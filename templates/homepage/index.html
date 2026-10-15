@@ -30,7 +30,7 @@
     <nav id="navigation" aria-label="Navigation principale">
       <a class="sidebar-brand" href="#accueil" aria-label="CargoLink, accueil"><img class="brand-logo" src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" width="2172" height="724"></a>
       <a class="active" href="#accueil">Accueil</a><a href="#fonctionnement">Comment ça marche</a><a href="#avantages">Nos avantages</a><a href="#transporteurs">Devenir transporteur</a>
-      <div class="account-actions"><a class="text-button" href="{% url 'signin:login' %}">Se connecter</a><button class="button small" data-action="inscription">S’inscrire <svg><use href="#arrow"/></svg></button></div>
+      <div class="account-actions"><a class="text-button" href="{% url 'signin:login' %}">Se connecter</a><a class="button small" href="{% url 'register:register' %}">S’inscrire <svg><use href="#arrow"/></svg></a></div>
     </nav>
   </div>
 </header>
