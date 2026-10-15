@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3D5F4B">
+  <title>Se connecter | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+</head>
+<body>
+  <main class="signin-layout">
+    <section class="signin-aside" aria-labelledby="welcome-title">
+      <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
+        <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
+      </a>
+      <div class="aside-copy">
+        <p class="eyebrow">VOTRE LOGISTIQUE, CONNECTÉE</p>
+        <h1 id="welcome-title">Content de vous revoir.</h1>
+        <p>Retrouvez vos trajets, vos demandes et vos livraisons au même endroit.</p>
+      </div>
+      <span class="aside-note">Le lien entre vos marchandises et les bonnes capacités.</span>
+    </section>
+
+    <section class="signin-main" aria-labelledby="signin-title">
+      <a class="mobile-brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
+        <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
+      </a>
+      <div class="signin-form-wrap">
+        <p class="eyebrow">ESPACE MEMBRE</p>
+        <h2 id="signin-title">Se connecter</h2>
+        <p class="form-intro">Accédez à votre espace CargoLink.</p>
+
+        {% if form.errors %}
+          <p class="form-error" role="alert">Identifiant ou mot de passe incorrect. Réessayez.</p>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+          <div class="field">
+            <label for="id_username">Adresse e-mail ou nom d’utilisateur</label>
+            <input id="id_username" name="username" type="text" autocomplete="username" required autofocus>
+          </div>
+          <div class="field">
+            <label for="id_password">Mot de passe</label>
+            <input id="id_password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="submit-button" type="submit">Se connecter <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="back-home"><a href="{% url 'home' %}">Retour à l’accueil</a></p>
+      </div>
+      <p class="signin-footer">© {% now 'Y' %} CargoLink · Pensé pour les routes tunisiennes.</p>
+    </section>
+  </main>
+</body>
+</html>
