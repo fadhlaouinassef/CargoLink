@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CargoLink rapproche les PME et les transporteurs indépendants partout en Tunisie. Trouvez un transport ou proposez vos capacités disponibles.">
+  <meta name="theme-color" content="#3D5F4B">
+  <title>CargoLink — Vos marchandises, le bon transporteur.</title>
+  <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+  <script src="{% static 'js/homepage.js' %}" defer></script>
+</head>
+<body>
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="link" viewBox="0 0 24 24"><path d="M8 16H6a4 4 0 0 1 0-8h5m2 0h5a4 4 0 0 1 0 8h-5M8 12h8"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+  <symbol id="box" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4v10l-9 4-9-4Zm0 0 9 4 9-4M12 11v10M7 5l10 4"/></symbol>
+  <symbol id="truck" viewBox="0 0 24 24"><path d="M3 16V5h11v11H3Zm11-8h4l4 5v3h-8M18 8v5h4"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+  <symbol id="list" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6m-6 4h6m-6 4h4"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m7 12 3 3 7-7"/><circle cx="12" cy="12" r="10"/></symbol>
+  <symbol id="route" viewBox="0 0 24 24"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 5h9a4 4 0 0 1 0 8H8a3 3 0 0 0 0 6h9"/></symbol>
+</defs></svg>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#accueil" aria-label="CargoLink, accueil"><img class="brand-logo" src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" width="2172" height="724"></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navigation"><span></span><span></span><span></span><span class="sr-only">Ouvrir le menu</span></button>
+    <nav id="navigation" aria-label="Navigation principale">
+      <a class="sidebar-brand" href="#accueil" aria-label="CargoLink, accueil"><img class="brand-logo" src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" width="2172" height="724"></a>
+      <a class="active" href="#accueil">Accueil</a><a href="#fonctionnement">Comment ça marche</a><a href="#avantages">Nos avantages</a><a href="#transporteurs">Devenir transporteur</a>
+      <div class="account-actions"><button class="text-button" data-action="connexion">Se connecter</button><button class="button small" data-action="inscription">S’inscrire <svg><use href="#arrow"/></svg></button></div>
+    </nav>
+  </div>
+</header>
+<main id="contenu">
+  <section class="hero" id="accueil">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-dot"></span> LA LOGISTIQUE, PLUS SIMPLE EN TUNISIE</p>
+        <h1>Vos marchandises,<br>le bon <span>transporteur.</span></h1>
+        <p class="hero-description">Trouvez un transporteur pour vos expéditions ou rentabilisez l’espace disponible dans votre véhicule. CargoLink rapproche les entreprises et les transporteurs partout en Tunisie.</p>
+        <div class="button-row"><button class="button" data-action="entreprise">Publier une demande <svg><use href="#arrow"/></svg></button><button class="button outline" data-action="transporteur">Proposer un trajet</button></div>
+        <p class="hero-note"><svg><use href="#route"/></svg> Moins de trajets à vide. Plus de possibilités.</p>
+      </div>
+      <div class="hero-visual"><img src="{% static 'images/delivery.svg' %}" alt="Un utilitaire vert accompagné de colis sur une route reliant les villes tunisiennes" width="640" height="520"><div class="visual-caption"><span class="caption-icon"><svg><use href="#link"/></svg></span><div><strong>Le bon trajet commence ici.</strong><span>Des entreprises. Des transporteurs. Un lien.</span></div></div></div>
+    </div>
+    <div class="container search-wrap">
+      <form id="route-search" class="search-form" aria-label="Rechercher parmi les exemples de trajets">
+        <div class="field"><label for="departure">Ville de départ</label><div class="input-wrap"><svg><use href="#pin"/></svg><select id="departure" name="departure"><option value="">D’où partez-vous ?</option><option>Tunis</option><option>Sousse</option><option>Sfax</option><option>Bizerte</option><option>Nabeul</option></select></div></div>
+        <div class="field"><label for="arrival">Ville d’arrivée</label><div class="input-wrap"><svg><use href="#pin"/></svg><select id="arrival" name="arrival"><option value="">Où allez-vous ?</option><option>Tunis</option><option>Sousse</option><option>Sfax</option><option>Bizerte</option><option>Nabeul</option></select></div></div>
+        <div class="field"><label for="date">Date souhaitée</label><input id="date" name="date" type="date"></div>
+        <button class="button search-button" type="submit"><svg><use href="#search"/></svg> Rechercher un trajet</button>
+      </form>
+    </div>
+  </section>
+  <section class="section container how" id="fonctionnement">
+    <div class="section-heading centered"><p class="eyebrow">SIMPLE, DU DÉPART À L’ARRIVÉE</p><h2>Votre transport en trois étapes</h2><p>Un besoin, une offre, une livraison. Avancez en toute clarté.</p></div>
+    <div class="steps">
+      <article class="step"><div class="step-top"><span class="icon-tile"><svg><use href="#list"/></svg></span><span class="step-number">01</span></div><h3>Publiez votre besoin</h3><p>Précisez le trajet, la date et les marchandises à transporter.</p></article>
+      <article class="step"><div class="step-top"><span class="icon-tile"><svg><use href="#check"/></svg></span><span class="step-number">02</span></div><h3>Choisissez une offre</h3><p>Comparez les transporteurs et les prix proposés pour votre expédition.</p></article>
+      <article class="step"><div class="step-top"><span class="icon-tile"><svg><use href="#pin"/></svg></span><span class="step-number">03</span></div><h3>Suivez votre livraison</h3><p>Consultez son avancement jusqu’à la réception de vos marchandises.</p></article>
+    </div>
+  </section>
+  <section class="audience-section" id="espaces"><div class="container">
+    <div class="section-heading"><p class="eyebrow">À CHACUN SON BESOIN</p><h2>Deux espaces, un même service.</h2></div>
+    <div class="audience-grid">
+      <article class="audience-card business"><span class="audience-label"><svg><use href="#box"/></svg> POUR LES ENTREPRISES</span><h3>Vous avez des marchandises<br>à expédier ?</h3><p>Publiez votre demande et trouvez une offre adaptée à votre trajet, votre budget et vos marchandises.</p><button class="button" data-action="entreprise">Publier ma demande <svg><use href="#arrow"/></svg></button><svg class="card-art"><use href="#box"/></svg></article>
+      <article class="audience-card carrier" id="transporteurs"><span class="audience-label"><svg><use href="#truck"/></svg> POUR LES TRANSPORTEURS</span><h3>Vous avez de la place<br>dans votre véhicule ?</h3><p>Proposez vos trajets et trouvez des chargements compatibles avec vos capacités disponibles.</p><button class="button dark" data-action="transporteur">Proposer mon trajet <svg><use href="#arrow"/></svg></button><svg class="card-art"><use href="#truck"/></svg></article>
+    </div>
+  </div></section>
+  <section class="section container advantages" id="avantages">
+    <div class="section-heading"><p class="eyebrow">MIEUX CONNECTÉS, MIEUX ORGANISÉS</p><h2>Les avantages CargoLink</h2><p>Des outils concrets pour faire avancer votre logistique.</p></div>
+    <div class="benefits-grid">
+      <article><span class="benefit-icon"><svg><use href="#link"/></svg></span><h3>Tout au même endroit</h3><p>Des demandes et des offres réunies sur une même plateforme.</p></article>
+      <article><span class="benefit-icon"><svg><use href="#search"/></svg></span><h3>Un trajet qui correspond</h3><p>Une recherche adaptée au trajet et à la capacité de votre véhicule.</p></article>
+      <article><span class="benefit-icon"><svg><use href="#route"/></svg></span><h3>De la visibilité à chaque étape</h3><p>Un suivi des étapes du transport, du départ à la réception.</p></article>
+      <article><span class="benefit-icon"><svg><use href="#box"/></svg></span><h3>De l’espace mieux utilisé</h3><p>Des chargements compatibles pour valoriser les capacités disponibles.</p></article>
+    </div>
+  </section>
+  <section class="routes-section" id="trajets"><div class="container">
+    <div class="routes-heading"><div class="section-heading"><p class="eyebrow">DES VILLES À RELIER</p><h2>Exemples de trajets</h2><p>Découvrez à quoi peut ressembler votre prochain transport.</p></div><span class="example-badge">Données fictives · À titre d’illustration</span></div>
+    <p id="search-status" class="search-status" role="status" hidden></p>
+    <div class="routes-grid">
+      <article class="route-card" data-departure="Tunis" data-arrival="Sousse"><div class="route-card-top"><span class="vehicle-icon"><svg><use href="#truck"/></svg></span><span>Exemple de trajet</span></div><h3>Tunis <span>→</span> Sousse</h3><p class="vehicle-type">Fourgon utilitaire</p><div class="capacity"><span><strong>800 kg</strong>Poids disponible</span><span><strong>6 m³</strong>Volume disponible</span></div><button class="route-button" data-route="Tunis → Sousse" data-details="Fourgon utilitaire · 800 kg · 6 m³">Voir le trajet <svg><use href="#arrow"/></svg></button></article>
+      <article class="route-card" data-departure="Sfax" data-arrival="Tunis"><div class="route-card-top"><span class="vehicle-icon"><svg><use href="#truck"/></svg></span><span>Exemple de trajet</span></div><h3>Sfax <span>→</span> Tunis</h3><p class="vehicle-type">Camion porteur</p><div class="capacity"><span><strong>2 500 kg</strong>Poids disponible</span><span><strong>18 m³</strong>Volume disponible</span></div><button class="route-button" data-route="Sfax → Tunis" data-details="Camion porteur · 2 500 kg · 18 m³">Voir le trajet <svg><use href="#arrow"/></svg></button></article>
+      <article class="route-card" data-departure="Bizerte" data-arrival="Nabeul"><div class="route-card-top"><span class="vehicle-icon"><svg><use href="#truck"/></svg></span><span>Exemple de trajet</span></div><h3>Bizerte <span>→</span> Nabeul</h3><p class="vehicle-type">Fourgon utilitaire</p><div class="capacity"><span><strong>500 kg</strong>Poids disponible</span><span><strong>4 m³</strong>Volume disponible</span></div><button class="route-button" data-route="Bizerte → Nabeul" data-details="Fourgon utilitaire · 500 kg · 4 m³">Voir le trajet <svg><use href="#arrow"/></svg></button></article>
+    </div><button id="reset-search" class="text-button reset-search" hidden>Afficher tous les exemples</button>
+  </div></section>
+  <section class="final-cta container"><div class="cta-symbol" aria-hidden="true"><svg><use href="#route"/></svg></div><p class="eyebrow">FAISONS UN BOUT DE CHEMIN ENSEMBLE</p><h2>Un besoin de transport<br>ou de l’espace disponible ?</h2><p>Rejoignez CargoLink et préparez votre prochain transport.</p><div class="button-row"><button class="button sand" data-action="entreprise">Je suis une entreprise <svg><use href="#arrow"/></svg></button><button class="button light-outline" data-action="transporteur">Je suis transporteur <svg><use href="#arrow"/></svg></button></div></section>
+</main>
+<footer class="container site-footer"><div class="footer-top"><div><a class="brand" href="#accueil"><img class="brand-logo" src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" width="2172" height="724"></a><p>Le lien entre vos marchandises<br>et les bonnes capacités, partout en Tunisie.</p></div><nav aria-label="Informations"><button data-info="about">À propos</button><button data-info="contact">Contact</button><button data-info="terms">Conditions d’utilisation</button><button data-info="privacy">Confidentialité</button></nav></div><div class="footer-bottom"><span>© {% now 'Y' %} CargoLink. Tous droits réservés.</span><span>Pensé pour les routes tunisiennes. <span class="footer-dot"></span></span></div></footer>
+<dialog id="information-dialog" aria-labelledby="dialog-title"><div class="dialog-content"><span class="icon-tile"><svg><use href="#link"/></svg></span><button class="dialog-close" aria-label="Fermer la fenêtre">×</button><h2 id="dialog-title"></h2><p id="dialog-description"></p><button class="button dialog-dismiss">Compris <svg><use href="#arrow"/></svg></button></div></dialog>
+</body></html>
