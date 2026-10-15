@@ -48,6 +48,8 @@
           </div>
           <button class="submit-button" type="submit">Se connecter <span aria-hidden="true">→</span></button>
         </form>
+        <p class="back-home"><a href="{% url 'authentification:forget_password' %}">Mot de passe oublié ?</a></p>
+        <p class="back-home">Pas encore de compte ? <a href="{% url 'authentification:register' %}">S’inscrire</a></p>
         <p class="back-home"><a href="{% url 'home' %}">Retour à l’accueil</a></p>
       </div>
       <p class="signin-footer">© {% now 'Y' %} CargoLink · Pensé pour les routes tunisiennes.</p>

@@ -32,7 +32,7 @@
         <h2 id="register-title">Créer votre compte</h2>
         <p class="form-intro">Rejoignez CargoLink en quelques instants.</p>
 
-        <form id="register-form" method="post" action="{% url 'register:register' %}">
+        <form id="register-form" method="post" action="{% url 'authentification:register' %}">
           {% csrf_token %}
           <div class="field">
             <label for="id_full_name">Nom complet</label>
@@ -53,7 +53,7 @@
           <button class="submit-button" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
         </form>
         <p class="form-intro" id="register-status" role="status" hidden>La création de compte sera bientôt disponible.</p>
-        <p class="back-home">Déjà membre ? <a href="{% url 'signin:login' %}">Se connecter</a></p>
+        <p class="back-home">Déjà membre ? <a href="{% url 'authentification:login' %}">Se connecter</a></p>
       </div>
       <p class="signin-footer">© {% now 'Y' %} CargoLink · Pensé pour les routes tunisiennes.</p>
     </section>
