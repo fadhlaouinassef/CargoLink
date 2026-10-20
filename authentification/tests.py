@@ -60,3 +60,37 @@ class SignupTests(TestCase):
         response = Client(enforce_csrf_checks=True).post(self.url, self.data)
         self.assertEqual(response.status_code, 403)
         self.assertFalse(User.objects.exists())
+
+
+class LoginTests(TestCase):
+    def setUp(self):
+        self.url = reverse('authentification:login')
+        self.password = 'Cargo-Strong-872!'
+        User.objects.create_user(
+            email='amine@example.com',
+            password=self.password,
+            full_name='Amine Test',
+        )
+
+    def test_get_displays_login_form(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'name="username"')
+        self.assertContains(response, 'name="password"')
+
+    def test_valid_credentials_log_user_in_and_redirect_home(self):
+        response = self.client.post(self.url, {
+            'username': 'AMINE@EXAMPLE.COM',
+            'password': self.password,
+        })
+        self.assertRedirects(response, reverse('home'))
+        self.assertEqual(str(self.client.session['_auth_user_id']), str(User.objects.get().pk))
+
+    def test_invalid_credentials_do_not_log_user_in(self):
+        response = self.client.post(self.url, {
+            'username': 'amine@example.com',
+            'password': 'incorrect-password',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['form'].errors)
+        self.assertNotIn('_auth_user_id', self.client.session)
