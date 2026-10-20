@@ -1,6 +1,11 @@
+import secrets
+from datetime import timedelta
+
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.db.models.functions import Lower
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -45,3 +50,40 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class PasswordResetCode(models.Model):
+    """Code à 6 chiffres envoyé par e-mail pour réinitialiser le mot de passe."""
+
+    LIFETIME = timedelta(minutes=10)
+    MAX_ATTEMPTS = 5
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reset_codes')
+    code = models.CharField(max_length=128)  # stocké haché, jamais en clair
+    attempts = models.PositiveSmallIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def create_for(cls, user):
+        """Remplace les anciens codes de l'utilisateur et renvoie le nouveau code en clair."""
+        cls.objects.filter(user=user).delete()
+        plain_code = f'{secrets.randbelow(10 ** 6):06d}'
+        cls.objects.create(user=user, code=make_password(plain_code))
+        return plain_code
+
+    @property
+    def is_expired(self):
+        return timezone.now() > self.created_at + self.LIFETIME
+
+    @property
+    def attempts_left(self):
+        return max(self.MAX_ATTEMPTS - self.attempts, 0)
+
+    def matches(self, plain_code):
+        """Compte une tentative puis compare le code saisi."""
+        self.attempts += 1
+        self.save(update_fields=['attempts'])
+        return check_password(plain_code, self.code)
+
+    def __str__(self):
+        return f'Code de réinitialisation pour {self.user}'

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3D5F4B">
+  <title>Vérification du code | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+</head>
+<body>
+  <main class="signin-layout">
+    <section class="signin-aside" aria-labelledby="welcome-title">
+      <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
+        <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
+      </a>
+      <div class="aside-copy">
+        <p class="eyebrow">VOTRE LOGISTIQUE, CONNECTÉE</p>
+        <h1 id="welcome-title">Vérifiez votre boîte mail.</h1>
+        <p>Entrez le code reçu pour confirmer que ce compte est bien le vôtre.</p>
+      </div>
+      <span class="aside-note">Le lien entre vos marchandises et les bonnes capacités.</span>
+    </section>
+
+    <section class="signin-main" aria-labelledby="page-title">
+      <a class="mobile-brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
+        <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
+      </a>
+      <div class="signin-form-wrap">
+        <p class="eyebrow">ESPACE MEMBRE</p>
+        <h2 id="page-title">Saisir le code</h2>
+        <p class="form-intro">Un code à 6 chiffres a été envoyé à <strong>{{ email }}</strong> s’il correspond à un compte. Il est valable 10 minutes.</p>
+
+        <form method="post" action="{% url 'authentification:verify_code' %}">
+          {% csrf_token %}
+          {% if form.errors %}
+            <div class="form-error" role="alert">
+              {{ form.non_field_errors }}
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <p>{{ error }}</p>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class="field">
+            <label for="id_code">Code de vérification</label>
+            <input id="id_code" name="code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" minlength="6" autocomplete="one-time-code" placeholder="123456" required autofocus>
+          </div>
+          <button class="submit-button" type="submit">Vérifier le code <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="back-home">Code non reçu ? <a href="{% url 'authentification:forget_password' %}">Renvoyer un code</a></p>
+      </div>
+      <p class="signin-footer">© {% now 'Y' %} CargoLink · Pensé pour les routes tunisiennes.</p>
+    </section>
+  </main>
+</body>
+</html>

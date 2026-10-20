@@ -18,4 +18,6 @@ urlpatterns = [
     ),
     path('register/', views.register, name='register'),
     path('forget-password/', views.forget_password, name='forget_password'),
+    path('forget-password/verify/', views.verify_code, name='verify_code'),
+    path('forget-password/reset/', views.reset_password, name='reset_password'),
 ]

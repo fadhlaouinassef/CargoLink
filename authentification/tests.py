@@ -1,8 +1,13 @@
+import re
+from datetime import timedelta
+
+from django.core import mail
 from django.db import IntegrityError, transaction
 from django.test import Client, TestCase
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import User
+from .models import PasswordResetCode, User
 
 
 class SignupTests(TestCase):
@@ -94,3 +99,110 @@ class LoginTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['form'].errors)
         self.assertNotIn('_auth_user_id', self.client.session)
+
+
+class ForgotPasswordTests(TestCase):
+    def setUp(self):
+        self.email = 'amine@example.com'
+        self.user = User.objects.create_user(self.email, 'Old-Password-872!', full_name='Amine Test')
+        self.forget_url = reverse('authentification:forget_password')
+        self.verify_url = reverse('authentification:verify_code')
+        self.reset_url = reverse('authentification:reset_password')
+
+    def request_code(self, email=None):
+        response = self.client.post(self.forget_url, {'email': email or self.email})
+        self.assertRedirects(response, self.verify_url)
+
+    def sent_code(self):
+        return re.search(r'\b(\d{6})\b', mail.outbox[-1].body).group(1)
+
+    def test_pages_display(self):
+        self.assertContains(self.client.get(self.forget_url), 'name="email"')
+        self.request_code()
+        self.assertContains(self.client.get(self.verify_url), 'name="code"')
+
+    def test_email_is_validated(self):
+        for value in ['', 'invalid']:
+            with self.subTest(value=value):
+                response = self.client.post(self.forget_url, {'email': value})
+                self.assertEqual(response.status_code, 200)
+                self.assertTrue(response.context['form'].errors)
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_code_is_emailed_and_stored_hashed(self):
+        self.request_code('AMINE@example.com')
+        code = self.sent_code()
+        self.assertEqual(mail.outbox[0].to, [self.email])
+        stored = PasswordResetCode.objects.get(user=self.user)
+        self.assertNotEqual(stored.code, code)
+        self.assertTrue(stored.matches(code))
+
+    def test_unknown_email_gets_same_response_without_email(self):
+        self.request_code('nobody@example.com')
+        self.assertEqual(len(mail.outbox), 0)
+        self.assertFalse(PasswordResetCode.objects.exists())
+
+    def test_resend_is_rate_limited(self):
+        self.request_code()
+        response = self.client.post(self.forget_url, {'email': self.email})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_verify_requires_requested_code(self):
+        self.assertRedirects(self.client.get(self.verify_url), self.forget_url)
+        self.assertRedirects(self.client.get(self.reset_url), self.forget_url)
+
+    def test_code_format_is_validated(self):
+        self.request_code()
+        for value in ['', '123', 'abcdef', '1234567']:
+            with self.subTest(value=value):
+                response = self.client.post(self.verify_url, {'code': value})
+                self.assertEqual(response.status_code, 200)
+                self.assertIn('code', response.context['form'].errors)
+
+    def test_wrong_code_then_lockout(self):
+        self.request_code()
+        good = self.sent_code()
+        wrong = '000000' if good != '000000' else '111111'
+        for _ in range(PasswordResetCode.MAX_ATTEMPTS):
+            response = self.client.post(self.verify_url, {'code': wrong})
+            self.assertEqual(response.status_code, 200)
+        response = self.client.post(self.verify_url, {'code': good})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn('reset_user_id', self.client.session)
+
+    def test_expired_code_is_rejected(self):
+        self.request_code()
+        PasswordResetCode.objects.update(created_at=timezone.now() - timedelta(minutes=11))
+        response = self.client.post(self.verify_url, {'code': self.sent_code()})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn('reset_user_id', self.client.session)
+
+    def test_full_flow_changes_password(self):
+        self.request_code()
+        response = self.client.post(self.verify_url, {'code': self.sent_code()})
+        self.assertRedirects(response, self.reset_url)
+        response = self.client.post(self.reset_url, {
+            'new_password1': 'Brand-New-Pass-4411!',
+            'new_password2': 'Brand-New-Pass-4411!',
+        })
+        self.assertRedirects(response, reverse('authentification:login'))
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('Brand-New-Pass-4411!'))
+        self.assertFalse(PasswordResetCode.objects.exists())
+        self.assertNotIn('reset_user_id', self.client.session)
+        self.assertRedirects(self.client.get(self.reset_url), self.forget_url)
+
+    def test_new_password_is_validated(self):
+        self.request_code()
+        self.client.post(self.verify_url, {'code': self.sent_code()})
+        for data in [
+            {'new_password1': 'Brand-New-Pass-4411!', 'new_password2': 'Different-4411!'},
+            {'new_password1': '123', 'new_password2': '123'},
+        ]:
+            with self.subTest(data=data):
+                response = self.client.post(self.reset_url, data)
+                self.assertEqual(response.status_code, 200)
+                self.assertTrue(response.context['form'].errors)
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('Old-Password-872!'))

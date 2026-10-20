@@ -35,6 +35,10 @@
           <p class="form-error" role="alert">Identifiant ou mot de passe incorrect. Réessayez.</p>
         {% endif %}
 
+        {% for message in messages %}
+          <p class="form-intro" role="status">{{ message }}</p>
+        {% endfor %}
+
         <form method="post">
           {% csrf_token %}
           {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}

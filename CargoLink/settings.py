@@ -10,10 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Charge les variables du fichier .env (KEY=VALUE) sans écraser l'environnement.
+_env_file = BASE_DIR / '.env'
+if _env_file.exists():
+    for _line in _env_file.read_text(encoding='utf-8').splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith('#') and '=' in _line:
+            _key, _value = _line.split('=', 1)
+            os.environ.setdefault(_key.strip(), _value.strip().strip('"\''))
 
 
 # Quick-start development settings - unsuitable for production
@@ -124,8 +134,32 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+_mail_user = os.environ.get('EMAIL_HOST_USER', '').strip()
+# Google affiche le mot de passe d'application par groupes de 4 : on retire les espaces.
+_mail_password = ''.join(os.environ.get('EMAIL_HOST_PASSWORD', '').split())
+DEFAULT_FROM_EMAIL = f'CargoLink <{_mail_user}>' if _mail_user else 'CargoLink <no-reply@cargolink.local>'
+
+if _mail_user and _mail_password:
+    # Gmail SMTP (mot de passe d'application défini dans .env)
+    MAILERS = {
+        'default': {
+            'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+            'OPTIONS': {
+                'host': 'smtp.gmail.com',
+                'port': 587,
+                'use_tls': True,
+                'username': _mail_user,
+                'password': _mail_password,
+                'timeout': 15,
+            },
+        },
+    }
+else:
+    # Sans identifiants, les e-mails s'affichent dans la console.
+    if _mail_password and not _mail_user:
+        print("ATTENTION : EMAIL_HOST_USER est vide dans .env, aucun e-mail ne sera envoyé (affichage console).")
+    MAILERS = {
+        'default': {
+            'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        },
+    }

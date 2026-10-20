@@ -19,3 +19,29 @@ class SignupForm(UserCreationForm):
         if User.objects.filter(email__iexact=email).exists():
             raise forms.ValidationError('Cette adresse e-mail est déjà utilisée.')
         return email
+
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(
+        max_length=254,
+        error_messages={
+            'required': 'Saisissez votre adresse e-mail.',
+            'invalid': 'Saisissez une adresse e-mail valide.',
+        },
+    )
+
+    def clean_email(self):
+        return self.cleaned_data['email'].strip().lower()
+
+
+class VerifyCodeForm(forms.Form):
+    code = forms.CharField(
+        max_length=10,
+        error_messages={'required': 'Saisissez le code reçu par e-mail.'},
+    )
+
+    def clean_code(self):
+        code = self.cleaned_data['code'].replace(' ', '')
+        if len(code) != 6 or not code.isdigit():
+            raise forms.ValidationError('Le code doit contenir exactement 6 chiffres.')
+        return code
