@@ -21,6 +21,30 @@ class SignupForm(UserCreationForm):
         return email
 
 
+class AdminUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['full_name', 'email', 'role', 'is_active']
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError('Cette adresse e-mail est déjà utilisée.')
+        return email
+
+
+class AdminUserChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['full_name', 'email', 'role', 'is_active']
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].strip().lower()
+        if User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Cette adresse e-mail est déjà utilisée.')
+        return email
+
+
 class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(
         max_length=254,

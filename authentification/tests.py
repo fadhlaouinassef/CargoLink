@@ -67,6 +67,87 @@ class SignupTests(TestCase):
         self.assertFalse(User.objects.exists())
 
 
+class AdminUserManagementTests(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user(
+            'admin@example.com',
+            'Admin-Strong-872!',
+            full_name='Admin CargoLink',
+            role=User.Role.ADMIN,
+        )
+        self.user = User.objects.create_user(
+            'user@example.com',
+            'User-Strong-872!',
+            full_name='Utilisateur Test',
+            role=User.Role.PME,
+        )
+        self.client.force_login(self.admin)
+
+    def test_management_requires_admin_role(self):
+        self.client.logout()
+        non_admin = self.client.post(reverse('authentification:admin_user_create'))
+        self.assertEqual(non_admin.status_code, 302)
+        self.assertIn(reverse('authentification:login'), non_admin['Location'])
+
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('authentification:admin_dashboard'))
+        self.assertEqual(response.status_code, 403)
+
+    def test_admin_can_create_and_validate_user(self):
+        response = self.client.post(reverse('authentification:admin_user_create'), {
+            'full_name': 'Nouveau Transporteur',
+            'email': 'new@example.com',
+            'role': User.Role.TRANSPORTEUR,
+            'is_active': 'on',
+            'password1': 'New-Strong-872!',
+            'password2': 'New-Strong-872!',
+        })
+        self.assertRedirects(response, reverse('authentification:admin_dashboard'))
+        created = User.objects.get(email='new@example.com')
+        self.assertEqual(created.role, User.Role.TRANSPORTEUR)
+        self.assertTrue(created.check_password('New-Strong-872!'))
+
+        invalid = self.client.post(reverse('authentification:admin_user_create'), {
+            'full_name': '',
+            'email': 'not-an-email',
+            'role': User.Role.PME,
+            'password1': 'short',
+            'password2': 'different',
+        })
+        self.assertEqual(invalid.status_code, 200)
+        self.assertTrue(invalid.context['form'].errors)
+
+    def test_admin_can_filter_and_manage_account(self):
+        response = self.client.get(reverse('authentification:admin_dashboard'), {
+            'q': 'Utilisateur',
+            'role': User.Role.PME,
+            'status': 'active',
+        })
+        self.assertContains(response, 'user@example.com')
+        self.assertNotContains(response, 'admin@example.com')
+
+        toggle_url = reverse('authentification:admin_user_toggle_active', args=[self.user.pk])
+        self.assertRedirects(self.client.post(toggle_url), reverse(
+            'authentification:admin_user_detail', args=[self.user.pk],
+        ))
+        self.user.refresh_from_db()
+        self.assertFalse(self.user.is_active)
+
+        delete_url = reverse('authentification:admin_user_delete', args=[self.user.pk])
+        self.assertRedirects(self.client.post(delete_url), reverse('authentification:admin_dashboard'))
+        self.assertFalse(User.objects.filter(pk=self.user.pk).exists())
+
+    def test_admin_cannot_disable_or_delete_self(self):
+        toggle_url = reverse('authentification:admin_user_toggle_active', args=[self.admin.pk])
+        self.client.post(toggle_url)
+        self.admin.refresh_from_db()
+        self.assertTrue(self.admin.is_active)
+
+        delete_url = reverse('authentification:admin_user_delete', args=[self.admin.pk])
+        self.client.post(delete_url)
+        self.assertTrue(User.objects.filter(pk=self.admin.pk).exists())
+
+
 class LoginTests(TestCase):
     def setUp(self):
         self.url = reverse('authentification:login')
@@ -90,6 +171,32 @@ class LoginTests(TestCase):
         })
         self.assertRedirects(response, reverse('home'))
         self.assertEqual(str(self.client.session['_auth_user_id']), str(User.objects.get().pk))
+
+    def test_admin_credentials_redirect_to_dashboard(self):
+        User.objects.create_user(
+            email='admin@example.com',
+            password=self.password,
+            full_name='Admin Test',
+            role=User.Role.ADMIN,
+        )
+        response = self.client.post(self.url, {
+            'username': 'admin@example.com',
+            'password': self.password,
+        })
+        self.assertRedirects(response, reverse('authentification:admin_dashboard'))
+
+    def test_admin_redirect_ignores_external_dashboard_destination(self):
+        User.objects.create_user(
+            email='admin@example.com',
+            password=self.password,
+            full_name='Admin Test',
+            role=User.Role.ADMIN,
+        )
+        response = self.client.post(f'{self.url}?next=/somewhere/', {
+            'username': 'admin@example.com',
+            'password': self.password,
+        })
+        self.assertRedirects(response, reverse('authentification:admin_dashboard'))
 
     def test_invalid_credentials_do_not_log_user_in(self):
         response = self.client.post(self.url, {
@@ -192,6 +299,20 @@ class ForgotPasswordTests(TestCase):
         self.assertFalse(PasswordResetCode.objects.exists())
         self.assertNotIn('reset_user_id', self.client.session)
         self.assertRedirects(self.client.get(self.reset_url), self.forget_url)
+
+    def test_admin_full_flow_logs_in_and_redirects_to_dashboard(self):
+        self.user.role = User.Role.ADMIN
+        self.user.save(update_fields=['role'])
+        self.request_code()
+        self.client.post(self.verify_url, {'code': self.sent_code()})
+        response = self.client.post(self.reset_url, {
+            'new_password1': 'Brand-New-Admin-Pass-4411!',
+            'new_password2': 'Brand-New-Admin-Pass-4411!',
+        })
+        self.assertRedirects(response, reverse('authentification:admin_dashboard'))
+        self.assertEqual(str(self.client.session['_auth_user_id']), str(self.user.pk))
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.check_password('Brand-New-Admin-Pass-4411!'))
 
     def test_new_password_is_validated(self):
         self.request_code()

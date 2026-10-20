@@ -2,17 +2,144 @@ import smtplib
 import time
 
 from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import IntegrityError, transaction
-from django.shortcuts import redirect, render
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
-from .forms import ForgotPasswordForm, SignupForm, VerifyCodeForm
+from .forms import (
+    AdminUserChangeForm,
+    AdminUserCreationForm,
+    ForgotPasswordForm,
+    SignupForm,
+    VerifyCodeForm,
+)
 from .models import PasswordResetCode, User
 
 RESEND_DELAY = 60  # secondes entre deux envois de code
 VERIFIED_LIFETIME = 15 * 60  # secondes pour choisir le nouveau mot de passe après vérification
+
+
+class RoleBasedLoginView(LoginView):
+    def get_success_url(self):
+        if self.request.user.role == User.Role.ADMIN:
+            return reverse('authentification:admin_dashboard')
+        return super().get_success_url()
+
+
+def admin_required(view):
+    @login_required(login_url='authentification:login')
+    def wrapped(request, *args, **kwargs):
+        if request.user.role != User.Role.ADMIN:
+            raise PermissionDenied
+        return view(request, *args, **kwargs)
+    return wrapped
+
+
+def _user_form_context(form, title, submit_label):
+    return {'form': form, 'title': title, 'submit_label': submit_label}
+
+
+@admin_required
+def admin_dashboard(request):
+    users = User.objects.all().order_by('-date_joined')
+    query = request.GET.get('q', '').strip()
+    role = request.GET.get('role', '')
+    status = request.GET.get('status', '')
+    if query:
+        users = users.filter(Q(full_name__icontains=query) | Q(email__icontains=query))
+    if role in dict(User.Role.choices):
+        users = users.filter(role=role)
+    if status == 'active':
+        users = users.filter(is_active=True)
+    elif status == 'inactive':
+        users = users.filter(is_active=False)
+
+    month_start = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    all_users = User.objects.all()
+    context = {
+        'users': users,
+        'create_form': AdminUserCreationForm(),
+        'query': query,
+        'selected_role': role,
+        'selected_status': status,
+        'role_choices': User.Role.choices,
+        'total_users': all_users.count(),
+        'new_users': all_users.filter(date_joined__gte=month_start).count(),
+        'active_users': all_users.filter(is_active=True).count(),
+        'inactive_users': all_users.filter(is_active=False).count(),
+    }
+    return render(request, 'dashboard/admin-dashboard.html', context)
+
+
+@admin_required
+@require_http_methods(['GET', 'POST'])
+def admin_user_create(request):
+    form = AdminUserCreationForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Le compte utilisateur a été créé.')
+        return redirect('authentification:admin_dashboard')
+    return render(request, 'dashboard/user-form.html', _user_form_context(
+        form, 'Ajouter un compte utilisateur', 'Créer le compte',
+    ))
+
+
+@admin_required
+def admin_user_detail(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    return render(request, 'dashboard/user-detail.html', {'managed_user': user})
+
+
+@admin_required
+@require_http_methods(['GET', 'POST'])
+def admin_user_edit(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    form = AdminUserChangeForm(request.POST or None, instance=user)
+    if request.method == 'POST' and form.is_valid():
+        if user.pk == request.user.pk and not form.cleaned_data['is_active']:
+            form.add_error('is_active', 'Vous ne pouvez pas désactiver votre propre compte.')
+        else:
+            form.save()
+            messages.success(request, 'Le compte utilisateur a été modifié.')
+            return redirect('authentification:admin_user_detail', pk=user.pk)
+    return render(request, 'dashboard/user-form.html', _user_form_context(
+        form, 'Modifier le compte utilisateur', 'Enregistrer les modifications',
+    ))
+
+
+@admin_required
+@require_http_methods(['POST'])
+def admin_user_delete(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if user.pk == request.user.pk:
+        messages.error(request, 'Vous ne pouvez pas supprimer votre propre compte.')
+    else:
+        user.delete()
+        messages.success(request, 'Le compte utilisateur a été supprimé.')
+    return redirect('authentification:admin_dashboard')
+
+
+@admin_required
+@require_http_methods(['POST'])
+def admin_user_toggle_active(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if user.pk == request.user.pk:
+        messages.error(request, 'Vous ne pouvez pas désactiver votre propre compte.')
+    else:
+        user.is_active = not user.is_active
+        user.save(update_fields=['is_active'])
+        state = 'activé' if user.is_active else 'désactivé'
+        messages.success(request, f'Le compte utilisateur a été {state}.')
+    return redirect('authentification:admin_user_detail', pk=user.pk)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -120,6 +247,10 @@ def reset_password(request):
         PasswordResetCode.objects.filter(user=user).delete()
         for key in ('reset_email', 'reset_sent_at', 'reset_user_id', 'reset_verified_at'):
             request.session.pop(key, None)
+        if user.role == User.Role.ADMIN:
+            login(request, user)
+            messages.success(request, 'Votre mot de passe a été modifié. Vous êtes connecté en tant qu’administrateur.')
+            return redirect('authentification:admin_dashboard')
         messages.success(request, 'Votre mot de passe a été modifié. Vous pouvez vous connecter.')
         return redirect('authentification:login')
     return render(request, 'authentification/reset-password.html', {'form': form})

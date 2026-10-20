@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#2a6049">
-  <title>Dashboard administrateur | CargoLink</title>
+  <title>Gestion des utilisateurs | CargoLink</title>
   <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
   <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
 </head>
@@ -13,97 +12,83 @@
   <div class="dashboard-shell">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
-          <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
-        </a>
+        <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil"><img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink"></a>
         <button class="sidebar-close" type="button" aria-label="Fermer le menu">×</button>
       </div>
-
       <div class="admin-profile">
-        <span class="avatar avatar-admin">AK</span>
-        <span><strong>Admin CargoLink</strong><small>Administrateur</small></span>
+        <span class="avatar avatar-admin">{{ request.user.full_name|slice:":1"|upper }}</span>
+        <span><strong>{{ request.user.full_name }}</strong><small>Administrateur</small></span>
       </div>
-
       <nav class="sidebar-nav" aria-label="Navigation administrateur">
         <p class="nav-label">MENU PRINCIPAL</p>
-        <a class="nav-link" href="#overview">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
-          Vue d’ensemble
-        </a>
-        <a class="nav-link active" href="#users" aria-current="page">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c.4-3.4 2.4-5 6-5s5.6 1.6 6 5M16 11a3 3 0 1 0 0-6M16 15c2.8 0 4.5 1.7 5 5"/></svg>
-          Comptes utilisateurs
-          <span class="nav-count">24</span>
-        </a>
-        <a class="nav-link" href="#roles">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-          Rôles et permissions
-        </a>
-        <a class="nav-link" href="#settings">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19 13 2 1-2 4-2-1a8 8 0 0 1-2 1l-.3 2h-5.4L9 18a8 8 0 0 1-2-1l-2 1-2-4 2-1a8 8 0 0 1 0-2l-2-1 2-4 2 1a8 8 0 0 1 2-1l.3-2h5.4L15 6a8 8 0 0 1 2 1l2-1 2 4-2 1a8 8 0 0 1 0 2Z"/></svg>
-          Paramètres
-        </a>
+        <a class="nav-link active" href="{% url 'authentification:admin_dashboard' %}" aria-current="page">Comptes utilisateurs <span class="nav-count">{{ total_users }}</span></a>
       </nav>
-
       <div class="sidebar-footer">
-        <a class="nav-link" href="{% url 'home' %}">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7M9 12h12"/></svg>
-          Retour au site
-        </a>
+        <a class="nav-link" href="{% url 'home' %}">Retour au site</a>
         <span class="sidebar-version">CargoLink · Administration</span>
       </div>
     </aside>
 
     <div class="dashboard-content">
       <header class="topbar">
-        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span></button>
         <div class="breadcrumb"><span>Administration</span><b>/</b><strong>Comptes utilisateurs</strong></div>
-        <div class="topbar-actions">
-          <button class="icon-button notification-button" type="button" aria-label="3 notifications"><span class="notification-dot"></span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button>
-          <span class="topbar-avatar">AK</span>
-        </div>
+        <span class="topbar-avatar">{{ request.user.full_name|slice:":1"|upper }}</span>
       </header>
-
       <main class="main-content" id="users">
-        <section class="page-heading" id="overview">
-          <div>
-            <p class="eyebrow">ESPACE ADMINISTRATEUR</p>
-            <h1>Comptes utilisateurs</h1>
-            <p>Gérez les comptes et les rôles de la communauté CargoLink.</p>
-          </div>
-          <button class="primary-button" type="button" id="add-user-button">
-            <span aria-hidden="true">+</span> Ajouter un compte
-          </button>
+        {% if messages %}
+          <div class="messages">{% for message in messages %}<p class="{{ message.tags }}">{{ message }}</p>{% endfor %}</div>
+        {% endif %}
+        <section class="page-heading">
+          <div><p class="eyebrow">ESPACE ADMINISTRATEUR</p><h1>Comptes utilisateurs</h1><p>Gérez les comptes et les rôles de la communauté CargoLink.</p></div>
+          <button class="primary-button" id="add-user-button" type="button">+ Ajouter un compte</button>
         </section>
-
         <section class="stats-grid" aria-label="Résumé des comptes">
-          <article class="stat-card"><span class="stat-icon green"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c.4-3.4 2.4-5 6-5s5.6 1.6 6 5M16 11a3 3 0 1 0 0-6M16 15c2.8 0 4.5 1.7 5 5"/></svg></span><span><small>Total comptes</small><strong id="total-users">24</strong><em>+8% ce mois</em></span></article>
-          <article class="stat-card"><span class="stat-icon sand"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span><span><small>Nouveaux ce mois</small><strong>6</strong><em>+2 depuis hier</em></span></article>
-          <article class="stat-card"><span class="stat-icon blue"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12a7 7 0 1 0 14 0"/><path d="M12 5v7l4 2"/></svg></span><span><small>En attente</small><strong>3</strong><em class="warning-text">À vérifier</em></span></article>
-          <article class="stat-card"><span class="stat-icon purple"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4m4 4V8m4 8V6"/></svg></span><span><small>Taux d’activité</small><strong>87%</strong><em>+4% ce mois</em></span></article>
+          <article class="stat-card"><span class="stat-icon green">◎</span><span><small>Total comptes</small><strong>{{ total_users }}</strong><em>Comptes inscrits</em></span></article>
+          <article class="stat-card"><span class="stat-icon sand">+</span><span><small>Nouveaux ce mois</small><strong>{{ new_users }}</strong><em>Depuis le début du mois</em></span></article>
+          <article class="stat-card"><span class="stat-icon blue">◷</span><span><small>Comptes actifs</small><strong>{{ active_users }}</strong><em>Accès autorisé</em></span></article>
+          <article class="stat-card"><span class="stat-icon purple">!</span><span><small>Comptes désactivés</small><strong>{{ inactive_users }}</strong><em class="warning-text">À vérifier</em></span></article>
         </section>
-
         <section class="users-panel" aria-labelledby="users-title">
-          <div class="panel-heading">
-            <div><h2 id="users-title">Tous les comptes</h2><p>Consultez et gérez les membres inscrits sur la plateforme.</p></div>
-            <button class="export-button" type="button" id="export-button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg> Exporter</button>
-          </div>
-          <div class="toolbar">
-            <label class="search-box" for="user-search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="user-search" type="search" placeholder="Rechercher un nom ou un e-mail" autocomplete="off"></label>
-            <label class="select-box" for="role-filter"><span>Rôle :</span><select id="role-filter"><option value="all">Tous les rôles</option><option value="admin">Admin</option><option value="PME">PME</option><option value="transporteur">Transporteur</option><option value="destinataire">Destinataire</option></select></label>
-            <label class="select-box" for="status-filter"><span>Statut :</span><select id="status-filter"><option value="all">Tous les statuts</option><option value="active">Actif</option><option value="pending">En attente</option><option value="inactive">Inactif</option></select></label>
-          </div>
+          <div class="panel-heading"><div><h2 id="users-title">Tous les comptes</h2><p>Consultez et gérez les membres inscrits sur la plateforme.</p></div></div>
+          <form class="toolbar" method="get">
+            <label class="search-box" for="user-search">Rechercher <input id="user-search" name="q" type="search" value="{{ query }}" placeholder="Nom ou e-mail" autocomplete="off"></label>
+            <label class="select-box" for="role-filter"><span>Rôle :</span><select id="role-filter" name="role"><option value="">Tous les rôles</option>{% for value, label in role_choices %}<option value="{{ value }}" {% if selected_role == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+            <label class="select-box" for="status-filter"><span>Statut :</span><select id="status-filter" name="status"><option value="">Tous les statuts</option><option value="active" {% if selected_status == 'active' %}selected{% endif %}>Actif</option><option value="inactive" {% if selected_status == 'inactive' %}selected{% endif %}>Désactivé</option></select></label>
+            <button class="secondary-button" type="submit">Filtrer</button>
+          </form>
           <div class="table-wrap">
             <table>
               <caption class="sr-only">Liste des comptes utilisateurs</caption>
-              <thead><tr><th scope="col"><input id="select-all" type="checkbox" aria-label="Sélectionner tous les comptes"></th><th scope="col">Utilisateur</th><th scope="col">Rôle</th><th scope="col">Date d’inscription</th><th scope="col">Statut</th><th scope="col">Dernière activité</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
-              <tbody id="users-table"></tbody>
+              <thead><tr><th>Utilisateur</th><th>Rôle</th><th>Inscription</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody>
+                {% for user in users %}
+                  <tr>
+                    <td><a class="user-cell" href="{% url 'authentification:admin_user_detail' user.pk %}"><span class="user-avatar">{{ user.full_name|slice:":1"|upper }}</span><span><strong>{{ user.full_name }}</strong><small>{{ user.email }}</small></span></a></td>
+                    <td><span class="role-badge {{ user.role|lower }}">{{ user.get_role_display }}</span></td>
+                    <td>{{ user.date_joined|date:"d/m/Y" }}</td>
+                    <td><span class="status-badge {% if user.is_active %}active{% else %}inactive{% endif %}">{% if user.is_active %}Actif{% else %}Désactivé{% endif %}</span></td>
+                    <td>
+                      <div class="row-actions">
+                        <a class="action-icon" href="{% url 'authentification:admin_user_detail' user.pk %}" title="Afficher le compte de {{ user.full_name }}" aria-label="Afficher le compte de {{ user.full_name }}">⌕</a>
+                        <a class="action-icon" href="{% url 'authentification:admin_user_edit' user.pk %}" title="Modifier {{ user.full_name }}" aria-label="Modifier {{ user.full_name }}">✎</a>
+                        {% if user.pk != request.user.pk %}
+                          <form method="post" action="{% url 'authentification:admin_user_toggle_active' user.pk %}">
+                            {% csrf_token %}
+                            <button class="action-icon" type="submit" title="{% if user.is_active %}Désactiver{% else %}Réactiver{% endif %} {{ user.full_name }}" aria-label="{% if user.is_active %}Désactiver{% else %}Réactiver{% endif %} {{ user.full_name }}">{% if user.is_active %}⊘{% else %}⟳{% endif %}</button>
+                          </form>
+                          <button class="action-icon delete-action" type="button" data-delete-url="{% url 'authentification:admin_user_delete' user.pk %}" data-user-name="{{ user.full_name }}" title="Supprimer {{ user.full_name }}" aria-label="Supprimer {{ user.full_name }}">⌫</button>
+                        {% endif %}
+                      </div>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr><td colspan="5"><p class="empty-state">Aucun compte ne correspond à votre recherche.</p></td></tr>
+                {% endfor %}
+              </tbody>
             </table>
-            <p class="empty-state" id="empty-state" hidden>Aucun compte ne correspond à votre recherche.</p>
           </div>
-          <div class="pagination"><p><strong id="visible-count">6</strong> comptes affichés sur <strong id="total-count">24</strong></p><div><button type="button" disabled aria-label="Page précédente">‹</button><button type="button" class="current-page">1</button><button type="button">2</button><button type="button">3</button><span>…</span><button type="button">4</button><button type="button" aria-label="Page suivante">›</button></div></div>
+          <div class="pagination"><p><strong>{{ users|length }}</strong> compte{{ users|length|pluralize }} affiché{{ users|length|pluralize }} sur <strong>{{ total_users }}</strong></p></div>
         </section>
       </main>
     </div>
@@ -116,13 +101,21 @@
         <button class="modal-close" type="button" aria-label="Fermer">×</button>
       </div>
       <p class="modal-description">Créez un compte utilisateur et attribuez-lui un rôle CargoLink.</p>
-      <form id="create-user-form" class="user-form">
+      <form method="post" action="{% url 'authentification:admin_user_create' %}" class="user-form">
+        {% csrf_token %}
+        {% for error in create_form.non_field_errors %}<p class="form-error">{{ error }}</p>{% endfor %}
         <div class="form-grid">
-          <label>Nom complet<input name="name" type="text" placeholder="Ex. Sami Ben Ali" required maxlength="150"></label>
-          <label>Adresse e-mail<input name="email" type="email" placeholder="exemple@email.tn" required maxlength="254"></label>
+          {% for field in create_form %}
+            {% if field.name == 'full_name' or field.name == 'email' %}
+              <label for="{{ field.id_for_label }}">{{ field.label }}{{ field }}{% for error in field.errors %}<small class="form-error">{{ error }}</small>{% endfor %}</label>
+            {% endif %}
+          {% endfor %}
         </div>
-        <label>Rôle<select name="role" required><option value="PME">PME</option><option value="transporteur">Transporteur</option><option value="destinataire">Destinataire</option><option value="admin">Admin</option></select></label>
-        <label>Statut initial<select name="status" required><option value="active">Actif</option><option value="pending">En attente</option><option value="inactive">Inactif</option></select></label>
+        {% for field in create_form %}
+          {% if field.name != 'full_name' and field.name != 'email' %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}{{ field }}{% for error in field.errors %}<small class="form-error">{{ error }}</small>{% endfor %}</label>
+          {% endif %}
+        {% endfor %}
         <div class="modal-actions"><button class="secondary-button modal-cancel" type="button">Annuler</button><button class="primary-button" type="submit">Créer le compte</button></div>
       </form>
     </section>
@@ -133,11 +126,12 @@
       <div class="confirmation-icon">!</div>
       <button class="modal-close" type="button" aria-label="Fermer">×</button>
       <h2 id="delete-user-title">Supprimer ce compte ?</h2>
-      <p>Vous êtes sur le point de supprimer le compte de <strong id="delete-user-name"></strong>. Cette action est uniquement simulée côté frontend.</p>
-      <div class="modal-actions"><button class="secondary-button modal-cancel" type="button">Annuler</button><button class="danger-button" type="button" id="confirm-delete-button">Supprimer le compte</button></div>
+      <p>Cette action supprimera définitivement le compte de <strong id="delete-user-name"></strong> et ses données associées.</p>
+      <form method="post" id="delete-user-form">
+        {% csrf_token %}
+        <div class="modal-actions"><button class="secondary-button modal-cancel" type="button">Annuler</button><button class="danger-button" type="submit">Supprimer le compte</button></div>
+      </form>
     </section>
   </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

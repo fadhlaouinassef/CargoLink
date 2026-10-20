@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ title }} | CargoLink</title><link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}"><script src="{% static 'js/admin-dashboard.js' %}" defer></script></head>
+<body>
+  <main class="main-content standalone-form">
+    <p class="eyebrow">ESPACE ADMINISTRATEUR</p>
+    <h1>{{ title }}</h1>
+    <p>Les champs sont validés par le serveur avant enregistrement.</p>
+    <form method="post" class="user-form admin-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}{{ field }}{% for error in field.errors %}<small class="form-error">{{ error }}</small>{% endfor %}</label>
+      {% endfor %}
+      {% if form.instance.pk %}<p class="form-help">La désactivation bloque la connexion sans supprimer les données du compte.</p>{% endif %}
+      <div class="modal-actions"><a class="secondary-button" href="{% url 'authentification:admin_dashboard' %}">Annuler</a><button class="primary-button" type="submit">{{ submit_label }}</button></div>
+    </form>
+  </main>
+</body>
+</html>

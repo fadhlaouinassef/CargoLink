@@ -1,4 +1,3 @@
-from django.contrib.auth.views import LoginView
 from django.urls import path
 
 from .forms import LoginForm
@@ -7,9 +6,15 @@ from . import views
 app_name = 'authentification'
 
 urlpatterns = [
+    path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/users/create/', views.admin_user_create, name='admin_user_create'),
+    path('dashboard/users/<int:pk>/', views.admin_user_detail, name='admin_user_detail'),
+    path('dashboard/users/<int:pk>/edit/', views.admin_user_edit, name='admin_user_edit'),
+    path('dashboard/users/<int:pk>/delete/', views.admin_user_delete, name='admin_user_delete'),
+    path('dashboard/users/<int:pk>/toggle-active/', views.admin_user_toggle_active, name='admin_user_toggle_active'),
     path(
         'signin/',
-        LoginView.as_view(
+        views.RoleBasedLoginView.as_view(
             authentication_form=LoginForm,
             next_page='home',
             template_name='authentification/login.html',

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ managed_user.full_name }} | CargoLink</title><link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}"></head>
+<body>
+  <main class="main-content standalone-form">
+    <p class="eyebrow">DÉTAIL DU COMPTE</p>
+    <h1>{{ managed_user.full_name }}</h1>
+    <p>{{ managed_user.email }}</p>
+    <div class="user-detail-card">
+      <p><strong>Rôle</strong><span>{{ managed_user.get_role_display }}</span></p>
+      <p><strong>Statut</strong><span>{% if managed_user.is_active %}Actif{% else %}Désactivé{% endif %}</span></p>
+      <p><strong>Inscription</strong><span>{{ managed_user.date_joined|date:"d/m/Y à H:i" }}</span></p>
+      <p><strong>Dernière connexion</strong><span>{{ managed_user.last_login|date:"d/m/Y à H:i"|default:"Jamais" }}</span></p>
+    </div>
+    <div class="modal-actions">
+      <a class="secondary-button" href="{% url 'authentification:admin_dashboard' %}">Retour à la liste</a>
+      <a class="primary-button" href="{% url 'authentification:admin_user_edit' managed_user.pk %}">Modifier</a>
+      {% if managed_user.pk != request.user.pk %}
+        <form method="post" action="{% url 'authentification:admin_user_toggle_active' managed_user.pk %}">{% csrf_token %}<button class="secondary-button" type="submit">{% if managed_user.is_active %}Désactiver{% else %}Réactiver{% endif %}</button></form>
+        <form method="post" action="{% url 'authentification:admin_user_delete' managed_user.pk %}" onsubmit="return confirm('Supprimer définitivement ce compte ?');">{% csrf_token %}<button class="danger-button" type="submit">Supprimer</button></form>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

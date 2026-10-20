@@ -566,7 +566,7 @@ th:last-child,
 td:last-child {
     padding-right: 25px;
     text-align: right;
-    width: 45px
+    width: auto
 }
 
 td {
@@ -684,16 +684,40 @@ tbody tr:hover {
     background: #edf0ed
 }
 
-.row-action {
-    border: 0;
-    background: none;
-    color: #89958c;
-    font-size: 20px;
-    padding: 4px 0
+.row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px
 }
 
-.row-action:hover {
-    color: var(--primary)
+.action-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 29px;
+    height: 29px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: transparent;
+    color: #89958c;
+    font-size: 17px;
+    line-height: 1;
+    text-decoration: none
+}
+
+.action-icon:hover,
+.action-icon:focus-visible {
+    border-color: #d5e2d6;
+    background: #edf5ed;
+    color: var(--primary);
+    outline: none
+}
+
+.action-icon.delete-action:hover,
+.action-icon.delete-action:focus-visible {
+    border-color: #f0c8c8;
+    background: #fcebea;
+    color: #ba1a1a
 }
 
 .empty-state {
@@ -901,6 +925,62 @@ body.modal-open {
 .user-form select:focus {
     border-color: var(--green);
     box-shadow: 0 0 0 3px #4379601c
+}
+
+.admin-form input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 4px 0
+}
+
+.form-error {
+    color: #ba1a1a;
+    font-size: 11px;
+    font-weight: 400
+}
+
+.form-help {
+    color: var(--muted);
+    font-size: 12px
+}
+
+.user-detail-card {
+    max-width: 620px;
+    margin: 28px 0;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px
+}
+
+.user-detail-card p {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line)
+}
+
+.user-detail-card p:last-child {
+    border-bottom: 0
+}
+
+.messages {
+    margin-bottom: 20px
+}
+
+.messages p {
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: #eaf2e9;
+    color: var(--deep)
+}
+
+.messages .error {
+    background: #fcebea;
+    color: #8d1717
 }
 
 .modal-actions {
