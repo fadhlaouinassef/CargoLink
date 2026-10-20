@@ -39,8 +39,8 @@
           {% csrf_token %}
           {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
           <div class="field">
-            <label for="id_username">Adresse e-mail ou nom d’utilisateur</label>
-            <input id="id_username" name="username" type="text" autocomplete="username" required autofocus>
+            <label for="id_username">Adresse e-mail</label>
+            <input id="id_username" name="username" type="email" autocomplete="email" required autofocus>
           </div>
           <div class="field">
             <label for="id_password">Mot de passe</label>

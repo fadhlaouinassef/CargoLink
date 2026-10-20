@@ -1,7 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .models import User
+
+
+class LoginForm(AuthenticationForm):
+    def clean_username(self):
+        return self.cleaned_data['username'].strip().lower()
 
 
 class SignupForm(UserCreationForm):
