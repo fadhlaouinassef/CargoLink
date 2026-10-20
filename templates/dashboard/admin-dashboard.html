@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2a6049">
+  <title>Dashboard administrateur | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+  <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil">
+          <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink">
+        </a>
+        <button class="sidebar-close" type="button" aria-label="Fermer le menu">×</button>
+      </div>
+
+      <div class="admin-profile">
+        <span class="avatar avatar-admin">AK</span>
+        <span><strong>Admin CargoLink</strong><small>Administrateur</small></span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navigation administrateur">
+        <p class="nav-label">MENU PRINCIPAL</p>
+        <a class="nav-link" href="#overview">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg>
+          Vue d’ensemble
+        </a>
+        <a class="nav-link active" href="#users" aria-current="page">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c.4-3.4 2.4-5 6-5s5.6 1.6 6 5M16 11a3 3 0 1 0 0-6M16 15c2.8 0 4.5 1.7 5 5"/></svg>
+          Comptes utilisateurs
+          <span class="nav-count">24</span>
+        </a>
+        <a class="nav-link" href="#roles">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          Rôles et permissions
+        </a>
+        <a class="nav-link" href="#settings">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m19 13 2 1-2 4-2-1a8 8 0 0 1-2 1l-.3 2h-5.4L9 18a8 8 0 0 1-2-1l-2 1-2-4 2-1a8 8 0 0 1 0-2l-2-1 2-4 2 1a8 8 0 0 1 2-1l.3-2h5.4L15 6a8 8 0 0 1 2 1l2-1 2 4-2 1a8 8 0 0 1 0 2Z"/></svg>
+          Paramètres
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="nav-link" href="{% url 'home' %}">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7M9 12h12"/></svg>
+          Retour au site
+        </a>
+        <span class="sidebar-version">CargoLink · Administration</span>
+      </div>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="topbar">
+        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="breadcrumb"><span>Administration</span><b>/</b><strong>Comptes utilisateurs</strong></div>
+        <div class="topbar-actions">
+          <button class="icon-button notification-button" type="button" aria-label="3 notifications"><span class="notification-dot"></span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button>
+          <span class="topbar-avatar">AK</span>
+        </div>
+      </header>
+
+      <main class="main-content" id="users">
+        <section class="page-heading" id="overview">
+          <div>
+            <p class="eyebrow">ESPACE ADMINISTRATEUR</p>
+            <h1>Comptes utilisateurs</h1>
+            <p>Gérez les comptes et les rôles de la communauté CargoLink.</p>
+          </div>
+          <button class="primary-button" type="button" id="add-user-button">
+            <span aria-hidden="true">+</span> Ajouter un compte
+          </button>
+        </section>
+
+        <section class="stats-grid" aria-label="Résumé des comptes">
+          <article class="stat-card"><span class="stat-icon green"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c.4-3.4 2.4-5 6-5s5.6 1.6 6 5M16 11a3 3 0 1 0 0-6M16 15c2.8 0 4.5 1.7 5 5"/></svg></span><span><small>Total comptes</small><strong id="total-users">24</strong><em>+8% ce mois</em></span></article>
+          <article class="stat-card"><span class="stat-icon sand"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span><span><small>Nouveaux ce mois</small><strong>6</strong><em>+2 depuis hier</em></span></article>
+          <article class="stat-card"><span class="stat-icon blue"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12a7 7 0 1 0 14 0"/><path d="M12 5v7l4 2"/></svg></span><span><small>En attente</small><strong>3</strong><em class="warning-text">À vérifier</em></span></article>
+          <article class="stat-card"><span class="stat-icon purple"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16v-4m4 4V8m4 8V6"/></svg></span><span><small>Taux d’activité</small><strong>87%</strong><em>+4% ce mois</em></span></article>
+        </section>
+
+        <section class="users-panel" aria-labelledby="users-title">
+          <div class="panel-heading">
+            <div><h2 id="users-title">Tous les comptes</h2><p>Consultez et gérez les membres inscrits sur la plateforme.</p></div>
+            <button class="export-button" type="button" id="export-button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg> Exporter</button>
+          </div>
+          <div class="toolbar">
+            <label class="search-box" for="user-search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="user-search" type="search" placeholder="Rechercher un nom ou un e-mail" autocomplete="off"></label>
+            <label class="select-box" for="role-filter"><span>Rôle :</span><select id="role-filter"><option value="all">Tous les rôles</option><option value="admin">Admin</option><option value="PME">PME</option><option value="transporteur">Transporteur</option><option value="destinataire">Destinataire</option></select></label>
+            <label class="select-box" for="status-filter"><span>Statut :</span><select id="status-filter"><option value="all">Tous les statuts</option><option value="active">Actif</option><option value="pending">En attente</option><option value="inactive">Inactif</option></select></label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Liste des comptes utilisateurs</caption>
+              <thead><tr><th scope="col"><input id="select-all" type="checkbox" aria-label="Sélectionner tous les comptes"></th><th scope="col">Utilisateur</th><th scope="col">Rôle</th><th scope="col">Date d’inscription</th><th scope="col">Statut</th><th scope="col">Dernière activité</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+              <tbody id="users-table"></tbody>
+            </table>
+            <p class="empty-state" id="empty-state" hidden>Aucun compte ne correspond à votre recherche.</p>
+          </div>
+          <div class="pagination"><p><strong id="visible-count">6</strong> comptes affichés sur <strong id="total-count">24</strong></p><div><button type="button" disabled aria-label="Page précédente">‹</button><button type="button" class="current-page">1</button><button type="button">2</button><button type="button">3</button><span>…</span><button type="button">4</button><button type="button" aria-label="Page suivante">›</button></div></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="create-user-modal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="create-user-title">
+      <div class="modal-header">
+        <div><span class="modal-icon green-icon">+</span><div><p class="modal-eyebrow">NOUVEAU MEMBRE</p><h2 id="create-user-title">Ajouter un compte</h2></div></div>
+        <button class="modal-close" type="button" aria-label="Fermer">×</button>
+      </div>
+      <p class="modal-description">Créez un compte utilisateur et attribuez-lui un rôle CargoLink.</p>
+      <form id="create-user-form" class="user-form">
+        <div class="form-grid">
+          <label>Nom complet<input name="name" type="text" placeholder="Ex. Sami Ben Ali" required maxlength="150"></label>
+          <label>Adresse e-mail<input name="email" type="email" placeholder="exemple@email.tn" required maxlength="254"></label>
+        </div>
+        <label>Rôle<select name="role" required><option value="PME">PME</option><option value="transporteur">Transporteur</option><option value="destinataire">Destinataire</option><option value="admin">Admin</option></select></label>
+        <label>Statut initial<select name="status" required><option value="active">Actif</option><option value="pending">En attente</option><option value="inactive">Inactif</option></select></label>
+        <div class="modal-actions"><button class="secondary-button modal-cancel" type="button">Annuler</button><button class="primary-button" type="submit">Créer le compte</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="delete-user-modal" hidden>
+    <section class="modal-card confirmation-card" role="alertdialog" aria-modal="true" aria-labelledby="delete-user-title">
+      <div class="confirmation-icon">!</div>
+      <button class="modal-close" type="button" aria-label="Fermer">×</button>
+      <h2 id="delete-user-title">Supprimer ce compte ?</h2>
+      <p>Vous êtes sur le point de supprimer le compte de <strong id="delete-user-name"></strong>. Cette action est uniquement simulée côté frontend.</p>
+      <div class="modal-actions"><button class="secondary-button modal-cancel" type="button">Annuler</button><button class="danger-button" type="button" id="confirm-delete-button">Supprimer le compte</button></div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
