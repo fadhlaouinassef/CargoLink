@@ -7,7 +7,6 @@
   <meta name="theme-color" content="#3D5F4B">
   <title>S’inscrire | CargoLink</title>
   <link rel="stylesheet" href="{% static 'css/signin.css' %}">
-  <script src="{% static 'js/register.js' %}" defer></script>
 </head>
 <body>
   <main class="signin-layout">
@@ -34,25 +33,35 @@
 
         <form id="register-form" method="post" action="{% url 'authentification:register' %}">
           {% csrf_token %}
+          {% if form.errors %}
+            <div class="form-error" role="alert">
+              {{ form.non_field_errors }}
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <p>{{ field.label }} : {{ error }}</p>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
           <div class="field">
             <label for="id_full_name">Nom complet</label>
-            <input id="id_full_name" name="full_name" type="text" autocomplete="name" required autofocus>
+            <input id="id_full_name" name="full_name" type="text" value="{{ form.full_name.value|default_if_none:'' }}" maxlength="150" autocomplete="name" required autofocus>
           </div>
           <div class="field">
             <label for="id_email">Adresse e-mail</label>
-            <input id="id_email" name="email" type="email" autocomplete="email" required>
+            <input id="id_email" name="email" type="email" value="{{ form.email.value|default_if_none:'' }}" maxlength="254" autocomplete="email" required>
           </div>
           <div class="field">
             <label for="id_password">Mot de passe</label>
-            <input id="id_password" name="password" type="password" autocomplete="new-password" required>
+            <input id="id_password" name="password1" type="password" autocomplete="new-password" required>
+            {{ form.password1.help_text }}
           </div>
           <div class="field">
             <label for="id_password_confirmation">Confirmer le mot de passe</label>
-            <input id="id_password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>
+            <input id="id_password_confirmation" name="password2" type="password" autocomplete="new-password" required>
           </div>
           <button class="submit-button" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
         </form>
-        <p class="form-intro" id="register-status" role="status" hidden>La création de compte sera bientôt disponible.</p>
         <p class="back-home">Déjà membre ? <a href="{% url 'authentification:login' %}">Se connecter</a></p>
       </div>
       <p class="signin-footer">© {% now 'Y' %} CargoLink · Pensé pour les routes tunisiennes.</p>
