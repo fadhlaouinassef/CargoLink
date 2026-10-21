@@ -1,15 +1,15 @@
 {% extends 'pme/base.html' %}
 {% load static %}
 
-{% block title %}Publier une demande de transport | CargoLink{% endblock %}
-{% block breadcrumb %}Publier une demande{% endblock %}
+{% block title %}{% if editing %}Modifier{% else %}Publier{% endif %} une demande | CargoLink{% endblock %}
+{% block breadcrumb %}{% if editing %}Modifier la demande{% else %}Publier une demande{% endif %}{% endblock %}
 
 {% block content %}
 <div class="portal-page-header">
   <div>
     <div class="portal-eyebrow">Gestion des demandes de transport</div>
-    <h1 class="portal-page-title">Publier un besoin de transport</h1>
-    <p class="portal-page-subtitle">Décrivez le trajet et les marchandises pour recevoir des propositions de transporteurs.</p>
+    <h1 class="portal-page-title">{% if editing %}Modifier {{ demande }}{% else %}Publier un besoin de transport{% endif %}</h1>
+    <p class="portal-page-subtitle">{% if editing %}Mettez à jour le trajet, les marchandises et les consignes.{% else %}Décrivez le trajet et les marchandises pour recevoir des propositions de transporteurs.{% endif %}</p>
   </div>
   <div class="portal-header-actions">
     <a href="{% url 'pme:demandes_list' %}" class="btn-secondary">Annuler</a>
@@ -150,8 +150,14 @@
       {% endfor %}
     </div>
     <div class="demand-form-actions">
-      <button type="submit" name="action" value="draft" class="btn-secondary">Enregistrer comme brouillon</button>
-      <button type="submit" name="action" value="publish" class="btn-primary">Publier la demande</button>
+      {% if editing %}
+        {% if demande.statut != 'brouillon' %}<button type="submit" name="action" value="draft" class="btn-secondary">Enregistrer comme brouillon</button>{% endif %}
+        {% if demande.statut != 'ouverte' %}<button type="submit" name="action" value="publish" class="btn-primary">Publier la demande</button>{% endif %}
+        <button type="submit" class="btn-primary">Enregistrer les modifications</button>
+      {% else %}
+        <button type="submit" name="action" value="draft" class="btn-secondary">Enregistrer comme brouillon</button>
+        <button type="submit" name="action" value="publish" class="btn-primary">Publier la demande</button>
+      {% endif %}
     </div>
   </div>
 </form>

@@ -14,7 +14,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
 
+from demandes.models import DemandeTransport
 from .forms import (
     AdminUserChangeForm,
     AdminUserCreationForm,
@@ -83,8 +85,73 @@ def admin_dashboard(request):
         'new_users': all_users.filter(date_joined__gte=month_start).count(),
         'active_users': all_users.filter(is_active=True).count(),
         'inactive_users': all_users.filter(is_active=False).count(),
+        'total_demandes': DemandeTransport.objects.count(),
     }
     return render(request, 'dashboard/admin-dashboard.html', context)
+
+
+@admin_required
+def admin_demandes(request):
+    demandes = DemandeTransport.objects.select_related('created_by').prefetch_related(
+        'marchandises',
+    )
+    query = request.GET.get('q', '').strip()
+    status = request.GET.get('status', '')
+    if query:
+        search_filter = (
+            Q(depart_ville__icontains=query)
+            | Q(arrivee_ville__icontains=query)
+            | Q(destinataire_nom__icontains=query)
+            | Q(created_by__full_name__icontains=query)
+            | Q(created_by__email__icontains=query)
+        )
+        reference = query.rsplit('-', 1)[-1].lstrip('#')
+        if reference.isdigit():
+            search_filter |= Q(pk=int(reference))
+        demandes = demandes.filter(search_filter).distinct()
+    if status in DemandeTransport.Statut.values:
+        demandes = demandes.filter(statut=status)
+    return render(request, 'dashboard/admin-demandes.html', {
+        'demandes': demandes,
+        'query': query,
+        'selected_status': status,
+        'status_choices': DemandeTransport.Statut.choices,
+        'total_demandes': DemandeTransport.objects.count(),
+        'open_demandes': DemandeTransport.objects.filter(
+            statut=DemandeTransport.Statut.OUVERTE,
+        ).count(),
+        'hidden_demandes': DemandeTransport.objects.filter(
+            statut=DemandeTransport.Statut.MASQUEE,
+        ).count(),
+    })
+
+
+@admin_required
+@require_POST
+def admin_demande_toggle_visibility(request, pk):
+    demande = get_object_or_404(DemandeTransport, pk=pk)
+    if demande.statut == DemandeTransport.Statut.MASQUEE:
+        demande.statut = DemandeTransport.Statut.OUVERTE
+        message = f'La demande {demande} est de nouveau visible aux transporteurs.'
+    elif demande.statut == DemandeTransport.Statut.OUVERTE:
+        demande.statut = DemandeTransport.Statut.MASQUEE
+        message = f'La demande {demande} est masquée aux transporteurs.'
+    else:
+        messages.error(request, 'Seules les demandes publiées peuvent être masquées ou réaffichées.')
+        return redirect('authentification:admin_demandes')
+    demande.save(update_fields=['statut', 'updated_at'])
+    messages.success(request, message)
+    return redirect('authentification:admin_demandes')
+
+
+@admin_required
+@require_POST
+def admin_demande_delete(request, pk):
+    demande = get_object_or_404(DemandeTransport, pk=pk)
+    reference = str(demande)
+    demande.delete()
+    messages.success(request, f'La demande {reference} et ses marchandises ont été supprimées.')
+    return redirect('authentification:admin_demandes')
 
 
 @admin_required

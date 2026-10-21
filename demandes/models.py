@@ -6,6 +6,7 @@ class DemandeTransport(models.Model):
     class Statut(models.TextChoices):
         BROUILLON = 'brouillon', 'Brouillon'
         OUVERTE = 'ouverte', 'En recherche de transporteur'
+        MASQUEE = 'masquee', 'Masquée par l’administration'
 
     class ModalitePaiement(models.TextChoices):
         LIVRAISON = 'livraison', 'À la livraison'

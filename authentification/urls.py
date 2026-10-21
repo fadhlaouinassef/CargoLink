@@ -18,6 +18,9 @@ app_name = 'authentification'
 
 urlpatterns = [
     path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/publications/', views.admin_demandes, name='admin_demandes'),
+    path('dashboard/publications/<int:pk>/visibilite/', views.admin_demande_toggle_visibility, name='admin_demande_toggle_visibility'),
+    path('dashboard/publications/<int:pk>/supprimer/', views.admin_demande_delete, name='admin_demande_delete'),
     path('dashboard/users/create/', views.admin_user_create, name='admin_user_create'),
     path('dashboard/users/<int:pk>/', views.admin_user_detail, name='admin_user_detail'),
     path('dashboard/users/<int:pk>/edit/', views.admin_user_edit, name='admin_user_edit'),

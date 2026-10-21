@@ -13,10 +13,9 @@ class ActorPortalsTests(TestCase):
         )
 
     def test_transporteur_portal_urls(self):
+        self.client.force_login(self.transporteur)
         for page in ('dashboard', 'trajets', 'offres', 'vehicules', 'transports', 'avis'):
             with self.subTest(page=page):
-                if page == 'vehicules':
-                    self.client.force_login(self.transporteur)
                 response = self.client.get(reverse(f'transporteur:{page}'))
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(response, 'Espace transporteur')
