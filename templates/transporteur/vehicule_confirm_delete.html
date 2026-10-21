@@ -1,0 +1,11 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Supprimer un véhicule | CargoLink{% endblock %}
+{% block breadcrumb %}Supprimer un véhicule{% endblock %}
+{% block content %}
+<section class="portal-card confirmation-card">
+  <div class="portal-eyebrow">Confirmation</div>
+  <h1 class="portal-page-title">Supprimer le véhicule ?</h1>
+  <p>Vous allez supprimer <strong>{{ object }}</strong>. Si ce véhicule possède une disponibilité réservée, Django empêchera la suppression et vous devrez le désactiver.</p>
+  <form method="post">{% csrf_token %}<button class="btn-danger" type="submit">Confirmer la suppression</button><a class="btn-secondary" href="{% url 'transporteur:vehicules' %}">Annuler</a></form>
+</section>
+{% endblock %}

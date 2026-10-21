@@ -1,4 +1,35 @@
 const feedback = document.querySelector('#demo-feedback');
+const confirmationModal = document.querySelector('#confirm-modal');
+let pendingDeleteForm = null;
+function closeConfirmation() {
+  if (!confirmationModal) return;
+  confirmationModal.hidden = true;
+  document.body.classList.remove('confirmation-open');
+  pendingDeleteForm = null;
+}
+document.querySelectorAll('[data-confirm-delete]').forEach(form => {
+  form.addEventListener('submit', event => {
+    if (!confirmationModal) return;
+    event.preventDefault();
+    pendingDeleteForm = form;
+    document.querySelector('#confirm-message').textContent = form.dataset.confirmDelete;
+    confirmationModal.hidden = false;
+    document.body.classList.add('confirmation-open');
+    document.querySelector('[data-confirm-submit]').focus();
+  });
+});
+if (confirmationModal) {
+  confirmationModal.querySelectorAll('[data-confirm-cancel], .confirm-modal-close').forEach(button => button.addEventListener('click', closeConfirmation));
+  confirmationModal.querySelector('[data-confirm-submit]').addEventListener('click', () => {
+    if (pendingDeleteForm) {
+      const form = pendingDeleteForm;
+      pendingDeleteForm = null;
+      form.submit();
+    }
+  });
+  confirmationModal.addEventListener('click', event => { if (event.target === confirmationModal) closeConfirmation(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeConfirmation(); });
+}
 document.querySelectorAll('[data-demo-form]').forEach(form => {
   form.addEventListener('submit', event => {
     event.preventDefault();

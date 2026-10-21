@@ -1,0 +1,7 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Détail disponibilité | CargoLink{% endblock %}
+{% block breadcrumb %}Détail disponibilité{% endblock %}
+{% block content %}
+<div class="portal-page-header"><div><div class="portal-eyebrow">Disponibilité</div><h1 class="portal-page-title">{{ availability.zone_depart }} → {{ availability.zone_arrivee }}</h1><p class="portal-page-subtitle">Véhicule {{ availability.vehicule.immatriculation }}</p></div><div class="portal-header-actions"><a class="btn-secondary" href="{% url 'transporteur:vehicules' %}">Retour</a>{% if availability.statut != 'reserve' %}<a class="btn-primary" href="{% url 'transporteur:disponibilite_update' availability.pk %}">Modifier</a>{% endif %}</div></div>
+<section class="portal-card detail-card"><div class="detail-grid"><div><span class="detail-label">Véhicule</span><strong>{{ availability.vehicule }}</strong></div><div><span class="detail-label">Début</span><strong>{{ availability.date_debut|date:"d/m/Y H:i" }}</strong></div><div><span class="detail-label">Fin</span><strong>{{ availability.date_fin|date:"d/m/Y H:i" }}</strong></div><div><span class="detail-label">Départ</span><strong>{{ availability.zone_depart }}</strong></div><div><span class="detail-label">Arrivée</span><strong>{{ availability.zone_arrivee }}</strong></div><div><span class="detail-label">Statut</span><strong>{{ availability.get_statut_display }}</strong></div></div>{% if availability.commentaire %}<p class="detail-comment">{{ availability.commentaire }}</p>{% endif %}</section>
+{% endblock %}
