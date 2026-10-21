@@ -1,0 +1,191 @@
+{% extends 'destinataire/base.html' %}
+
+{% block title %}Confirmer la réception de livraison | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'destinataire:dashboard' %}">Réceptions</a>
+<span>/</span>
+<a href="{% url 'destinataire:suivi' %}">#TR-8842</a>
+<span>/</span>
+<span class="current">Confirmation réception</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Module 4 : Gestion des transports et du suivi</div>
+    <h1 class="portal-page-title">Confirmation & Émargement de réception</h1>
+    <p class="portal-page-subtitle">Validez la prise en charge physique de votre cargaison soit via votre <strong>code de sécurité OTP</strong>, soit par <strong>signature électronique tactile</strong>.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'destinataire:dashboard' %}" class="btn-secondary">Annuler</a>
+  </div>
+</div>
+
+<div style="max-width: 860px; margin: 0 auto;">
+  <!-- Récapitulatif de la cargaison à quai -->
+  <div class="portal-card" style="padding: 1.25rem 1.5rem; background: var(--bg); border-color: var(--line-strong);">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span style="font-size: 11.5px; font-weight: 700; color: var(--green); text-transform: uppercase;">Livraison à quai • Transport #TR-8842</span>
+        <div style="font-size: 16px; font-weight: 700; color: var(--ink);">4 Palettes d'huile d'olive (1 850 kg)</div>
+        <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">
+          Expéditeur : <strong>AgroMed Distribution (Tunis)</strong> • Chauffeur : <strong>Mohamed Triki</strong>
+        </div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-active">Chauffeur présent au quai</span>
+      </div>
+    </div>
+  </div>
+
+  <form method="post" action="{% url 'destinataire:dashboard' %}" id="reception-form">
+    {% csrf_token %}
+
+    <!-- 1. Contrôle d'état physique de la marchandise -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">1. Contrôle de conformité de la marchandise</h2>
+      </div>
+
+      <div class="portal-form-group">
+        <label class="portal-label">État constaté au déchargement *</label>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
+          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid var(--green); border-radius: var(--radius-md); background: #fbfdfc; cursor: pointer;">
+            <input type="radio" name="etat_conformite" value="conforme" checked style="width: 18px; height: 18px; accent-color: var(--green);">
+            <div>
+              <strong style="color: var(--ink);">✅ Conforme sans réserve</strong>
+              <div style="font-size: 12.5px; color: var(--muted);">Les 4 palettes sont intactes, emballage d'origine scellé, aucun dommage constaté.</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
+            <input type="radio" name="etat_conformite" value="reserves" style="width: 18px; height: 18px; accent-color: var(--warning);">
+            <div>
+              <strong style="color: var(--warning);">⚠️ Reçu avec réserves</strong>
+              <div style="font-size: 12.5px; color: var(--muted);">Emballage abîmé, film déchiré ou léger déséquilibre de palette (réserves obligatoires ci-dessous).</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
+            <input type="radio" name="etat_conformite" value="refuse" style="width: 18px; height: 18px; accent-color: var(--error);">
+            <div>
+              <strong style="color: var(--error);">❌ Refus partiel ou total pour avarie grave</strong>
+              <div style="font-size: 12.5px; color: var(--muted);">Bouteilles cassées, fuite constatée ou lot non conforme au bon de commande.</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="portal-form-group" style="margin-top: 1rem;">
+        <label class="portal-label">Observations et réserves éventuelles (émargées sur le bon)</label>
+        <textarea class="portal-textarea" name="observations" rows="2" placeholder="Facultatif si conforme. Obligatoire en cas de réserves ou dommages constatés..."></textarea>
+      </div>
+    </div>
+
+    <!-- 2. Méthode d'attestation de réception (Code OU Signature) -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">2. Méthode d'attestation de réception</h2>
+        <span style="font-size: 12px; color: var(--muted);">Choisissez le mode de validation souhaité</span>
+      </div>
+
+      <!-- Onglets de sélection du mode -->
+      <div style="display: flex; gap: 12px; margin-bottom: 1.5rem;">
+        <button type="button" id="tab-code-btn" class="btn-primary" style="flex: 1; justify-content: center; font-size: 14px;" onclick="showTab('code')">
+          🔑 Option A : Code de sécurité OTP (6 chiffres)
+        </button>
+        <button type="button" id="tab-signature-btn" class="btn-secondary" style="flex: 1; justify-content: center; font-size: 14px;" onclick="showTab('signature')">
+          ✍️ Option B : Signature électronique / tactile
+        </button>
+      </div>
+
+      <!-- Option A : Code OTP -->
+      <div id="section-code">
+        <div style="text-align: center; padding: 1rem 0;">
+          <p style="font-size: 14px; color: var(--ink); margin-bottom: 4px;">
+            Saisissez le <strong>code de réception à 6 chiffres</strong> transmis par l'expéditeur ou affiché sur votre bon de commande :
+          </p>
+          <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 1rem;">
+            Code pour cette livraison : <code style="background: var(--bg); padding: 3px 6px; border-radius: 4px; font-weight: 700; color: var(--primary);">842190</code>
+          </div>
+
+          <div class="otp-container">
+            <input type="text" maxlength="1" class="otp-digit" value="8" autocomplete="off" autofocus>
+            <input type="text" maxlength="1" class="otp-digit" value="4" autocomplete="off">
+            <input type="text" maxlength="1" class="otp-digit" value="2" autocomplete="off">
+            <input type="text" maxlength="1" class="otp-digit" value="1" autocomplete="off">
+            <input type="text" maxlength="1" class="otp-digit" value="9" autocomplete="off">
+            <input type="text" maxlength="1" class="otp-digit" value="0" autocomplete="off">
+          </div>
+
+          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--green); font-weight: 600;">
+            ✓ Code valide vérifié avec le serveur CargoLink
+          </span>
+        </div>
+      </div>
+
+      <!-- Option B : Signature tactile -->
+      <div id="section-signature" style="display: none;">
+        <p style="font-size: 13.5px; color: var(--ink); margin-bottom: 8px;">
+          Apposez votre signature au doigt ou à la souris sur le cadre ci-dessous pour certifier la réception physique :
+        </p>
+
+        <div class="signature-box">
+          <canvas class="signature-canvas" id="signature-canvas"></canvas>
+          <div class="signature-toolbar">
+            <span>Tracez votre signature au doigt ou à la souris</span>
+            <button type="button" id="btn-clear-sig" class="btn-secondary" style="font-size: 11.5px; padding: 0.25rem 0.65rem;">
+              ✕ Effacer la signature
+            </button>
+          </div>
+        </div>
+
+        <div class="form-grid-2" style="margin-top: 1rem;">
+          <div>
+            <label class="portal-label">Nom et prénom du signataire *</label>
+            <input type="text" class="portal-input" name="signataire_nom" value="Ahmed Trabelsi">
+          </div>
+          <div>
+            <label class="portal-label">Fonction au sein de l'entreprise *</label>
+            <input type="text" class="portal-input" name="signataire_fonction" value="Chef de quai / Responsable Réception">
+          </div>
+        </div>
+      </div>
+
+      <!-- Certification légale et horodatage -->
+      <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius-md); margin-top: 1.5rem; font-size: 12.5px; color: var(--muted); line-height: 1.6;">
+        🔒 <strong>Horodatage certifié :</strong> 21 Octobre 2026 à 15:20 • Adresse IP enregistrée • La validation de ce document libère les fonds en séquestre vers le transporteur et génère le récépissé officiel téléchargeable par la PME expéditrice et le destinataire.
+      </div>
+
+      <!-- Actions -->
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);">
+        <a href="{% url 'destinataire:dashboard' %}" class="btn-secondary">Annuler</a>
+        <button type="submit" class="btn-primary" style="font-size: 15px; padding: 0.75rem 1.5rem;">
+          ✍️ Confirmer et émarger la livraison
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  function showTab(type) {
+    const secCode = document.getElementById('section-code');
+    const secSig = document.getElementById('section-signature');
+    const btnCode = document.getElementById('tab-code-btn');
+    const btnSig = document.getElementById('tab-signature-btn');
+
+    if (type === 'code') {
+      secCode.style.display = 'block';
+      secSig.style.display = 'none';
+      btnCode.className = 'btn-primary';
+      btnSig.className = 'btn-secondary';
+    } else {
+      secCode.style.display = 'none';
+      secSig.style.display = 'block';
+      btnCode.className = 'btn-secondary';
+      btnSig.className = 'btn-primary';
+    }
+  }
+</script>
+{% endblock %}

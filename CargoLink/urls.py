@@ -20,6 +20,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='homepage/index.html'), name='home'),
+    path('pme/', include('CargoLink.urls_pme', namespace='pme')),
+    path('destinataire/', include('CargoLink.urls_destinataire', namespace='destinataire')),
     path('', include('authentification.urls')),
     path('admin/', admin.site.urls),
 ]

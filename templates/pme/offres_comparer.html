@@ -1,0 +1,289 @@
+{% extends 'pme/base.html' %}
+
+{% block title %}Comparer les offres reçues | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'pme:demandes_list' %}">Demandes</a>
+<span>/</span>
+<a href="{% url 'pme:demande_detail' %}">#DEM-2026-08</a>
+<span>/</span>
+<span class="current">Comparer les offres</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Module 2 : Trajet & OffreTransport</div>
+    <h1 class="portal-page-title">Comparer les offres des transporteurs</h1>
+    <p class="portal-page-subtitle">3 transporteurs indépendants ont proposé leurs services pour votre demande <strong>#DEM-2026-08 (Tunis → Sfax)</strong>.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'pme:demandes_list' %}" class="btn-secondary">← Retour à mes demandes</a>
+  </div>
+</div>
+
+<!-- Rappel de la demande -->
+<div class="portal-card" style="padding: 1rem 1.5rem; background: var(--bg); border-color: var(--line-strong);">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <span style="font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase;">Récapitulatif de votre besoin</span>
+      <div style="font-weight: 700; font-size: 16px; color: var(--ink);">Tunis (La Charguia I) ➔ Sfax (ZI Poudrière II)</div>
+      <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">
+        4 Palettes d'huile d'olive (1 850 kg) • Enlèvement le 24 Octobre 2026 • Budget estimé : <strong>420 TND</strong>
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <span class="badge badge-offers">3 propositions actives</span>
+    </div>
+  </div>
+</div>
+
+<!-- Grille des Offres des transporteurs -->
+<div class="offers-grid">
+  <!-- Offre 1 : Recommandée (Meilleur rapport qualité/prix) -->
+  <div class="offer-card recommended">
+    <div class="recommended-ribbon">⭐ Recommandé par CargoLink</div>
+
+    <div class="offer-header">
+      <div class="carrier-avatar" style="background: var(--primary-light); color: var(--primary);">MT</div>
+      <div>
+        <h3 class="carrier-name">Express Sahel Transport</h3>
+        <div style="font-size: 12px; color: var(--muted);">Mohamed Triki • Transporteur indépendant certifié</div>
+        <div class="carrier-rating">
+          <span>★★★★★</span>
+          <strong>4.9 / 5</strong>
+          <span style="color: var(--muted);">(42 avis)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="offer-price-box">
+      <div>
+        <span class="price-val">400</span>
+        <span class="price-currency">TND TTC</span>
+      </div>
+      <span style="font-size: 12px; color: var(--success); font-weight: 600;">-20 TND vs votre budget</span>
+    </div>
+
+    <ul class="offer-details-list">
+      <li>
+        <span>Véhicule proposé :</span>
+        <strong>Isuzu NPR 3.5T (Hayon élévateur)</strong>
+      </li>
+      <li>
+        <span>Trajet déclaré :</span>
+        <strong>Grand Tunis ➔ Sfax (Régulier)</strong>
+      </li>
+      <li>
+        <span>Créneau d'enlèvement :</span>
+        <strong>24 Oct à 08h30 garanti</strong>
+      </li>
+      <li>
+        <span>Livraison estimée :</span>
+        <strong>24 Oct à 14h00 (Même jour)</strong>
+      </li>
+      <li>
+        <span>Équipements :</span>
+        <strong>Sangles d'arrimage + Transpalette</strong>
+      </li>
+      <li>
+        <span>Assurance marchandise :</span>
+        <strong style="color: var(--green);">Incluse jusqu'à 25 000 TND</strong>
+      </li>
+    </ul>
+
+    <div style="font-size: 12.5px; color: var(--muted); background: var(--bg); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+      💬 <em>« Habitué au transport de palettes agroalimentaires sur l'axe Tunis-Sfax. Camion bâché propre avec hayon pour faciliter le déchargement. »</em>
+    </div>
+
+    <div class="offer-actions">
+      <button type="button" class="btn-primary btn-accept-offer" data-carrier="Express Sahel Transport" data-price="400" data-redirect="{% url 'pme:transport_suivi' %}" style="width: 100%; justify-content: center;">
+        ✅ Sélectionner cette offre
+      </button>
+    </div>
+  </div>
+
+  <!-- Offre 2 : La plus économique -->
+  <div class="offer-card">
+    <div class="offer-header">
+      <div class="carrier-avatar" style="background: var(--sand-light); color: var(--sand-dark);">KB</div>
+      <div>
+        <h3 class="carrier-name">Trans Sud Logistique</h3>
+        <div style="font-size: 12px; color: var(--muted);">Karim Ben Amor • Transporteur régulier</div>
+        <div class="carrier-rating">
+          <span>★★★★☆</span>
+          <strong>4.6 / 5</strong>
+          <span style="color: var(--muted);">(28 avis)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="offer-price-box">
+      <div>
+        <span class="price-val">380</span>
+        <span class="price-currency">TND TTC</span>
+      </div>
+      <span style="font-size: 12px; color: var(--green); font-weight: 600;">Tarif le plus bas</span>
+    </div>
+
+    <ul class="offer-details-list">
+      <li>
+        <span>Véhicule proposé :</span>
+        <strong>Peugeot Boxer L3H2 (Fourgon fermé)</strong>
+      </li>
+      <li>
+        <span>Trajet déclaré :</span>
+        <strong>Bizerte ➔ Sousse ➔ Sfax</strong>
+      </li>
+      <li>
+        <span>Créneau d'enlèvement :</span>
+        <strong>24 Oct entre 10h00 et 12h00</strong>
+      </li>
+      <li>
+        <span>Livraison estimée :</span>
+        <strong>24 Oct à 17h30</strong>
+      </li>
+      <li>
+        <span>Équipements :</span>
+        <strong>Diable & sangles</strong>
+      </li>
+      <li>
+        <span>Assurance marchandise :</span>
+        <strong>Responsabilité civile transport</strong>
+      </li>
+    </ul>
+
+    <div style="font-size: 12.5px; color: var(--muted); background: var(--bg); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+      💬 <em>« J'ai de la place disponible sur mon retour vers le Sud. Tarif optimisé pour trajet combiné. »</em>
+    </div>
+
+    <div class="offer-actions">
+      <button type="button" class="btn-primary btn-accept-offer" data-carrier="Trans Sud Logistique" data-price="380" data-redirect="{% url 'pme:transport_suivi' %}" style="width: 100%; justify-content: center;">
+        ✅ Sélectionner cette offre
+      </button>
+    </div>
+  </div>
+
+  <!-- Offre 3 : Express / Dédié -->
+  <div class="offer-card">
+    <div class="offer-header">
+      <div class="carrier-avatar" style="background: #eef2ff; color: #4338ca;">FF</div>
+      <div>
+        <h3 class="carrier-name">Fast Fret Express</h3>
+        <div style="font-size: 12px; color: var(--muted);">Faouzi F. • Transport dédié urgent</div>
+        <div class="carrier-rating">
+          <span>★★★★★</span>
+          <strong>5.0 / 5</strong>
+          <span style="color: var(--muted);">(19 avis)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="offer-price-box">
+      <div>
+        <span class="price-val">450</span>
+        <span class="price-currency">TND TTC</span>
+      </div>
+      <span style="font-size: 12px; color: var(--muted);">Livraison directe sans arrêt</span>
+    </div>
+
+    <ul class="offer-details-list">
+      <li>
+        <span>Véhicule proposé :</span>
+        <strong>Mercedes Sprinter 316 CDI Plateau</strong>
+      </li>
+      <li>
+        <span>Trajet déclaré :</span>
+        <strong>Direct point à point</strong>
+      </li>
+      <li>
+        <span>Créneau d'enlèvement :</span>
+        <strong>24 Oct à 07h30 précises</strong>
+      </li>
+      <li>
+        <span>Livraison estimée :</span>
+        <strong>24 Oct à 12h30 (Express 5h)</strong>
+      </li>
+      <li>
+        <span>Équipements :</span>
+        <strong>Bâche étanche + Hayon hydraulique</strong>
+      </li>
+      <li>
+        <span>Assurance marchandise :</span>
+        <strong style="color: var(--green);">Tous risques jusqu'à 50 000 TND</strong>
+      </li>
+    </ul>
+
+    <div style="font-size: 12.5px; color: var(--muted); background: var(--bg); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+      💬 <em>« Transport exclusif sans groupage. Liaison directe Tunis-Sfax avec suivi GPS minute par minute. »</em>
+    </div>
+
+    <div class="offer-actions">
+      <button type="button" class="btn-primary btn-accept-offer" data-carrier="Fast Fret Express" data-price="450" data-redirect="{% url 'pme:transport_suivi' %}" style="width: 100%; justify-content: center;">
+        ✅ Sélectionner cette offre
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Tableau comparatif direct -->
+<div class="portal-card" style="margin-top: 2rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">📊 Synthèse comparative des 3 propositions</h2>
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Transporteur</th>
+          <th>Note & Expérience</th>
+          <th>Véhicule & Capacité</th>
+          <th>Prix proposé</th>
+          <th>Délai de livraison</th>
+          <th style="text-align: right;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #fcfdfb;">
+          <td>
+            <strong>Express Sahel Transport</strong>
+            <div style="font-size: 11px; color: var(--green);">⭐ Recommandé</div>
+          </td>
+          <td>★ 4.9/5 (42 transports)</td>
+          <td>Isuzu NPR 3.5T (Hayon)</td>
+          <td><strong style="color: var(--primary); font-size: 16px;">400 TND</strong></td>
+          <td>Arrivée 14h00 (Le jour même)</td>
+          <td style="text-align: right;">
+            <button type="button" class="btn-sand btn-accept-offer" data-carrier="Express Sahel Transport" data-price="400" data-redirect="{% url 'pme:transport_suivi' %}" style="font-size: 12px; padding: 0.45rem 0.85rem;">
+              Retenir cette offre
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Trans Sud Logistique</strong></td>
+          <td>★ 4.6/5 (28 transports)</td>
+          <td>Peugeot Boxer L3H2</td>
+          <td><strong style="color: var(--primary); font-size: 16px;">380 TND</strong></td>
+          <td>Arrivée 17h30</td>
+          <td style="text-align: right;">
+            <button type="button" class="btn-secondary btn-accept-offer" data-carrier="Trans Sud Logistique" data-price="380" data-redirect="{% url 'pme:transport_suivi' %}" style="font-size: 12px; padding: 0.45rem 0.85rem;">
+              Retenir cette offre
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Fast Fret Express</strong></td>
+          <td>★ 5.0/5 (19 transports)</td>
+          <td>Mercedes Sprinter Plateau</td>
+          <td><strong style="color: var(--primary); font-size: 16px;">450 TND</strong></td>
+          <td>Express direct 12h30</td>
+          <td style="text-align: right;">
+            <button type="button" class="btn-secondary btn-accept-offer" data-carrier="Fast Fret Express" data-price="450" data-redirect="{% url 'pme:transport_suivi' %}" style="font-size: 12px; padding: 0.45rem 0.85rem;">
+              Retenir cette offre
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

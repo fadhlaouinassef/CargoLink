@@ -1,0 +1,215 @@
+{% extends 'destinataire/base.html' %}
+
+{% block title %}Espace Réception & Suivi Livraisons | CargoLink{% endblock %}
+{% block breadcrumb %}Tableau de bord Réception{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Acteur : Destinataire</div>
+    <h1 class="portal-page-title">Mes réceptions & livraisons</h1>
+    <p class="portal-page-subtitle">Consultez en direct l'avancement de vos marchandises expédiées par vos partenaires PME et confirmez la remise à quai.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'destinataire:confirmation' %}" class="btn-sand">
+      ✍️ Confirmer une réception à quai
+    </a>
+  </div>
+</div>
+
+<!-- Alerte livraison imminente -->
+<div class="portal-card" style="border-left: 4px solid var(--green); background: #fbfdfc;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span style="font-size: 28px;">🚚</span>
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <strong style="font-size: 16px; color: var(--ink);">Livraison en approche — Arrivée estimée à 15:15</strong>
+          <span class="badge badge-active">Chauffeur en route</span>
+        </div>
+        <p style="margin: 3px 0 0; color: var(--muted); font-size: 13.5px;">
+          Expédition <strong>#TR-8842</strong> envoyée par <strong>AgroMed Distribution SARL (Tunis)</strong>.
+          Chauffeur : <strong>Mohamed Triki (+216 98 223 344)</strong>.
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <a href="{% url 'destinataire:suivi' %}" class="btn-secondary" style="font-size: 13px;">
+        Suivi sur carte & étapes →
+      </a>
+      <a href="{% url 'destinataire:confirmation' %}" class="btn-primary" style="font-size: 13px;">
+        Valider la réception (Code / Signature)
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Recipient -->
+<div class="stat-cards-grid">
+  <div class="stat-item-card">
+    <div class="stat-icon-wrapper green">📦</div>
+    <div class="stat-content">
+      <small>Livraisons attendues aujourd'hui</small>
+      <strong>1</strong>
+      <span class="sub">Arrivée estimée à 15h15</span>
+    </div>
+  </div>
+
+  <div class="stat-item-card">
+    <div class="stat-icon-wrapper sand">📅</div>
+    <div class="stat-content">
+      <small>Prévues cette semaine</small>
+      <strong>2</strong>
+      <span class="sub">1 depuis Tunis, 1 depuis Sousse</span>
+    </div>
+  </div>
+
+  <div class="stat-item-card">
+    <div class="stat-icon-wrapper blue">✅</div>
+    <div class="stat-content">
+      <small>Colis reçus ce mois-ci</small>
+      <strong>18</strong>
+      <span class="sub">100% avec preuve horodatée</span>
+    </div>
+  </div>
+
+  <div class="stat-item-card">
+    <div class="stat-icon-wrapper red">⚠️</div>
+    <div class="stat-content">
+      <small>Litiges / Anomalies</small>
+      <strong>0</strong>
+      <span class="sub">Toutes réceptions conformes</span>
+    </div>
+  </div>
+</div>
+
+<!-- Livraisons en cours et attendues -->
+<div class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">📥 Livraisons attendues à quai</h2>
+    <span style="font-size: 13px; color: var(--muted);">Quai de réception : Sfax ZI Poudrière II</span>
+  </div>
+
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>N° Expédition</th>
+          <th>PME Expéditeur</th>
+          <th>Marchandises attendues</th>
+          <th>Transporteur & Contact</th>
+          <th>Heure estimée</th>
+          <th>Statut</th>
+          <th style="text-align: right;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: #fbfdfc;">
+          <td>
+            <strong>#TR-8842</strong>
+            <div style="font-size: 11px; color: var(--muted);">Réf. DEM-2026-08</div>
+          </td>
+          <td>
+            <strong>AgroMed Distribution SARL</strong>
+            <div style="font-size: 11px; color: var(--muted);">Tunis La Charguia</div>
+          </td>
+          <td>
+            4 Palettes (1 850 kg)
+            <div style="font-size: 11px; color: var(--warning); font-weight: 600;">Huile d'olive • Fragile</div>
+          </td>
+          <td>
+            Mohamed Triki
+            <div style="font-size: 11px; color: var(--primary);"><a href="tel:+21698223344">📞 +216 98 223 344</a></div>
+          </td>
+          <td>
+            <strong style="color: var(--green);">Aujourd'hui 15:15</strong>
+            <div style="font-size: 11px; color: var(--muted);">Péage El Jem passé</div>
+          </td>
+          <td><span class="badge badge-active">En approche</span></td>
+          <td style="text-align: right;">
+            <div style="display: flex; gap: 6px; justify-content: flex-end;">
+              <a href="{% url 'destinataire:suivi' %}" class="btn-secondary" style="font-size: 12px; padding: 0.35rem 0.65rem;">Suivre</a>
+              <a href="{% url 'destinataire:confirmation' %}" class="btn-primary" style="font-size: 12px; padding: 0.35rem 0.65rem;">Valider</a>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <strong>#TR-8850</strong>
+            <div style="font-size: 11px; color: var(--muted);">Réf. DEM-2026-11</div>
+          </td>
+          <td>
+            <strong>Emballages Modernes Tunisie</strong>
+            <div style="font-size: 11px; color: var(--muted);">Sousse Akouda</div>
+          </td>
+          <td>
+            12 Cartons d'étiquettes et bouchons (320 kg)
+          </td>
+          <td>
+            Bilel Mabrouk
+            <div style="font-size: 11px; color: var(--muted);">Fourgon Citroën Jumper</div>
+          </td>
+          <td>
+            Demain • ~11h00
+          </td>
+          <td><span class="badge badge-pending">Prise en charge prévue</span></td>
+          <td style="text-align: right;">
+            <a href="{% url 'destinataire:suivi' %}" class="btn-secondary" style="font-size: 12px; padding: 0.35rem 0.65rem;">Détails</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Historique récent des réceptions avec preuve de livraison -->
+<div class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">📜 Historique des réceptions récentes</h2>
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Date de réception</th>
+          <th>N° Expédition</th>
+          <th>Expéditeur</th>
+          <th>Marchandises</th>
+          <th>Mode de validation</th>
+          <th>État constaté</th>
+          <th style="text-align: right;">Bon de livraison</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>18 Oct 2026 à 14h20</td>
+          <td><strong>#TR-8794</strong></td>
+          <td>AgroMed Distribution</td>
+          <td>2 Palettes bouteilles verre</td>
+          <td><span style="font-size: 12px; font-weight: 600; color: var(--green);">Code OTP validé (6 chiffres)</span></td>
+          <td><span class="badge badge-success">Conforme 100%</span></td>
+          <td style="text-align: right;">
+            <button type="button" class="btn-secondary" style="font-size: 11.5px; padding: 0.35rem 0.65rem;" onclick="alert('Téléchargement du récépissé de livraison émargé...')">
+              📄 Télécharger le récépissé
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>12 Oct 2026 à 10h45</td>
+          <td><strong>#TR-8720</strong></td>
+          <td>Nord Chimie Tunisie</td>
+          <td>6 Bidons nettoyant industriel</td>
+          <td><span style="font-size: 12px; font-weight: 600; color: var(--deep);">Signature sur écran tactile</span></td>
+          <td><span class="badge badge-success">Conforme</span></td>
+          <td style="text-align: right;">
+            <button type="button" class="btn-secondary" style="font-size: 11.5px; padding: 0.35rem 0.65rem;" onclick="alert('Téléchargement du récépissé de livraison émargé...')">
+              📄 Télécharger le récépissé
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

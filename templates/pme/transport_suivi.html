@@ -1,0 +1,181 @@
+{% extends 'pme/base.html' %}
+
+{% block title %}Suivi du transport #TR-8842 | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'pme:transports_list' %}">Transports</a>
+<span>/</span>
+<span class="current">#TR-8842 Suivi en direct</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+      <span class="portal-eyebrow">Module 4 : Transport & EvenementSuivi</span>
+      <span class="badge badge-active">En cours de livraison</span>
+    </div>
+    <h1 class="portal-page-title">Suivi de l'expédition #TR-8842</h1>
+    <p class="portal-page-subtitle">Tunis (La Charguia I) ➔ Sfax (ZI Poudrière II) • Pris en charge par Mohamed Triki (Express Sahel Transport)</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'pme:reclamation_create' %}" class="btn-secondary" style="color: var(--error); border-color: var(--error);">
+      ⚠️ Signaler un incident
+    </a>
+  </div>
+</div>
+
+<!-- Stepper Visuel de Suivi -->
+<div class="portal-card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <span style="font-size: 13px; color: var(--muted);">Statut actuel :</span>
+      <strong style="font-size: 16px; color: var(--green); display: block;">Étape 3 sur 5 : En transit vers Sfax (A1)</strong>
+    </div>
+    <div style="text-align: right;">
+      <span style="font-size: 13px; color: var(--muted);">Arrivée estimée :</span>
+      <strong style="font-size: 16px; color: var(--ink); display: block;">Aujourd'hui à 15:15</strong>
+    </div>
+  </div>
+
+  <div class="tracking-stepper">
+    <div class="tracking-stepper-inner">
+      <div class="stepper-progress-fill" style="width: 55%;"></div>
+
+      <!-- Étape 1 -->
+      <div class="stepper-step completed">
+        <div class="step-bubble">✓</div>
+        <div class="step-label">Transport validé</div>
+        <div class="step-timestamp">21 Oct • 07h45</div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="stepper-step completed">
+        <div class="step-bubble">✓</div>
+        <div class="step-label">Marchandise enlevée</div>
+        <div class="step-timestamp">21 Oct • 08h30</div>
+      </div>
+
+      <!-- Étape 3 (En cours) -->
+      <div class="stepper-step current">
+        <div class="step-bubble">🚚</div>
+        <div class="step-label">En acheminement</div>
+        <div class="step-timestamp">El Jem (13h42)</div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="stepper-step">
+        <div class="step-bubble">📍</div>
+        <div class="step-label">Arrivée site client</div>
+        <div class="step-timestamp">Estimé 15h15</div>
+      </div>
+
+      <!-- Étape 5 -->
+      <div class="stepper-step">
+        <div class="step-bubble">✍️</div>
+        <div class="step-label">Réception confirmée</div>
+        <div class="step-timestamp">Code ou Signature</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2 Colonnes : Acteurs & Journal des événements (EvenementSuivi) -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+  <!-- Colonne Acteurs (Transporteur & Destinataire) -->
+  <div>
+    <!-- Carte Transporteur -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">🚚 Transporteur affecté</h2>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 1rem;">
+        <div class="carrier-avatar" style="width: 52px; height: 52px; background: var(--primary-light); color: var(--primary);">MT</div>
+        <div>
+          <strong style="font-size: 16px; color: var(--ink);">Mohamed Triki</strong>
+          <div style="font-size: 13px; color: var(--muted);">Express Sahel Transport • Indépendant</div>
+          <div style="font-size: 12px; color: var(--sand-dark);">★★★★★ 4.9/5 (42 avis)</div>
+        </div>
+      </div>
+      <div style="background: var(--bg); padding: 0.85rem; border-radius: var(--radius-md); font-size: 13px; line-height: 1.6; margin-bottom: 1rem;">
+        <div><strong>Véhicule :</strong> Isuzu NPR 3.5T (Immatriculation : 184 TU 4920)</div>
+        <div><strong>Équipement :</strong> Hayon élévateur, bâché étanche</div>
+        <div><strong>Téléphone direct :</strong> <a href="tel:+21698223344" style="font-weight: 700;">+216 98 223 344</a></div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="tel:+21698223344" class="btn-primary" style="flex: 1; justify-content: center; font-size: 13px;">
+          📞 Appeler le chauffeur
+        </a>
+      </div>
+    </div>
+
+    <!-- Carte Destinataire -->
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">🏢 Destinataire de la marchandise</h2>
+      </div>
+      <div style="font-size: 13.5px; line-height: 1.7; margin-bottom: 1rem;">
+        <div><strong>Entreprise :</strong> Huiles du Sud SARL</div>
+        <div><strong>Contact :</strong> M. Ahmed Trabelsi (Chef de quai)</div>
+        <div><strong>Adresse :</strong> Avenue de l'Indépendance, ZI Poudrière II, Sfax</div>
+        <div><strong>Téléphone :</strong> +216 98 765 432</div>
+        <div style="margin-top: 6px; padding: 6px 10px; background: var(--sand-light); border-radius: var(--radius-sm); font-size: 12.5px; color: var(--sand-dark);">
+          🔑 <strong>Code de livraison généré :</strong> <span style="font-family: monospace; font-size: 14px; font-weight: 700; color: var(--ink);">842-190</span> (À communiquer au chauffeur lors du déchargement)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colonne Journal des Événements (EvenementSuivi) -->
+  <div>
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">📜 Journal des événements (EvenementSuivi)</h2>
+        <span style="font-size: 12px; color: var(--muted);">Actualisé en temps réel</span>
+      </div>
+
+      <div class="event-log-list">
+        <!-- Event 1 : Récent -->
+        <div class="event-log-item">
+          <div class="event-log-time">Aujourd'hui à 13h42 • El Jem</div>
+          <div class="event-log-title">Passage du péage El Jem (A1)</div>
+          <p class="event-log-desc">Le chauffeur poursuit sa route sur l'autoroute A1. Trafic fluide, heure d'arrivée estimée maintenue pour 15h15.</p>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-log-item">
+          <div class="event-log-time">Aujourd'hui à 11h15 • Enfidha</div>
+          <div class="event-log-title">Contrôle de chargement & Point étape</div>
+          <p class="event-log-desc">Arrêt de sécurité. Sangles d'arrimage vérifiées. Palettes intactes.</p>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-log-item">
+          <div class="event-log-time">Aujourd'hui à 08h30 • Tunis La Charguia</div>
+          <div class="event-log-title">Chargement au quai terminé & Départ</div>
+          <p class="event-log-desc">Prise en charge de 4 palettes d'huile d'olive (1 850 kg). Bon d'enlèvement émargé.</p>
+        </div>
+
+        <!-- Event 4 -->
+        <div class="event-log-item">
+          <div class="event-log-time">Aujourd'hui à 07h45 • Tunis</div>
+          <div class="event-log-title">Confirmation du transport</div>
+          <p class="event-log-desc">L'offre du transporteur a été acceptée par AgroMed Distribution. Lettre de voiture dématérialisée générée.</p>
+        </div>
+
+        <!-- Prochaines étapes en attente -->
+        <div class="event-log-item pending">
+          <div class="event-log-time">À venir (~15h15) • Sfax</div>
+          <div class="event-log-title" style="color: var(--muted);">Arrivée au dépôt et déchargement</div>
+          <p class="event-log-desc">Mise à quai chez Huiles du Sud SARL.</p>
+        </div>
+
+        <div class="event-log-item pending">
+          <div class="event-log-time">À venir (~15h45) • Sfax</div>
+          <div class="event-log-title" style="color: var(--muted);">Validation finale par le destinataire</div>
+          <p class="event-log-desc">Contrôle de conformité et validation par code OTP sécurisé ou signature sur tablette.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

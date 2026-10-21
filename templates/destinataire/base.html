@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Espace Destinataire | CargoLink{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/portals.css' %}">
+  <script src="{% static 'js/portals.js' %}" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="portal-shell">
+    <!-- Sidebar Destinataire -->
+    <aside class="portal-sidebar">
+      <div class="sidebar-brand-box">
+        <a href="{% url 'home' %}">
+          <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" class="sidebar-logo">
+        </a>
+        <span class="actor-badge destinataire">Destinataire</span>
+      </div>
+
+      <div class="user-snippet">
+        <div class="user-avatar destinataire">
+          {{ request.user.full_name|default:"DES"|slice:":2"|upper }}
+        </div>
+        <div class="user-meta">
+          <div class="user-name">{{ request.user.full_name|default:"Huiles du Sud SARL" }}</div>
+          <div class="user-role-label">Site de réception / Quai Sfax</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Espace Réception</div>
+        <a href="{% url 'destinataire:dashboard' %}" class="portal-nav-link {% if active_tab == 'dashboard' %}active{% endif %}">
+          <span class="nav-icon">📥</span>
+          <span>Mes livraisons attendues</span>
+          <span class="nav-pill" style="background: var(--sand-dark);">2</span>
+        </a>
+        <a href="{% url 'destinataire:suivi' %}" class="portal-nav-link {% if active_tab == 'suivi' %}active{% endif %}">
+          <span class="nav-icon">🚚</span>
+          <span>Suivi en direct (Tracking)</span>
+        </a>
+        <a href="{% url 'destinataire:confirmation' %}" class="portal-nav-link {% if active_tab == 'confirmation' %}active{% endif %}">
+          <span class="nav-icon">✍️</span>
+          <span>Valider une réception (Code/Signature)</span>
+        </a>
+
+        <div class="nav-section-title" style="margin-top: 1rem;">Support & Litiges</div>
+        <a href="{% url 'destinataire:reclamation' %}" class="portal-nav-link {% if active_tab == 'reclamation' %}active{% endif %}">
+          <span class="nav-icon">⚠️</span>
+          <span>Signaler une anomalie</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="{% url 'home' %}" class="portal-btn-sm portal-btn-ghost">
+          <span>← Retour au site public</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="portal-main">
+      <header class="portal-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" type="button" aria-label="Menu">☰</button>
+          <div class="portal-breadcrumbs">
+            <a href="{% url 'destinataire:dashboard' %}">Destinataire</a>
+            <span>/</span>
+            <span class="current">{% block breadcrumb %}Espace Réception{% endblock %}</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <a href="{% url 'destinataire:confirmation' %}" class="btn-sand" style="padding: 0.45rem 0.95rem; font-size: 13px;">
+            ✍️ Valider une réception
+          </a>
+          <span class="actor-badge destinataire">Quai Réception</span>
+        </div>
+      </header>
+
+      <main class="portal-container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="portal-card" style="padding: 0.85rem 1.25rem; margin-bottom: 1rem; background: var(--success-bg); border-color: var(--success); color: var(--success);">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

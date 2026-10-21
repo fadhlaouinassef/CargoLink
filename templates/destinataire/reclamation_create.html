@@ -1,0 +1,86 @@
+{% extends 'destinataire/base.html' %}
+
+{% block title %}Signaler une anomalie à la réception | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'destinataire:dashboard' %}">Réceptions</a>
+<span>/</span>
+<span class="current">Signaler une anomalie</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Module 5 : Reclamation & Litiges Réception</div>
+    <h1 class="portal-page-title">Déclarer un litige à la réception</h1>
+    <p class="portal-page-subtitle">Si la marchandise livrée présente une casse, un manquant ou une anomalie par rapport au bon d'expédition, déposez un constat immédiat.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'destinataire:dashboard' %}" class="btn-secondary">Annuler</a>
+  </div>
+</div>
+
+<div style="max-width: 800px; margin: 0 auto;">
+  <form method="post" action="{% url 'destinataire:dashboard' %}">
+    {% csrf_token %}
+
+    <div class="portal-card">
+      <div class="portal-card-header">
+        <h2 class="portal-card-title">Constat d'avarie à la réception</h2>
+      </div>
+
+      <div class="portal-form-group">
+        <label class="portal-label">Expédition concernée *</label>
+        <select class="portal-select" name="transport_id" required>
+          <option value="TR-8842" selected>#TR-8842 — AgroMed Distribution (Tunis) • 4 Palettes</option>
+          <option value="TR-8794">#TR-8794 — AgroMed Distribution (Tunis) • 2 Palettes</option>
+          <option value="TR-8720">#TR-8720 — Nord Chimie Tunisie • 6 Bidons</option>
+        </select>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="portal-form-group">
+          <label class="portal-label">Nature du problème constaté *</label>
+          <select class="portal-select" name="type_anomalie" required>
+            <option value="casse" selected>Marchandise brisée / Avarie au transport</option>
+            <option value="manquant">Colis ou palette manquante</option>
+            <option value="temperature">Rupture de la chaîne du froid</option>
+            <option value="mouille">Marchandise mouillée / emballage détrempé</option>
+            <option value="non_conforme">Marchandise non conforme à la commande</option>
+          </select>
+        </div>
+
+        <div class="portal-form-group">
+          <label class="portal-label">Gravité du litige *</label>
+          <select class="portal-select" name="gravite" required>
+            <option value="partiel" selected>Avarie partielle (Ex: quelques cartons endommagés)</option>
+            <option value="total">Avarie totale / Lot entièrement refusé</option>
+            <option value="mineur">Emballage abîmé sans casse de produit</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="portal-form-group">
+        <label class="portal-label">Description précise des dommages constatés *</label>
+        <textarea class="portal-textarea" name="description" rows="4" placeholder="Indiquez le nombre d'articles touchés, l'état du scellé et du filmage plastique lors de l'ouverture du camion..." required>À l'ouverture du camion Isuzu, la palette N° 3 était inclinée suite à un freinage brutal. 18 cartons d'huile ont été écrasés, plusieurs bouteilles brisées. Le chauffeur a été témoin du constat à quai.</textarea>
+      </div>
+
+      <div class="portal-form-group">
+        <label class="portal-label">Photos des dommages prises au quai</label>
+        <input type="file" class="portal-input" name="photos_avarie" multiple>
+        <div class="portal-input-hint">Téléversez des photos nettes de la palette, de l'arrimage et des cartons abîmés (JPG/PNG).</div>
+      </div>
+
+      <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius-md); font-size: 13px; color: var(--muted); margin-top: 1rem;">
+        ℹ️ Cette déclaration sera transmise en temps réel à <strong>l'expéditeur AgroMed Distribution</strong>, au <strong>transporteur Mohamed Triki</strong> et à <strong>l'Administrateur CargoLink</strong> pour instruction du litige et déclenchement des assurances.
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem;">
+        <a href="{% url 'destinataire:dashboard' %}" class="btn-secondary">Annuler</a>
+        <button type="submit" class="btn-danger">
+          ⚠️ Enregistrer le constat d'anomalie
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
