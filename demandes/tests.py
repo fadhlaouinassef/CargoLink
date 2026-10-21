@@ -1,7 +1,10 @@
+import json
+from io import BytesIO
+from unittest.mock import patch
 from datetime import date, timedelta
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from .models import DemandeTransport, Marchandise
@@ -103,6 +106,73 @@ class DemandesTransportTests(TestCase):
         self.assertContains(response, '<strong>1</strong>', html=True)
         self.assertNotContains(response, 'AgroMed Distribution')
 
+    @override_settings(GEMINI_API_KEY='')
+    def test_ai_description_requires_server_api_key(self):
+        response = self.client.post(
+            reverse('pme:ai_improve_description'),
+            data=json.dumps({'marchandise': {'description': 'Palettes'}}),
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 503)
+        self.assertContains(response, 'GEMINI_API_KEY', status_code=503)
+
+    @override_settings(GEMINI_API_KEY='test-gemini-key', GEMINI_MODEL='gemini-test')
+    @patch('demandes.views.urlopen')
+    def test_ai_description_uses_form_data_without_recipient_pii(self, mock_urlopen):
+        mock_urlopen.return_value.__enter__.return_value = BytesIO(json.dumps({
+            'candidates': [{'content': {'parts': [{'text': 'Palettes de bouteilles, 1 850 kg, fragiles.'}]}}],
+        }).encode())
+        payload = {
+            'depart_ville': 'Tunis',
+            'arrivee_ville': 'Sfax',
+            'date_depart': '2026-11-01',
+            'date_limite': '2026-11-02',
+            'hayon': True,
+            'transpalette': False,
+            'bache': True,
+            'destinataire_tel': '21612345678',
+            'destinataire_contact': 'Données privées',
+            'marchandise': {
+                'description': 'Palettes bouteilles',
+                'type': 'Palettes standard',
+                'poids': '1850',
+                'volume': '4.8',
+                'fragile': True,
+            },
+        }
+
+        response = self.client.post(
+            reverse('pme:ai_improve_description'),
+            data=json.dumps(payload),
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.json()['description'],
+            'Palettes de bouteilles, 1 850 kg, fragiles.',
+        )
+        request = mock_urlopen.call_args.args[0]
+        self.assertIn('gemini-test:generateContent', request.full_url)
+        self.assertEqual(request.get_header('X-goog-api-key'), 'test-gemini-key')
+        prompt = json.loads(request.data)['contents'][0]['parts'][0]['text']
+        self.assertIn('Tunis', prompt)
+        self.assertIn('Palettes bouteilles', prompt)
+        self.assertNotIn('21612345678', prompt)
+        self.assertNotIn('Données privées', prompt)
+
+    @override_settings(GEMINI_API_KEY='test-gemini-key')
+    def test_ai_description_rejects_missing_goods(self):
+        response = self.client.post(
+            reverse('pme:ai_improve_description'),
+            data=json.dumps({'marchandise': {}}),
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('marchandise', response.json()['error'])
+
 
 class TransporteurDemandesTests(TestCase):
     def setUp(self):
@@ -201,6 +271,16 @@ class PmeDemandeCrudTests(TestCase):
             role='PME',
         )
         self.client.force_login(self.pme)
+
+    def test_ai_button_is_available_on_create_and_update_forms(self):
+        create_response = self.client.get(reverse('pme:demande_create'))
+        self.assertContains(create_response, 'Améliorer avec IA')
+
+        demande = self.create_demand()
+        update_response = self.client.get(
+            reverse('pme:demande_update', args=[demande.pk]),
+        )
+        self.assertContains(update_response, 'Améliorer avec IA')
 
     def create_demand(self, owner=None, **overrides):
         fields = {
