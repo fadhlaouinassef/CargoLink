@@ -164,13 +164,26 @@ class LoginTests(TestCase):
         self.assertContains(response, 'name="username"')
         self.assertContains(response, 'name="password"')
 
-    def test_valid_credentials_log_user_in_and_redirect_home(self):
+    def test_pme_credentials_redirect_to_pme_dashboard(self):
         response = self.client.post(self.url, {
             'username': 'AMINE@EXAMPLE.COM',
             'password': self.password,
         })
-        self.assertRedirects(response, reverse('home'))
-        self.assertEqual(str(self.client.session['_auth_user_id']), str(User.objects.get().pk))
+        self.assertRedirects(response, reverse('pme:dashboard'))
+        self.assertEqual(str(self.client.session['_auth_user_id']), str(User.objects.get(email='amine@example.com').pk))
+
+    def test_destinataire_credentials_redirect_to_destinataire_dashboard(self):
+        User.objects.create_user(
+            email='dest@example.com',
+            password=self.password,
+            full_name='Destinataire Test',
+            role=User.Role.DESTINATAIRE,
+        )
+        response = self.client.post(self.url, {
+            'username': 'dest@example.com',
+            'password': self.password,
+        })
+        self.assertRedirects(response, reverse('destinataire:dashboard'))
 
     def test_admin_credentials_redirect_to_dashboard(self):
         User.objects.create_user(

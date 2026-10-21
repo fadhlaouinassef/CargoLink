@@ -30,8 +30,13 @@ VERIFIED_LIFETIME = 15 * 60  # secondes pour choisir le nouveau mot de passe apr
 
 class RoleBasedLoginView(LoginView):
     def get_success_url(self):
-        if self.request.user.role == User.Role.ADMIN:
+        user = self.request.user
+        if user.role == User.Role.ADMIN:
             return reverse('authentification:admin_dashboard')
+        elif user.role == User.Role.PME:
+            return reverse('pme:dashboard')
+        elif user.role == User.Role.DESTINATAIRE:
+            return reverse('destinataire:dashboard')
         return super().get_success_url()
 
 
