@@ -92,7 +92,7 @@
 
       <div class="portal-form-group" style="background: var(--bg); padding: 1rem; border-radius: var(--radius-md);">
         <label class="portal-label" style="margin-bottom: 8px;">Recommanderiez-vous ce transporteur à d'autres PME ?</label>
-        <div style="display: flex; gap: 2rem;">
+        <div class="actor-flex-row" style="display: flex; gap: 2rem;">
           <label style="display: flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
             <input type="radio" name="recommande" value="oui" checked> 👍 Oui, absolument
           </label>
@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem;">
+      <div class="actor-flex-row" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem;">
         <a href="{% url 'pme:dashboard' %}" class="btn-secondary">Annuler</a>
         <button type="submit" class="btn-primary">
           ⭐ Publier mon évaluation certifiée

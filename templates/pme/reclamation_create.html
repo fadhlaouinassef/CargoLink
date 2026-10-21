@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+<div class="actor-grid-detail" style="display: grid;  gap: 1.5rem;">
   <!-- Formulaire de réclamation -->
   <div>
     <form method="post" action="{% url 'pme:dashboard' %}">
@@ -79,7 +79,7 @@
           <div class="portal-input-hint">Formats acceptés : JPG, PNG, PDF (max 10 Mo par fichier).</div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);">
+        <div class="actor-flex-row" style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);">
           <a href="{% url 'pme:dashboard' %}" class="btn-secondary">Annuler</a>
           <button type="submit" class="btn-danger">
             ⚖️ Transmettre la réclamation à l'Administrateur
@@ -114,7 +114,7 @@
       </div>
       <div style="font-size: 13px;">
         <div style="padding-bottom: 0.75rem; border-bottom: 1px solid var(--line); margin-bottom: 0.75rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center;">
             <strong>#REC-2026-02</strong>
             <span class="badge badge-success">Résolue</span>
           </div>
@@ -123,7 +123,7 @@
         </div>
 
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center;">
             <strong>#REC-2026-03</strong>
             <span class="badge badge-pending">En instruction</span>
           </div>

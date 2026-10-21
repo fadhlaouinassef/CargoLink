@@ -6,13 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Espace PME & Expéditeur | CargoLink{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/portals.css' %}">
+  <link rel="stylesheet" href="{% static 'css/actor-responsive.css' %}">
   <script src="{% static 'js/portals.js' %}" defer></script>
+  <script src="{% static 'js/actor-responsive.js' %}" defer></script>
   {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body class="responsive-actor">
   <div class="portal-shell">
     <!-- Sidebar PME -->
-    <aside class="portal-sidebar">
+    <aside class="portal-sidebar" id="actor-sidebar">
       <div class="sidebar-brand-box">
         <a href="{% url 'home' %}">
           <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" class="sidebar-logo">
@@ -79,7 +81,7 @@
     <div class="portal-main">
       <header class="portal-topbar">
         <div class="topbar-left">
-          <button class="mobile-menu-btn" type="button" aria-label="Menu">☰</button>
+          <button class="mobile-menu-btn" type="button" aria-label="Ouvrir le menu" aria-controls="actor-sidebar" aria-expanded="false">☰</button>
           <div class="portal-breadcrumbs">
             <a href="{% url 'pme:dashboard' %}">PME</a>
             <span>/</span>

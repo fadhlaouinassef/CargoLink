@@ -1,71 +1,72 @@
-{% extends 'transporteur/base.html' %}
-{% block title %}Avis & réclamations | CargoLink{% endblock %}
-{% block breadcrumb %}Avis & réclamations{% endblock %}
-{% block content %}<div class="portal-page-header">
-<div>
-<div class="portal-eyebrow">Espace transporteur</div>
-<h1 class="portal-page-title">Avis & réclamations</h1>
-<p class="portal-page-subtitle">Consultez les retours de vos clients et signalez un problème.</p>
-</div>
+{% extends 'transporteur/base.html' %} {% block title %}Avis & réclamations |
+CargoLink{% endblock %} {% block breadcrumb %}Avis & réclamations{% endblock %}
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace transporteur</div>
+    <h1 class="portal-page-title">Avis & réclamations</h1>
+    <p class="portal-page-subtitle">
+      Consultez les retours de vos clients et signalez un problème.
+    </p>
+  </div>
 </div>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">⭐ 4,8 / 5 · 34 avis</h2>
-</div>
-<p>
-<strong>AgroMed Distribution · ★★★★★</strong>
-</p>
-<p>Livraison ponctuelle et marchandise soigneusement transportée.</p>
-<p class="portal-input-hint">Transport #TR-8831 · 19 octobre 2026</p>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">⭐ 4,8 / 5 · 34 avis</h2>
+  </div>
+  <p>
+    <strong>AgroMed Distribution · ★★★★★</strong>
+  </p>
+  <p>Livraison ponctuelle et marchandise soigneusement transportée.</p>
+  <p class="portal-input-hint">Transport #TR-8831 · 19 octobre 2026</p>
 </section>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Mes réclamations</h2>
-</div>
-<div class="portal-table-wrap">
-<table class="portal-table">
-<thead>
-<tr>
-<th>Référence</th>
-<th>Transport</th>
-<th>Objet</th>
-<th>État</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>#REC-012</td>
-<td>#TR-8820</td>
-<td>Attente prolongée au chargement</td>
-<td>
-<span class="badge badge-pending">En cours</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Mes réclamations</h2>
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Référence</th>
+          <th>Transport</th>
+          <th>Objet</th>
+          <th>État</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#REC-012</td>
+          <td>#TR-8820</td>
+          <td>Attente prolongée au chargement</td>
+          <td>
+            <span class="badge badge-pending">En cours</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Déposer une réclamation</h2>
-</div>
-<form data-demo-form>
-<div class="form-grid-2">
-<label class="portal-form-group">
-<span class="portal-label">Référence du transport</span>
-<input class="portal-input" type="text" required >
-</label>
-<label class="portal-form-group">
-<span class="portal-label">Objet</span>
-<input class="portal-input" type="text" required >
-</label>
-<label class="portal-form-group">
-<span class="portal-label">Description</span>
-<textarea class="portal-textarea" rows="4" required>
-</textarea>
-</label>
-</div>
-<button type="submit" class="btn-primary">Simuler le dépôt</button>
-</form>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Déposer une réclamation</h2>
+  </div>
+  <form data-demo-form>
+    <div class="form-grid-2">
+      <label class="portal-form-group">
+        <span class="portal-label">Référence du transport</span>
+        <input class="portal-input" type="text" required />
+      </label>
+      <label class="portal-form-group">
+        <span class="portal-label">Objet</span>
+        <input class="portal-input" type="text" required />
+      </label>
+      <label class="portal-form-group">
+        <span class="portal-label">Description</span>
+        <textarea class="portal-textarea" rows="4" required></textarea>
+      </label>
+    </div>
+    <button type="submit" class="btn-primary">Simuler le dépôt</button>
+  </form>
 </section>
 {% endblock %}
