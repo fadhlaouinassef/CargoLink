@@ -4,7 +4,8 @@ from django.urls import reverse
 
 class ActorPortalsTests(SimpleTestCase):
     def test_transporteur_portal_urls(self):
-        for page in ('dashboard', 'trajets', 'offres', 'vehicules', 'transports', 'avis'):
+        # La page « avis » est réelle et protégée : voir avis_reclamations/tests.py.
+        for page in ('dashboard', 'trajets', 'offres', 'vehicules', 'transports'):
             with self.subTest(page=page):
                 response = self.client.get(reverse(f'transporteur:{page}'))
                 self.assertEqual(response.status_code, 200)
@@ -20,8 +21,6 @@ class ActorPortalsTests(SimpleTestCase):
             'pme:offres_comparer',
             'pme:transports_list',
             'pme:transport_suivi',
-            'pme:avis_create',
-            'pme:reclamation_create',
         ]
         for url_name in urls:
             with self.subTest(url_name=url_name):
@@ -33,7 +32,6 @@ class ActorPortalsTests(SimpleTestCase):
             'destinataire:dashboard',
             'destinataire:suivi',
             'destinataire:confirmation',
-            'destinataire:reclamation',
         ]
         for url_name in urls:
             with self.subTest(url_name=url_name):

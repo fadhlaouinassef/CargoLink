@@ -1,0 +1,53 @@
+{% extends 'avis_reclamations/admin/base.html' %}
+
+{% block title %}Avis{% endblock %}
+{% block breadcrumb %}Avis{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div><p class="eyebrow">ESPACE ADMINISTRATEUR</p><h1>Avis</h1><p>Modérez les évaluations publiées sur les profils des transporteurs.</p></div>
+</section>
+
+<section class="stats-grid" aria-label="Résumé des avis">
+  <article class="stat-card"><span class="stat-icon green">★</span><span><small>Total des avis</small><strong>{{ total }}</strong><em>Tous statuts</em></span></article>
+  <article class="stat-card"><span class="stat-icon sand">◎</span><span><small>Note moyenne</small><strong>{% if stats.total %}{{ stats.moyenne|floatformat:1 }}{% else %}—{% endif %}</strong><em>Avis publiés</em></span></article>
+  <article class="stat-card"><span class="stat-icon purple">⊘</span><span><small>Avis masqués</small><strong>{{ masques }}</strong><em class="warning-text">Retirés des profils</em></span></article>
+</section>
+
+<section class="users-panel" aria-labelledby="avis-title">
+  <div class="panel-heading"><div><h2 id="avis-title">Tous les avis</h2><p>Ouvrez un avis pour le masquer ou le republier.</p></div></div>
+  <form class="toolbar" method="get">
+    <label class="search-box" for="avis-search">Rechercher <input id="avis-search" name="q" type="search" value="{{ q }}" placeholder="Auteur, transporteur, commentaire" autocomplete="off"></label>
+    <label class="select-box" for="avis-statut"><span>Statut :</span>
+      <select id="avis-statut" name="statut"><option value="">Tous</option>{% for value, label in statuts %}<option value="{{ value }}" {% if statut == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    </label>
+    <label class="select-box" for="avis-note"><span>Note :</span>
+      <select id="avis-note" name="note"><option value="">Toutes</option>{% for n in "54321" %}<option value="{{ n }}" {% if note == n %}selected{% endif %}>{{ n }} ★</option>{% endfor %}</select>
+    </label>
+    <button class="secondary-button" type="submit">Filtrer</button>
+    {% if q or statut or note %}<a class="secondary-button" href="{% url 'avis_admin:avis_list' %}">Réinitialiser</a>{% endif %}
+  </form>
+  <div class="table-wrap">
+    <table>
+      <caption class="sr-only">Liste des avis</caption>
+      <thead><tr><th>Auteur</th><th>Transporteur</th><th>Note</th><th>Commentaire</th><th>Date</th><th>Statut</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for avis in page %}
+          <tr>
+            <td><strong>{{ avis.auteur.full_name }}</strong></td>
+            <td>{{ avis.transporteur.full_name }}</td>
+            <td class="nowrap">{% include 'avis_reclamations/_stars.html' with note=avis.note %}</td>
+            <td>{{ avis.commentaire|truncatechars:90 }}</td>
+            <td class="nowrap">{{ avis.created_at|date:"d/m/Y" }}</td>
+            <td class="nowrap"><span class="ar-badge ar-badge--{{ avis.statut }}">{{ avis.get_statut_display }}</span></td>
+            <td class="nowrap"><a class="secondary-button" href="{% url 'avis_admin:avis_detail' avis.pk %}">Modérer</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7"><p class="empty-state">Aucun avis ne correspond à votre recherche.</p></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% include 'avis_reclamations/_pagination.html' %}
+</section>
+{% endblock %}

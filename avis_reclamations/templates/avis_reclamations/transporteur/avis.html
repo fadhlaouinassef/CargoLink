@@ -1,0 +1,83 @@
+{% extends 'transporteur/base.html' %}
+{% load static %}
+
+{% block title %}Avis & réclamations | CargoLink{% endblock %}
+{% block breadcrumb %}Avis & réclamations{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Espace transporteur</div>
+      <h1 class="portal-page-title">Avis & réclamations</h1>
+      <p class="portal-page-subtitle">Les retours de vos clients et les réclamations qui vous concernent.</p>
+    </div>
+  </div>
+
+  <section class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">Ma réputation</h2></div>
+    {% if stats.total %}
+      <div class="ar-summary">
+        <div class="ar-score">
+          <strong>{{ stats.moyenne|floatformat:1 }}</strong>
+          {% include 'avis_reclamations/_stars.html' with note=stats.arrondie large=True %}
+          <small>{{ stats.total }} avis publié{{ stats.total|pluralize }}</small>
+        </div>
+        <ul class="ar-bars" aria-label="Répartition des notes">
+          {% for ligne in repartition %}
+            <li><span>{{ ligne.note }} ★</span><span class="ar-bar"><span style="width: {{ ligne.pourcentage }}%"></span></span><span>{{ ligne.nombre }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <p class="ar-note">Vous n’avez pas encore reçu d’avis. Ils apparaîtront ici dès qu’une PME aura évalué l’un de vos transports.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">Avis reçus</h2></div>
+    {% if page.object_list %}
+      <div class="ar-card-list">
+        {% for avis in page %}
+          <article class="ar-item">
+            <div class="ar-item-main">
+              <h3 class="ar-item-title">{{ avis.auteur.full_name }} {% include 'avis_reclamations/_stars.html' with note=avis.note %}</h3>
+              <p class="ar-item-meta"><span>{{ avis.demande.depart_ville }} ➔ {{ avis.demande.arrivee_ville }}</span><span>{{ avis.created_at|date:"d/m/Y" }}</span></p>
+              <p class="ar-item-text">{{ avis.commentaire }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      {% include 'avis_reclamations/_pagination.html' %}
+    {% else %}
+      <p class="ar-note">Aucun avis publié pour le moment.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">Réclamations qui me concernent</h2></div>
+    {% if reclamations %}
+      <div class="portal-table-wrap">
+        <table class="portal-table">
+          <thead><tr><th>Référence</th><th>Demande</th><th>Motif</th><th>Date</th><th>État</th></tr></thead>
+          <tbody>
+            {% for reclamation in reclamations %}
+              <tr>
+                <td>{{ reclamation.reference }}</td>
+                <td>{{ reclamation.demande }}</td>
+                <td>{{ reclamation.get_motif_display }}</td>
+                <td>{{ reclamation.created_at|date:"d/m/Y" }}</td>
+                <td><span class="ar-badge ar-badge--{{ reclamation.statut }}">{{ reclamation.get_statut_display }}</span></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if reclamations_total > 10 %}<p class="portal-input-hint">Les 10 plus récentes sur {{ reclamations_total }}.</p>{% endif %}
+    {% else %}
+      <p class="ar-note">Aucune réclamation ne vous concerne. L’administrateur vous contacte en cas de litige.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

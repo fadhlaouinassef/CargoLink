@@ -1,0 +1,1 @@
+<span class="ar-stars{% if large %} large{% endif %}" role="img" aria-label="{{ note }} sur 5">{% for i in "12345" %}<span{% if forloop.counter > note %} class="off"{% endif %} aria-hidden="true">★</span>{% endfor %}</span>

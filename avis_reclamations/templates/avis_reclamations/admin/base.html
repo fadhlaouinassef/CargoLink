@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Avis et réclamations{% endblock %} | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">
+  <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
+  <script src="{% static 'js/avis-reclamations.js' %}" defer></script>
+</head>
+<body class="ar-page ar-admin">
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil"><img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink"></a>
+        <button class="sidebar-close" type="button" aria-label="Fermer le menu">×</button>
+      </div>
+      <div class="admin-profile">
+        <span class="avatar avatar-admin">{{ request.user.full_name|slice:":1"|upper }}</span>
+        <span><strong>{{ request.user.full_name }}</strong><small>Administrateur</small></span>
+      </div>
+      <nav class="sidebar-nav" aria-label="Navigation administrateur">
+        <p class="nav-label">MENU PRINCIPAL</p>
+        <a class="nav-link" href="{% url 'authentification:admin_dashboard' %}">Comptes utilisateurs</a>
+        <a class="nav-link {% if active_tab == 'reclamations' %}active{% endif %}" href="{% url 'avis_admin:reclamation_list' %}" {% if active_tab == 'reclamations' %}aria-current="page"{% endif %}>Réclamations</a>
+        <a class="nav-link {% if active_tab == 'avis' %}active{% endif %}" href="{% url 'avis_admin:avis_list' %}" {% if active_tab == 'avis' %}aria-current="page"{% endif %}>Avis</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="nav-link" href="{% url 'home' %}">Retour au site</a>
+        <span class="sidebar-version">CargoLink · Administration</span>
+      </div>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="topbar">
+        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span></button>
+        <div class="breadcrumb"><span>Administration</span><b>/</b><strong>{% block breadcrumb %}{% endblock %}</strong></div>
+        <span class="topbar-avatar">{{ request.user.full_name|slice:":1"|upper }}</span>
+      </header>
+      <main class="main-content">
+        {% if messages %}
+          <div class="messages">{% for message in messages %}<p class="{{ message.tags }}">{{ message }}</p>{% endfor %}</div>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</body>
+</html>

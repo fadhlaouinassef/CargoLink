@@ -23,6 +23,7 @@ urlpatterns = [
     path('transporteur/', include('CargoLink.urls_transporteur', namespace='transporteur')),
     path('pme/', include('CargoLink.urls_pme', namespace='pme')),
     path('destinataire/', include('CargoLink.urls_destinataire', namespace='destinataire')),
+    path('dashboard/', include('avis_reclamations.urls_admin')),
     path('', include('authentification.urls')),
     path('admin/', admin.site.urls),
 ]

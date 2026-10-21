@@ -63,9 +63,17 @@
           <span class="nav-icon">⭐</span>
           <span>Évaluer un transporteur</span>
         </a>
+        <a href="{% url 'pme:avis_list' %}" class="portal-nav-link {% if active_tab == 'avis_list' %}active{% endif %}">
+          <span class="nav-icon">📝</span>
+          <span>Mes avis</span>
+        </a>
         <a href="{% url 'pme:reclamation_create' %}" class="portal-nav-link {% if active_tab == 'reclamation_create' %}active{% endif %}">
           <span class="nav-icon">⚖️</span>
           <span>Déposer une réclamation</span>
+        </a>
+        <a href="{% url 'pme:reclamation_list' %}" class="portal-nav-link {% if active_tab == 'reclamation_list' %}active{% endif %}">
+          <span class="nav-icon">🗂️</span>
+          <span>Mes réclamations</span>
         </a>
       </nav>
 

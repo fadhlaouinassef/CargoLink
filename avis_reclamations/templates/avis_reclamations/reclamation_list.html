@@ -1,0 +1,49 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Mes réclamations | CargoLink{% endblock %}
+{% block breadcrumb %}Mes réclamations{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">Mes réclamations</h1>
+      <p class="portal-page-subtitle">Suivez l’instruction de vos dossiers et la réponse de l’administrateur.</p>
+    </div>
+    <div class="portal-header-actions">
+      <a href="{% url url_create %}" class="btn-danger">Déposer une réclamation</a>
+    </div>
+  </div>
+
+  {% if page.object_list %}
+    <div class="ar-card-list">
+      {% for reclamation in page %}
+        <article class="ar-item ar-item--{{ reclamation.statut }}">
+          <div class="ar-item-main">
+            <h2 class="ar-item-title"><a href="{% url url_detail reclamation.pk %}">{{ reclamation.reference }}</a> · {{ reclamation.get_motif_display }}</h2>
+            <p class="ar-item-meta">
+              <span>{{ reclamation.demande }} · {{ reclamation.demande.depart_ville }} ➔ {{ reclamation.demande.arrivee_ville }}</span>
+              {% if reclamation.transporteur %}<span>Transporteur : {{ reclamation.transporteur.full_name }}</span>{% endif %}
+              <span>Déposée le {{ reclamation.created_at|date:"d/m/Y" }}</span>
+            </p>
+          </div>
+          <div class="ar-item-side">
+            <span class="ar-badge ar-badge--{{ reclamation.statut }}">{{ reclamation.get_statut_display }}</span>
+            <a href="{% url url_detail reclamation.pk %}" class="btn-secondary">Voir le dossier</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    {% include 'avis_reclamations/_pagination.html' %}
+  {% else %}
+    <div class="ar-empty">
+      <h2>Aucune réclamation</h2>
+      <p>Vous n’avez déposé aucune réclamation. Si un transport pose problème, signalez-le ici.</p>
+      <a href="{% url url_create %}" class="btn-danger">Déposer une réclamation</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

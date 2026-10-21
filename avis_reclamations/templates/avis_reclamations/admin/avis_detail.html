@@ -1,0 +1,45 @@
+{% extends 'avis_reclamations/admin/base.html' %}
+
+{% block title %}Avis de {{ avis.auteur.full_name }}{% endblock %}
+{% block breadcrumb %}Modération d’un avis{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">MODÉRATION</p>
+    <h1>Avis sur {{ avis.transporteur.full_name }} <span class="ar-badge ar-badge--{{ avis.statut }}">{{ avis.get_statut_display }}</span></h1>
+    <p>Publié le {{ avis.created_at|date:"d/m/Y à H:i" }} par {{ avis.auteur.full_name }}</p>
+  </div>
+  <a class="secondary-button" href="{% url 'avis_admin:avis_list' %}">← Retour à la liste</a>
+</section>
+
+<section class="ar-panel">
+  <h2>Contenu de l’avis</h2>
+  <dl class="ar-facts">
+    <div><dt>Note</dt><dd>{% include 'avis_reclamations/_stars.html' with note=avis.note %}</dd></div>
+    <div><dt>Auteur</dt><dd>{{ avis.auteur.full_name }}<br><small>{{ avis.auteur.email }}</small></dd></div>
+    <div><dt>Demande</dt><dd>{{ avis.demande }}<br><small>{{ avis.demande.depart_ville }} ➔ {{ avis.demande.arrivee_ville }}</small></dd></div>
+  </dl>
+  <p class="ar-text-block">{{ avis.commentaire }}</p>
+  {% if not avis.est_publie and avis.motif_moderation %}
+    <p class="ar-note danger"><strong>Motif du masquage :</strong> {{ avis.motif_moderation }}</p>
+  {% endif %}
+</section>
+
+<section class="ar-panel">
+  <h2>{% if avis.est_publie %}Masquer cet avis{% else %}Republier cet avis{% endif %}</h2>
+  <form method="post" novalidate data-ar-form>
+    {% csrf_token %}
+    {% include 'avis_reclamations/_form_errors.html' %}
+    {% if avis.est_publie %}
+      <input type="hidden" name="action" value="masquer">
+      {% include 'avis_reclamations/_field.html' with field=form.motif hint='Obligatoire. Ce motif est visible par l’auteur de l’avis.' %}
+      <div class="modal-actions"><button class="danger-button" type="submit">Masquer l’avis</button></div>
+    {% else %}
+      <input type="hidden" name="action" value="publier">
+      <p class="hint">L’avis réapparaîtra sur le profil du transporteur et sera de nouveau pris en compte dans sa note moyenne.</p>
+      <div class="modal-actions"><button class="primary-button" type="submit">Republier l’avis</button></div>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}

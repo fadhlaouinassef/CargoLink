@@ -1,0 +1,7 @@
+{# Champ de formulaire : libellé, widget, aide et erreurs. Usage : {% include '...' with field=form.x hint='...' %} #}
+<div class="portal-form-group ar-field">
+  <label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="ar-required" aria-hidden="true">*</span>{% endif %}</label>
+  {{ field }}
+  {% if hint %}<p class="portal-input-hint">{{ hint }}</p>{% endif %}
+  {% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+</div>

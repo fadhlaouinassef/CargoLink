@@ -11,6 +11,5 @@ urlpatterns = [
     path('offres/comparer/', views_pme.offres_comparer, name='offres_comparer'),
     path('transports/', views_pme.transports_list, name='transports_list'),
     path('transports/suivi/', views_pme.transport_suivi, name='transport_suivi'),
-    path('avis/nouveau/', views_pme.avis_create, name='avis_create'),
-    path('reclamations/nouvelle/', views_pme.reclamation_create, name='reclamation_create'),
+    path('', include('avis_reclamations.urls_pme')),
 ]

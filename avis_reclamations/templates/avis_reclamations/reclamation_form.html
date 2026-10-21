@@ -1,0 +1,62 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Déposer une réclamation | CargoLink{% endblock %}
+{% block breadcrumb %}Déposer une réclamation{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">
+  <script src="{% static 'js/avis-reclamations.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">Déposer une réclamation</h1>
+      <p class="portal-page-subtitle">En cas de problème sur un transport, l’administrateur CargoLink instruit votre dossier et vous répond.</p>
+    </div>
+    <div class="portal-header-actions">
+      <a href="{% url url_list %}" class="btn-secondary">Mes réclamations</a>
+    </div>
+  </div>
+
+  {% if aucune_demande %}
+    <div class="ar-empty">
+      <h2>Aucune demande concernée</h2>
+      <p>Une réclamation se rattache à une demande de transport publiée vous concernant. Aucune demande n’est disponible pour votre compte.</p>
+    </div>
+  {% else %}
+    <div class="actor-grid-detail" style="display: grid; gap: 1.5rem; max-width: 820px;">
+      <form method="post" novalidate data-ar-form>
+        {% csrf_token %}
+        {% include 'avis_reclamations/_form_errors.html' %}
+
+        <div class="portal-card">
+          <div class="portal-card-header"><h2 class="portal-card-title">1. Transport concerné</h2></div>
+          <div class="form-grid-2">
+            {% include 'avis_reclamations/_field.html' with field=form.demande %}
+            {% include 'avis_reclamations/_field.html' with field=form.transporteur %}
+          </div>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-card-header"><h2 class="portal-card-title">2. Le problème</h2></div>
+          {% include 'avis_reclamations/_field.html' with field=form.motif %}
+          {% include 'avis_reclamations/_field.html' with field=form.description hint='Décrivez les faits dans l’ordre : ce qui était prévu, ce qui s’est passé, les réserves émises.' %}
+          {% include 'avis_reclamations/_field.html' with field=form.montant_prejudice hint='Laissez vide si vous ne pouvez pas encore l’estimer.' %}
+
+          <p class="ar-help">
+            Votre réclamation est transmise à <strong>l’administrateur CargoLink</strong>. Vous suivez son traitement dans « Mes réclamations » et recevez sa réponse sur la fiche du dossier.
+          </p>
+
+          <div class="ar-form-actions">
+            <a href="{% url url_list %}" class="btn-secondary">Annuler</a>
+            <button type="submit" class="btn-danger">Transmettre la réclamation</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

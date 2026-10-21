@@ -1,0 +1,55 @@
+{% extends 'avis_reclamations/admin/base.html' %}
+
+{% block title %}Réclamations{% endblock %}
+{% block breadcrumb %}Réclamations{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div><p class="eyebrow">ESPACE ADMINISTRATEUR</p><h1>Réclamations</h1><p>Instruisez les litiges déposés par les PME et les destinataires.</p></div>
+</section>
+
+<section class="stats-grid" aria-label="Résumé des réclamations">
+  <article class="stat-card"><span class="stat-icon sand">!</span><span><small>Ouvertes</small><strong>{{ compteurs.ouverte }}</strong><em class="warning-text">À prendre en charge</em></span></article>
+  <article class="stat-card"><span class="stat-icon blue">◷</span><span><small>En instruction</small><strong>{{ compteurs.en_cours }}</strong><em>Dossiers en cours</em></span></article>
+  <article class="stat-card"><span class="stat-icon green">✓</span><span><small>Résolues</small><strong>{{ compteurs.resolue }}</strong><em>Litiges réglés</em></span></article>
+  <article class="stat-card"><span class="stat-icon purple">×</span><span><small>Rejetées</small><strong>{{ compteurs.rejetee }}</strong><em>Sans suite</em></span></article>
+</section>
+
+<section class="users-panel" aria-labelledby="rec-title">
+  <div class="panel-heading"><div><h2 id="rec-title">Tous les dossiers</h2><p>{{ total }} réclamation{{ total|pluralize }} au total.</p></div></div>
+  <form class="toolbar" method="get">
+    <label class="search-box" for="rec-search">Rechercher <input id="rec-search" name="q" type="search" value="{{ q }}" placeholder="Auteur, transporteur, ville" autocomplete="off"></label>
+    <label class="select-box" for="rec-statut"><span>Statut :</span>
+      <select id="rec-statut" name="statut"><option value="">Tous</option>{% for value, label in statuts %}<option value="{{ value }}" {% if statut == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    </label>
+    <label class="select-box" for="rec-motif"><span>Motif :</span>
+      <select id="rec-motif" name="motif"><option value="">Tous</option>{% for value, label in motifs %}<option value="{{ value }}" {% if motif == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    </label>
+    <button class="secondary-button" type="submit">Filtrer</button>
+    {% if q or statut or motif %}<a class="secondary-button" href="{% url 'avis_admin:reclamation_list' %}">Réinitialiser</a>{% endif %}
+  </form>
+  <div class="table-wrap">
+    <table>
+      <caption class="sr-only">Liste des réclamations</caption>
+      <thead><tr><th>Référence</th><th>Auteur</th><th>Motif</th><th>Demande</th><th>Transporteur</th><th>Date</th><th>Statut</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for reclamation in page %}
+          <tr>
+            <td class="nowrap"><a href="{% url 'avis_admin:reclamation_detail' reclamation.pk %}"><strong>{{ reclamation.reference }}</strong></a></td>
+            <td><strong>{{ reclamation.auteur.full_name }}</strong><br><small>{{ reclamation.auteur.get_role_display }}</small></td>
+            <td>{{ reclamation.get_motif_display }}</td>
+            <td class="nowrap">{{ reclamation.demande.depart_ville }} ➔ {{ reclamation.demande.arrivee_ville }}</td>
+            <td>{{ reclamation.transporteur.full_name|default:"—" }}</td>
+            <td class="nowrap">{{ reclamation.created_at|date:"d/m/Y" }}</td>
+            <td class="nowrap"><span class="ar-badge ar-badge--{{ reclamation.statut }}">{{ reclamation.get_statut_display }}</span></td>
+            <td class="nowrap"><a class="secondary-button" href="{% url 'avis_admin:reclamation_detail' reclamation.pk %}">{% if reclamation.est_close %}Consulter{% else %}Traiter{% endif %}</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="8"><p class="empty-state">Aucune réclamation ne correspond à votre recherche.</p></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% include 'avis_reclamations/_pagination.html' %}
+</section>
+{% endblock %}

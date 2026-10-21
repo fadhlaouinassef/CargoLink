@@ -1,0 +1,7 @@
+{% if form.errors %}
+  <div class="ar-form-summary" role="alert">
+    <strong>Le formulaire contient {{ form.errors|length }} erreur{{ form.errors|length|pluralize }}.</strong>
+    Corrigez les champs signalés en rouge puis validez à nouveau.
+    {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+  </div>
+{% endif %}

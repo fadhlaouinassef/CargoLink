@@ -1,0 +1,65 @@
+{% extends 'avis_reclamations/admin/base.html' %}
+
+{% block title %}{{ reclamation.reference }}{% endblock %}
+{% block breadcrumb %}{{ reclamation.reference }}{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <p class="eyebrow">RÉCLAMATION</p>
+    <h1>{{ reclamation.reference }} <span class="ar-badge ar-badge--{{ reclamation.statut }}">{{ reclamation.get_statut_display }}</span></h1>
+    <p>{{ reclamation.get_motif_display }} · déposée le {{ reclamation.created_at|date:"d/m/Y à H:i" }}</p>
+  </div>
+  <a class="secondary-button" href="{% url 'avis_admin:reclamation_list' %}">← Retour à la liste</a>
+</section>
+
+<div class="ar-detail-grid">
+  <div>
+    <section class="ar-panel">
+      <h2>Dossier</h2>
+      <dl class="ar-facts">
+        <div><dt>Auteur</dt><dd>{{ reclamation.auteur.full_name }}<br><small>{{ reclamation.auteur.email }} · {{ reclamation.auteur.get_role_display }}</small></dd></div>
+        <div><dt>Transporteur</dt><dd>{{ reclamation.transporteur.full_name|default:"Non précisé" }}</dd></div>
+        <div><dt>Demande</dt><dd>{{ reclamation.demande }}<br><small>{{ reclamation.demande.depart_ville }} ➔ {{ reclamation.demande.arrivee_ville }}</small></dd></div>
+        <div><dt>Préjudice estimé</dt><dd>{% if reclamation.montant_prejudice is not None %}{{ reclamation.montant_prejudice }} TND{% else %}Non précisé{% endif %}</dd></div>
+      </dl>
+      <h3>Description des faits</h3>
+      <p class="ar-text-block">{{ reclamation.description }}</p>
+    </section>
+
+    {% if form %}
+      <section class="ar-panel">
+        <h2>Traiter le dossier</h2>
+        <form method="post" novalidate data-ar-form>
+          {% csrf_token %}
+          {% include 'avis_reclamations/_form_errors.html' %}
+          <fieldset class="ar-choices{% if form.statut.errors %} is-invalid{% endif %}">
+            <legend class="portal-label">Décision <span class="ar-required" aria-hidden="true">*</span></legend>
+            {% for radio in form.statut %}
+              <label class="ar-choice" for="{{ radio.id_for_label }}">{{ radio.tag }}<span>{{ radio.choice_label }}</span></label>
+            {% endfor %}
+            {% for error in form.statut.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+          </fieldset>
+          {% include 'avis_reclamations/_field.html' with field=form.reponse hint='Obligatoire pour résoudre ou rejeter. Cette réponse est visible par l’auteur du dossier.' %}
+          <div class="modal-actions"><button class="primary-button" type="submit">Enregistrer la décision</button></div>
+        </form>
+      </section>
+    {% else %}
+      <section class="ar-panel">
+        <h2>Décision</h2>
+        <p class="ar-note{% if reclamation.statut == 'rejetee' %} danger{% endif %}" style="white-space: pre-line;">{{ reclamation.reponse_admin }}</p>
+        <p class="hint">Dossier clôturé{% if reclamation.traitee_par %} par {{ reclamation.traitee_par.full_name }}{% endif %}{% if reclamation.traitee_le %} le {{ reclamation.traitee_le|date:"d/m/Y à H:i" }}{% endif %}. Il ne peut plus être modifié.</p>
+      </section>
+    {% endif %}
+  </div>
+
+  <aside class="ar-panel">
+    <h2>Avancement</h2>
+    <ol class="ar-steps">
+      <li class="done"><strong>Déposée</strong><small>{{ reclamation.created_at|date:"d/m/Y H:i" }}</small></li>
+      <li class="{% if reclamation.statut != 'ouverte' %}done{% endif %}"><strong>En instruction</strong><small>{% if reclamation.statut == 'ouverte' %}En attente{% else %}Pris en charge{% endif %}</small></li>
+      <li class="{% if reclamation.est_close %}done{% if reclamation.statut == 'rejetee' %} bad{% endif %}{% endif %}"><strong>{% if reclamation.statut == 'rejetee' %}Rejetée{% else %}Résolue{% endif %}</strong><small>{% if reclamation.est_close %}{{ reclamation.traitee_le|date:"d/m/Y H:i" }}{% else %}À venir{% endif %}</small></li>
+    </ol>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'pme/base.html' %}
+{% load static %}
+
+{% block title %}Évaluer un transporteur | CargoLink{% endblock %}
+{% block breadcrumb %}Évaluer un transporteur{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">
+  <script src="{% static 'js/avis-reclamations.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">Évaluer un transporteur</h1>
+      <p class="portal-page-subtitle">Votre avis aide les autres PME à choisir et récompense les transporteurs sérieux.</p>
+    </div>
+    <div class="portal-header-actions">
+      <a href="{% url 'pme:avis_list' %}" class="btn-secondary">Mes avis</a>
+    </div>
+  </div>
+
+  {% if aucune_demande %}
+    <div class="ar-empty">
+      <h2>Aucune demande à évaluer</h2>
+      <p>Vous pouvez évaluer un transporteur une fois une demande de transport publiée. Chaque demande ne peut être évaluée qu’une seule fois.</p>
+      <a href="{% url 'pme:demande_create' %}" class="btn-primary">Publier une demande</a>
+    </div>
+  {% else %}
+    <form method="post" novalidate data-ar-form style="max-width: 820px;">
+      {% csrf_token %}
+      {% include 'avis_reclamations/_form_errors.html' %}
+
+      <div class="portal-card">
+        <div class="portal-card-header"><h2 class="portal-card-title">1. Prestation concernée</h2></div>
+        <div class="form-grid-2">
+          {% include 'avis_reclamations/_field.html' with field=form.demande %}
+          {% include 'avis_reclamations/_field.html' with field=form.transporteur %}
+        </div>
+      </div>
+
+      <div class="portal-card">
+        <div class="portal-card-header"><h2 class="portal-card-title">2. Votre évaluation</h2></div>
+
+        <fieldset class="ar-rating{% if form.note.errors %} is-invalid{% endif %}">
+          <legend class="portal-label">Note globale <span class="ar-required" aria-hidden="true">*</span></legend>
+          <div class="star-rating">
+            {% for value in "54321" %}
+              <input type="radio" id="star{{ value }}" name="note" value="{{ value }}" required{% if form.note.value|stringformat:"s" == value %} checked{% endif %}>
+              <label for="star{{ value }}" title="{{ value }} sur 5">★<span class="sr-only">{{ value }} sur 5</span></label>
+            {% endfor %}
+          </div>
+          <p class="ar-rating-text" data-rating-text></p>
+          {% for error in form.note.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+        </fieldset>
+
+        {% include 'avis_reclamations/_field.html' with field=form.commentaire hint='Soyez factuel et respectueux : ponctualité, soin des marchandises, communication.' %}
+
+        <div class="ar-form-actions">
+          <a href="{% url 'pme:avis_list' %}" class="btn-secondary">Annuler</a>
+          <button type="submit" class="btn-primary">Publier mon avis</button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

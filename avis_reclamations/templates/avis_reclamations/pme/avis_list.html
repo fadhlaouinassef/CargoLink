@@ -1,0 +1,49 @@
+{% extends 'pme/base.html' %}
+{% load static %}
+
+{% block title %}Mes avis | CargoLink{% endblock %}
+{% block breadcrumb %}Mes avis{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">Mes avis</h1>
+      <p class="portal-page-subtitle">Les évaluations que vous avez données à vos transporteurs.</p>
+    </div>
+    <div class="portal-header-actions">
+      <a href="{% url 'pme:avis_create' %}" class="btn-primary">Évaluer un transporteur</a>
+    </div>
+  </div>
+
+  {% if page.object_list %}
+    <div class="ar-card-list">
+      {% for avis in page %}
+        <article class="ar-item ar-item--{{ avis.statut }}">
+          <div class="ar-item-main">
+            <h2 class="ar-item-title">{{ avis.transporteur.full_name }} {% include 'avis_reclamations/_stars.html' with note=avis.note %}</h2>
+            <p class="ar-item-meta">
+              <span>{{ avis.demande }} · {{ avis.demande.depart_ville }} ➔ {{ avis.demande.arrivee_ville }}</span>
+              <span>Publié le {{ avis.created_at|date:"d/m/Y" }}</span>
+            </p>
+            <p class="ar-item-text">{{ avis.commentaire }}</p>
+            {% if not avis.est_publie %}
+              <p class="ar-note danger">Cet avis a été masqué par la modération{% if avis.motif_moderation %} : {{ avis.motif_moderation }}{% endif %}.</p>
+            {% endif %}
+          </div>
+          <div class="ar-item-side"><span class="ar-badge ar-badge--{{ avis.statut }}">{{ avis.get_statut_display }}</span></div>
+        </article>
+      {% endfor %}
+    </div>
+    {% include 'avis_reclamations/_pagination.html' %}
+  {% else %}
+    <div class="ar-empty">
+      <h2>Vous n’avez pas encore donné d’avis</h2>
+      <p>Évaluez un transporteur pour partager votre expérience avec la communauté.</p>
+      <a href="{% url 'pme:avis_create' %}" class="btn-primary">Évaluer un transporteur</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

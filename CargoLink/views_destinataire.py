@@ -21,12 +21,3 @@ def confirmation(request):
     return render(request, 'destinataire/confirmation_reception.html', {
         'active_tab': 'confirmation',
     })
-
-
-def reclamation(request):
-    if request.method == 'POST':
-        messages.warning(request, "Votre constat d'anomalie a été transmis à l'administrateur CargoLink et à l'expéditeur pour instruction immédiate.")
-        return redirect('destinataire:dashboard')
-    return render(request, 'destinataire/reclamation_create.html', {
-        'active_tab': 'reclamation',
-    })

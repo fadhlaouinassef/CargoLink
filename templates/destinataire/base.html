@@ -53,6 +53,10 @@
           <span class="nav-icon">⚠️</span>
           <span>Signaler une anomalie</span>
         </a>
+        <a href="{% url 'destinataire:reclamation_list' %}" class="portal-nav-link {% if active_tab == 'reclamation_list' %}active{% endif %}">
+          <span class="nav-icon">🗂️</span>
+          <span>Mes réclamations</span>
+        </a>
       </nav>
 
       <div class="sidebar-footer">

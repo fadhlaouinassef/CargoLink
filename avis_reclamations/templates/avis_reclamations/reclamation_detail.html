@@ -1,0 +1,52 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}{{ reclamation.reference }} | CargoLink{% endblock %}
+{% block breadcrumb %}{{ reclamation.reference }}{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">{{ reclamation.reference }} <span class="ar-badge ar-badge--{{ reclamation.statut }}">{{ reclamation.get_statut_display }}</span></h1>
+      <p class="portal-page-subtitle">{{ reclamation.get_motif_display }} · déposée le {{ reclamation.created_at|date:"d/m/Y à H:i" }}</p>
+    </div>
+    <div class="portal-header-actions">
+      <a href="{% url url_list %}" class="btn-secondary">← Mes réclamations</a>
+    </div>
+  </div>
+
+  <div class="ar-detail-grid">
+    <div class="portal-card">
+      <dl class="ar-facts">
+        <div><dt>Demande</dt><dd>{{ reclamation.demande }}</dd></div>
+        <div><dt>Trajet</dt><dd>{{ reclamation.demande.depart_ville }} ➔ {{ reclamation.demande.arrivee_ville }}</dd></div>
+        <div><dt>Transporteur</dt><dd>{{ reclamation.transporteur.full_name|default:"Non précisé" }}</dd></div>
+        <div><dt>Préjudice estimé</dt><dd>{% if reclamation.montant_prejudice is not None %}{{ reclamation.montant_prejudice }} TND{% else %}Non précisé{% endif %}</dd></div>
+      </dl>
+
+      <h2 class="portal-card-title">Description des faits</h2>
+      <p class="ar-text-block">{{ reclamation.description }}</p>
+
+      <h2 class="portal-card-title">Réponse de l’administrateur</h2>
+      {% if reclamation.reponse_admin %}
+        <p class="ar-note{% if reclamation.statut == 'rejetee' %} danger{% endif %}" style="white-space: pre-line;">{{ reclamation.reponse_admin }}</p>
+        <p class="portal-input-hint">Traité le {{ reclamation.traitee_le|date:"d/m/Y à H:i" }}</p>
+      {% else %}
+        <p class="ar-note">Aucune réponse pour le moment. Votre dossier sera traité par l’administrateur CargoLink.</p>
+      {% endif %}
+    </div>
+
+    <aside class="portal-card">
+      <h2 class="portal-card-title">Avancement du dossier</h2>
+      <ol class="ar-steps">
+        <li class="done"><strong>Réclamation déposée</strong><small>{{ reclamation.created_at|date:"d/m/Y H:i" }}</small></li>
+        <li class="{% if reclamation.statut != 'ouverte' %}done{% endif %}"><strong>En instruction</strong><small>{% if reclamation.statut == 'ouverte' %}En attente de prise en charge{% else %}Pris en charge par l’administrateur{% endif %}</small></li>
+        <li class="{% if reclamation.est_close %}done{% if reclamation.statut == 'rejetee' %} bad{% endif %}{% endif %}"><strong>{% if reclamation.statut == 'rejetee' %}Rejetée{% else %}Résolue{% endif %}</strong><small>{% if reclamation.est_close %}{{ reclamation.traitee_le|date:"d/m/Y H:i" }}{% else %}Décision à venir{% endif %}</small></li>
+      </ol>
+    </aside>
+  </div>
+</div>
+{% endblock %}
