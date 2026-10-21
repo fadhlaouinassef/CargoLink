@@ -1,0 +1,32 @@
+.demand-section-label { margin: 0 0 0.75rem; color: var(--green); font-size: 14px; }
+.field-error { margin: 0.35rem 0 0; color: var(--error); font-size: 13px; }
+.form-errors { color: var(--error); }
+.demand-form-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.checkbox-cell, .demand-checkboxes label { display: flex; align-items: center; gap: 8px; }
+.demand-checkboxes { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+.btn-remove-row { min-width: 36px; min-height: 36px; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--error); background: var(--surface); font-size: 20px; cursor: pointer; }
+.demand-filter-card { padding: 1rem 1.25rem; }
+.demand-filter-form { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.demand-filter-form > .portal-input { flex: 1 1 240px; }
+.demand-filter-form > .portal-select { flex: 0 1 240px; }
+.demand-count { margin-left: auto; color: var(--muted); font-size: 13px; }
+.demand-list-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 1rem; border-left: 4px solid var(--green); }
+.demand-list-main { min-width: 0; }
+.demand-title-row, .demand-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+.demand-route { margin: 0.55rem 0; color: var(--ink); font-size: 16px; font-weight: 700; }
+.demand-meta { color: var(--muted); font-size: 13px; }
+.demand-empty-state { text-align: center; padding: 2.5rem 1rem; }
+.demand-empty-state p { color: var(--muted); }
+.demand-detail-block { min-width: 0; padding: 1rem; border-radius: var(--radius-md); background: var(--bg); overflow-wrap: anywhere; }
+.demand-detail-block h3 { margin: 0 0 0.5rem; color: var(--green); font-size: 13px; text-transform: uppercase; }
+.demand-detail-block p, .demand-detail-grid aside p { margin: 0.4rem 0; color: var(--muted); }
+.demand-notes { margin-top: 1rem; padding: 1rem; border-radius: var(--radius-md); background: var(--bg); overflow-wrap: anywhere; }
+.demand-equipment { padding-left: 1.25rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 600px) {
+  .demand-list-card { align-items: stretch; flex-direction: column; }
+  .demand-list-card > .btn-secondary { justify-content: center; }
+  .demand-count { margin-left: 0; flex-basis: 100%; }
+  .demand-form-actions > * { flex: 1 1 100%; justify-content: center; }
+}

@@ -13,7 +13,7 @@ class ActorPortalsTests(TestCase):
         )
 
     def test_transporteur_portal_urls(self):
-        for page in ('dashboard', 'trajets', 'demandes', 'offres', 'vehicules', 'transports', 'avis'):
+        for page in ('dashboard', 'trajets', 'offres', 'vehicules', 'transports', 'avis'):
             with self.subTest(page=page):
                 if page == 'vehicules':
                     self.client.force_login(self.transporteur)

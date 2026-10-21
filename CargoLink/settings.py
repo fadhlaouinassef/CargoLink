@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentification.apps.AuthentificationConfig',
     'vehicules',
+    'demandes.apps.DemandesConfig',
 ]
 
 MIDDLEWARE = [
