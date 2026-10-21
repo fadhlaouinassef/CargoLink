@@ -1,0 +1,162 @@
+{% extends 'pme/base.html' %}
+{% load static %}
+
+{% block title %}Publier une demande de transport | CargoLink{% endblock %}
+{% block breadcrumb %}Publier une demande{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Gestion des demandes de transport</div>
+    <h1 class="portal-page-title">Publier un besoin de transport</h1>
+    <p class="portal-page-subtitle">Décrivez le trajet et les marchandises pour recevoir des propositions de transporteurs.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a href="{% url 'pme:demandes_list' %}" class="btn-secondary">Annuler</a>
+  </div>
+</div>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors or formset.non_form_errors %}
+    <div class="portal-card form-errors" role="alert">
+      {{ form.non_field_errors }}{{ formset.non_form_errors }}
+    </div>
+  {% endif %}
+
+  <div class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">1. Itinéraire & planning</h2></div>
+    <div class="form-grid-2">
+      <div>
+        <h3 class="demand-section-label">Point d'enlèvement</h3>
+        {% for field in form %}
+          {% if field.name == 'depart_ville' or field.name == 'depart_adresse' or field.name == 'date_depart' %}
+            <div class="portal-form-group">
+              <label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+              {{ field }}
+              {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div>
+        <h3 class="demand-section-label">Point de livraison</h3>
+        {% for field in form %}
+          {% if field.name == 'arrivee_ville' or field.name == 'arrivee_adresse' or field.name == 'date_limite' %}
+            <div class="portal-form-group">
+              <label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+              {{ field }}
+              {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">2. Destinataire</h2></div>
+    <div class="form-grid-3">
+      {% for field in form %}
+        {% if field.name == 'destinataire_nom' or field.name == 'destinataire_contact' or field.name == 'destinataire_tel' %}
+          <div class="portal-form-group">
+            <label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }} *</label>
+            {{ field }}
+            {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="portal-card">
+    <div class="portal-card-header">
+      <h2 class="portal-card-title">3. Marchandises</h2>
+      <button type="button" class="btn-secondary" id="btn-add-goods">+ Ajouter une marchandise</button>
+    </div>
+    {{ formset.management_form }}
+    <div class="portal-table-wrap" tabindex="0" aria-label="Liste des marchandises, défilement horizontal possible">
+      <table class="portal-table goods-table">
+        <thead><tr><th>Description</th><th>Conditionnement</th><th>Poids (kg)</th><th>Volume (m³)</th><th>Fragile</th><th>Retirer</th></tr></thead>
+        <tbody id="goods-table-body">
+          {% for good_form in formset %}
+            <tr class="goods-row">
+              {% for hidden in good_form.hidden_fields %}{{ hidden }}{% endfor %}
+              {% for field in good_form.visible_fields %}
+                <td>
+                  {% if field.name == 'fragile' %}
+                    <label class="checkbox-cell">{{ field }}<span class="sr-only">{{ field.label }}</span></label>
+                  {% elif field.name == 'DELETE' %}
+                    <span class="delete-field">{{ field.as_hidden }}</span>
+                    <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
+                  {% else %}
+                    {{ field }}
+                  {% endif %}
+                  {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <template id="empty-good-form">
+      <tr class="goods-row">
+        {% for hidden in formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+        {% for field in formset.empty_form.visible_fields %}
+          <td>
+            {% if field.name == 'fragile' %}
+              <label class="checkbox-cell">{{ field }}<span class="sr-only">{{ field.label }}</span></label>
+            {% elif field.name == 'DELETE' %}
+              <span class="delete-field">{{ field.as_hidden }}</span>
+              <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
+            {% else %}
+              {{ field }}
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    </template>
+  </div>
+
+  <div class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">4. Besoins & budget</h2></div>
+    <div class="form-grid-2">
+      <div class="portal-form-group">
+        <span class="portal-label">Équipement requis</span>
+        <div class="demand-checkboxes">
+          {% for field in form %}
+            {% if field.name == 'hayon' or field.name == 'transpalette' or field.name == 'bache' %}
+              <label>{{ field }} {{ field.label }}</label>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="portal-form-group">
+        <label class="portal-label" for="{{ form.consignes.id_for_label }}">{{ form.consignes.label }}</label>
+        {{ form.consignes }}
+        {% for error in form.consignes.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+    </div>
+    <div class="form-grid-3">
+      {% for field in form %}
+        {% if field.name == 'budget' or field.name == 'modalite_paiement' or field.name == 'validite_offres' %}
+          <div class="portal-form-group">
+            <label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="demand-form-actions">
+      <button type="submit" name="action" value="draft" class="btn-secondary">Enregistrer comme brouillon</button>
+      <button type="submit" name="action" value="publish" class="btn-primary">Publier la demande</button>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/demandes.js' %}" defer></script>
+{% endblock %}

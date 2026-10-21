@@ -1,0 +1,72 @@
+{% extends 'pme/base.html' %}
+
+{% block title %}Détail {{ demande }} | CargoLink{% endblock %}
+{% block breadcrumb %}
+  <a href="{% url 'pme:demandes_list' %}">Mes demandes</a><span>/</span><span class="current">{{ demande }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">{{ demande.get_statut_display }}</div>
+    <h1 class="portal-page-title">Demande {{ demande }}</h1>
+    <p class="portal-page-subtitle">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</p>
+  </div>
+  <div class="portal-header-actions"><a href="{% url 'pme:demandes_list' %}" class="btn-secondary">Retour aux demandes</a></div>
+</div>
+
+<div class="actor-grid-detail demand-detail-grid">
+  <div>
+    <section class="portal-card">
+      <div class="portal-card-header"><h2 class="portal-card-title">Itinéraire & planning</h2></div>
+      <div class="form-grid-2">
+        <div class="demand-detail-block">
+          <h3>Départ</h3><strong>{{ demande.depart_ville }}</strong>
+          <p>{{ demande.depart_adresse }}</p><p>Enlèvement : {{ demande.date_depart|date:"d/m/Y" }}</p>
+        </div>
+        <div class="demand-detail-block">
+          <h3>Destination</h3><strong>{{ demande.arrivee_ville }}</strong>
+          <p>{{ demande.arrivee_adresse }}</p><p>Livraison avant le {{ demande.date_limite|date:"d/m/Y" }}</p>
+        </div>
+      </div>
+    </section>
+    <section class="portal-card">
+      <div class="portal-card-header"><h2 class="portal-card-title">Marchandises</h2></div>
+      <div class="portal-table-wrap" tabindex="0" aria-label="Marchandises, défilement horizontal possible">
+        <table class="portal-table">
+          <thead><tr><th>Description</th><th>Conditionnement</th><th>Poids</th><th>Volume</th><th>Fragile</th></tr></thead>
+          <tbody>
+            {% for marchandise in demande.marchandises.all %}
+              <tr>
+                <td>{{ marchandise.description }}</td><td>{{ marchandise.get_type_display }}</td>
+                <td>{{ marchandise.poids }} kg</td><td>{% if marchandise.volume %}{{ marchandise.volume }} m³{% else %}—{% endif %}</td>
+                <td>{% if marchandise.fragile %}Oui{% else %}Non{% endif %}</td>
+              </tr>
+            {% empty %}<tr><td colspan="5">Aucune marchandise renseignée.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if demande.consignes %}<p class="demand-notes"><strong>Consignes :</strong> {{ demande.consignes }}</p>{% endif %}
+    </section>
+  </div>
+  <aside>
+    <section class="portal-card">
+      <div class="portal-card-header"><h2 class="portal-card-title">Destinataire</h2></div>
+      <p><strong>{{ demande.destinataire_nom }}</strong></p>
+      <p>{{ demande.destinataire_contact }}</p>
+      <p><a href="tel:{{ demande.destinataire_tel }}">{{ demande.destinataire_tel }}</a></p>
+    </section>
+    <section class="portal-card">
+      <div class="portal-card-header"><h2 class="portal-card-title">Budget & besoins</h2></div>
+      <p>Budget : <strong>{% if demande.budget %}{{ demande.budget|floatformat:2 }} TND{% else %}Non précisé{% endif %}</strong></p>
+      <p>Règlement : {{ demande.get_modalite_paiement_display }}</p>
+      <p>Validité des offres : {{ demande.validite_offres }}</p>
+      <ul class="demand-equipment">
+        {% if demande.hayon %}<li>Hayon élévateur requis</li>{% endif %}
+        {% if demande.transpalette %}<li>Transpalette à bord</li>{% endif %}
+        {% if demande.bache %}<li>Camion bâché / fermé</li>{% endif %}
+      </ul>
+    </section>
+  </aside>
+</div>
+{% endblock %}
