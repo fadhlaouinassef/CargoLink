@@ -1,219 +1,70 @@
 {% extends 'pme/base.html' %}
 
-{% block title %}Tableau de bord PME & Expéditeur | CargoLink{% endblock %}
+{% block title %}Tableau de bord PME | CargoLink{% endblock %}
 {% block breadcrumb %}Tableau de bord{% endblock %}
 
 {% block content %}
 <div class="portal-page-header">
   <div>
-    <div class="portal-eyebrow">Vue d'ensemble de vos expéditions</div>
-    <h1 class="portal-page-title">Bonjour, AgroMed Distribution</h1>
-    <p class="portal-page-subtitle">Gérez vos demandes de fret, comparez les propositions de transporteurs et suivez vos livraisons partout en Tunisie.</p>
+    <div class="portal-eyebrow">Vue d'ensemble de vos demandes</div>
+    <h1 class="portal-page-title">Bonjour, {{ request.user.full_name|default:"bienvenue" }}</h1>
+    <p class="portal-page-subtitle">Consultez vos demandes de transport enregistrées et leur statut.</p>
   </div>
   <div class="portal-header-actions">
-    <a href="{% url 'pme:demande_create' %}" class="btn-primary">
-      <span>➕</span> Publier un besoin de transport
-    </a>
+    <a href="{% url 'pme:demande_create' %}" class="btn-primary">+ Publier un besoin de transport</a>
   </div>
 </div>
 
-<!-- Alerte Offres en attente -->
-<div class="portal-card" style="border-left: 4px solid var(--sand); background: var(--sand-light);">
-  <div class="actor-flex-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-    <div class="actor-flex-row" style="display: flex; align-items: center; gap: 14px;">
-      <span style="font-size: 24px;">🏷️</span>
-      <div>
-        <strong style="color: var(--ink); font-size: 15px;">Nouvelles offres reçues !</strong>
-        <p style="margin: 2px 0 0; color: var(--muted); font-size: 13.5px;">
-          Vous avez <strong>3 nouvelles propositions</strong> de transporteurs pour la demande <strong>#DEM-2026-08 (Tunis → Sfax)</strong>.
-        </p>
-      </div>
-    </div>
-    <a href="{% url 'pme:offres_comparer' %}" class="btn-sand" style="font-size: 13px; padding: 0.5rem 1rem;">
-      Comparer et sélectionner un transporteur →
-    </a>
-  </div>
-</div>
-
-<!-- Stats Grid -->
 <div class="stat-cards-grid">
   <div class="stat-item-card">
     <div class="stat-icon-wrapper green">📦</div>
-    <div class="stat-content">
-      <small>Demandes actives</small>
-      <strong>4</strong>
-      <span class="sub">Dont 2 ouvertes aux devis</span>
-    </div>
+    <div class="stat-content"><small>Total des demandes</small><strong>{{ total_demandes }}</strong><span class="sub">Enregistrées dans votre espace</span></div>
   </div>
-
   <div class="stat-item-card">
-    <div class="stat-icon-wrapper sand">🏷️</div>
-    <div class="stat-content">
-      <small>Offres reçues</small>
-      <strong>8</strong>
-      <span class="sub">À comparer aujourd'hui</span>
-    </div>
+    <div class="stat-icon-wrapper sand">🚚</div>
+    <div class="stat-content"><small>Demandes publiées</small><strong>{{ demandes_ouvertes }}</strong><span class="sub">En recherche de transporteur</span></div>
   </div>
-
   <div class="stat-item-card">
-    <div class="stat-icon-wrapper blue">🚚</div>
-    <div class="stat-content">
-      <small>En acheminement</small>
-      <strong>2</strong>
-      <span class="sub">1 arrivée prévue cet après-midi</span>
-    </div>
-  </div>
-
-  <div class="stat-item-card">
-    <div class="stat-icon-wrapper green">✅</div>
-    <div class="stat-content">
-      <small>Taux de livraison conforme</small>
-      <strong>98.7%</strong>
-      <span class="sub">Sur 34 transports effectués</span>
-    </div>
+    <div class="stat-icon-wrapper blue">📝</div>
+    <div class="stat-content"><small>Brouillons</small><strong>{{ brouillons }}</strong><span class="sub">À compléter ou publier</span></div>
   </div>
 </div>
 
-<!-- Two columns: Active Tracking & Recent Demands -->
-<div class="actor-grid-equal" style="display: grid;  gap: 1.5rem; margin-bottom: 1.5rem;">
-  <!-- Suivi en direct -->
-  <div class="portal-card" style="margin-bottom: 0;">
-    <div class="portal-card-header">
-      <h2 class="portal-card-title">🚚 Expédition en cours d'acheminement</h2>
-      <a href="{% url 'pme:transport_suivi' %}" style="font-size: 12.5px; font-weight: 600;">Détails complets →</a>
-    </div>
-    <div style="background: var(--bg); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
-      <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-        <span style="font-weight: 700; color: var(--ink);">Transport #TR-8842</span>
-        <span class="badge badge-active">En transit</span>
-      </div>
-      <div style="color: var(--muted); font-size: 13px;">
-        <strong>Tunis (Zone Industrielle Charguia)</strong> → <strong>Sfax (Zone Portuaire)</strong>
-      </div>
-      <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px;">
-        Marchandise : 4 Palettes d'huile d'olive (1 850 kg) • Camionnette 3.5T
-      </div>
-    </div>
-    <div style="font-size: 13px; line-height: 1.6;">
-      <div class="actor-flex-row" style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-        <span style="color: var(--muted);">Transporteur :</span>
-        <strong>Express Sahel Transport (M. Mohamed Triki)</strong>
-      </div>
-      <div class="actor-flex-row" style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-        <span style="color: var(--muted);">Destinataire :</span>
-        <strong>Société Huiles du Sud (Sfax)</strong>
-      </div>
-      <div class="actor-flex-row" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-        <span style="color: var(--muted);">Dernier pointage :</span>
-        <span style="color: var(--green); font-weight: 600;">Péage El Jem (13h42)</span>
-      </div>
-    </div>
-    <div style="margin-top: 1rem; text-align: right;">
-      <a href="{% url 'pme:transport_suivi' %}" class="btn-secondary" style="font-size: 12.5px; padding: 0.45rem 0.85rem;">
-        Consulter le suivi en direct
-      </a>
-    </div>
-  </div>
-
-  <!-- Actions rapides & Conseils PME -->
-  <div class="portal-card" style="margin-bottom: 0;">
-    <div class="portal-card-header">
-      <h2 class="portal-card-title">⚡ Actions rapides</h2>
-    </div>
-    <div class="actor-flex-row" style="display: flex; flex-direction: column; gap: 10px;">
-      <a href="{% url 'pme:demande_create' %}" class="portal-card" style="padding: 1rem; margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: space-between; border-color: var(--line);">
-        <div>
-          <strong style="color: var(--ink); display: block;">Publier un nouveau besoin</strong>
-          <span style="font-size: 12px; color: var(--muted);">Décrivez votre marchandise et recevez des offres en quelques heures</span>
-        </div>
-        <span style="font-size: 20px; color: var(--primary);">➔</span>
-      </a>
-
-      <a href="{% url 'pme:offres_comparer' %}" class="portal-card" style="padding: 1rem; margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: space-between; border-color: var(--line);">
-        <div>
-          <strong style="color: var(--ink); display: block;">Comparer les propositions reçues</strong>
-          <span style="font-size: 12px; color: var(--muted);">Analysez les prix, véhicules et notes des transporteurs indépendants</span>
-        </div>
-        <span style="font-size: 20px; color: var(--sand-dark);">➔</span>
-      </a>
-
-      <a href="{% url 'pme:avis_create' %}" class="portal-card" style="padding: 1rem; margin: 0; background: var(--bg); display: flex; align-items: center; justify-content: space-between; border-color: var(--line);">
-        <div>
-          <strong style="color: var(--ink); display: block;">Déposer un avis sur une prestation</strong>
-          <span style="font-size: 12px; color: var(--muted);">Évaluez la ponctualité et le soin apporté à votre marchandise</span>
-        </div>
-        <span style="font-size: 20px; color: var(--green);">➔</span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- Table: Dernières demandes de transport -->
-<div class="portal-card" style="margin-top: 1.5rem;">
+<section class="portal-card">
   <div class="portal-card-header">
-    <h2 class="portal-card-title">📦 Vos demandes récentes de transport</h2>
-    <a href="{% url 'pme:demandes_list' %}" style="font-size: 13px; font-weight: 600;">Voir toutes les demandes (4) →</a>
+    <h2 class="portal-card-title">Demandes récentes</h2>
+    <a href="{% url 'pme:demandes_list' %}">Voir toutes les demandes →</a>
   </div>
-  <div class="portal-table-wrap">
-    <table class="portal-table">
-      <thead>
-        <tr>
-          <th>Réf. Demande</th>
-          <th>Trajet</th>
-          <th>Marchandises</th>
-          <th>Date enlèvement</th>
-          <th>Offres reçues</th>
-          <th>Statut</th>
-          <th style="text-align: right;">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>#DEM-2026-08</strong></td>
-          <td>Tunis → Sfax</td>
-          <td>4 Palettes (1 850 kg) • Agroalimentaire</td>
-          <td>24 Oct 2026</td>
-          <td><span style="font-weight: 700; color: var(--sand-dark);">3 offres</span></td>
-          <td><span class="badge badge-offers">Offres à comparer</span></td>
-          <td style="text-align: right;">
-            <a href="{% url 'pme:offres_comparer' %}" class="btn-sand" style="font-size: 12px; padding: 0.4rem 0.75rem;">Comparer les offres</a>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>#DEM-2026-07</strong></td>
-          <td>Sousse → Bizerte</td>
-          <td>12 Fûts sécurisés (900 kg)</td>
-          <td>26 Oct 2026</td>
-          <td><span style="font-weight: 700; color: var(--sand-dark);">2 offres</span></td>
-          <td><span class="badge badge-offers">Offres à comparer</span></td>
-          <td style="text-align: right;">
-            <a href="{% url 'pme:offres_comparer' %}" class="btn-sand" style="font-size: 12px; padding: 0.4rem 0.75rem;">Comparer les offres</a>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>#DEM-2026-05</strong></td>
-          <td>Nabeul → Tunis</td>
-          <td>Lot de matériel d'emballage (450 kg)</td>
-          <td>28 Oct 2026</td>
-          <td><span>1 offre en attente</span></td>
-          <td><span class="badge badge-pending">En recherche</span></td>
-          <td style="text-align: right;">
-            <a href="{% url 'pme:demande_detail' %}" class="btn-secondary" style="font-size: 12px; padding: 0.4rem 0.75rem;">Voir la fiche</a>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>#DEM-2026-01</strong></td>
-          <td>Tunis → Gabès</td>
-          <td>Machines pièces détachées (1 200 kg)</td>
-          <td>19 Oct 2026</td>
-          <td><span>Offre acceptée</span></td>
-          <td><span class="badge badge-success">Livré</span></td>
-          <td style="text-align: right;">
-            <a href="{% url 'pme:avis_create' %}" class="btn-secondary" style="font-size: 12px; padding: 0.4rem 0.75rem;">Évaluer</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  {% if demandes_recentes %}
+    <div class="portal-table-wrap" tabindex="0" aria-label="Demandes récentes, défilement horizontal possible">
+      <table class="portal-table">
+        <thead>
+          <tr><th>Référence</th><th>Trajet</th><th>Marchandises</th><th>Enlèvement</th><th>Statut</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          {% for demande in demandes_recentes %}
+            <tr>
+              <td><strong>{{ demande }}</strong></td>
+              <td>{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</td>
+              <td>
+                {% with marchandise=demande.marchandises.all|first %}
+                  {% if marchandise %}{{ marchandise.description }} ({{ marchandise.poids }} kg){% endif %}
+                  {% if demande.marchandises.count > 1 %} + {{ demande.marchandises.count|add:"-1" }} autre{{ demande.marchandises.count|add:"-1"|pluralize }}{% endif %}
+                {% endwith %}
+              </td>
+              <td>{{ demande.date_depart|date:"d/m/Y" }}</td>
+              <td><span class="badge {% if demande.statut == 'ouverte' %}badge-active{% else %}badge-offers{% endif %}">{{ demande.get_statut_display }}</span></td>
+              <td><a href="{% url 'pme:demande_detail_item' demande.pk %}" class="btn-secondary">Détail</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="demand-empty-state">
+      <p>Vos demandes enregistrées apparaîtront ici.</p>
+      <a href="{% url 'pme:demande_create' %}" class="btn-primary">Créer ma première demande</a>
+    </div>
+  {% endif %}
+</section>
 {% endblock %}

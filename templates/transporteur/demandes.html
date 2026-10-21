@@ -1,139 +1,61 @@
-{% extends 'transporteur/base.html' %} {% block title %}Demandes compatibles |
-CargoLink{% endblock %} {% block breadcrumb %}Demandes compatibles{% endblock %}
+{% extends 'transporteur/base.html' %}
+
+{% block title %}Demandes disponibles | CargoLink{% endblock %}
+{% block breadcrumb %}Demandes disponibles{% endblock %}
+
 {% block content %}
 <div class="portal-page-header">
   <div>
-    <div class="portal-eyebrow">Espace transporteur</div>
-    <h1 class="portal-page-title">Demandes compatibles</h1>
-    <p class="portal-page-subtitle">
-      Consultez les besoins des PME et proposez votre prix.
-    </p>
+    <div class="portal-eyebrow">Demandes publiées par les PME</div>
+    <h1 class="portal-page-title">Demandes de transport disponibles</h1>
+    <p class="portal-page-subtitle">Parcourez les demandes ouvertes et consultez les marchandises, trajets et délais avant de contacter la PME.</p>
   </div>
 </div>
+
 <section class="portal-card">
-  <div class="portal-card-header">
-    <h2 class="portal-card-title">Rechercher un chargement</h2>
-  </div>
-  <form id="carrier-search">
-    <div class="form-grid-2">
-      <label class="portal-form-group">
-        <span class="portal-label">Ville ou marchandise</span>
-        <input
-          class="portal-input"
-          type="search"
-          required
-          id="demand-search"
-          placeholder="Tunis, palettes…"
-        />
-      </label>
-    </div>
-    <button class="btn-secondary" type="submit">Rechercher</button>
+  <form method="get" class="available-demand-search">
+    <label class="portal-form-group">
+      <span class="portal-label">Ville ou marchandise</span>
+      <input class="portal-input" type="search" name="q" value="{{ query }}" placeholder="Ex. Tunis, palettes">
+    </label>
+    <button class="btn-primary" type="submit">Rechercher</button>
+    {% if query %}<a class="btn-secondary" href="{% url 'transporteur:demandes' %}">Effacer</a>{% endif %}
   </form>
 </section>
+
 <section class="portal-card">
   <div class="portal-card-header">
     <h2 class="portal-card-title">Demandes ouvertes</h2>
+    <span class="badge badge-active">{{ total_demandes }} disponible{{ total_demandes|pluralize }}</span>
   </div>
-  <div id="demand-results">
-    <div class="portal-table-wrap">
-      <table class="portal-table">
-        <thead>
-          <tr>
-            <th>Demande / PME</th>
-            <th>Trajet</th>
-            <th>Marchandises</th>
-            <th>Date</th>
-            <th>Budget</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#DEM-2026-08<br />AgroMed Distribution</td>
-            <td>Tunis → Sfax</td>
-            <td>4 palettes · 1 850 kg</td>
-            <td>24 oct. 2026</td>
-            <td>450 TND</td>
-            <td>
-              <button
-                class="btn-primary"
-                type="button"
-                data-offer="DEM-2026-08"
-              >
-                Proposer un prix
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>#DEM-2026-07<br />Sahel Industrie</td>
-            <td>Sousse → Bizerte</td>
-            <td>12 fûts · 900 kg</td>
-            <td>26 oct. 2026</td>
-            <td>380 TND</td>
-            <td>
-              <button
-                class="btn-primary"
-                type="button"
-                data-offer="DEM-2026-07"
-              >
-                Proposer un prix
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>#DEM-2026-05<br />Cap Emballage</td>
-            <td>Nabeul → Tunis</td>
-            <td>Emballages · 450 kg</td>
-            <td>28 oct. 2026</td>
-            <td>180 TND</td>
-            <td>
-              <button
-                class="btn-primary"
-                type="button"
-                data-offer="DEM-2026-05"
-              >
-                Proposer un prix
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  {% for demande in demandes %}
+    <article class="available-demand-card">
+      <div class="available-demand-summary">
+        <div class="available-demand-heading">
+          <strong>{{ demande }}</strong>
+          <span class="badge badge-active">{{ demande.get_statut_display }}</span>
+        </div>
+        <h3 class="available-demand-route">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</h3>
+        <div class="available-demand-meta">
+          <span>Enlèvement : {{ demande.date_depart|date:"d/m/Y" }}</span>
+          <span>Livraison avant : {{ demande.date_limite|date:"d/m/Y" }}</span>
+          <span>{{ demande.marchandises.count }} marchandise{{ demande.marchandises.count|pluralize }}</span>
+          {% if demande.budget %}<span>Budget indicatif : {{ demande.budget|floatformat:2 }} TND</span>{% endif %}
+        </div>
+        <ul class="available-goods-preview">
+          {% for marchandise in demande.marchandises.all %}
+            <li>{{ marchandise.description }} · {{ marchandise.poids }} kg{% if marchandise.volume %} · {{ marchandise.volume }} m³{% endif %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <a href="{% url 'transporteur:demande_detail' demande.pk %}" class="btn-secondary">Consulter le détail</a>
+    </article>
+  {% empty %}
+    <div class="demand-empty-state">
+      <h3>Aucune demande disponible</h3>
+      <p>{% if query %}Aucune demande ouverte ne correspond à « {{ query }} ».{% else %}Les nouvelles demandes publiées par les PME apparaîtront ici.{% endif %}</p>
+      {% if query %}<a class="btn-secondary" href="{% url 'transporteur:demandes' %}">Voir toutes les demandes</a>{% endif %}
     </div>
-  </div>
-  <p id="no-demands" hidden>Aucune demande ne correspond à votre recherche.</p>
-</section>
-<section class="portal-card">
-  <div class="portal-card-header">
-    <h2 class="portal-card-title">Proposer une offre</h2>
-  </div>
-  <form data-demo-form>
-    <div class="form-grid-2">
-      <label class="portal-form-group">
-        <span class="portal-label">Référence de la demande</span>
-        <input class="portal-input" type="text" required id="offer-reference" />
-      </label>
-      <label class="portal-form-group">
-        <span class="portal-label">Prix proposé (TND)</span>
-        <input
-          class="portal-input"
-          type="number"
-          required
-          min="1"
-          step="0.01"
-        />
-      </label>
-      <label class="portal-form-group">
-        <span class="portal-label">Véhicule proposé</span>
-        <input class="portal-input" type="text" required />
-      </label>
-      <label class="portal-form-group">
-        <span class="portal-label">Date de prise en charge</span>
-        <input class="portal-input" type="date" required />
-      </label>
-    </div>
-    <button type="submit" class="btn-primary">
-      Simuler l’envoi de l’offre
-    </button>
-  </form>
+  {% endfor %}
 </section>
 {% endblock %}
