@@ -1,6 +1,7 @@
-from django.urls import include, path
+from django.urls import path
 from django.views.generic import TemplateView
 
+from avis_reclamations.urls import transporteur_urls
 from gestion_trajets.decorators import transporteur_required
 from gestion_trajets.urls import urlpatterns as trajet_urls
 from vehicules.views import (
@@ -35,5 +36,5 @@ urlpatterns = trajet_urls + [
     path('disponibilites/<int:pk>/modifier/', DisponibiliteUpdateView.as_view(), name='disponibilite_update'),
     path('disponibilites/<int:pk>/', TransporteurDisponibiliteDetailView.as_view(), name='disponibilite_detail'),
     path('disponibilites/<int:pk>/supprimer/', DisponibiliteDeleteView.as_view(), name='disponibilite_delete'),
-    path('', include('avis_reclamations.urls_transporteur')),
+    *transporteur_urls,
 ]

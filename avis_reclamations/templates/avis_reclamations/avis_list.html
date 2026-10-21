@@ -3,7 +3,7 @@
 
 {% block title %}Mes avis | CargoLink{% endblock %}
 {% block breadcrumb %}Mes avis{% endblock %}
-{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">{% endblock %}
 
 {% block content %}
 <div class="ar-page">
@@ -23,7 +23,7 @@
       {% for avis in page %}
         <article class="ar-item ar-item--{{ avis.statut }}">
           <div class="ar-item-main">
-            <h2 class="ar-item-title">{{ avis.transporteur.full_name }} {% include 'avis_reclamations/_stars.html' with note=avis.note %}</h2>
+            <h2 class="ar-item-title">{{ avis.transporteur.full_name }} {% include 'avis_reclamations/stars.html' with note=avis.note %}</h2>
             <p class="ar-item-meta">
               <span>{{ avis.demande }} · {{ avis.demande.depart_ville }} ➔ {{ avis.demande.arrivee_ville }}</span>
               <span>Publié le {{ avis.created_at|date:"d/m/Y" }}</span>
@@ -37,7 +37,7 @@
         </article>
       {% endfor %}
     </div>
-    {% include 'avis_reclamations/_pagination.html' %}
+    {% include 'avis_reclamations/pagination.html' %}
   {% else %}
     <div class="ar-empty">
       <h2>Vous n’avez pas encore donné d’avis</h2>

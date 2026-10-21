@@ -3,7 +3,7 @@
 
 {% block title %}Mes réclamations | CargoLink{% endblock %}
 {% block breadcrumb %}Mes réclamations{% endblock %}
-{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">{% endblock %}
 
 {% block content %}
 <div class="ar-page">
@@ -37,7 +37,7 @@
         </article>
       {% endfor %}
     </div>
-    {% include 'avis_reclamations/_pagination.html' %}
+    {% include 'avis_reclamations/pagination.html' %}
   {% else %}
     <div class="ar-empty">
       <h2>Aucune réclamation</h2>

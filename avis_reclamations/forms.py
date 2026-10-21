@@ -1,8 +1,10 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.db.models import Q
 
+from authentification.models import User
 from demandes.models import DemandeTransport
 
-from . import services
 from .models import (
     AVIS_COMMENTAIRE_MAX, AVIS_COMMENTAIRE_MIN, MOTIF_MODERATION_MAX, MOTIF_MODERATION_MIN,
     RECLAMATION_DESCRIPTION_MAX, RECLAMATION_DESCRIPTION_MIN, REPONSE_MAX, REPONSE_MIN,
@@ -11,6 +13,43 @@ from .models import (
 
 MSG_MIN = 'Saisissez au moins %(limit_value)d caractères (actuellement %(show_value)d).'
 MSG_MAX = 'Saisissez au plus %(limit_value)d caractères (actuellement %(show_value)d).'
+
+
+# ---------------------------------------------------------------------------
+# Règles d'accès aux données : quelles demandes et quels transporteurs proposer.
+#
+# Le module « Transports » n'existe pas encore : une demande de transport publiée tient donc
+# lieu de prestation. Quand il sera disponible, seules ces fonctions (et la clé étrangère
+# `demande` des modèles) devront être adaptées pour pointer vers le transport réellement effectué.
+# ---------------------------------------------------------------------------
+
+def demandes_du_pme(user):
+    """Demandes publiées (hors brouillons) créées par ce PME."""
+    return DemandeTransport.objects.filter(created_by=user).exclude(statut=DemandeTransport.Statut.BROUILLON)
+
+
+def demandes_du_destinataire(user):
+    """Demandes publiées dont le destinataire désigné correspond à ce compte (nom ou e-mail)."""
+    identifiants = [valeur for valeur in (user.full_name, user.email) if valeur]
+    condition = Q()
+    for valeur in identifiants:
+        condition |= Q(destinataire_nom__iexact=valeur) | Q(destinataire_contact__iexact=valeur)
+    if not condition:
+        return DemandeTransport.objects.none()
+    return DemandeTransport.objects.filter(condition).exclude(statut=DemandeTransport.Statut.BROUILLON)
+
+
+def demandes_reclamables(user):
+    """Demandes pour lesquelles cet utilisateur peut déposer une réclamation."""
+    if user.role == User.Role.PME:
+        return demandes_du_pme(user)
+    if user.role == User.Role.DESTINATAIRE:
+        return demandes_du_destinataire(user)
+    return DemandeTransport.objects.none()
+
+
+def transporteurs_actifs():
+    return get_user_model().objects.filter(role=User.Role.TRANSPORTEUR, is_active=True).order_by('full_name')
 
 
 def texte_long(label, minimum, maximum, **attrs):
@@ -62,7 +101,7 @@ class AvisForm(SignalerErreursMixin, forms.ModelForm):
     )
     transporteur = TransporteurChoiceField(
         label='Transporteur évalué',
-        queryset=services.transporteurs_actifs(),
+        queryset=transporteurs_actifs(),
         empty_label='Choisissez le transporteur',
         widget=forms.Select(attrs={'class': 'portal-select'}),
         error_messages={
@@ -89,7 +128,7 @@ class AvisForm(SignalerErreursMixin, forms.ModelForm):
     def __init__(self, *args, user, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
-        self.fields['demande'].queryset = services.demandes_du_pme(user).exclude(avis__auteur=user)
+        self.fields['demande'].queryset = demandes_du_pme(user).exclude(avis__auteur=user)
 
     def save(self, commit=True):
         avis = super().save(commit=False)
@@ -112,7 +151,7 @@ class ReclamationForm(SignalerErreursMixin, forms.ModelForm):
     )
     transporteur = TransporteurChoiceField(
         label='Transporteur concerné (facultatif)',
-        queryset=services.transporteurs_actifs(),
+        queryset=transporteurs_actifs(),
         required=False,
         empty_label='Je ne sais pas / non précisé',
         widget=forms.Select(attrs={'class': 'portal-select'}),
@@ -152,7 +191,7 @@ class ReclamationForm(SignalerErreursMixin, forms.ModelForm):
     def __init__(self, *args, user, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
-        self.fields['demande'].queryset = services.demandes_reclamables(user)
+        self.fields['demande'].queryset = demandes_reclamables(user)
 
     def clean_demande(self):
         demande = self.cleaned_data['demande']

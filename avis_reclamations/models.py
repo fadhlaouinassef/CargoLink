@@ -3,8 +3,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg, Count
 
-from demandes.models import DemandeTransport
-
 # Limites de saisie, partagées par les modèles et les formulaires.
 AVIS_COMMENTAIRE_MIN = 10
 AVIS_COMMENTAIRE_MAX = 1000
@@ -44,7 +42,7 @@ class Avis(models.Model):
     transporteur = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='avis_recus',
     )
-    demande = models.ForeignKey(DemandeTransport, on_delete=models.CASCADE, related_name='avis')
+    demande = models.ForeignKey('demandes.DemandeTransport', on_delete=models.CASCADE, related_name='avis')
     note = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     commentaire = models.TextField(max_length=AVIS_COMMENTAIRE_MAX)
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.PUBLIE)
@@ -99,7 +97,7 @@ class Reclamation(models.Model):
     auteur = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reclamations_deposees',
     )
-    demande = models.ForeignKey(DemandeTransport, on_delete=models.CASCADE, related_name='reclamations')
+    demande = models.ForeignKey('demandes.DemandeTransport', on_delete=models.CASCADE, related_name='reclamations')
     transporteur = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

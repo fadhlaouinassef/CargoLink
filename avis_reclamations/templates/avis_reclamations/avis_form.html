@@ -4,8 +4,8 @@
 {% block title %}Évaluer un transporteur | CargoLink{% endblock %}
 {% block breadcrumb %}Évaluer un transporteur{% endblock %}
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">
-  <script src="{% static 'js/avis-reclamations.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">
+  <script src="{% static 'avis_reclamations/module.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -30,13 +30,13 @@
   {% else %}
     <form method="post" novalidate data-ar-form style="max-width: 820px;">
       {% csrf_token %}
-      {% include 'avis_reclamations/_form_errors.html' %}
+      {% include 'avis_reclamations/form_errors.html' %}
 
       <div class="portal-card">
         <div class="portal-card-header"><h2 class="portal-card-title">1. Prestation concernée</h2></div>
         <div class="form-grid-2">
-          {% include 'avis_reclamations/_field.html' with field=form.demande %}
-          {% include 'avis_reclamations/_field.html' with field=form.transporteur %}
+          {% include 'avis_reclamations/form_field.html' with field=form.demande %}
+          {% include 'avis_reclamations/form_field.html' with field=form.transporteur %}
         </div>
       </div>
 
@@ -55,7 +55,7 @@
           {% for error in form.note.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
         </fieldset>
 
-        {% include 'avis_reclamations/_field.html' with field=form.commentaire hint='Soyez factuel et respectueux : ponctualité, soin des marchandises, communication.' %}
+        {% include 'avis_reclamations/form_field.html' with field=form.commentaire hint='Soyez factuel et respectueux : ponctualité, soin des marchandises, communication.' %}
 
         <div class="ar-form-actions">
           <a href="{% url 'pme:avis_list' %}" class="btn-secondary">Annuler</a>

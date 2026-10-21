@@ -1,4 +1,4 @@
-{% extends 'avis_reclamations/admin/base.html' %}
+{% extends 'avis_reclamations/admin_base.html' %}
 
 {% block title %}Réclamations{% endblock %}
 {% block breadcrumb %}Réclamations{% endblock %}
@@ -50,6 +50,6 @@
       </tbody>
     </table>
   </div>
-  {% include 'avis_reclamations/_pagination.html' %}
+  {% include 'avis_reclamations/pagination.html' %}
 </section>
 {% endblock %}

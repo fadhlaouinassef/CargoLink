@@ -3,7 +3,7 @@
 
 {% block title %}Avis & réclamations | CargoLink{% endblock %}
 {% block breadcrumb %}Avis & réclamations{% endblock %}
-{% block extra_head %}<link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">{% endblock %}
 
 {% block content %}
 <div class="ar-page">
@@ -21,7 +21,7 @@
       <div class="ar-summary">
         <div class="ar-score">
           <strong>{{ stats.moyenne|floatformat:1 }}</strong>
-          {% include 'avis_reclamations/_stars.html' with note=stats.arrondie large=True %}
+          {% include 'avis_reclamations/stars.html' with note=stats.arrondie large=True %}
           <small>{{ stats.total }} avis publié{{ stats.total|pluralize }}</small>
         </div>
         <ul class="ar-bars" aria-label="Répartition des notes">
@@ -42,14 +42,14 @@
         {% for avis in page %}
           <article class="ar-item">
             <div class="ar-item-main">
-              <h3 class="ar-item-title">{{ avis.auteur.full_name }} {% include 'avis_reclamations/_stars.html' with note=avis.note %}</h3>
+              <h3 class="ar-item-title">{{ avis.auteur.full_name }} {% include 'avis_reclamations/stars.html' with note=avis.note %}</h3>
               <p class="ar-item-meta"><span>{{ avis.demande.depart_ville }} ➔ {{ avis.demande.arrivee_ville }}</span><span>{{ avis.created_at|date:"d/m/Y" }}</span></p>
               <p class="ar-item-text">{{ avis.commentaire }}</p>
             </div>
           </article>
         {% endfor %}
       </div>
-      {% include 'avis_reclamations/_pagination.html' %}
+      {% include 'avis_reclamations/pagination.html' %}
     {% else %}
       <p class="ar-note">Aucun avis publié pour le moment.</p>
     {% endif %}

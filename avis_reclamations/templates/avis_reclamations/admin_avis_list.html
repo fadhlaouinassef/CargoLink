@@ -1,4 +1,4 @@
-{% extends 'avis_reclamations/admin/base.html' %}
+{% extends 'avis_reclamations/admin_base.html' %}
 
 {% block title %}Avis{% endblock %}
 {% block breadcrumb %}Avis{% endblock %}
@@ -36,7 +36,7 @@
           <tr>
             <td><strong>{{ avis.auteur.full_name }}</strong></td>
             <td>{{ avis.transporteur.full_name }}</td>
-            <td class="nowrap">{% include 'avis_reclamations/_stars.html' with note=avis.note %}</td>
+            <td class="nowrap">{% include 'avis_reclamations/stars.html' with note=avis.note %}</td>
             <td>{{ avis.commentaire|truncatechars:90 }}</td>
             <td class="nowrap">{{ avis.created_at|date:"d/m/Y" }}</td>
             <td class="nowrap"><span class="ar-badge ar-badge--{{ avis.statut }}">{{ avis.get_statut_display }}</span></td>
@@ -48,6 +48,6 @@
       </tbody>
     </table>
   </div>
-  {% include 'avis_reclamations/_pagination.html' %}
+  {% include 'avis_reclamations/pagination.html' %}
 </section>
 {% endblock %}

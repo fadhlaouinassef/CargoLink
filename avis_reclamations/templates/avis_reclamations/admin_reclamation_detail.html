@@ -1,4 +1,4 @@
-{% extends 'avis_reclamations/admin/base.html' %}
+{% extends 'avis_reclamations/admin_base.html' %}
 
 {% block title %}{{ reclamation.reference }}{% endblock %}
 {% block breadcrumb %}{{ reclamation.reference }}{% endblock %}
@@ -32,7 +32,7 @@
         <h2>Traiter le dossier</h2>
         <form method="post" novalidate data-ar-form>
           {% csrf_token %}
-          {% include 'avis_reclamations/_form_errors.html' %}
+          {% include 'avis_reclamations/form_errors.html' %}
           <fieldset class="ar-choices{% if form.statut.errors %} is-invalid{% endif %}">
             <legend class="portal-label">Décision <span class="ar-required" aria-hidden="true">*</span></legend>
             {% for radio in form.statut %}
@@ -40,7 +40,7 @@
             {% endfor %}
             {% for error in form.statut.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
           </fieldset>
-          {% include 'avis_reclamations/_field.html' with field=form.reponse hint='Obligatoire pour résoudre ou rejeter. Cette réponse est visible par l’auteur du dossier.' %}
+          {% include 'avis_reclamations/form_field.html' with field=form.reponse hint='Obligatoire pour résoudre ou rejeter. Cette réponse est visible par l’auteur du dossier.' %}
           <div class="modal-actions"><button class="primary-button" type="submit">Enregistrer la décision</button></div>
         </form>
       </section>

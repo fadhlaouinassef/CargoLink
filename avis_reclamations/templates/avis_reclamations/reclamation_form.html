@@ -4,8 +4,8 @@
 {% block title %}Déposer une réclamation | CargoLink{% endblock %}
 {% block breadcrumb %}Déposer une réclamation{% endblock %}
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'css/avis-reclamations.css' %}">
-  <script src="{% static 'js/avis-reclamations.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">
+  <script src="{% static 'avis_reclamations/module.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -30,21 +30,21 @@
     <div class="actor-grid-detail" style="display: grid; gap: 1.5rem; max-width: 820px;">
       <form method="post" novalidate data-ar-form>
         {% csrf_token %}
-        {% include 'avis_reclamations/_form_errors.html' %}
+        {% include 'avis_reclamations/form_errors.html' %}
 
         <div class="portal-card">
           <div class="portal-card-header"><h2 class="portal-card-title">1. Transport concerné</h2></div>
           <div class="form-grid-2">
-            {% include 'avis_reclamations/_field.html' with field=form.demande %}
-            {% include 'avis_reclamations/_field.html' with field=form.transporteur %}
+            {% include 'avis_reclamations/form_field.html' with field=form.demande %}
+            {% include 'avis_reclamations/form_field.html' with field=form.transporteur %}
           </div>
         </div>
 
         <div class="portal-card">
           <div class="portal-card-header"><h2 class="portal-card-title">2. Le problème</h2></div>
-          {% include 'avis_reclamations/_field.html' with field=form.motif %}
-          {% include 'avis_reclamations/_field.html' with field=form.description hint='Décrivez les faits dans l’ordre : ce qui était prévu, ce qui s’est passé, les réserves émises.' %}
-          {% include 'avis_reclamations/_field.html' with field=form.montant_prejudice hint='Laissez vide si vous ne pouvez pas encore l’estimer.' %}
+          {% include 'avis_reclamations/form_field.html' with field=form.motif %}
+          {% include 'avis_reclamations/form_field.html' with field=form.description hint='Décrivez les faits dans l’ordre : ce qui était prévu, ce qui s’est passé, les réserves émises.' %}
+          {% include 'avis_reclamations/form_field.html' with field=form.montant_prejudice hint='Laissez vide si vous ne pouvez pas encore l’estimer.' %}
 
           <p class="ar-help">
             Votre réclamation est transmise à <strong>l’administrateur CargoLink</strong>. Vous suivez son traitement dans « Mes réclamations » et recevez sa réponse sur la fiche du dossier.
