@@ -7,6 +7,8 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from demandes.models import DemandeTransport, Marchandise
+
 from .models import PasswordResetCode, User
 
 
@@ -146,6 +148,102 @@ class AdminUserManagementTests(TestCase):
         delete_url = reverse('authentification:admin_user_delete', args=[self.admin.pk])
         self.client.post(delete_url)
         self.assertTrue(User.objects.filter(pk=self.admin.pk).exists())
+
+
+class AdminPublicationManagementTests(TestCase):
+    def setUp(self):
+        self.admin = User.objects.create_user(
+            'publication-admin@example.com',
+            'Admin-Strong-872!',
+            full_name='Administrateur CargoLink',
+            role=User.Role.ADMIN,
+        )
+        self.pme = User.objects.create_user(
+            'publication-pme@example.com',
+            'Pme-Strong-872!',
+            full_name='PME Exemple',
+            role=User.Role.PME,
+        )
+        self.demande = DemandeTransport.objects.create(
+            created_by=self.pme,
+            statut=DemandeTransport.Statut.OUVERTE,
+            depart_ville='Tunis',
+            depart_adresse='Centre',
+            date_depart=timezone.localdate() + timedelta(days=2),
+            arrivee_ville='Sfax',
+            arrivee_adresse='Zone industrielle',
+            date_limite=timezone.localdate() + timedelta(days=3),
+            destinataire_nom='Destinataire Exemple',
+            destinataire_contact='Contact',
+            destinataire_tel='12345678',
+        )
+        Marchandise.objects.create(
+            demande=self.demande,
+            description='Palettes',
+            poids=100,
+        )
+        self.client.force_login(self.admin)
+
+    def test_admin_dashboard_links_to_publication_management(self):
+        response = self.client.get(reverse('authentification:admin_dashboard'))
+
+        self.assertContains(response, reverse('authentification:admin_demandes'))
+        self.assertContains(response, 'Gérer les publications')
+
+    def test_admin_can_filter_hide_restore_and_delete_demands(self):
+        page_url = reverse('authentification:admin_demandes')
+        response = self.client.get(page_url, {'q': 'Tunis'})
+        self.assertContains(response, str(self.demande))
+        self.assertContains(response, 'Palettes')
+
+        toggle_url = reverse(
+            'authentification:admin_demande_toggle_visibility',
+            args=[self.demande.pk],
+        )
+        response = self.client.post(toggle_url)
+        self.assertRedirects(response, page_url)
+        self.demande.refresh_from_db()
+        self.assertEqual(self.demande.statut, DemandeTransport.Statut.MASQUEE)
+
+        transporteur = User.objects.create_user(
+            'publication-transporteur@example.com',
+            'Transporteur-Strong-872!',
+            full_name='Transporteur Exemple',
+            role=User.Role.TRANSPORTEUR,
+        )
+        self.client.force_login(transporteur)
+        response = self.client.get(reverse('transporteur:demandes'))
+        self.assertNotContains(response, str(self.demande))
+
+        self.client.force_login(self.admin)
+        self.client.post(toggle_url)
+        self.demande.refresh_from_db()
+        self.assertEqual(self.demande.statut, DemandeTransport.Statut.OUVERTE)
+
+        delete_url = reverse(
+            'authentification:admin_demande_delete',
+            args=[self.demande.pk],
+        )
+        response = self.client.post(delete_url)
+        self.assertRedirects(response, page_url)
+        self.assertFalse(DemandeTransport.objects.filter(pk=self.demande.pk).exists())
+        self.assertFalse(Marchandise.objects.exists())
+
+    def test_non_admin_cannot_manage_publications(self):
+        self.client.logout()
+        response = self.client.get(reverse('authentification:admin_demandes'))
+        self.assertEqual(response.status_code, 302)
+
+        self.client.force_login(self.pme)
+        response = self.client.get(reverse('authentification:admin_demandes'))
+        self.assertEqual(response.status_code, 403)
+
+        response = self.client.post(reverse(
+            'authentification:admin_demande_delete',
+            args=[self.demande.pk],
+        ))
+        self.assertEqual(response.status_code, 403)
+        self.assertTrue(DemandeTransport.objects.filter(pk=self.demande.pk).exists())
 
 
 class LoginTests(TestCase):

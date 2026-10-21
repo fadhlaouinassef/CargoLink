@@ -24,6 +24,8 @@
       <nav class="sidebar-nav" aria-label="Navigation administrateur">
         <p class="nav-label">MENU PRINCIPAL</p>
         <a class="nav-link" href="{% url 'authentification:admin_dashboard' %}">Comptes utilisateurs</a>
+        <a class="nav-link" href="{% url 'authentification:admin_demandes' %}">Publications PME</a>
+        <a class="nav-link" href="{% url 'authentification:admin_vehicles' %}">Véhicules & disponibilités</a>
         <a class="nav-link {% if active_tab == 'reclamations' %}active{% endif %}" href="{% url 'avis_admin:reclamation_list' %}" {% if active_tab == 'reclamations' %}aria-current="page"{% endif %}>Réclamations</a>
         <a class="nav-link {% if active_tab == 'avis' %}active{% endif %}" href="{% url 'avis_admin:avis_list' %}" {% if active_tab == 'avis' %}aria-current="page"{% endif %}>Avis</a>
       </nav>

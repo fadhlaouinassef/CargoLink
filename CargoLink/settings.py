@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentification.apps.AuthentificationConfig',
+    'vehicules',
     'demandes.apps.DemandesConfig',
+    'gestion_trajets.apps.GestionTrajetsConfig',
     'avis_reclamations.apps.AvisReclamationsConfig',
 ]
 

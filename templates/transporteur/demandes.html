@@ -8,7 +8,7 @@
   <div>
     <div class="portal-eyebrow">Demandes publiées par les PME</div>
     <h1 class="portal-page-title">Demandes de transport disponibles</h1>
-    <p class="portal-page-subtitle">Parcourez les demandes ouvertes et consultez les marchandises, trajets et délais avant de contacter la PME.</p>
+    <p class="portal-page-subtitle">Parcourez les demandes ouvertes et consultez les marchandises, trajets et délais avant de proposer votre offre.</p>
   </div>
 </div>
 
@@ -32,7 +32,7 @@
     <article class="available-demand-card">
       <div class="available-demand-summary">
         <div class="available-demand-heading">
-          <strong>{{ demande }}</strong>
+          <strong>{{ demande }}</strong><span class="module-small">{{ demande.created_by.full_name|default:"PME / Expéditeur" }}</span>
           <span class="badge badge-active">{{ demande.get_statut_display }}</span>
         </div>
         <h3 class="available-demand-route">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</h3>
@@ -48,7 +48,10 @@
           {% endfor %}
         </ul>
       </div>
-      <a href="{% url 'transporteur:demande_detail' demande.pk %}" class="btn-secondary">Consulter le détail</a>
+      <div class="module-demand-actions">
+        {% if demande.deja_postule %}<a href="{% url 'transporteur:offres' %}" class="btn-secondary">Voir mon offre</a>{% else %}<button type="button" class="btn-primary" data-popup-url="{% url 'transporteur:offre_create' demande.pk %}">Postuler · Proposer une offre</button>{% endif %}
+        <a href="{% url 'transporteur:demande_detail' demande.pk %}" class="btn-secondary">Consulter le détail</a>
+      </div>
     </article>
   {% empty %}
     <div class="demand-empty-state">

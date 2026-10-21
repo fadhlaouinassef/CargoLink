@@ -1,0 +1,11 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Supprimer une disponibilité | CargoLink{% endblock %}
+{% block breadcrumb %}Supprimer une disponibilité{% endblock %}
+{% block content %}
+<section class="portal-card confirmation-card">
+  <div class="portal-eyebrow">Confirmation</div>
+  <h1 class="portal-page-title">Supprimer la disponibilité ?</h1>
+  <p>Cette action supprimera la période <strong>{{ object }}</strong>.</p>
+  <form method="post">{% csrf_token %}<button class="btn-danger" type="submit">Confirmer la suppression</button><a class="btn-secondary" href="{% url 'transporteur:vehicules' %}">Annuler</a></form>
+</section>
+{% endblock %}

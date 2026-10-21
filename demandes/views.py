@@ -55,6 +55,48 @@ def demande_create(request):
         'active_tab': 'demande_create',
         'form': form,
         'formset': formset,
+        'editing': False,
+    })
+
+
+def demande_update(request, pk):
+    demande = get_object_or_404(_owned_demands(request), pk=pk)
+    form = DemandeTransportForm(request.POST or None, instance=demande)
+    formset = MarchandiseFormSet(
+        request.POST or None,
+        instance=demande,
+        prefix='marchandises',
+    )
+    if request.method == 'POST' and form.is_valid() and formset.is_valid():
+        with transaction.atomic():
+            demande = form.save(commit=False)
+            action = request.POST.get('action')
+            if action == 'publish':
+                demande.statut = DemandeTransport.Statut.OUVERTE
+            elif action == 'draft':
+                demande.statut = DemandeTransport.Statut.BROUILLON
+            demande.save()
+            formset.save()
+        messages.success(request, 'Votre demande a été mise à jour.')
+        return redirect('pme:demande_detail_item', pk=demande.pk)
+    return render(request, 'demandes/demande_create.html', {
+        'active_tab': 'demandes_list',
+        'form': form,
+        'formset': formset,
+        'demande': demande,
+        'editing': True,
+    })
+
+
+def demande_delete(request, pk):
+    demande = get_object_or_404(_owned_demands(request), pk=pk)
+    if request.method == 'POST':
+        demande.delete()
+        messages.success(request, 'La demande et ses marchandises ont été supprimées.')
+        return redirect('pme:demandes_list')
+    return render(request, 'demandes/demande_confirm_delete.html', {
+        'active_tab': 'demandes_list',
+        'demande': demande,
     })
 
 
@@ -93,37 +135,5 @@ def demande_detail(request, pk=None):
         demande = get_object_or_404(demands, pk=pk)
     return render(request, 'demandes/demande_detail.html', {
         'active_tab': 'demandes_list',
-        'demande': demande,
-    })
-
-
-def transporteur_demandes(request):
-    demandes = DemandeTransport.objects.filter(
-        statut=DemandeTransport.Statut.OUVERTE,
-    ).prefetch_related('marchandises')
-    query = request.GET.get('q', '').strip()
-    if query:
-        demandes = demandes.filter(
-            Q(depart_ville__icontains=query)
-            | Q(arrivee_ville__icontains=query)
-            | Q(marchandises__description__icontains=query)
-            | Q(marchandises__type__icontains=query)
-        ).distinct()
-    return render(request, 'transporteur/demandes.html', {
-        'active_tab': 'demandes',
-        'demandes': demandes,
-        'query': query,
-        'total_demandes': demandes.count(),
-    })
-
-
-def transporteur_demande_detail(request, pk):
-    demande = get_object_or_404(
-        DemandeTransport.objects.filter(statut=DemandeTransport.Statut.OUVERTE)
-        .prefetch_related('marchandises'),
-        pk=pk,
-    )
-    return render(request, 'transporteur/demande_detail.html', {
-        'active_tab': 'demandes',
         'demande': demande,
     })
