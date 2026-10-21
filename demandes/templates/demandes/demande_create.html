@@ -89,6 +89,12 @@
                   {% elif field.name == 'DELETE' %}
                     <span class="delete-field">{{ field.as_hidden }}</span>
                     <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
+                  {% elif field.name == 'description' %}
+                    <div class="goods-description-field">
+                      {{ field }}
+                      <button type="button" class="btn-ai-description" data-ai-url="{% url 'pme:ai_improve_description' %}">Améliorer avec IA</button>
+                      <span class="ai-description-status" role="status" aria-live="polite"></span>
+                    </div>
                   {% else %}
                     {{ field }}
                   {% endif %}
@@ -110,6 +116,12 @@
             {% elif field.name == 'DELETE' %}
               <span class="delete-field">{{ field.as_hidden }}</span>
               <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
+            {% elif field.name == 'description' %}
+              <div class="goods-description-field">
+                {{ field }}
+                <button type="button" class="btn-ai-description" data-ai-url="{% url 'pme:ai_improve_description' %}">Améliorer avec IA</button>
+                <span class="ai-description-status" role="status" aria-live="polite"></span>
+              </div>
             {% else %}
               {{ field }}
             {% endif %}
