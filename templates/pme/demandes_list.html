@@ -20,7 +20,7 @@
 <!-- Filtres et recherche -->
 <div class="portal-card" style="padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
   <form method="get" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1;">
+    <div class="actor-flex-row" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; flex: 1;">
       <input type="text" name="q" placeholder="Rechercher par référence, ville..." class="portal-input" style="max-width: 280px;" value="{{ request.GET.q }}">
       <select name="status" class="portal-select" style="max-width: 220px;">
         <option value="">Tous les statuts</option>
@@ -38,12 +38,12 @@
 </div>
 
 <!-- Liste des demandes sous forme de cartes structurées -->
-<div style="display: flex; flex-direction: column; gap: 1rem;">
+<div class="actor-flex-row" style="display: flex; flex-direction: column; gap: 1rem;">
   <!-- Demande 1 : Offres reçues -->
   <div class="portal-card" style="margin-bottom: 0; border-left: 4px solid var(--sand);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-      <div style="flex: 1; min-width: 280px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+    <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: min(280px, 100%);">
+        <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
           <strong style="font-size: 16px; color: var(--ink);">#DEM-2026-08</strong>
           <span class="badge badge-offers">3 offres reçues</span>
           <span style="font-size: 12px; color: var(--muted);">Publiée il y a 5 heures</span>
@@ -51,14 +51,14 @@
         <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">
           📍 Tunis (La Charguia I) ➔ 🏁 Sfax (ZI Poudrière II)
         </div>
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
+        <div class="actor-flex-row" style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
           <span>📦 4 Palettes (1 850 kg • 4.8 m³)</span>
           <span>📅 Enlèvement : 24 Oct 2026</span>
           <span>👤 Destinataire : Huiles du Sud SARL</span>
           <span>💰 Budget indicatif : <strong>420 TND</strong></span>
         </div>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center;">
+      <div class="actor-flex-row" style="display: flex; gap: 8px; align-items: center;">
         <a href="{% url 'pme:demande_detail' %}" class="btn-secondary" style="font-size: 12.5px; padding: 0.5rem 0.85rem;">
           Fiche détaillée
         </a>
@@ -71,9 +71,9 @@
 
   <!-- Demande 2 : Offres reçues -->
   <div class="portal-card" style="margin-bottom: 0; border-left: 4px solid var(--sand);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-      <div style="flex: 1; min-width: 280px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+    <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: min(280px, 100%);">
+        <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
           <strong style="font-size: 16px; color: var(--ink);">#DEM-2026-07</strong>
           <span class="badge badge-offers">2 offres reçues</span>
           <span style="font-size: 12px; color: var(--muted);">Publiée hier</span>
@@ -81,14 +81,14 @@
         <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">
           📍 Sousse (Akouda) ➔ 🏁 Bizerte (Menzel Bourguiba)
         </div>
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
+        <div class="actor-flex-row" style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
           <span>📦 12 Fûts étanches (900 kg)</span>
           <span>📅 Enlèvement : 26 Oct 2026</span>
           <span>👤 Destinataire : Nord Chimie SARL</span>
           <span>💰 Budget indicatif : <strong>380 TND</strong></span>
         </div>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center;">
+      <div class="actor-flex-row" style="display: flex; gap: 8px; align-items: center;">
         <a href="{% url 'pme:demande_detail' %}" class="btn-secondary" style="font-size: 12.5px; padding: 0.5rem 0.85rem;">
           Fiche détaillée
         </a>
@@ -101,9 +101,9 @@
 
   <!-- Demande 3 : Transport en cours -->
   <div class="portal-card" style="margin-bottom: 0; border-left: 4px solid var(--green);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-      <div style="flex: 1; min-width: 280px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+    <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: min(280px, 100%);">
+        <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
           <strong style="font-size: 16px; color: var(--ink);">#DEM-2026-04</strong>
           <span class="badge badge-active">Transport en cours (#TR-8842)</span>
           <span style="font-size: 12px; color: var(--muted);">Transporteur assigné</span>
@@ -111,14 +111,14 @@
         <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">
           📍 Tunis (La Charguia) ➔ 🏁 Sfax (Port)
         </div>
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
+        <div class="actor-flex-row" style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
           <span>📦 4 Palettes (1 850 kg)</span>
           <span>📅 Enlèvement effectué le 21 Oct à 08:30</span>
           <span>🚚 Transporteur : Express Sahel (Isuzu 3.5T)</span>
           <span>💰 Montant retenu : <strong>400 TND</strong></span>
         </div>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center;">
+      <div class="actor-flex-row" style="display: flex; gap: 8px; align-items: center;">
         <a href="{% url 'pme:transport_suivi' %}" class="btn-primary" style="font-size: 12.5px; padding: 0.5rem 1rem;">
           Suivre l'acheminement →
         </a>
@@ -128,9 +128,9 @@
 
   <!-- Demande 4 : Livrée -->
   <div class="portal-card" style="margin-bottom: 0; border-left: 4px solid var(--muted-light);">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
-      <div style="flex: 1; min-width: 280px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+    <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: min(280px, 100%);">
+        <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
           <strong style="font-size: 16px; color: var(--ink);">#DEM-2026-01</strong>
           <span class="badge badge-success">Livraison confirmée par destinataire</span>
           <span style="font-size: 12px; color: var(--muted);">Terminé le 19 Oct 2026</span>
@@ -138,12 +138,12 @@
         <div style="font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px;">
           📍 Tunis ➔ 🏁 Gabès
         </div>
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
+        <div class="actor-flex-row" style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 13px; color: var(--muted);">
           <span>📦 Pièces mécaniques (1 200 kg)</span>
           <span>✍️ Réception signée par destinataire (Code OTP validé)</span>
         </div>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center;">
+      <div class="actor-flex-row" style="display: flex; gap: 8px; align-items: center;">
         <a href="{% url 'pme:avis_create' %}" class="btn-secondary" style="font-size: 12.5px; padding: 0.5rem 0.85rem;">
           ⭐ Évaluer le transporteur
         </a>

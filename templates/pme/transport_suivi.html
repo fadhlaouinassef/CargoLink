@@ -10,7 +10,7 @@
 {% block content %}
 <div class="portal-page-header">
   <div>
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+    <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
       <span class="portal-eyebrow">Module 4 : Transport & EvenementSuivi</span>
       <span class="badge badge-active">En cours de livraison</span>
     </div>
@@ -26,7 +26,7 @@
 
 <!-- Stepper Visuel de Suivi -->
 <div class="portal-card">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+  <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
     <div>
       <span style="font-size: 13px; color: var(--muted);">Statut actuel :</span>
       <strong style="font-size: 16px; color: var(--green); display: block;">Étape 3 sur 5 : En transit vers Sfax (A1)</strong>
@@ -80,7 +80,7 @@
 </div>
 
 <!-- 2 Colonnes : Acteurs & Journal des événements (EvenementSuivi) -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+<div class="actor-grid-equal" style="display: grid;  gap: 1.5rem;">
   <!-- Colonne Acteurs (Transporteur & Destinataire) -->
   <div>
     <!-- Carte Transporteur -->
@@ -88,7 +88,7 @@
       <div class="portal-card-header">
         <h2 class="portal-card-title">🚚 Transporteur affecté</h2>
       </div>
-      <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 1rem;">
+      <div class="actor-flex-row" style="display: flex; gap: 14px; align-items: center; margin-bottom: 1rem;">
         <div class="carrier-avatar" style="width: 52px; height: 52px; background: var(--primary-light); color: var(--primary);">MT</div>
         <div>
           <strong style="font-size: 16px; color: var(--ink);">Mohamed Triki</strong>
@@ -101,7 +101,7 @@
         <div><strong>Équipement :</strong> Hayon élévateur, bâché étanche</div>
         <div><strong>Téléphone direct :</strong> <a href="tel:+21698223344" style="font-weight: 700;">+216 98 223 344</a></div>
       </div>
-      <div style="display: flex; gap: 10px;">
+      <div class="actor-flex-row" style="display: flex; gap: 10px;">
         <a href="tel:+21698223344" class="btn-primary" style="flex: 1; justify-content: center; font-size: 13px;">
           📞 Appeler le chauffeur
         </a>

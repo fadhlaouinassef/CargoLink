@@ -1,0 +1,63 @@
+/* Layout adjustments for the PME and recipient portals. */
+.responsive-actor .portal-sidebar { flex: 0 0 270px; }
+.responsive-actor .sidebar-brand-box { flex-wrap: wrap; gap: 12px; }
+.responsive-actor .actor-grid-equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.responsive-actor .actor-grid-detail { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.responsive-actor :is(.actor-grid-equal, .actor-grid-detail, .form-grid-2, .form-grid-3, .form-grid-4) > * { min-width: 0; }
+.responsive-actor :is(.portal-page-header, .portal-card-header, .portal-header-actions, .topbar-right) { flex-wrap: wrap; gap: 12px; }
+.responsive-actor :is(.portal-card, .offer-card, .portal-form-group, .topbar-left, .portal-breadcrumbs, .stat-content) { min-width: 0; }
+.responsive-actor :is(.portal-container, .portal-sidebar) { overflow-wrap: anywhere; }
+.responsive-actor .portal-table-wrap { max-width: 100%; overscroll-behavior-x: contain; }
+.responsive-actor .portal-table { min-width: 640px; }
+.responsive-actor .goods-table { min-width: 850px; }
+.responsive-actor .portal-input,
+.responsive-actor .portal-select,
+.responsive-actor .portal-textarea { min-width: 0; max-width: 100%; }
+.responsive-actor .portal-textarea { resize: vertical; }
+.responsive-actor .carrier-avatar { flex-shrink: 0; }
+.responsive-actor .portal-breadcrumbs { flex-wrap: wrap; }
+.responsive-actor :is(.signature-toolbar, .offer-actions, .offer-price-box, .offer-details-list li) { flex-wrap: wrap; gap: 8px; }
+.responsive-actor .signature-canvas { display: block; }
+.responsive-actor .offers-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.responsive-actor .stat-cards-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.responsive-actor .actor-flex-row > :not(.stat-icon-wrapper, .carrier-avatar) { min-width: 0; }
+.responsive-actor .portal-table-wrap:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+@media (max-width: 1200px) {
+  .responsive-actor :is(.actor-grid-equal, .actor-grid-detail) { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 992px) {
+  .responsive-actor .portal-sidebar { width: min(300px, 85vw); height: 100dvh; left: 0; bottom: 0; box-shadow: var(--shadow-lg); }
+  .responsive-actor .portal-topbar { padding: 12px 20px; gap: 12px; flex-wrap: wrap; }
+  .responsive-actor .topbar-left { flex: 1 1 240px; }
+  .responsive-actor .topbar-right { margin-left: auto; }
+  .responsive-actor .portal-container { padding: 20px; }
+  .responsive-actor .actor-flex-row { flex-wrap: wrap; }
+  .responsive-actor .tracking-stepper-inner { align-items: stretch; }
+  .responsive-actor .stepper-step { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; max-width: none; text-align: left; align-items: center; }
+  .responsive-actor .step-bubble { grid-row: 1 / 3; margin-bottom: 0; }
+  .responsive-actor .step-timestamp { grid-column: 2; }
+}
+
+@media (max-width: 600px) {
+  .responsive-actor .portal-container { padding: 16px 12px; }
+  .responsive-actor .portal-topbar { padding: 10px 12px; }
+  .responsive-actor .portal-page-title { font-size: 23px; }
+  .responsive-actor .portal-page-subtitle { font-size: 13px; }
+  .responsive-actor .portal-card { padding: 16px; }
+  .responsive-actor .offer-card { padding: 20px 16px; }
+  .responsive-actor .portal-card-title { font-size: 16px; }
+  .responsive-actor .stat-cards-grid { grid-template-columns: minmax(0, 1fr); }
+  .responsive-actor .portal-header-actions { width: 100%; }
+  .responsive-actor .portal-header-actions > * { flex: 1 1 100%; justify-content: center; }
+  .responsive-actor :is(.btn-primary, .btn-secondary, .btn-sand, .btn-danger) { max-width: 100%; min-height: 44px; text-align: center; justify-content: center; }
+  .responsive-actor .actor-flex-row > :is(.btn-primary, .btn-secondary, .btn-sand, .btn-danger) { flex-basis: 100% !important; }
+  .responsive-actor :is(.portal-input, .portal-select, .portal-textarea) { font-size: 16px; }
+  .responsive-actor .otp-container { gap: 6px; }
+  .responsive-actor .otp-digit { width: min(40px, calc((100% - 30px) / 6)); min-width: 0; height: 50px; font-size: 22px; padding: 0; }
+  .responsive-actor .recommended-ribbon { max-width: calc(100% - 24px); right: 12px; font-size: 10px; }
+  .responsive-actor .offer-details-list li > strong { text-align: right; }
+  .responsive-actor input:is([type="radio"], [type="checkbox"]) { flex-shrink: 0; }
+  .responsive-actor .mobile-menu-btn { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
+}

@@ -1,97 +1,108 @@
-{% extends 'transporteur/base.html' %}
-{% block title %}Suivi des transports | CargoLink{% endblock %}
-{% block breadcrumb %}Suivi des transports{% endblock %}
-{% block content %}<div class="portal-page-header">
-<div>
-<div class="portal-eyebrow">Espace transporteur</div>
-<h1 class="portal-page-title">Suivi des transports</h1>
-<p class="portal-page-subtitle">Actualisez l’acheminement et préparez la remise au destinataire.</p>
-</div>
+{% extends 'transporteur/base.html' %} {% block title %}Suivi des transports |
+CargoLink{% endblock %} {% block breadcrumb %}Suivi des transports{% endblock %}
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace transporteur</div>
+    <h1 class="portal-page-title">Suivi des transports</h1>
+    <p class="portal-page-subtitle">
+      Actualisez l’acheminement et préparez la remise au destinataire.
+    </p>
+  </div>
 </div>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Transports confirmés</h2>
-</div>
-<div class="portal-table-wrap">
-<table class="portal-table">
-<thead>
-<tr>
-<th>Transport</th>
-<th>Trajet / Client</th>
-<th>Marchandises</th>
-<th>État</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>#TR-8842</td>
-<td>Tunis → Sfax<br>AgroMed Distribution</td>
-<td>4 palettes · 1 850 kg</td>
-<td>
-<span class="badge badge-active">En transit</span>
-</td>
-<td>
-<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Actualiser le suivi</a>
-</td>
-</tr>
-<tr>
-<td>#TR-8845</td>
-<td>Sousse → Bizerte<br>Sahel Industrie</td>
-<td>12 fûts · 900 kg</td>
-<td>
-<span class="badge badge-pending">Planifié</span>
-</td>
-<td>
-<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Consulter</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Transports confirmés</h2>
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Transport</th>
+          <th>Trajet / Client</th>
+          <th>Marchandises</th>
+          <th>État</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#TR-8842</td>
+          <td>Tunis → Sfax<br />AgroMed Distribution</td>
+          <td>4 palettes · 1 850 kg</td>
+          <td>
+            <span class="badge badge-active">En transit</span>
+          </td>
+          <td>
+            <a class="btn-secondary" href="{% url 'transporteur:transports' %}"
+              >Actualiser le suivi</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>#TR-8845</td>
+          <td>Sousse → Bizerte<br />Sahel Industrie</td>
+          <td>12 fûts · 900 kg</td>
+          <td>
+            <span class="badge badge-pending">Planifié</span>
+          </td>
+          <td>
+            <a class="btn-secondary" href="{% url 'transporteur:transports' %}"
+              >Consulter</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Transport #TR-8842 · Tunis → Sfax</h2>
-</div>
-<p>
-<strong>Expéditeur :</strong> AgroMed Distribution SARL<br>
-<strong>Destinataire :</strong> Société Huiles du Sud · Sfax ZI Poudrière II<br>
-<strong>Marchandises :</strong> 4 palettes d’huile d’olive · 1 850 kg</p>
-<div class="event-log-list" id="carrier-events">
-<div class="event-log-item">
-<div class="event-log-time">24 oct. · 13h42</div>
-<div class="event-log-title">En transit · Péage El Jem</div>
-<p class="event-log-desc">Arrivée estimée · 15h15.</p>
-</div>
-<div class="event-log-item">
-<div class="event-log-time">24 oct. · 08h20</div>
-<div class="event-log-title">Marchandises prises en charge à Tunis</div>
-</div>
-</div>
-<p class="portal-input-hint">La réception sera confirmée par le destinataire avec un code ou une signature.</p>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Transport #TR-8842 · Tunis → Sfax</h2>
+  </div>
+  <p>
+    <strong>Expéditeur :</strong> AgroMed Distribution SARL<br />
+    <strong>Destinataire :</strong> Société Huiles du Sud · Sfax ZI Poudrière
+    II<br />
+    <strong>Marchandises :</strong> 4 palettes d’huile d’olive · 1 850 kg
+  </p>
+  <div class="event-log-list" id="carrier-events">
+    <div class="event-log-item">
+      <div class="event-log-time">24 oct. · 13h42</div>
+      <div class="event-log-title">En transit · Péage El Jem</div>
+      <p class="event-log-desc">Arrivée estimée · 15h15.</p>
+    </div>
+    <div class="event-log-item">
+      <div class="event-log-time">24 oct. · 08h20</div>
+      <div class="event-log-title">Marchandises prises en charge à Tunis</div>
+    </div>
+  </div>
+  <p class="portal-input-hint">
+    La réception sera confirmée par le destinataire avec un code ou une
+    signature.
+  </p>
 </section>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Ajouter un événement de suivi</h2>
-</div>
-<form data-demo-form data-tracking>
-<div class="form-grid-2">
-<label class="portal-form-group">
-<span class="portal-label">Étape</span>
-<select class="portal-select" name="stage">
-<option>Pris en charge</option>
-<option>En transit</option>
-<option>Arrivé à destination</option>
-<option>Incident signalé</option>
-</select>
-</label>
-<label class="portal-form-group">
-<span class="portal-label">Position / commentaire</span>
-<input class="portal-input" type="text" required name="location">
-</label>
-</div>
-<button class="btn-primary" type="submit">Simuler la mise à jour</button>
-</form>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Ajouter un événement de suivi</h2>
+  </div>
+  <form data-demo-form data-tracking>
+    <div class="form-grid-2">
+      <label class="portal-form-group">
+        <span class="portal-label">Étape</span>
+        <select class="portal-select" name="stage">
+          <option>Pris en charge</option>
+          <option>En transit</option>
+          <option>Arrivé à destination</option>
+          <option>Incident signalé</option>
+        </select>
+      </label>
+      <label class="portal-form-group">
+        <span class="portal-label">Position / commentaire</span>
+        <input class="portal-input" type="text" required name="location" />
+      </label>
+    </div>
+    <button class="btn-primary" type="submit">Simuler la mise à jour</button>
+  </form>
 </section>
 {% endblock %}

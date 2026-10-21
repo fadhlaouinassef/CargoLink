@@ -1,61 +1,66 @@
-{% extends 'transporteur/base.html' %}
-{% block title %}Mes offres | CargoLink{% endblock %}
-{% block breadcrumb %}Mes offres{% endblock %}
-{% block content %}<div class="portal-page-header">
-<div>
-<div class="portal-eyebrow">Espace transporteur</div>
-<h1 class="portal-page-title">Mes offres</h1>
-<p class="portal-page-subtitle">Retrouvez vos propositions et les réponses des expéditeurs.</p>
-</div>
+{% extends 'transporteur/base.html' %} {% block title %}Mes offres | CargoLink{%
+endblock %} {% block breadcrumb %}Mes offres{% endblock %} {% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace transporteur</div>
+    <h1 class="portal-page-title">Mes offres</h1>
+    <p class="portal-page-subtitle">
+      Retrouvez vos propositions et les réponses des expéditeurs.
+    </p>
+  </div>
 </div>
 <section class="portal-card">
-<div class="portal-card-header">
-<h2 class="portal-card-title">Propositions envoyées</h2>
-</div>
-<div class="portal-table-wrap">
-<table class="portal-table">
-<thead>
-<tr>
-<th>Offre</th>
-<th>Demande / Trajet</th>
-<th>Prix</th>
-<th>État</th>
-<th>Suite</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>#OFF-124</td>
-<td>#DEM-2026-08 · Tunis → Sfax</td>
-<td>420 TND</td>
-<td>
-<span class="badge badge-pending">En attente</span>
-</td>
-<td>Réponse de la PME attendue</td>
-</tr>
-<tr>
-<td>#OFF-121</td>
-<td>#DEM-2026-07 · Sousse → Bizerte</td>
-<td>350 TND</td>
-<td>
-<span class="badge badge-success">Acceptée</span>
-</td>
-<td>
-<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Consulter le transport</a>
-</td>
-</tr>
-<tr>
-<td>#OFF-118</td>
-<td>#DEM-2026-04 · Tunis → Gabès</td>
-<td>520 TND</td>
-<td>
-<span class="badge badge-draft">Non retenue</span>
-</td>
-<td>Demande attribuée</td>
-</tr>
-</tbody>
-</table>
-</div>
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Propositions envoyées</h2>
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Offre</th>
+          <th>Demande / Trajet</th>
+          <th>Prix</th>
+          <th>État</th>
+          <th>Suite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#OFF-124</td>
+          <td>#DEM-2026-08 · Tunis → Sfax</td>
+          <td>420 TND</td>
+          <td>
+            <span class="badge badge-pending">En attente</span>
+          </td>
+          <td>Réponse de la PME attendue</td>
+        </tr>
+        <tr>
+          <td>#OFF-121</td>
+          <td>#DEM-2026-07 · Sousse → Bizerte</td>
+          <td>350 TND</td>
+          <td>
+            <span class="badge badge-success">Acceptée</span>
+          </td>
+          <td>
+            <a class="btn-secondary" href="{% url 'transporteur:transports' %}"
+              >Consulter le transport</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>#OFF-118</td>
+          <td>#DEM-2026-04 · Tunis → Gabès</td>
+          <td>520 TND</td>
+          <td>
+            <span class="badge badge-draft">Non retenue</span>
+          </td>
+          <td>Demande attribuée</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
-<a class="btn-primary" href="{% url 'transporteur:demandes' %}">Trouver une nouvelle demande</a>
+<a class="btn-primary" href="{% url 'transporteur:demandes' %}"
+  >Trouver une nouvelle demande</a
+>
 {% endblock %}

@@ -19,11 +19,11 @@
 
 <!-- Alerte livraison imminente -->
 <div class="portal-card" style="border-left: 4px solid var(--green); background: #fbfdfc;">
-  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-    <div style="display: flex; align-items: center; gap: 14px;">
+  <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div class="actor-flex-row" style="display: flex; align-items: center; gap: 14px;">
       <span style="font-size: 28px;">🚚</span>
       <div>
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="actor-flex-row" style="display: flex; align-items: center; gap: 8px;">
           <strong style="font-size: 16px; color: var(--ink);">Livraison en approche — Arrivée estimée à 15:15</strong>
           <span class="badge badge-active">Chauffeur en route</span>
         </div>
@@ -33,7 +33,7 @@
         </p>
       </div>
     </div>
-    <div style="display: flex; gap: 10px;">
+    <div class="actor-flex-row" style="display: flex; gap: 10px;">
       <a href="{% url 'destinataire:suivi' %}" class="btn-secondary" style="font-size: 13px;">
         Suivi sur carte & étapes →
       </a>
@@ -127,7 +127,7 @@
           </td>
           <td><span class="badge badge-active">En approche</span></td>
           <td style="text-align: right;">
-            <div style="display: flex; gap: 6px; justify-content: flex-end;">
+            <div class="actor-flex-row" style="display: flex; gap: 6px; justify-content: flex-end;">
               <a href="{% url 'destinataire:suivi' %}" class="btn-secondary" style="font-size: 12px; padding: 0.35rem 0.65rem;">Suivre</a>
               <a href="{% url 'destinataire:confirmation' %}" class="btn-primary" style="font-size: 12px; padding: 0.35rem 0.65rem;">Valider</a>
             </div>
