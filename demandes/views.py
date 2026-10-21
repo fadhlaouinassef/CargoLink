@@ -95,35 +95,3 @@ def demande_detail(request, pk=None):
         'active_tab': 'demandes_list',
         'demande': demande,
     })
-
-
-def transporteur_demandes(request):
-    demandes = DemandeTransport.objects.filter(
-        statut=DemandeTransport.Statut.OUVERTE,
-    ).prefetch_related('marchandises')
-    query = request.GET.get('q', '').strip()
-    if query:
-        demandes = demandes.filter(
-            Q(depart_ville__icontains=query)
-            | Q(arrivee_ville__icontains=query)
-            | Q(marchandises__description__icontains=query)
-            | Q(marchandises__type__icontains=query)
-        ).distinct()
-    return render(request, 'transporteur/demandes.html', {
-        'active_tab': 'demandes',
-        'demandes': demandes,
-        'query': query,
-        'total_demandes': demandes.count(),
-    })
-
-
-def transporteur_demande_detail(request, pk):
-    demande = get_object_or_404(
-        DemandeTransport.objects.filter(statut=DemandeTransport.Statut.OUVERTE)
-        .prefetch_related('marchandises'),
-        pk=pk,
-    )
-    return render(request, 'transporteur/demande_detail.html', {
-        'active_tab': 'demandes',
-        'demande': demande,
-    })

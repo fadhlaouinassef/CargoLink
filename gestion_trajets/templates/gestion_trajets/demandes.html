@@ -1,0 +1,64 @@
+{% extends 'transporteur/base.html' %}
+
+{% block title %}Demandes disponibles | CargoLink{% endblock %}
+{% block breadcrumb %}Demandes disponibles{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Demandes publiées par les PME</div>
+    <h1 class="portal-page-title">Demandes de transport disponibles</h1>
+    <p class="portal-page-subtitle">Parcourez les demandes ouvertes et consultez les marchandises, trajets et délais avant de proposer votre offre.</p>
+  </div>
+</div>
+
+<section class="portal-card">
+  <form method="get" class="available-demand-search">
+    <label class="portal-form-group">
+      <span class="portal-label">Ville ou marchandise</span>
+      <input class="portal-input" type="search" name="q" value="{{ query }}" placeholder="Ex. Tunis, palettes">
+    </label>
+    <button class="btn-primary" type="submit">Rechercher</button>
+    {% if query %}<a class="btn-secondary" href="{% url 'transporteur:demandes' %}">Effacer</a>{% endif %}
+  </form>
+</section>
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Demandes ouvertes</h2>
+    <span class="badge badge-active">{{ total_demandes }} disponible{{ total_demandes|pluralize }}</span>
+  </div>
+  {% for demande in demandes %}
+    <article class="available-demand-card">
+      <div class="available-demand-summary">
+        <div class="available-demand-heading">
+          <strong>{{ demande }}</strong><span class="module-small">{{ demande.created_by.full_name|default:"PME / Expéditeur" }}</span>
+          <span class="badge badge-active">{{ demande.get_statut_display }}</span>
+        </div>
+        <h3 class="available-demand-route">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</h3>
+        <div class="available-demand-meta">
+          <span>Enlèvement : {{ demande.date_depart|date:"d/m/Y" }}</span>
+          <span>Livraison avant : {{ demande.date_limite|date:"d/m/Y" }}</span>
+          <span>{{ demande.marchandises.count }} marchandise{{ demande.marchandises.count|pluralize }}</span>
+          {% if demande.budget %}<span>Budget indicatif : {{ demande.budget|floatformat:2 }} TND</span>{% endif %}
+        </div>
+        <ul class="available-goods-preview">
+          {% for marchandise in demande.marchandises.all %}
+            <li>{{ marchandise.description }} · {{ marchandise.poids }} kg{% if marchandise.volume %} · {{ marchandise.volume }} m³{% endif %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="module-demand-actions">
+        {% if demande.deja_postule %}<a href="{% url 'transporteur:offres' %}" class="btn-secondary">Voir mon offre</a>{% else %}<button type="button" class="btn-primary" data-popup-url="{% url 'transporteur:offre_create' demande.pk %}">Postuler · Proposer une offre</button>{% endif %}
+        <a href="{% url 'transporteur:demande_detail' demande.pk %}" class="btn-secondary">Consulter le détail</a>
+      </div>
+    </article>
+  {% empty %}
+    <div class="demand-empty-state">
+      <h3>Aucune demande disponible</h3>
+      <p>{% if query %}Aucune demande ouverte ne correspond à « {{ query }} ».{% else %}Les nouvelles demandes publiées par les PME apparaîtront ici.{% endif %}</p>
+      {% if query %}<a class="btn-secondary" href="{% url 'transporteur:demandes' %}">Voir toutes les demandes</a>{% endif %}
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}
