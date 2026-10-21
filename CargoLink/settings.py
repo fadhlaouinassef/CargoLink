@@ -16,14 +16,15 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Charge les variables du fichier .env (KEY=VALUE) sans écraser l'environnement.
-_env_file = BASE_DIR / '.env'
-if _env_file.exists():
-    for _line in _env_file.read_text(encoding='utf-8').splitlines():
-        _line = _line.strip()
-        if _line and not _line.startswith('#') and '=' in _line:
-            _key, _value = _line.split('=', 1)
-            os.environ.setdefault(_key.strip(), _value.strip().strip('"\''))
+# Charge les variables .env à la racine (ou à côté de settings.py),
+# sans écraser les variables déjà définies dans l'environnement.
+for _env_file in (BASE_DIR / '.env', BASE_DIR / 'CargoLink' / '.env'):
+    if _env_file.exists():
+        for _line in _env_file.read_text(encoding='utf-8').splitlines():
+            _line = _line.strip()
+            if _line and not _line.startswith('#') and '=' in _line:
+                _key, _value = _line.split('=', 1)
+                os.environ.setdefault(_key.strip(), _value.strip().strip('"\''))
 
 
 # Quick-start development settings - unsuitable for production
@@ -132,6 +133,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Gemini is called only from the server; never expose this key in browser code.
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '').strip()
+GEMINI_MODEL = os.environ.get('GEMINI_MODEL', '').strip() or 'gemini-2.5-flash'
 
 
 # Email
