@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{% static 'css/transporteur.css' %}">
   <script src="{% static 'js/transporteur.js' %}" defer>
 </script>
+  <link rel="stylesheet" href="{% static 'gestion_trajets/module.css' %}">
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -45,7 +46,7 @@
 </a>
 <a href="{% url 'transporteur:demandes' %}" class="portal-nav-link {% if active_tab == 'demandes' %}active{% endif %}">
 <span class="nav-icon" aria-hidden="true">📦</span>
-<span>Demandes compatibles</span>
+<span>Demandes disponibles</span>
 </a>
 <a href="{% url 'transporteur:offres' %}" class="portal-nav-link {% if active_tab == 'offres' %}active{% endif %}">
 <span class="nav-icon" aria-hidden="true">🏷️</span>
@@ -84,9 +85,9 @@
           </div>
         </div>
         <div class="topbar-right">
-          <a href="{% url 'transporteur:trajets' %}" class="btn-primary" style="padding: 0.45rem 0.95rem; font-size: 13px;">
+          <button type="button" data-popup-url="{% url 'transporteur:trajet_create' %}" class="btn-primary" style="padding: 0.45rem 0.95rem; font-size: 13px;">
             + Publier un trajet
-          </a>
+          </button>
           <span class="actor-badge pme">Connecté</span>
         </div>
       </header>
@@ -100,6 +101,7 @@
           {% endfor %}
         {% endif %}
 
+        {% if active_tab == 'dashboard' or active_tab == 'vehicules' or active_tab == 'avis' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
         {% if active_tab != 'vehicules' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
         {% if active_tab != 'demandes' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
         <p id="demo-feedback" class="portal-card demo-feedback" role="status" hidden>
@@ -108,6 +110,9 @@
       </main>
     </div>
   </div>
+  <dialog id="module-dialog" class="module-dialog" aria-labelledby="module-dialog-title"><div id="module-dialog-content"></div></dialog>
+  <p id="module-feedback" class="module-toast" role="alert" hidden></p>
+  <script src="{% static 'gestion_trajets/module.js' %}" defer></script>
   <div class="confirm-modal" id="confirm-modal" hidden>
     <div class="confirm-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
       <button class="confirm-modal-close" type="button" aria-label="Fermer">×</button>

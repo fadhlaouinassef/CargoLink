@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
@@ -104,8 +105,14 @@ class DemandesTransportTests(TestCase):
 
 
 class TransporteurDemandesTests(TestCase):
+    def setUp(self):
+        self.pme = get_user_model().objects.create_user(email='pme@example.com', role='PME')
+        transporteur = get_user_model().objects.create_user(email='transporteur@example.com', role='transporteur')
+        self.client.force_login(transporteur)
+
     def create_demand(self, status=DemandeTransport.Statut.OUVERTE, **overrides):
         fields = {
+            'created_by': self.pme,
             'statut': status,
             'depart_ville': 'Tunis',
             'depart_adresse': 'Rue des Métiers',

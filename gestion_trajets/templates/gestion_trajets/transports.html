@@ -1,0 +1,34 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Suivi des transports | CargoLink{% endblock %}
+{% block breadcrumb %}Suivi des transports{% endblock %}
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Gestion des trajets et suivi</div>
+    <h1 class="portal-page-title">Suivi des transports</h1>
+    <p class="portal-page-subtitle">Consultez vos trajets et actualisez leur état. Chaque mise à jour est enregistrée.</p>
+  </div>
+</div>
+<section class="portal-card">
+  <div class="portal-card-header"><h2 class="portal-card-title">Mes transports</h2></div>
+  <div class="portal-table-wrap" tabindex="0" aria-label="Suivi des transports, défilement horizontal possible">
+    <table class="portal-table">
+      <thead><tr><th>Trajet / Véhicule</th><th>Départ prévu</th><th>Demandes associées</th><th>État actuel</th><th>Dernière mise à jour</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for trajet in trajets %}
+        <tr>
+          <td>{{ trajet.depart_ville }} → {{ trajet.arrivee_ville }}<small class="module-small">{{ trajet.vehicule }}</small></td>
+          <td>{{ trajet.date_depart|date:"d/m/Y H:i" }}</td>
+          <td>{% for offre in trajet.offres.all %}<small class="module-small">{{ offre.demande }} · {{ offre.get_statut_display }}</small>{% empty %}Aucune offre associée{% endfor %}</td>
+          <td><span class="badge badge-active">{{ trajet.get_statut_display }}</span></td>
+          <td>{{ trajet.updated_at|date:"d/m/Y H:i" }}</td>
+          <td><button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:trajet_suivi' trajet.pk %}">Actualiser le suivi</button></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6"><div class="demand-empty-state"><h3>Aucun trajet à suivre</h3><p>Publiez un trajet pour commencer.</p><button type="button" class="btn-primary" data-popup-url="{% url 'transporteur:trajet_create' %}">+ Publier un trajet</button></div></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

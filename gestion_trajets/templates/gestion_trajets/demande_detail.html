@@ -1,0 +1,79 @@
+{% extends 'transporteur/base.html' %}
+
+{% block title %}Détail {{ demande }} | CargoLink{% endblock %}
+{% block breadcrumb %}
+  <a href="{% url 'transporteur:demandes' %}">Demandes disponibles</a><span>/</span><span class="current">{{ demande }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Demande ouverte</div>
+    <h1 class="portal-page-title">Détail de {{ demande }}</h1>
+    <p class="portal-page-subtitle">{{ demande.depart_ville }} → {{ demande.arrivee_ville }} · Publiée le {{ demande.created_at|date:"d/m/Y" }}</p>
+  </div>
+  <div class="portal-header-actions">
+    {% if deja_postule %}<a class="btn-primary" href="{% url 'transporteur:offres' %}">Voir mon offre</a>{% else %}<button type="button" class="btn-primary" data-popup-url="{% url 'transporteur:offre_create' demande.pk %}">Postuler · Proposer une offre</button>{% endif %}
+    <a href="{% url 'transporteur:demandes' %}" class="btn-secondary">Retour aux demandes</a>
+  </div>
+</div>
+
+<div class="carrier-columns">
+  <section class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">Trajet & planning</h2></div>
+    <div class="available-demand-detail-block">
+      <h3>Enlèvement</h3>
+      <strong>{{ demande.depart_ville }}</strong>
+      <p>{{ demande.depart_adresse }}</p>
+      <p>Date prévue : <strong>{{ demande.date_depart|date:"d/m/Y" }}</strong></p>
+    </div>
+    <div class="available-demand-detail-block">
+      <h3>Livraison</h3>
+      <strong>{{ demande.arrivee_ville }}</strong>
+      <p>{{ demande.arrivee_adresse }}</p>
+      <p>Date limite : <strong>{{ demande.date_limite|date:"d/m/Y" }}</strong></p>
+    </div>
+  </section>
+
+  <section class="portal-card">
+    <div class="portal-card-header"><h2 class="portal-card-title">Marchandises</h2></div>
+    <div class="portal-table-wrap" tabindex="0" aria-label="Marchandises, défilement horizontal possible">
+      <table class="portal-table">
+        <thead><tr><th>Description</th><th>Type</th><th>Poids</th><th>Volume</th><th>Fragile</th></tr></thead>
+        <tbody>
+          {% for marchandise in demande.marchandises.all %}
+            <tr>
+              <td>{{ marchandise.description }}</td>
+              <td>{{ marchandise.get_type_display }}</td>
+              <td>{{ marchandise.poids }} kg</td>
+              <td>{% if marchandise.volume %}{{ marchandise.volume }} m³{% else %}—{% endif %}</td>
+              <td>{% if marchandise.fragile %}Oui{% else %}Non{% endif %}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5">Aucune marchandise renseignée.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header"><h2 class="portal-card-title">Informations complémentaires</h2></div>
+  <div class="available-demand-meta">
+    <span>Budget indicatif : <strong>{% if demande.budget %}{{ demande.budget|floatformat:2 }} TND{% else %}Non précisé{% endif %}</strong></span>
+    <span>Modalité de paiement : <strong>{{ demande.get_modalite_paiement_display }}</strong></span>
+    <span>Durée de réception des offres : <strong>{{ demande.get_validite_offres_display }}</strong></span>
+  </div>
+  <h3 class="available-equipment-title">Équipement demandé</h3>
+  <ul class="available-goods-preview">
+    {% if demande.hayon %}<li>Hayon élévateur requis</li>{% endif %}
+    {% if demande.transpalette %}<li>Transpalette à bord</li>{% endif %}
+    {% if demande.bache %}<li>Camion bâché / fermé</li>{% endif %}
+    {% if not demande.hayon and not demande.transpalette and not demande.bache %}<li>Aucun équipement spécifique demandé.</li>{% endif %}
+  </ul>
+  {% if demande.consignes %}
+    <div class="available-demand-detail-block"><h3>Consignes de transport</h3><p>{{ demande.consignes|linebreaksbr }}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

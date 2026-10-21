@@ -13,6 +13,7 @@
     <p class="portal-page-subtitle">{{ demande.depart_ville }} → {{ demande.arrivee_ville }} · Publiée le {{ demande.created_at|date:"d/m/Y" }}</p>
   </div>
   <div class="portal-header-actions">
+    {% if deja_postule %}<a class="btn-primary" href="{% url 'transporteur:offres' %}">Voir mon offre</a>{% else %}<button type="button" class="btn-primary" data-popup-url="{% url 'transporteur:offre_create' demande.pk %}">Postuler · Proposer une offre</button>{% endif %}
     <a href="{% url 'transporteur:demandes' %}" class="btn-secondary">Retour aux demandes</a>
   </div>
 </div>

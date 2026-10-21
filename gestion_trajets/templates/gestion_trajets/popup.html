@@ -1,0 +1,21 @@
+<form action="{{ action }}" method="post" data-module-form>
+  {% csrf_token %}
+  <div class="module-dialog-heading"><h2 id="module-dialog-title">{{ title }}</h2><button type="button" class="module-close" data-close-dialog aria-label="Fermer">×</button></div>
+  {% if subtitle %}<p class="module-subtitle">{{ subtitle }}</p>{% endif %}
+  <p class="module-error" data-popup-error role="alert" hidden></p>
+  {% if delete %}
+    <p>Voulez-vous vraiment supprimer cet élément ? Cette action est définitive.</p>
+  {% else %}
+    {% if offer %}<p class="module-subtitle">Choisissez un trajet avec les mêmes villes, des dates et une capacité adaptées à la demande.</p>{% endif %}
+    {% for error in form.non_field_errors %}<p class="module-error" role="alert">{{ error }}</p>{% endfor %}
+    <div class="form-grid-2">
+    {% for field in form %}
+      <div class="portal-form-group"><label class="portal-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+        {% for error in field.errors %}<p class="module-error" role="alert">{{ error }}</p>{% endfor %}
+      </div>
+    {% endfor %}
+    </div>
+    {% if offer %}<p class="module-subtitle">Vous devez disposer d’un trajet publié pour postuler. <a href="{% url 'transporteur:trajets' %}">Créer ou gérer mes trajets</a></p>{% endif %}
+  {% endif %}
+  <div class="module-dialog-actions"><button class="btn-secondary" type="button" data-close-dialog>Annuler</button><button class="btn-primary {% if delete %}module-danger{% endif %}" type="submit">{% if delete %}Confirmer la suppression{% else %}Enregistrer{% endif %}</button></div>
+</form>

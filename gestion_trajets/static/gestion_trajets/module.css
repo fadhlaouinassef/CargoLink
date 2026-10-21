@@ -1,0 +1,14 @@
+.module-dialog{width:min(660px,calc(100% - 32px));max-height:90vh;box-sizing:border-box;margin:auto;padding:28px;border:1px solid var(--line);border-radius:18px;background:white;color:var(--ink);box-shadow:0 24px 80px #152c2940;overflow-y:auto}
+.module-dialog::backdrop{background:#102c2a80;backdrop-filter:blur(3px)}
+.module-dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.module-dialog-heading h2{font-size:22px;margin:0}.module-close{border:0;background:var(--bg);font-size:28px;cursor:pointer;border-radius:8px;padding:0 10px;color:var(--ink)}
+.module-subtitle{color:var(--muted);font-size:14px;margin:0 0 18px;overflow-wrap:anywhere}.module-dialog .portal-input{box-sizing:border-box;width:100%}
+.module-dialog-actions,.module-actions{display:flex;gap:10px;flex-wrap:wrap}.module-dialog-actions{justify-content:flex-end;margin-top:24px}
+.module-error{color:#a4202c;font-size:13px;margin:8px 0}.module-danger{background:#b42332!important}.module-delete{color:#a4202c}.module-small{display:block;color:var(--muted);font-size:12px;margin-top:5px}
+.module-demand-actions{display:flex;flex-direction:column;gap:10px;flex-shrink:0}.module-demand-actions>*{justify-content:center;text-align:center}
+.available-demand-card{padding:22px!important;margin:16px 0;border:1px solid var(--line)!important;border-radius:14px;background:linear-gradient(120deg,#f4faf7,white);transition:box-shadow .2s,border-color .2s}
+.available-demand-card:hover{border-color:#98bbaa!important;box-shadow:0 6px 20px #183b2c0d}.available-demand-heading .module-small{margin:0}
+.module-spinner{display:inline-block;width:15px;height:15px;margin-right:8px;vertical-align:middle;flex-shrink:0;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:module-spin .7s linear infinite}
+@keyframes module-spin{to{transform:rotate(360deg)}}button[aria-busy=true]{opacity:.75;cursor:wait}.module-toast{position:fixed;bottom:24px;right:24px;max-width:min(420px,80vw);padding:16px 20px;border:1px solid #e1a9ad;border-radius:12px;background:#fff1f2;color:#a4202c;box-shadow:0 8px 30px #0002;z-index:1000}
+@media(max-width:700px){.module-dialog{padding:20px}.module-dialog .form-grid-2{grid-template-columns:1fr}.module-dialog-actions>*{flex:1}.module-demand-actions{width:100%}.available-demand-card{padding:16px!important}}
+@media(prefers-reduced-motion:reduce){.module-spinner{animation-duration:1.5s}.available-demand-card{transition:none}}
