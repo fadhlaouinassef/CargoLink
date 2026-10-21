@@ -12,7 +12,11 @@
     <h1 class="portal-page-title">Demande {{ demande }}</h1>
     <p class="portal-page-subtitle">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</p>
   </div>
-  <div class="portal-header-actions"><a href="{% url 'pme:demandes_list' %}" class="btn-secondary">Retour aux demandes</a></div>
+  <div class="portal-header-actions">
+    <a href="{% url 'pme:demandes_list' %}" class="btn-secondary">Retour aux demandes</a>
+    <a href="{% url 'pme:demande_update' demande.pk %}" class="btn-primary">Modifier</a>
+    <a href="{% url 'pme:demande_delete' demande.pk %}" class="btn-danger">Supprimer</a>
+  </div>
 </div>
 
 <div class="actor-grid-detail demand-detail-grid">

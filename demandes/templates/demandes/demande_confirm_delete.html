@@ -1,0 +1,20 @@
+{% extends 'pme/base.html' %}
+
+{% block title %}Supprimer {{ demande }} | CargoLink{% endblock %}
+{% block breadcrumb %}
+  <a href="{% url 'pme:demandes_list' %}">Mes demandes</a><span>/</span><span class="current">Supprimer</span>
+{% endblock %}
+
+{% block content %}
+<section class="portal-card demand-delete-card">
+  <div class="portal-eyebrow">Suppression définitive</div>
+  <h1 class="portal-page-title">Supprimer {{ demande }} ?</h1>
+  <p>Cette action supprimera également les marchandises associées. Elle ne peut pas être annulée.</p>
+  <p><strong>{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</strong> · {{ demande.date_depart|date:"d/m/Y" }}</p>
+  <form method="post" class="demand-form-actions">
+    {% csrf_token %}
+    <a href="{% url 'pme:demande_detail_item' demande.pk %}" class="btn-secondary">Annuler</a>
+    <button type="submit" class="btn-danger">Confirmer la suppression</button>
+  </form>
+</section>
+{% endblock %}

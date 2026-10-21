@@ -801,6 +801,7 @@ body.modal-open {
     overflow: hidden
 }
 .admin-message{padding:12px 16px;margin-bottom:18px;border-left:4px solid var(--green);background:#eaf4ec;color:var(--deep);border-radius:5px}.admin-message.error{border-color:#ba1a1a;background:#ffeded;color:#ba1a1a}.row-actions{display:flex;align-items:center;gap:8px}.action-icon{border:0;background:none;color:var(--muted);font-size:18px;padding:2px;text-decoration:none}.action-icon:hover{color:var(--primary)}.delete-form{display:inline}.delete-form button{cursor:pointer}.portal-header-actions{display:flex;gap:10px}.back-link{display:inline-block;margin-bottom:20px;color:var(--primary);font-size:12px}.standalone-admin-form{max-width:760px;margin:0 auto}.admin-form{display:grid;gap:16px;padding:25px}.admin-form label{display:grid;gap:7px;color:var(--deep);font-size:12px;font-weight:600}.admin-form input,.admin-form select,.admin-form textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:5px}.admin-form .primary-button{justify-self:start;padding:0 20px}.confirmation-card{padding:30px}.confirmation-card form{display:flex;gap:10px;margin-top:20px}.confirmation-card .danger-button,.confirmation-card .secondary-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:25px}.detail-label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.detail-grid strong{color:var(--deep);font-size:13px}
+.admin-demand-shortcut{margin-bottom:22px}.admin-demand-shortcut .panel-heading{gap:16px;flex-wrap:wrap}.admin-demand-shortcut .primary-button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;text-decoration:none}.admin-publication-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.admin-demand-table{min-width:900px}.admin-demand-owner{display:block;margin-top:4px;color:var(--muted);font-size:11px}.admin-demand-status{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf1ed;color:var(--deep);font-size:11px;font-weight:700}.admin-demand-status.status-ouverte{background:#e4f1e7;color:#2a6049}.admin-demand-status.status-masquee{background:#eeeafa;color:#66558f}.admin-demand-status.status-brouillon{background:#fff0dc;color:#9b651d}.admin-demand-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px}.admin-demand-actions form{margin:0}.admin-demand-actions .secondary-button,.admin-demand-actions .danger-button{min-height:34px;padding:0 10px;font-size:11px}.admin-demand-goods summary{cursor:pointer;color:var(--primary);font-weight:600}.admin-demand-goods ul{padding-left:17px;color:var(--muted);font-size:11px}.admin-demand-goods small{color:var(--muted)}
 .confirmation-open{overflow:hidden}.confirm-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:#19312680}.confirm-modal[hidden]{display:none}.confirm-modal-card{position:relative;width:min(100%,420px);padding:30px;background:#fff;border-radius:12px;box-shadow:0 18px 55px #19312635;text-align:center}.confirm-modal-close{position:absolute;right:18px;top:14px;border:0;background:none;color:var(--muted);font-size:25px}.confirm-modal-icon{display:grid;place-items:center;width:46px;height:46px;margin:0 auto 14px;border-radius:50%;background:#ffeded;color:#ba1a1a;font-weight:700;font-size:22px}.confirm-modal-card h2{color:var(--deep);font-size:20px}.confirm-modal-card p{color:var(--muted);font-size:13px}.confirm-modal-actions{display:flex;justify-content:center;gap:10px;margin-top:22px}.confirm-modal-actions .secondary-button,.confirm-modal-actions .danger-button{min-height:40px}.detail-actions{display:flex;justify-content:flex-end;padding:0 25px 25px}.detail-comment{padding:0 25px 25px;color:var(--muted)}
 
 .modal-backdrop {
@@ -1062,6 +1063,7 @@ body.modal-open {
 }
 
 @media (max-width:900px) {
+    .admin-publication-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .sidebar {
         width: 225px;
         flex-basis: 225px
@@ -1081,6 +1083,7 @@ body.modal-open {
 }
 
 @media (max-width:700px) {
+    .admin-publication-stats { grid-template-columns: 1fr; }
     .sidebar {
         position: fixed;
         z-index: 10;
