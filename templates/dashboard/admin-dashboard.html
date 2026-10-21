@@ -22,6 +22,7 @@
       <nav class="sidebar-nav" aria-label="Navigation administrateur">
         <p class="nav-label">MENU PRINCIPAL</p>
         <a class="nav-link active" href="{% url 'authentification:admin_dashboard' %}" aria-current="page">Comptes utilisateurs <span class="nav-count">{{ total_users }}</span></a>
+        <a class="nav-link" href="{% url 'authentification:admin_vehicles' %}">Véhicules & disponibilités</a>
       </nav>
       <div class="sidebar-footer">
         <a class="nav-link" href="{% url 'home' %}">Retour au site</a>

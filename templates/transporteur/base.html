@@ -100,11 +100,20 @@
           {% endfor %}
         {% endif %}
 
-        <p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>
+        {% if active_tab != 'vehicules' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
         <p id="demo-feedback" class="portal-card demo-feedback" role="status" hidden>
 </p>
         {% block content %}{% endblock %}
       </main>
+    </div>
+  </div>
+  <div class="confirm-modal" id="confirm-modal" hidden>
+    <div class="confirm-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <button class="confirm-modal-close" type="button" aria-label="Fermer">×</button>
+      <span class="confirm-modal-icon">!</span>
+      <h2 id="confirm-title">Confirmer la suppression</h2>
+      <p id="confirm-message"></p>
+      <div class="confirm-modal-actions"><button class="btn-secondary" type="button" data-confirm-cancel>Annuler</button><button class="btn-danger" type="button" data-confirm-submit>Supprimer</button></div>
     </div>
   </div>
   {% block extra_js %}{% endblock %}

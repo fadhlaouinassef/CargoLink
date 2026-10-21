@@ -1,15 +1,27 @@
-from django.test import SimpleTestCase
+from django.test import TestCase
 from django.urls import reverse
 
+from authentification.models import User
 
-class ActorPortalsTests(SimpleTestCase):
+class ActorPortalsTests(TestCase):
+    def setUp(self):
+        self.transporteur = User.objects.create_user(
+            email='portal@example.com',
+            password='Strong-password-872!',
+            full_name='Transporteur Portal',
+            role=User.Role.TRANSPORTEUR,
+        )
+
     def test_transporteur_portal_urls(self):
         for page in ('dashboard', 'trajets', 'demandes', 'offres', 'vehicules', 'transports', 'avis'):
             with self.subTest(page=page):
+                if page == 'vehicules':
+                    self.client.force_login(self.transporteur)
                 response = self.client.get(reverse(f'transporteur:{page}'))
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(response, 'Espace transporteur')
-                self.assertContains(response, 'Données fictives')
+                if page != 'vehicules':
+                    self.assertContains(response, 'Données fictives')
 
     def test_pme_portal_urls(self):
         urls = [
