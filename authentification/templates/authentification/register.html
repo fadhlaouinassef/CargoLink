@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#3D5F4B">
   <title>S’inscrire | CargoLink</title>
   <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+  <script src="{% static 'js/register.js' %}" defer></script>
 </head>
 <body>
   <main class="signin-layout">
@@ -53,14 +54,20 @@
           </div>
           <div class="field">
             <label for="id_password">Mot de passe</label>
-            <input id="id_password" name="password1" type="password" autocomplete="new-password" required>
-            {{ form.password1.help_text }}
+            <input id="id_password" name="password1" type="password" autocomplete="new-password" aria-describedby="password-requirements password-note" required>
+            <ul id="password-requirements" class="password-requirements">
+              <li data-rule="length"><span aria-hidden="true">✕</span> Au moins 8 caractères</li>
+              <li data-rule="numeric"><span aria-hidden="true">✕</span> Ne pas contenir uniquement des chiffres</li>
+              <li data-rule="match"><span aria-hidden="true">✕</span> Les deux mots de passe sont identiques</li>
+            </ul>
+            <p id="password-note" class="password-note">Le serveur vérifie aussi que le mot de passe n’est pas trop courant ou trop proche de vos informations personnelles.</p>
           </div>
           <div class="field">
             <label for="id_password_confirmation">Confirmer le mot de passe</label>
             <input id="id_password_confirmation" name="password2" type="password" autocomplete="new-password" required>
           </div>
-          <button class="submit-button" type="submit">Créer mon compte <span aria-hidden="true">→</span></button>
+          <button class="submit-button" type="submit"><span class="submit-label">Créer mon compte</span><span class="submit-arrow" aria-hidden="true">→</span><span class="submit-spinner" aria-hidden="true" hidden></span></button>
+          <p id="register-status" class="password-note" role="status" hidden>Création de votre compte en cours…</p>
         </form>
         <p class="back-home">Déjà membre ? <a href="{% url 'authentification:login' %}">Se connecter</a></p>
       </div>

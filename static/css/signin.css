@@ -30,6 +30,16 @@ input:focus{border-color:var(--bright-green);box-shadow:0 0 0 3px #43796020}
 .back-home a{text-decoration:underline;text-underline-offset:3px}
 .signin-footer{margin:35px 0 0;color:#7a827c;text-align:center;font-size:11px}
 .mobile-brand{display:none}
+.password-requirements{padding:0;list-style:none;font-size:12px;line-height:1.8;color:#b42318}
+.password-requirements li.is-valid{color:#267044}
+.password-requirements li span{display:inline-block;width:18px;font-weight:700}
+.password-note{color:var(--muted);font-size:12px;line-height:1.6}
+.submit-button .submit-label{font-size:14px;line-height:1.4}
+.submit-button:disabled{cursor:wait;opacity:.8}
+.submit-spinner{width:20px;height:20px;border:2px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:register-spin .8s linear infinite}
+[hidden]{display:none!important}
+@keyframes register-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.submit-spinner{animation-duration:2s}}
 @media(max-width:760px){.signin-layout{grid-template-columns:1fr}.signin-aside{display:none}.signin-main{min-height:100vh;padding:30px 24px 20px}.mobile-brand{display:block;margin:0 auto 48px}.signin-form-wrap{margin:auto 0}.signin-footer{margin-top:36px}}
 @media(max-width:420px){.signin-main{padding-inline:20px}.mobile-brand img{width:170px}h2{font-size:30px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}

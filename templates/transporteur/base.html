@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Espace Transporteur | CargoLink{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/portals.css' %}">
+  <script src="{% static 'js/portals.js' %}" defer>
+</script>
+  <link rel="stylesheet" href="{% static 'css/transporteur.css' %}">
+  <script src="{% static 'js/transporteur.js' %}" defer>
+</script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="portal-shell">
+    <!-- Sidebar Transporteur -->
+    <aside class="portal-sidebar">
+      <div class="sidebar-brand-box">
+        <a href="{% url 'home' %}">
+          <img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink" class="sidebar-logo">
+        </a>
+        <span class="actor-badge pme">Transporteur indépendant</span>
+      </div>
+
+      <div class="user-snippet">
+        <div class="user-avatar">
+          {{ request.user.full_name|default:"MT"|slice:":2"|upper }}
+        </div>
+        <div class="user-meta">
+          <div class="user-name">{{ request.user.full_name|default:"Express Sahel Transport" }}</div>
+          <div class="user-role-label">Compte Transporteur Professionnel</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Espace transporteur">
+<a href="{% url 'transporteur:dashboard' %}" class="portal-nav-link {% if active_tab == 'dashboard' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">📊</span>
+<span>Tableau de bord</span>
+</a>
+<a href="{% url 'transporteur:trajets' %}" class="portal-nav-link {% if active_tab == 'trajets' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">🛣️</span>
+<span>Mes trajets</span>
+</a>
+<a href="{% url 'transporteur:demandes' %}" class="portal-nav-link {% if active_tab == 'demandes' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">📦</span>
+<span>Demandes compatibles</span>
+</a>
+<a href="{% url 'transporteur:offres' %}" class="portal-nav-link {% if active_tab == 'offres' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">🏷️</span>
+<span>Mes offres</span>
+</a>
+<a href="{% url 'transporteur:vehicules' %}" class="portal-nav-link {% if active_tab == 'vehicules' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">🚚</span>
+<span>Véhicules & disponibilités</span>
+</a>
+<a href="{% url 'transporteur:transports' %}" class="portal-nav-link {% if active_tab == 'transports' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">📍</span>
+<span>Suivi des transports</span>
+</a>
+<a href="{% url 'transporteur:avis' %}" class="portal-nav-link {% if active_tab == 'avis' %}active{% endif %}">
+<span class="nav-icon" aria-hidden="true">⭐</span>
+<span>Avis & réclamations</span>
+</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="{% url 'home' %}" class="portal-btn-sm portal-btn-ghost">
+          <span>← Retour au site public</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="portal-main">
+      <header class="portal-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" type="button" aria-label="Menu">☰</button>
+          <div class="portal-breadcrumbs">
+            <a href="{% url 'transporteur:dashboard' %}">Transporteur</a>
+            <span>/</span>
+            <span class="current">{% block breadcrumb %}Espace Transporteur{% endblock %}</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <a href="{% url 'transporteur:trajets' %}" class="btn-primary" style="padding: 0.45rem 0.95rem; font-size: 13px;">
+            + Publier un trajet
+          </a>
+          <span class="actor-badge pme">Connecté</span>
+        </div>
+      </header>
+
+      <main class="portal-container">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="portal-card" style="padding: 0.85rem 1.25rem; margin-bottom: 1rem; background: var(--success-bg); border-color: var(--success); color: var(--success);">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>
+        <p id="demo-feedback" class="portal-card demo-feedback" role="status" hidden>
+</p>
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

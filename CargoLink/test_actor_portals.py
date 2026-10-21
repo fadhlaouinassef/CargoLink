@@ -3,6 +3,14 @@ from django.urls import reverse
 
 
 class ActorPortalsTests(SimpleTestCase):
+    def test_transporteur_portal_urls(self):
+        for page in ('dashboard', 'trajets', 'demandes', 'offres', 'vehicules', 'transports', 'avis'):
+            with self.subTest(page=page):
+                response = self.client.get(reverse(f'transporteur:{page}'))
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, 'Espace transporteur')
+                self.assertContains(response, 'Données fictives')
+
     def test_pme_portal_urls(self):
         urls = [
             'pme:dashboard',

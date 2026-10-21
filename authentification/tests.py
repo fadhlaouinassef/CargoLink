@@ -172,6 +172,19 @@ class LoginTests(TestCase):
         self.assertRedirects(response, reverse('pme:dashboard'))
         self.assertEqual(str(self.client.session['_auth_user_id']), str(User.objects.get(email='amine@example.com').pk))
 
+    def test_transporteur_credentials_redirect_to_transporteur_dashboard(self):
+        User.objects.create_user(
+            email='transporteur@example.com',
+            password=self.password,
+            full_name='Transporteur Test',
+            role=User.Role.TRANSPORTEUR,
+        )
+        response = self.client.post(self.url, {
+            'username': 'transporteur@example.com',
+            'password': self.password,
+        })
+        self.assertRedirects(response, reverse('transporteur:dashboard'))
+
     def test_destinataire_credentials_redirect_to_destinataire_dashboard(self):
         User.objects.create_user(
             email='dest@example.com',

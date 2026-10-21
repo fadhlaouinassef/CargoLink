@@ -1,0 +1,144 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Bonjour, Mohamed Triki | CargoLink{% endblock %}
+{% block breadcrumb %}Bonjour, Mohamed Triki{% endblock %}
+{% block content %}<div class="portal-page-header">
+<div>
+<div class="portal-eyebrow">Espace transporteur</div>
+<h1 class="portal-page-title">Bonjour, Mohamed Triki</h1>
+<p class="portal-page-subtitle">Gérez vos trajets, rentabilisez vos capacités et accompagnez chaque livraison.</p>
+</div>
+</div>
+<div class="portal-header-actions">
+<a class="btn-primary" href="{% url 'transporteur:trajets' %}">＋ Publier un trajet</a>
+<a class="btn-secondary" href="{% url 'transporteur:demandes' %}">Rechercher un chargement</a>
+</div>
+<br>
+<div class="stat-cards-grid">
+<div class="stat-item-card">
+<div class="stat-icon-wrapper green">🛣️</div>
+<div class="stat-content">
+<small>Trajets publiés</small>
+<strong>3</strong>
+<span class="sub">2 départs cette semaine</span>
+</div>
+</div>
+<div class="stat-item-card">
+<div class="stat-icon-wrapper green">🏷️</div>
+<div class="stat-content">
+<small>Offres en attente</small>
+<strong>4</strong>
+<span class="sub">1 offre acceptée</span>
+</div>
+</div>
+<div class="stat-item-card">
+<div class="stat-icon-wrapper green">🚚</div>
+<div class="stat-content">
+<small>Transports en cours</small>
+<strong>2</strong>
+<span class="sub">1 livraison attendue à Sfax</span>
+</div>
+</div>
+<div class="stat-item-card">
+<div class="stat-icon-wrapper green">⭐</div>
+<div class="stat-content">
+<small>Note moyenne</small>
+<strong>4,8 / 5</strong>
+<span class="sub">34 transports réalisés</span>
+</div>
+</div>
+</div>
+<div class="carrier-columns">
+<section class="portal-card">
+<div class="portal-card-header">
+<h2 class="portal-card-title">🚚 Des chargements pour vos trajets</h2>
+</div>
+<p>3 demandes correspondent à vos capacités disponibles. Un chargement de 1 850 kg vous attend sur Tunis → Sfax.</p>
+<a class="btn-sand" href="{% url 'transporteur:demandes' %}">Voir les demandes compatibles</a>
+</section>
+<section class="portal-card">
+<div class="portal-card-header">
+<h2 class="portal-card-title">🚚 Prochaine livraison</h2>
+</div>
+<p>
+<strong>#TR-8842 · Tunis → Sfax</strong>
+</p>
+<p>Destinataire : Société Huiles du Sud<br>Arrivée estimée : 15h15 · Quai de réception 2</p>
+<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Mettre à jour mon transport</a>
+</section>
+</div>
+<section class="portal-card">
+<div class="portal-card-header">
+<h2 class="portal-card-title">Vos missions</h2>
+</div>
+<div class="portal-table-wrap">
+<table class="portal-table">
+<thead>
+<tr>
+<th>Transport</th>
+<th>Trajet / Client</th>
+<th>Marchandises</th>
+<th>État</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#TR-8842</td>
+<td>Tunis → Sfax<br>AgroMed Distribution</td>
+<td>4 palettes · 1 850 kg</td>
+<td>
+<span class="badge badge-active">En transit</span>
+</td>
+<td>
+<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Actualiser le suivi</a>
+</td>
+</tr>
+<tr>
+<td>#TR-8845</td>
+<td>Sousse → Bizerte<br>Sahel Industrie</td>
+<td>12 fûts · 900 kg</td>
+<td>
+<span class="badge badge-pending">Planifié</span>
+</td>
+<td>
+<a class="btn-secondary" href="{% url 'transporteur:transports' %}">Consulter</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="portal-card">
+<div class="portal-card-header">
+<h2 class="portal-card-title">Disponibilités de votre flotte</h2>
+</div>
+<div class="portal-table-wrap">
+<table class="portal-table">
+<thead>
+<tr>
+<th>Véhicule</th>
+<th>Capacité</th>
+<th>Disponibilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Iveco Daily · 145 TU 2280</td>
+<td>3 500 kg · 20 m³</td>
+<td>
+<span class="badge badge-active">En mission</span>
+</td>
+</tr>
+<tr>
+<td>Renault Master · 162 TU 4510</td>
+<td>1 500 kg · 12 m³</td>
+<td>
+<span class="badge badge-success">Disponible</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<a class="btn-secondary" href="{% url 'transporteur:vehicules' %}">Gérer mes véhicules</a>
+{% endblock %}

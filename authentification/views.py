@@ -35,6 +35,8 @@ class RoleBasedLoginView(LoginView):
             return reverse('authentification:admin_dashboard')
         elif user.role == User.Role.PME:
             return reverse('pme:dashboard')
+        elif user.role == User.Role.TRANSPORTEUR:
+            return reverse('transporteur:dashboard')
         elif user.role == User.Role.DESTINATAIRE:
             return reverse('destinataire:dashboard')
         return super().get_success_url()
