@@ -6,7 +6,7 @@ from django.db.models import Avg, Count
 # Limites de saisie, partagées par les modèles et les formulaires.
 AVIS_COMMENTAIRE_MIN = 10
 AVIS_COMMENTAIRE_MAX = 1000
-RECLAMATION_DESCRIPTION_MIN = 20
+RECLAMATION_DESCRIPTION_MIN = 15
 RECLAMATION_DESCRIPTION_MAX = 2000
 REPONSE_MIN = 10
 REPONSE_MAX = 2000
