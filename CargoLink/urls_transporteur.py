@@ -15,6 +15,7 @@ from vehicules.views import (
     VehiculeListView,
     VehiculeUpdateView,
 )
+from vehicules.ia_views import AssistantDisponibiliteIAView
 
 app_name = 'transporteur'
 
@@ -36,5 +37,6 @@ urlpatterns = trajet_urls + [
     path('disponibilites/<int:pk>/modifier/', DisponibiliteUpdateView.as_view(), name='disponibilite_update'),
     path('disponibilites/<int:pk>/', TransporteurDisponibiliteDetailView.as_view(), name='disponibilite_detail'),
     path('disponibilites/<int:pk>/supprimer/', DisponibiliteDeleteView.as_view(), name='disponibilite_delete'),
+    path('disponibilites/ia-assistant/', AssistantDisponibiliteIAView.as_view(), name='disponibilite_ia_assistant'),
     *transporteur_urls,
 ]

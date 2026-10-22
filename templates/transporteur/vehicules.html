@@ -1,6 +1,11 @@
 {% extends 'transporteur/base.html' %}
+{% load static %}
 {% block title %}Véhicules & disponibilités | CargoLink{% endblock %}
 {% block breadcrumb %}Véhicules & disponibilités{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'vehicules/css/assistant_ia.css' %}">
+{% endblock %}
 {% block content %}
 <div class="portal-page-header">
   <div>
@@ -86,7 +91,46 @@
 
 <section class="portal-card">
   <div class="portal-card-header"><h2 class="portal-card-title">Définir une disponibilité</h2></div>
-  <form method="post" action="{% if editing_availability %}{% url 'transporteur:disponibilite_update' editing_availability.pk %}{% else %}{% url 'transporteur:disponibilite_create' %}{% endif %}">
+
+  {% if request.user.role == 'transporteur' %}
+  <!-- Assistant IA de saisie en langage naturel -->
+  <div id="assistant-ia-container" class="ia-assistant-card" data-endpoint="{% url 'transporteur:disponibilite_ia_assistant' %}">
+    <div class="ia-assistant-title">
+      <span aria-hidden="true">✨</span>
+      <span>Assistant IA CargoLink</span>
+    </div>
+    <p class="ia-assistant-help" id="assistant-ia-help">
+      Décrivez votre disponibilité en une phrase libre (ex. : <em>« Camion libre de Tunis à Sfax du 5 au 8 novembre »</em>). L'IA pré-remplit les champs pour vous ; vous pourrez vérifier et corriger avant d'enregistrer.
+    </p>
+
+    <div class="ia-input-wrapper">
+      <label for="assistant-ia-phrase" class="portal-label">Votre phrase de disponibilité</label>
+      <textarea
+        id="assistant-ia-phrase"
+        class="ia-textarea"
+        rows="2"
+        maxlength="300"
+        aria-describedby="assistant-ia-help assistant-ia-counter"
+        placeholder="Ex : Camionnette disponible au départ de Sousse vers Tunis demain matin..."
+      ></textarea>
+
+      <div class="ia-controls">
+        <span id="assistant-ia-counter" class="ia-counter" aria-live="off">0 / 300 caractères</span>
+        <button type="button" id="assistant-ia-submit" class="btn-ia" disabled>
+          <span id="assistant-ia-spinner" class="ia-spinner" hidden aria-hidden="true"></span>
+          <span id="assistant-ia-btn-text">Remplir avec l’IA</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Régions d'accessibilité WCAG AA -->
+    <div id="assistant-ia-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <div id="assistant-ia-alert" class="ia-alert-error" role="alert" tabindex="-1" hidden></div>
+    <div id="assistant-ia-summary" hidden></div>
+  </div>
+  {% endif %}
+
+  <form id="form-disponibilite" method="post" action="{% if editing_availability %}{% url 'transporteur:disponibilite_update' editing_availability.pk %}{% else %}{% url 'transporteur:disponibilite_create' %}{% endif %}">
     {% csrf_token %}
     {% include 'transporteur/includes/form_errors.html' with form=availability_form %}
     <div class="form-grid-2">
@@ -97,4 +141,8 @@
     <button type="submit" class="btn-primary">{% if editing_availability %}Enregistrer les modifications{% else %}Enregistrer la disponibilité{% endif %}</button>
   </form>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'vehicules/js/assistant_ia.js' %}" defer></script>
 {% endblock %}
