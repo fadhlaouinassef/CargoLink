@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from demandes.models import DemandeTransport, Marchandise
+from vehicules.models import Vehicule
 from .models import OffreTransport, Trajet
 
 
@@ -17,6 +18,16 @@ class GestionTrajetsTests(TestCase):
         cls.other = users.create_user(email='other@example.com', role='transporteur')
         cls.pme = users.create_user(email='pme@example.com', role='PME')
         cls.depart = timezone.now() + timedelta(days=3)
+        cls.vehicule = Vehicule.objects.create(
+            transporteur=cls.carrier, immatriculation='123 TU 456', marque='Iveco',
+            modele='Daily', annee=2024, type_vehicule='camion',
+            capacite_poids_kg=1000, capacite_volume_m3=10,
+        )
+        cls.other_vehicule = Vehicule.objects.create(
+            transporteur=cls.other, immatriculation='789 TU 123', marque='Renault',
+            modele='Master', annee=2024, type_vehicule='camionnette',
+            capacite_poids_kg=500, capacite_volume_m3=5,
+        )
         cls.demande = DemandeTransport.objects.create(
             created_by=cls.pme, depart_ville='Tunis', depart_adresse='Dépôt A',
             arrivee_ville='Sfax', arrivee_adresse='Dépôt B',
@@ -99,18 +110,103 @@ class GestionTrajetsTests(TestCase):
 
     def test_trajet_crud_and_tracking_persist(self):
         data = {'depart_ville': 'Sousse', 'arrivee_ville': 'Bizerte',
-                'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'), 'vehicule': 'Camion',
+                'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'), 'vehicule': self.vehicule.immatriculation,
                 'capacite_kg': 500, 'volume_m3': 5, 'statut': 'publie'}
         self.assertEqual(self.client.post(self.url('trajet_create'), data).json(), {'success': True})
-        trajet = Trajet.objects.get(vehicule='Camion')
-        data['vehicule'] = 'Camion B'
+        trajet = Trajet.objects.get(depart_ville='Sousse')
+        self.assertEqual(trajet.capacite_kg, self.vehicule.capacite_poids_kg)
+        self.assertEqual(trajet.volume_m3, self.vehicule.capacite_volume_m3)
+        data['arrivee_ville'] = 'Gabes'
         self.assertEqual(self.client.post(self.url('trajet_update', trajet.pk), data).status_code, 200)
         self.assertEqual(self.client.post(self.url('trajet_suivi', trajet.pk), {'statut': 'en_cours'}).json(), {'success': True})
         trajet.refresh_from_db()
         self.assertEqual(trajet.statut, 'en_cours')
-        self.assertContains(self.client.get(self.url('transports')), 'Camion B')
+        self.assertEqual(trajet.arrivee_ville, 'Gabes')
+        self.assertContains(self.client.get(self.url('transports')), self.vehicule.immatriculation)
         self.assertEqual(self.client.post(self.url('trajet_delete', trajet.pk)).status_code, 200)
         self.assertFalse(Trajet.objects.filter(pk=trajet.pk).exists())
+
+    def test_trajet_popup_only_lists_owned_vehicles_with_capacity(self):
+        self.assertContains(
+            self.client.get(self.url('trajets')),
+            '/static/gestion_trajets_offres/trajet.js',
+        )
+        html = self.client.get(self.url('trajet_create')).json()['html']
+        self.assertIn(str(self.vehicule), html)
+        self.assertNotIn(self.other_vehicule.immatriculation, html)
+        self.assertIn('data-capacite="1000.00"', html)
+        self.assertIn('data-volume="10.00"', html)
+        self.assertRegex(html, r'<input[^>]*name="capacite_kg"[^>]* disabled')
+        self.assertRegex(html, r'<input[^>]*name="volume_m3"[^>]* disabled')
+
+    def test_trajet_requires_owned_vehicle_and_ignores_posted_capacity(self):
+        data = {
+            'depart_ville': 'Sousse', 'arrivee_ville': 'Bizerte',
+            'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'), 'statut': 'publie',
+        }
+        url = self.url('trajet_create')
+        for value in ('', 'Camion libre', self.other_vehicule.immatriculation):
+            self.assertEqual(self.client.post(url, {**data, 'vehicule': value}).status_code, 422)
+        data['vehicule'] = self.vehicule.immatriculation
+        self.assertEqual(self.client.post(url, data).json(), {'success': True})
+        trajet = Trajet.objects.get(depart_ville='Sousse')
+        self.other_vehicule.transporteur = self.carrier
+        self.other_vehicule.save()
+        data['vehicule'] = self.other_vehicule.immatriculation
+        response = self.client.post(self.url('trajet_update', trajet.pk), {
+            **data, 'capacite_kg': 999999, 'volume_m3': 999999,
+        })
+        self.assertEqual(response.json(), {'success': True})
+        trajet.refresh_from_db()
+        self.assertEqual(trajet.vehicule, self.other_vehicule.immatriculation)
+        self.assertEqual(trajet.capacite_kg, self.other_vehicule.capacite_poids_kg)
+        self.assertEqual(trajet.volume_m3, self.other_vehicule.capacite_volume_m3)
+
+    def test_trajet_without_owned_vehicles_cannot_be_created(self):
+        self.vehicule.delete()
+        html = self.client.get(self.url('trajet_create')).json()['html']
+        self.assertNotIn('data-capacite=', html)
+        response = self.client.post(self.url('trajet_create'), {
+            'depart_ville': 'Sousse', 'arrivee_ville': 'Bizerte',
+            'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'),
+            'vehicule': self.other_vehicule.immatriculation, 'statut': 'publie',
+        })
+        self.assertEqual(response.status_code, 422)
+        self.assertFalse(Trajet.objects.filter(depart_ville='Sousse').exists())
+
+    def test_accepted_trajet_only_allows_status_updates(self):
+        OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet,
+            prix=200, statut='acceptee',
+        )
+        data = {
+            'depart_ville': 'Tunis', 'arrivee_ville': 'Sfax',
+            'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'),
+            'vehicule': self.vehicule.immatriculation, 'statut': 'en_cours',
+        }
+        # Use the exact stored departure so this remains a status-only update.
+        self.trajet.date_depart = self.depart.replace(second=0, microsecond=0)
+        self.trajet.save()
+        url = self.url('trajet_update', self.trajet.pk)
+        self.assertEqual(self.client.post(url, data).json(), {'success': True})
+        self.vehicule.capacite_poids_kg = 800
+        self.vehicule.save()
+        self.assertEqual(self.client.post(url, data).status_code, 422)
+        self.trajet.refresh_from_db()
+        self.assertEqual(self.trajet.capacite_kg, 1000)
+
+    def test_trajet_edit_preserves_vehicle_selection_and_capacity_after_error(self):
+        url = self.url('trajet_update', self.trajet.pk)
+        html = self.client.get(url).json()['html']
+        self.assertIn('value="123 TU 456" selected', html)
+        response = self.client.post(url, {
+            'depart_ville': 'Tunis', 'arrivee_ville': 'Tunis',
+            'date_depart': self.depart.strftime('%Y-%m-%dT%H:%M'),
+            'vehicule': self.vehicule.immatriculation, 'statut': 'publie',
+        })
+        self.assertEqual(response.status_code, 422)
+        self.assertIn('value="1000.00"', response.json()['html'])
+        self.assertIn('value="10.00"', response.json()['html'])
 
     def test_accepted_offers_and_linked_trajets_are_protected(self):
         offre = OffreTransport.objects.create(transporteur=self.carrier, demande=self.demande,

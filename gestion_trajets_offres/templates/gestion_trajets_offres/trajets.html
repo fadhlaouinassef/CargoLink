@@ -1,4 +1,5 @@
 {% extends 'transporteur/base.html' %}
+{% load static %}
 {% block title %}Mes trajets | CargoLink{% endblock %}
 {% block breadcrumb %}Mes trajets{% endblock %}
 {% block content %}
@@ -8,4 +9,7 @@
 {% for trajet in trajets %}<tr><td>{{ trajet.depart_ville }} → {{ trajet.arrivee_ville }}</td><td>{{ trajet.date_depart|date:"d/m/Y H:i" }}</td><td>{{ trajet.vehicule }}</td><td>{{ trajet.capacite_kg }} kg · {{ trajet.volume_m3 }} m³</td><td><span class="badge badge-active">{{ trajet.get_statut_display }}</span></td><td><div class="module-actions"><button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:trajet_update' trajet.pk %}">Modifier / Suivre</button><button type="button" class="btn-secondary module-delete" data-popup-url="{% url 'transporteur:trajet_delete' trajet.pk %}">Supprimer</button></div></td></tr>
 {% empty %}<tr><td colspan="6"><div class="demand-empty-state"><h3>Aucun trajet publié</h3><p>Ajoutez votre premier trajet pour proposer une offre aux PME.</p></div></td></tr>{% endfor %}
 </tbody></table></div></section>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'gestion_trajets_offres/trajet.js' %}" defer></script>
 {% endblock %}
