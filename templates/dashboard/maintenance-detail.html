@@ -53,6 +53,10 @@
         <span class="detail-label">Date de fin</span>
         <strong>{{ maintenance.date_fin|date:"d/m/Y H:i" }}</strong>
       </div>
+      <div>
+        <span class="detail-label">Kilométrage relevé</span>
+        <strong>{% if maintenance.kilometrage_releve %}{{ maintenance.kilometrage_releve }} km{% else %}—{% endif %}</strong>
+      </div>
     </div>
     {% if maintenance.commentaire %}
       <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-card, #f8f9fa); border-radius: 8px;">

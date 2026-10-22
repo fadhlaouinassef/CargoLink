@@ -139,6 +139,24 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '').strip()
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', '').strip() or 'gemini-2.5-flash'
 
+# Celery & Broker configuration (facultatif : le projet démarre sans ces packages)
+# Installer : uv add celery redis
+# Lancer (Windows) : uv run celery -A CargoLink worker -P solo -l info
+# Beat : uv run celery -A CargoLink beat -l info
+# Redis (WSL / Docker) : docker run -p 6379:6379 redis:alpine
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://127.0.0.1:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# Fuseau Tunisie cohérent avec TIME_ZONE (UTC) + USE_TZ=True :
+# Celery convertit les heures en UTC en interne ; le beat_schedule est exprimé en Africa/Tunis.
+CELERY_TIMEZONE = 'Africa/Tunis'
+CELERY_TASK_TRACK_STARTED = True
+
+# Pause entre requêtes IA pour respecter le quota gratuit Gemini (secondes)
+IA_RISQUE_PAUSE_SECONDS = float(os.environ.get('IA_RISQUE_PAUSE_SECONDS', '6'))
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

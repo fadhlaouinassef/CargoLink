@@ -1,8 +1,11 @@
 """Services métier et couche d'adaptation découplée pour le module véhicules."""
+import logging
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, List, Optional, Tuple
 from zoneinfo import ZoneInfo
+
+logger = logging.getLogger(__name__)
 
 from django.apps import apps
 from django.core.exceptions import ValidationError
@@ -326,3 +329,124 @@ def verifier_passage_manuel_en_maintenance(vehicule):
             f"Veuillez réaffecter le trajet avant de changer son statut."
         )
         raise ValidationError(msg)
+
+
+# ==============================================================================
+# ANALYSE DU RISQUE DE MAINTENANCE — COUCHE SERVICE
+# ==============================================================================
+import time as _time
+
+from .models import AnalyseRisque
+
+
+def niveau_risque_vehicule(vehicule_id: int) -> Optional[dict]:
+    """Retourne le dernier niveau de risque stocké pour un véhicule, ou None.
+
+    AUCUN appel API n'est effectué. Cette fonction est conçue pour être appelée
+    depuis d'autres modules (ex : module Offres) pour afficher un avertissement
+    sans déclencher d'analyse. Copier-coller minimal pour l'intégration :
+
+        from vehicules.services import niveau_risque_vehicule
+        risque = niveau_risque_vehicule(vehicule.pk)
+        if risque and risque['niveau'] == 'eleve':
+            # afficher avertissement
+            pass
+
+    Returns:
+        dict avec clés niveau, score, date_analyse, source, divergence
+        ou None si aucune analyse n'a encore été effectuée.
+    """
+    try:
+        analyse = AnalyseRisque.objects.filter(vehicule_id=vehicule_id).order_by('-date_analyse').first()
+        if analyse is None:
+            return None
+        return {
+            'niveau': analyse.niveau,
+            'score': analyse.score,
+            'date_analyse': analyse.date_analyse,
+            'source': analyse.source,
+            'divergence': analyse.divergence,
+            'urgence': analyse.urgence,
+            'recommandation': analyse.recommandation,
+        }
+    except Exception:
+        return None
+
+
+def analyser_vehicule(vehicule_id: int, force: bool = False) -> Optional[AnalyseRisque]:
+    """Analyse le risque de maintenance d'un véhicule (logique métier centralisée).
+
+    - Si une analyse récente (< 24 h) avec le même hash existe et force=False, la réutilise.
+    - Sinon : calcule les variables, appelle l'IA (avec repli sur les règles si échec).
+    - Crée et sauvegarde un enregistrement AnalyseRisque.
+
+    Args:
+        vehicule_id: Identifiant du véhicule.
+        force: Si True, force un nouvel appel même si le hash n'a pas changé.
+
+    Returns:
+        L'objet AnalyseRisque créé ou réutilisé, ou None si le véhicule n'existe pas.
+    """
+    from django.conf import settings
+    from .models import Vehicule
+    from .ia.risque_regles import calculer_variables, score_regles
+    from .ia.risque_assistant import analyser_via_ia, calculer_hash_variables
+
+    try:
+        vehicule = Vehicule.objects.get(pk=vehicule_id)
+    except Vehicule.DoesNotExist:
+        logger.warning("analyser_vehicule : véhicule %s introuvable.", vehicule_id)
+        return None
+
+    t0 = _time.monotonic()
+
+    # Calcul des variables (date de référence = maintenant)
+    variables = calculer_variables(vehicule)
+    resultats_regles = score_regles(variables)
+    donnees_hash = calculer_hash_variables(variables)
+
+    # Cache : si hash identique dans les 24 h et pas force
+    if not force:
+        seuil = timezone.now() - timedelta(hours=24)
+        analyse_existante = AnalyseRisque.objects.filter(
+            vehicule=vehicule,
+            donnees_hash=donnees_hash,
+            date_analyse__gte=seuil,
+        ).order_by('-date_analyse').first()
+        if analyse_existante:
+            logger.debug("analyser_vehicule %d : hash inchangé, réutilisation de l'analyse %d.", vehicule_id, analyse_existante.pk)
+            return analyse_existante
+
+    # Appel IA (avec repli automatique sur les règles en cas d'erreur)
+    resultat = analyser_via_ia(variables, resultats_regles)
+    duree_ms = int((_time.monotonic() - t0) * 1000)
+
+    # Modèle utilisé
+    try:
+        from django.conf import settings as dj_settings
+        modele_utilise = getattr(dj_settings, 'GEMINI_MODEL', '') if resultat['source'] == 'ia' else ''
+    except Exception:
+        modele_utilise = ''
+
+    analyse = AnalyseRisque.objects.create(
+        vehicule=vehicule,
+        niveau=resultat['niveau'],
+        score=resultat['score'],
+        facteurs=resultat['facteurs'],
+        recommandation=resultat.get('recommandation', ''),
+        motif_suggere=resultat.get('motif_suggere'),
+        urgence=resultat.get('urgence', 'aucune'),
+        source=resultat['source'],
+        modele_utilise=modele_utilise,
+        confiance=resultat.get('confiance', 1.0),
+        divergence=resultat.get('divergence', False),
+        donnees_hash=donnees_hash,
+        duree_ms=duree_ms,
+    )
+
+    logger.info(
+        "Analyse risque véhicule %d : niveau=%s, score=%d, source=%s, durée=%dms",
+        vehicule_id, analyse.niveau, analyse.score, analyse.source, duree_ms,
+    )
+    return analyse
+

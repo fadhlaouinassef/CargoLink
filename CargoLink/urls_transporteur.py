@@ -22,6 +22,8 @@ from vehicules.views import (
     VehiculeDeleteView,
     VehiculeListView,
     VehiculeUpdateView,
+    AnalyserRisqueVehiculeView,
+    StatutTacheRisqueView,
 )
 from vehicules.ia_views import AssistantDisponibiliteIAView
 
@@ -41,6 +43,8 @@ urlpatterns = trajet_urls + [
     path('vehicules/<int:pk>/modifier/', VehiculeUpdateView.as_view(), name='vehicule_update'),
     path('vehicules/<int:pk>/', TransporteurVehiculeDetailView.as_view(), name='vehicule_detail'),
     path('vehicules/<int:pk>/supprimer/', VehiculeDeleteView.as_view(), name='vehicule_delete'),
+    path('vehicules/<int:pk>/analyser-risque/', AnalyserRisqueVehiculeView.as_view(), name='vehicule_analyser_risque'),
+    path('taches/risque/<str:task_id>/statut/', StatutTacheRisqueView.as_view(), name='tache_risque_statut'),
     path('disponibilites/nouvelle/', DisponibiliteCreateView.as_view(), name='disponibilite_create'),
     path('disponibilites/<int:pk>/modifier/', DisponibiliteUpdateView.as_view(), name='disponibilite_update'),
     path('disponibilites/<int:pk>/', TransporteurDisponibiliteDetailView.as_view(), name='disponibilite_detail'),

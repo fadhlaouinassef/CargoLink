@@ -8,8 +8,54 @@
   {% if messages %}{% for message in messages %}<p class="admin-message {{ message.tags }}" role="status">{{ message }}</p>{% endfor %}{% endif %}
   <section class="users-panel">
     <div class="panel-heading"><div><p class="eyebrow">FICHE DE SUPERVISION</p><h1>{{ vehicle.marque }} {{ vehicle.modele }}</h1><p>{{ vehicle.immatriculation }} · {{ vehicle.transporteur.full_name }}</p></div><a class="primary-button" href="{% url 'authentification:admin_vehicle_update' vehicle.pk %}">Modifier</a></div>
-    <div class="detail-grid"><div><span class="detail-label">Transporteur</span><strong>{{ vehicle.transporteur.full_name }}</strong></div><div><span class="detail-label">Type</span><strong>{{ vehicle.get_type_vehicule_display }}</strong></div><div><span class="detail-label">Statut</span><strong>{{ vehicle.get_statut_display }}</strong></div><div><span class="detail-label">Poids</span><strong>{{ vehicle.capacite_poids_kg }} kg</strong></div><div><span class="detail-label">Volume</span><strong>{{ vehicle.capacite_volume_m3 }} m³</strong></div></div>
+    <div class="detail-grid"><div><span class="detail-label">Transporteur</span><strong>{{ vehicle.transporteur.full_name }}</strong></div><div><span class="detail-label">Type</span><strong>{{ vehicle.get_type_vehicule_display }}</strong></div><div><span class="detail-label">Statut</span><strong>{{ vehicle.get_statut_display }}</strong></div><div><span class="detail-label">Poids</span><strong>{{ vehicle.capacite_poids_kg }} kg</strong></div><div><span class="detail-label">Volume</span><strong>{{ vehicle.capacite_volume_m3 }} m³</strong></div><div><span class="detail-label">Kilométrage actuel</span><strong>{% if vehicle.kilometrage %}{{ vehicle.kilometrage }} km{% if vehicle.date_releve_km %} <small>({{ vehicle.date_releve_km|date:"d/m/Y" }})</small>{% endif %}{% else %}—{% endif %}</strong></div></div>
     <div class="detail-actions"><form class="delete-form" method="post" action="{% url 'authentification:admin_vehicle_delete' vehicle.pk %}" data-confirm-delete="Supprimer ce véhicule ? Cette action est irréversible."><button class="danger-button" type="submit">Supprimer</button>{% csrf_token %}</form></div>
+  </section>
+  <section class="users-panel">
+    <div class="panel-heading">
+      <div>
+        <h2>Analyse du risque de maintenance</h2>
+        <p>Évaluation indicative calculée à partir de l'historique et des caractéristiques techniques.</p>
+      </div>
+    </div>
+    {% with derniere=vehicle.analyses_risque.all.first %}
+      {% if derniere %}
+        <div style="padding: 1rem 0; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+          <div>
+            <span style="font-weight:600; color:#475569; margin-right:8px;">Niveau :</span>
+            {% if derniere.niveau == 'faible' %}
+              <span class="status-badge active" style="font-size:0.9rem;">● Risque faible ({{ derniere.score }}/100)</span>
+            {% elif derniere.niveau == 'moyen' %}
+              <span class="status-badge pending" style="font-size:0.9rem;">▲ Risque modéré ({{ derniere.score }}/100)</span>
+            {% else %}
+              <span class="status-badge inactive" style="font-size:0.9rem; font-weight:700;">⚠️ Risque élevé ({{ derniere.score }}/100)</span>
+            {% endif %}
+          </div>
+          <div style="font-size:0.85rem; color:#64748b;">
+            Date d'analyse : <strong>{{ derniere.date_analyse|date:"d/m/Y H:i" }}</strong>
+            · Source : <strong>{{ derniere.get_source_display }}</strong>
+            {% if derniere.divergence %}· <span style="color:#d97706; font-weight:600;">Divergence constatée</span>{% endif %}
+          </div>
+        </div>
+        {% if derniere.recommandation %}
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:0.9rem;">
+            <strong>Recommandation :</strong> {{ derniere.recommandation }}
+          </div>
+        {% endif %}
+        {% if derniere.facteurs %}
+          <div style="font-size:0.85rem; margin-top:8px;">
+            <p style="font-weight:600; color:#475569; margin-bottom:6px;">Facteurs explicatifs :</p>
+            <ul style="margin:0; padding-left:1.2rem; color:#334155;">
+              {% for f in derniere.facteurs %}
+                <li><strong>{{ f.facteur }}</strong> ({% if f.impact == 'hausse' %}+{% else %}-{% endif %}) : {{ f.explication }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% else %}
+        <p style="color:#64748b; padding:1rem 0;">Aucune analyse de risque enregistrée pour ce véhicule.</p>
+      {% endif %}
+    {% endwith %}
   </section>
   <section class="users-panel"><div class="panel-heading"><div><h2>Historique des disponibilités</h2><p>Créneaux associés à ce véhicule.</p></div><a class="secondary-button" href="{% url 'authentification:admin_availability_create' %}">+ Ajouter une disponibilité</a></div><div class="table-wrap"><table><thead><tr><th>Période</th><th>Trajet</th><th>Statut</th><th>Actions</th></tr></thead><tbody>{% for availability in vehicle.disponibilites.all %}<tr><td>{{ availability.date_debut|date:"d/m/Y H:i" }} → {{ availability.date_fin|date:"d/m/Y H:i" }}</td><td>{{ availability.zone_depart }} → {{ availability.zone_arrivee }}</td><td>{{ availability.get_statut_display }}</td><td><a class="action-icon" href="{% url 'authentification:admin_availability_detail' availability.pk %}">⌕</a><a class="action-icon" href="{% url 'authentification:admin_availability_update' availability.pk %}">✎</a>{% if availability.statut != 'reserve' %}<form class="delete-form" method="post" action="{% url 'authentification:admin_availability_delete' availability.pk %}" data-confirm-delete="Supprimer cette disponibilité ?"><button class="action-icon" type="submit" aria-label="Supprimer">⌫</button>{% csrf_token %}</form>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">Aucune disponibilité.</td></tr>{% endfor %}</tbody></table></div></section>
   <section class="users-panel"><div class="panel-heading"><div><h2>Maintenances programmées</h2><p>Périodes d'immobilisation technique.</p></div><a class="secondary-button" href="{% url 'authentification:admin_maintenance_create' %}">+ Programmer une maintenance</a></div><div class="table-wrap"><table><thead><tr><th>Période</th><th>Motif</th><th>Statut</th><th>Actions</th></tr></thead><tbody>{% for m in vehicle.maintenances.all %}<tr><td>{{ m.date_debut|date:"d/m/Y H:i" }} → {{ m.date_fin|date:"d/m/Y H:i" }}</td><td>{{ m.get_motif_display }}</td><td><span class="status-badge {% if m.statut == 'planifiee' %}pending{% elif m.statut == 'en_cours' %}active{% else %}inactive{% endif %}">{{ m.get_statut_display }}</span></td><td><a class="action-icon" href="{% url 'authentification:admin_maintenance_detail' m.pk %}">⌕</a>{% if m.statut != 'terminee' %}<a class="action-icon" href="{% url 'authentification:admin_maintenance_update' m.pk %}">✎</a>{% endif %}{% if m.statut == 'planifiee' %}<form class="delete-form" method="post" action="{% url 'authentification:admin_maintenance_delete' m.pk %}" data-confirm-delete="Supprimer cette maintenance ?"><button class="action-icon" type="submit" aria-label="Supprimer">⌫</button>{% csrf_token %}</form>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">Aucune maintenance programmée pour ce véhicule.</td></tr>{% endfor %}</tbody></table></div></section>
