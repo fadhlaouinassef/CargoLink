@@ -121,7 +121,7 @@ def accepter_offre(request, pk, offre_pk):
 @require_http_methods(['GET', 'POST'])
 def trajet_form(request, pk=None):
     trajet = get_object_or_404(Trajet, pk=pk, transporteur=request.user) if pk else Trajet(transporteur=request.user)
-    form = TrajetForm(request.POST if request.method == 'POST' else None, instance=trajet)
+    form = TrajetForm(request.POST if request.method == 'POST' else None, instance=trajet, transporteur=request.user)
     if request.method == 'POST' and form.is_valid():
         form.save()
         return JsonResponse({'success': True})

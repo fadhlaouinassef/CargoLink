@@ -1,5 +1,11 @@
 from django.contrib import admin, messages
-from .models import Disponibilite, Vehicule
+from .models import Disponibilite, Maintenance, Vehicule
+
+
+class MaintenanceInline(admin.TabularInline):
+    model = Maintenance
+    extra = 0
+    ordering = ('-date_debut',)
 
 
 class DisponibiliteInline(admin.TabularInline):
@@ -37,9 +43,34 @@ class VehiculeAdmin(admin.ModelAdmin):
     )
     list_filter = ('type_vehicule', 'statut')
     search_fields = ('immatriculation', 'marque', 'modele', 'transporteur__email', 'transporteur__full_name')
-    readonly_fields = ('date_creation',)
-    inlines = (DisponibiliteInline,)
+    inlines = (DisponibiliteInline, MaintenanceInline)
     actions = (desactiver_vehicules, reactiver_vehicules)
+
+
+@admin.register(Maintenance)
+class MaintenanceAdmin(admin.ModelAdmin):
+    list_display = (
+        'vehicule',
+        'transporteur',
+        'motif',
+        'statut',
+        'date_debut',
+        'date_fin',
+        'date_creation',
+    )
+    list_filter = ('statut', 'motif', 'date_debut')
+    search_fields = (
+        'vehicule__immatriculation',
+        'vehicule__marque',
+        'vehicule__transporteur__email',
+        'vehicule__transporteur__full_name',
+        'commentaire',
+    )
+    readonly_fields = ('date_creation', 'transporteur')
+
+    @admin.display(description='Transporteur')
+    def transporteur(self, obj):
+        return obj.vehicule.transporteur
 
 
 @admin.register(Disponibilite)

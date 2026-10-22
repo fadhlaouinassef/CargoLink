@@ -165,3 +165,101 @@ class AdminDisponibiliteDeleteView(AdminRequiredMixin, DeleteView):
         response = super().form_valid(form)
         messages.success(self.request, 'La disponibilité a été supprimée.')
         return response
+
+
+# ==============================================================================
+# VUES ADMINISTRATEUR : SUPERVISION DES MAINTENANCES
+# ==============================================================================
+from .forms import AdminMaintenanceForm
+from .models import Maintenance
+
+
+class AdminMaintenanceListView(AdminRequiredMixin, ListView):
+    model = Maintenance
+    template_name = 'dashboard/maintenances.html'
+    context_object_name = 'maintenances'
+    paginate_by = 15
+
+    def get_queryset(self):
+        queryset = Maintenance.objects.select_related('vehicule', 'vehicule__transporteur')
+        owner = self.request.GET.get('transporteur', '')
+        statut = self.request.GET.get('statut', '')
+        motif = self.request.GET.get('motif', '')
+        vehicule_id = self.request.GET.get('vehicule', '')
+
+        if owner.isdigit():
+            queryset = queryset.filter(vehicule__transporteur_id=int(owner))
+        if statut in dict(Maintenance.Statut.choices):
+            queryset = queryset.filter(statut=statut)
+        if motif in dict(Maintenance.Motif.choices):
+            queryset = queryset.filter(motif=motif)
+        if vehicule_id.isdigit():
+            queryset = queryset.filter(vehicule_id=int(vehicule_id))
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_maintenances = Maintenance.objects.all()
+        context.update({
+            'total_maintenances': all_maintenances.count(),
+            'planifiees_count': all_maintenances.filter(statut=Maintenance.Statut.PLANIFIEE).count(),
+            'en_cours_count': all_maintenances.filter(statut=Maintenance.Statut.EN_COURS).count(),
+            'terminees_count': all_maintenances.filter(statut=Maintenance.Statut.TERMINEE).count(),
+            'transporteurs': User.objects.filter(role=User.Role.TRANSPORTEUR).order_by('full_name'),
+            'statuts': Maintenance.Statut.choices,
+            'motifs': Maintenance.Motif.choices,
+            'selected_owner': self.request.GET.get('transporteur', ''),
+            'selected_statut': self.request.GET.get('statut', ''),
+            'selected_motif': self.request.GET.get('motif', ''),
+            'selected_vehicule': self.request.GET.get('vehicule', ''),
+        })
+        return context
+
+
+class AdminMaintenanceDetailView(AdminRequiredMixin, DetailView):
+    model = Maintenance
+    template_name = 'dashboard/maintenance-detail.html'
+    context_object_name = 'maintenance'
+
+    def get_queryset(self):
+        return Maintenance.objects.select_related('vehicule', 'vehicule__transporteur')
+
+
+class AdminMaintenanceCreateView(AdminRequiredMixin, CreateView):
+    model = Maintenance
+    form_class = AdminMaintenanceForm
+    template_name = 'dashboard/maintenance-form.html'
+    success_url = reverse_lazy('authentification:admin_vehicles')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'La maintenance a été planifiée.')
+        return super().form_valid(form)
+
+
+class AdminMaintenanceUpdateView(AdminRequiredMixin, UpdateView):
+    model = Maintenance
+    form_class = AdminMaintenanceForm
+    template_name = 'dashboard/maintenance-form.html'
+    success_url = reverse_lazy('authentification:admin_vehicles')
+
+    def get_queryset(self):
+        return Maintenance.objects.exclude(statut=Maintenance.Statut.TERMINEE)
+
+    def form_valid(self, form):
+        messages.success(self.request, 'La maintenance a été modifiée.')
+        return super().form_valid(form)
+
+
+class AdminMaintenanceDeleteView(AdminRequiredMixin, DeleteView):
+    model = Maintenance
+    template_name = 'dashboard/vehicle-delete.html'
+    success_url = reverse_lazy('authentification:admin_vehicles')
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(statut=Maintenance.Statut.PLANIFIEE)
+
+    def form_valid(self, form):
+        messages.success(self.request, 'La maintenance a été supprimée.')
+        return super().form_valid(form)
+

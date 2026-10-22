@@ -7,6 +7,11 @@ from vehicules.admin_views import (
     AdminDisponibiliteDeleteView,
     AdminDisponibiliteUpdateView,
     AdminDisponibiliteDetailView,
+    AdminMaintenanceCreateView,
+    AdminMaintenanceDeleteView,
+    AdminMaintenanceDetailView,
+    AdminMaintenanceListView,
+    AdminMaintenanceUpdateView,
     AdminVehiculeCreateView,
     AdminVehiculeDeleteView,
     AdminVehiculeDetailView,
@@ -35,6 +40,11 @@ urlpatterns = [
     path('dashboard/disponibilites/<int:pk>/modifier/', AdminDisponibiliteUpdateView.as_view(), name='admin_availability_update'),
     path('dashboard/disponibilites/<int:pk>/', AdminDisponibiliteDetailView.as_view(), name='admin_availability_detail'),
     path('dashboard/disponibilites/<int:pk>/supprimer/', AdminDisponibiliteDeleteView.as_view(), name='admin_availability_delete'),
+    path('dashboard/maintenances/', AdminMaintenanceListView.as_view(), name='admin_maintenances'),
+    path('dashboard/maintenances/nouvelle/', AdminMaintenanceCreateView.as_view(), name='admin_maintenance_create'),
+    path('dashboard/maintenances/<int:pk>/', AdminMaintenanceDetailView.as_view(), name='admin_maintenance_detail'),
+    path('dashboard/maintenances/<int:pk>/modifier/', AdminMaintenanceUpdateView.as_view(), name='admin_maintenance_update'),
+    path('dashboard/maintenances/<int:pk>/supprimer/', AdminMaintenanceDeleteView.as_view(), name='admin_maintenance_delete'),
     path(
         'signin/',
         views.RoleBasedLoginView.as_view(

@@ -1,0 +1,159 @@
+{% extends 'transporteur/base.html' %}
+{% load static %}
+{% block title %}Maintenances planifiées | CargoLink{% endblock %}
+{% block breadcrumb %}Maintenances{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace transporteur</div>
+    <h1 class="portal-page-title">Maintenances de la flotte</h1>
+    <p class="portal-page-subtitle">Programmez les entretiens et réparations de vos véhicules en toute sérénité.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a class="btn-secondary" href="{% url 'transporteur:vehicules' %}">← Retour aux véhicules</a>
+    <a class="btn-primary" href="#planifier-maintenance">+ Planifier une maintenance</a>
+  </div>
+</div>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="portal-card module-message {{ message.tags }}" role="status">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Toutes les maintenances</h2>
+  </div>
+
+  <form class="vehicle-filters" method="get">
+    <label class="portal-form-group">
+      <span class="portal-label">Véhicule</span>
+      <select class="portal-input" name="vehicule">
+        <option value="">Tous les véhicules</option>
+        {% for v in vehicles %}
+          <option value="{{ v.pk }}" {% if selected_vehicle == v.pk|stringformat:"s" %}selected{% endif %}>{{ v.immatriculation }} — {{ v.marque }} {{ v.modele }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="portal-form-group">
+      <span class="portal-label">Statut</span>
+      <select class="portal-input" name="statut">
+        <option value="">Tous les statuts</option>
+        {% for val, label in statuts %}
+          <option value="{{ val }}" {% if selected_status == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="portal-form-group">
+      <span class="portal-label">Motif</span>
+      <select class="portal-input" name="motif">
+        <option value="">Tous les motifs</option>
+        {% for val, label in motifs %}
+          <option value="{{ val }}" {% if selected_motif == val %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <button class="btn-secondary filter-button" type="submit">Filtrer</button>
+  </form>
+
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Véhicule</th>
+          <th>Période</th>
+          <th>Motif</th>
+          <th>État</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in maintenances %}
+          <tr>
+            <td>
+              <strong>{{ m.vehicule.immatriculation }}</strong><br>
+              <small>{{ m.vehicule.marque }} {{ m.vehicule.modele }}</small>
+            </td>
+            <td>
+              {{ m.date_debut|date:"d/m/Y H:i" }} → {{ m.date_fin|date:"d/m/Y H:i" }}
+            </td>
+            <td>{{ m.get_motif_display }}</td>
+            <td>
+              <span class="badge {% if m.statut == 'terminee' %}badge-success{% elif m.statut == 'en_cours' %}badge-warning{% elif m.statut == 'planifiee' %}badge-info{% else %}badge-muted{% endif %}">
+                {{ m.get_statut_display }}
+              </span>
+            </td>
+            <td class="table-actions">
+              <a href="{% url 'transporteur:maintenance_detail' m.pk %}">Détails</a>
+              {% if m.statut == 'planifiee' %}
+                <a href="{% url 'transporteur:maintenance_update' m.pk %}">Modifier</a>
+                <form method="post" action="{% url 'transporteur:maintenance_demarrer' m.pk %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-link" style="color: #2563eb; background:none; border:none; padding:0; cursor:pointer;">Démarrer</button>
+                </form>
+                <form method="post" action="{% url 'transporteur:maintenance_annuler' m.pk %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="danger-link" style="background:none; border:none; padding:0; cursor:pointer;">Annuler</button>
+                </form>
+                <form class="delete-form" method="post" action="{% url 'transporteur:maintenance_delete' m.pk %}" data-confirm-delete="Supprimer cette maintenance planifiée ?">
+                  {% csrf_token %}
+                  <button class="danger-link" type="submit">Supprimer</button>
+                </form>
+              {% elif m.statut == 'en_cours' %}
+                <form method="post" action="{% url 'transporteur:maintenance_terminer' m.pk %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-link" style="color: #16a34a; font-weight:600; background:none; border:none; padding:0; cursor:pointer;">Terminer</button>
+                </form>
+                <form method="post" action="{% url 'transporteur:maintenance_annuler' m.pk %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="danger-link" style="background:none; border:none; padding:0; cursor:pointer;">Annuler</button>
+                </form>
+              {% else %}
+                <span class="muted-note">Archivée</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-module-state">Aucune maintenance enregistrée.</div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="portal-card" id="planifier-maintenance">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Planifier une maintenance</h2>
+  </div>
+  <p class="portal-page-subtitle" style="margin-bottom: 1rem;">
+    Sélectionnez le véhicule et la période. Tout chevauchement avec un trajet confirmé ou une disponibilité réservée sera automatiquement détecté et refusé.
+  </p>
+
+  <form method="post" action="{% url 'transporteur:maintenance_create' %}">
+    {% csrf_token %}
+    {% include 'transporteur/includes/form_errors.html' with form=maintenance_form %}
+    <div class="form-grid-2">
+      {% for field in maintenance_form %}
+        <label class="portal-form-group">
+          <span class="portal-label">{{ field.label }}{% if field.field.required %} *{% endif %}</span>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {% for error in field.errors %}
+            <span class="field-error" role="alert">{{ error }}</span>
+          {% endfor %}
+        </label>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn-primary">Enregistrer la maintenance</button>
+  </form>
+</section>
+{% endblock %}

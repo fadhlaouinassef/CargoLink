@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion maintenance | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+</head>
+<body>
+<main class="main-content standalone-admin-form">
+  <a class="back-link" href="{% url 'authentification:admin_vehicles' %}">← Retour à la supervision</a>
+  <section class="users-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">SUPERVISION ADMINISTRATEUR</p>
+        <h1>{% if object %}Modifier{% else %}Programmer{% endif %} une maintenance</h1>
+        <p>Programmez ou ajustez une maintenance pour un véhicule.</p>
+      </div>
+    </div>
+    <form method="post" class="admin-form">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-error-summary" role="alert">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+      {% for field in form %}
+        <label>
+          {{ field.label }}
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: var(--muted, #666); font-size: 0.85rem;">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <span class="field-error" role="alert">{{ error }}</span>
+          {% endfor %}
+        </label>
+      {% endfor %}
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+        <button class="primary-button" type="submit">Enregistrer la maintenance</button>
+        <a class="secondary-button" href="{% url 'authentification:admin_vehicles' %}">Annuler</a>
+      </div>
+    </form>
+  </section>
+</main>
+</body>
+</html>
