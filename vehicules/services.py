@@ -1,7 +1,7 @@
 """Services métier et couche d'adaptation découplée pour le module véhicules."""
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
 from django.apps import apps
