@@ -101,3 +101,53 @@ class DisponibiliteForm(forms.ModelForm):
             ).exclude(
                 statut__in=[Vehicule.Statut.EN_MAINTENANCE, Vehicule.Statut.DESACTIVE],
             )
+
+
+class MaintenanceForm(forms.ModelForm):
+    class Meta:
+        from .models import Maintenance
+        model = Maintenance
+        fields = (
+            'vehicule',
+            'date_debut',
+            'date_fin',
+            'motif',
+            'commentaire',
+        )
+        widgets = {
+            'date_debut': forms.DateTimeInput(
+                format='%Y-%m-%dT%H:%M',
+                attrs={'type': 'datetime-local'},
+            ),
+            'date_fin': forms.DateTimeInput(
+                format='%Y-%m-%dT%H:%M',
+                attrs={'type': 'datetime-local'},
+            ),
+            'commentaire': forms.Textarea(attrs={'rows': 3}),
+        }
+        labels = {
+            'vehicule': 'Véhicule',
+            'date_debut': 'Date de début',
+            'date_fin': 'Date de fin',
+            'motif': 'Motif de la maintenance',
+            'commentaire': 'Commentaire / Détails',
+        }
+
+    def __init__(self, *args, transporteur=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.setdefault('class', 'portal-input')
+        if transporteur is not None:
+            self.fields['vehicule'].queryset = Vehicule.objects.filter(
+                transporteur=transporteur,
+            ).exclude(statut=Vehicule.Statut.DESACTIVE)
+
+
+class AdminMaintenanceForm(MaintenanceForm):
+    class Meta(MaintenanceForm.Meta):
+        fields = ('vehicule', 'date_debut', 'date_fin', 'motif', 'statut', 'commentaire')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, transporteur=None, **kwargs)
+        self.fields['vehicule'].queryset = Vehicule.objects.select_related('transporteur').all()
+

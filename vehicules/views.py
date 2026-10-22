@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 from django.views.generic.base import TemplateView
 
@@ -106,6 +107,14 @@ class VehiculeUpdateView(TransporteurRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
+        # Contrôle rapide : refuse le passage en maintenance si un trajet actif existe
+        if form.cleaned_data.get('statut') == Vehicule.Statut.EN_MAINTENANCE and self.object.statut != Vehicule.Statut.EN_MAINTENANCE:
+            from .services import verifier_passage_manuel_en_maintenance
+            try:
+                verifier_passage_manuel_en_maintenance(self.object)
+            except ValidationError as err:
+                form.add_error('statut', err.message if hasattr(err, 'message') else str(err))
+                return self.form_invalid(form)
         response = super().form_valid(form)
         messages.success(self.request, 'Le véhicule a été modifié.')
         return response
@@ -237,4 +246,179 @@ class TransporteurVehiculeDetailView(TransporteurRequiredMixin, TemplateView):
             raise Http404
         context['vehicle'] = vehicle
         context['availabilities'] = vehicle.disponibilites.all()
+        context['maintenances'] = vehicle.maintenances.all()
         return context
+
+
+# ==============================================================================
+# VUES TRANSPORTEUR : GESTION DES MAINTENANCES PLANIFIÉES
+# ==============================================================================
+from .forms import MaintenanceForm
+from .models import Maintenance
+from .services import demarrer_maintenance, terminer_maintenance, annuler_maintenance
+
+
+class MaintenanceListView(TransporteurRequiredMixin, TemplateView):
+    template_name = 'transporteur/maintenances.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        maintenances = Maintenance.objects.filter(
+            vehicule__transporteur=self.request.user,
+        ).select_related('vehicule')
+
+        statut = self.request.GET.get('statut', '')
+        motif = self.request.GET.get('motif', '')
+        vehicule_id = self.request.GET.get('vehicule', '')
+
+        if statut in dict(Maintenance.Statut.choices):
+            maintenances = maintenances.filter(statut=statut)
+        if motif in dict(Maintenance.Motif.choices):
+            maintenances = maintenances.filter(motif=motif)
+        if vehicule_id.isdigit():
+            maintenances = maintenances.filter(vehicule_id=int(vehicule_id))
+
+        context.update({
+            'maintenances': maintenances,
+            'maintenance_form': MaintenanceForm(transporteur=self.request.user),
+            'statuts': Maintenance.Statut.choices,
+            'motifs': Maintenance.Motif.choices,
+            'vehicles': Vehicule.objects.filter(transporteur=self.request.user).exclude(statut=Vehicule.Statut.DESACTIVE),
+            'selected_status': statut,
+            'selected_motif': motif,
+            'selected_vehicle': vehicule_id,
+        })
+        return context
+
+
+class MaintenanceDetailView(TransporteurRequiredMixin, DetailView):
+    model = Maintenance
+    template_name = 'transporteur/maintenance_detail.html'
+    context_object_name = 'maintenance'
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(
+            vehicule__transporteur=self.request.user,
+        ).select_related('vehicule')
+
+
+class MaintenanceCreateView(TransporteurRequiredMixin, CreateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = 'transporteur/maintenances.html'
+    success_url = reverse_lazy('transporteur:maintenances')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['transporteur'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Détection d'avertissement : chevauchement avec disponibilités "disponible"
+        m = self.object
+        dispos_ouvertes = Disponibilite.objects.filter(
+            vehicule=m.vehicule,
+            statut=Disponibilite.Statut.DISPONIBLE,
+            date_debut__lt=m.date_fin,
+            date_fin__gt=m.date_debut,
+        )
+        if dispos_ouvertes.exists():
+            messages.warning(
+                self.request,
+                f"La maintenance a été enregistrée. Attention : {dispos_ouvertes.count()} disponibilité(s) "
+                f"ouverte(s) chevauche(nt) cette période de maintenance. Pensez à ajuster vos créneaux."
+            )
+        else:
+            messages.success(self.request, 'La maintenance a été planifiée avec succès.')
+        return response
+
+    def form_invalid(self, form):
+        # Affiche la liste des maintenances avec les erreurs du formulaire
+        return MaintenanceListView.as_view()(self.request)
+
+
+class MaintenanceUpdateView(TransporteurRequiredMixin, UpdateView):
+    model = Maintenance
+    form_class = MaintenanceForm
+    template_name = 'transporteur/maintenance_form.html'
+    success_url = reverse_lazy('transporteur:maintenances')
+
+    def get_queryset(self):
+        return Maintenance.objects.filter(
+            vehicule__transporteur=self.request.user,
+        ).exclude(statut=Maintenance.Statut.TERMINEE)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['transporteur'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'La maintenance a été modifiée.')
+        return response
+
+
+class MaintenanceDeleteView(TransporteurRequiredMixin, DeleteView):
+    model = Maintenance
+    template_name = 'transporteur/maintenance_confirm_delete.html'
+    success_url = reverse_lazy('transporteur:maintenances')
+
+    def get_queryset(self):
+        # Seules les maintenances planifiées peuvent être supprimées
+        return Maintenance.objects.filter(
+            vehicule__transporteur=self.request.user,
+            statut=Maintenance.Statut.PLANIFIEE,
+        )
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'La maintenance a été supprimée.')
+        return response
+
+
+class MaintenanceDemarrerView(TransporteurRequiredMixin, View):
+    def post(self, request, pk):
+        maintenance = Maintenance.objects.filter(
+            pk=pk, vehicule__transporteur=request.user
+        ).first()
+        if not maintenance:
+            raise Http404
+        try:
+            demarrer_maintenance(maintenance)
+            messages.success(request, f"La maintenance a démarré. Le véhicule {maintenance.vehicule.immatriculation} est maintenant en maintenance.")
+        except ValidationError as err:
+            messages.error(request, str(err.message if hasattr(err, 'message') else err))
+        return redirect('transporteur:maintenances')
+
+
+class MaintenanceTerminerView(TransporteurRequiredMixin, View):
+    def post(self, request, pk):
+        maintenance = Maintenance.objects.filter(
+            pk=pk, vehicule__transporteur=request.user
+        ).first()
+        if not maintenance:
+            raise Http404
+        try:
+            terminer_maintenance(maintenance)
+            messages.success(request, f"La maintenance est terminée. Le véhicule {maintenance.vehicule.immatriculation} est réactivé.")
+        except ValidationError as err:
+            messages.error(request, str(err.message if hasattr(err, 'message') else err))
+        return redirect('transporteur:maintenances')
+
+
+class MaintenanceAnnulerView(TransporteurRequiredMixin, View):
+    def post(self, request, pk):
+        maintenance = Maintenance.objects.filter(
+            pk=pk, vehicule__transporteur=request.user
+        ).first()
+        if not maintenance:
+            raise Http404
+        try:
+            annuler_maintenance(maintenance)
+            messages.success(request, "La maintenance a été annulée.")
+        except ValidationError as err:
+            messages.error(request, str(err.message if hasattr(err, 'message') else err))
+        return redirect('transporteur:maintenances')
+
