@@ -83,7 +83,7 @@
         return;
       }
       content.innerHTML = data.html;
-      content.querySelector('[aria-invalid="true"], input:not([type="hidden"]), select')?.focus();
+      content.querySelector('[aria-invalid="true"], input:not([type="hidden"]), select, [data-close-dialog]')?.focus();
     } catch (error) {
       showError(error.message);
     } finally {

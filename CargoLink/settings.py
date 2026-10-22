@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'authentification.apps.AuthentificationConfig',
     'vehicules',
     'demandes.apps.DemandesConfig',
-    'gestion_trajets.apps.GestionTrajetsConfig',
+    'gestion_trajets_offres.apps.GestionTrajetsOffresConfig',
     'avis_reclamations.apps.AvisReclamationsConfig',
 ]
 

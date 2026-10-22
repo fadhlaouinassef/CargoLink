@@ -2,8 +2,8 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from avis_reclamations.urls import transporteur_urls
-from gestion_trajets.decorators import transporteur_required
-from gestion_trajets.urls import urlpatterns as trajet_urls
+from gestion_trajets_offres.decorators import transporteur_required
+from gestion_trajets_offres.urls import urlpatterns as trajet_urls
 from vehicules.views import (
     DisponibiliteCreateView,
     DisponibiliteDeleteView,
