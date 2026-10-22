@@ -123,3 +123,83 @@ class GestionTrajetsTests(TestCase):
         client = Client(enforce_csrf_checks=True)
         client.force_login(self.carrier)
         self.assertEqual(client.post(self.url('trajet_create'), {}).status_code, 403)
+
+    def test_pme_can_read_only_their_demand_offers(self):
+        OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet,
+            prix=200, message='<script>alert(1)</script>',
+        )
+        url = reverse('pme:demande_offres', args=[self.demande.pk])
+        self.client.force_login(self.pme)
+        html = self.client.get(url).json()['html']
+        self.assertIn('200.00 TND', html)
+        self.assertIn(self.carrier.email, html)
+        self.assertIn('&lt;script&gt;', html)
+        self.assertNotIn('<script>', html)
+        self.assertEqual(self.client.post(url).status_code, 405)
+        self.client.force_login(self.other)
+        self.assertEqual(self.client.get(url).status_code, 404)
+        self.client.logout()
+        self.assertEqual(self.client.get(url).status_code, 404)
+
+    def test_pme_offers_popup_empty_and_button(self):
+        self.client.force_login(self.pme)
+        url = reverse('pme:demande_offres', args=[self.demande.pk])
+        self.assertContains(self.client.get(reverse('pme:demandes_list')), f'data-popup-url="{url}"')
+        self.assertIn('Aucune offre reçue', self.client.get(url).json()['html'])
+
+    def test_session_owner_can_read_their_demand_offers(self):
+        self.client.logout()
+        session = self.client.session
+        session.save()
+        self.demande.created_by = None
+        self.demande.owner_session = session.session_key
+        self.demande.save()
+        url = reverse('pme:demande_offres', args=[self.demande.pk])
+        self.assertEqual(self.client.get(url).status_code, 200)
+        self.assertEqual(Client().get(url).status_code, 404)
+
+    def test_accept_offer_updates_popup_and_rejects_other_offers(self):
+        offre = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
+        )
+        other = OffreTransport.objects.create(
+            transporteur=self.other, demande=self.demande, trajet=self.trajet, prix=250,
+        )
+        self.client.force_login(self.pme)
+        url = reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk])
+        popup_url = reverse('pme:demande_offres', args=[self.demande.pk])
+        self.assertIn('>Accepter</button>', self.client.get(popup_url).json()['html'])
+        self.assertEqual(self.client.get(url).status_code, 405)
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Acceptée', response.json()['html'])
+        self.assertNotIn('>Accepter</button>', response.json()['html'])
+        offre.refresh_from_db()
+        other.refresh_from_db()
+        self.assertEqual(offre.statut, OffreTransport.Statut.ACCEPTEE)
+        self.assertEqual(other.statut, OffreTransport.Statut.REFUSEE)
+        self.assertEqual(self.client.post(url).status_code, 409)
+        self.assertEqual(self.client.post(reverse('pme:accepter_offre', args=[self.demande.pk, other.pk])).status_code, 409)
+        self.client.force_login(self.carrier)
+        self.assertEqual(self.client.get(self.url('offre_create', self.demande.pk)).status_code, 404)
+        self.assertEqual(self.client.get(self.url('offre_update', offre.pk)).status_code, 409)
+
+    def test_accept_offer_checks_owner_demand_status_and_csrf(self):
+        offre = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
+        )
+        url = reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk])
+        self.assertEqual(self.client.post(url).status_code, 404)
+        self.client.logout()
+        self.assertEqual(self.client.post(url).status_code, 404)
+        self.client.force_login(self.pme)
+        self.assertEqual(self.client.post(reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk + 1])).status_code, 404)
+        csrf_client = Client(enforce_csrf_checks=True)
+        csrf_client.force_login(self.pme)
+        self.assertEqual(csrf_client.post(url).status_code, 403)
+        self.demande.statut = DemandeTransport.Statut.BROUILLON
+        self.demande.save()
+        self.assertEqual(self.client.post(url).status_code, 409)
+        offre.refresh_from_db()
+        self.assertEqual(offre.statut, OffreTransport.Statut.EN_ATTENTE)

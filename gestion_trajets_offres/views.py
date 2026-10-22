@@ -4,9 +4,10 @@ from django.db.models.deletion import ProtectedError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
 from demandes.models import DemandeTransport
+from demandes.views import _owned_demands
 from .decorators import transporteur_required
 from .forms import OffreTransportForm, SuiviForm, TrajetForm
 from .models import OffreTransport, Trajet
@@ -15,7 +16,7 @@ from .models import OffreTransport, Trajet
 def _demandes():
     return DemandeTransport.objects.filter(
         statut=DemandeTransport.Statut.OUVERTE
-    ).select_related('created_by').prefetch_related('marchandises')
+    ).exclude(offres_transport__statut=OffreTransport.Statut.ACCEPTEE).select_related('created_by').prefetch_related('marchandises')
 
 
 @transporteur_required
@@ -29,7 +30,7 @@ def demandes(request):
             Q(depart_ville__icontains=query) | Q(arrivee_ville__icontains=query)
             | Q(marchandises__description__icontains=query) | Q(marchandises__type__icontains=query)
         ).distinct()
-    return render(request, 'gestion_trajets/demandes.html', {
+    return render(request, 'gestion_trajets_offres/demandes.html', {
         'active_tab': 'demandes', 'demandes': items, 'query': query, 'total_demandes': items.count(),
     })
 
@@ -37,7 +38,7 @@ def demandes(request):
 @transporteur_required
 def demande_detail(request, pk):
     demande = get_object_or_404(_demandes(), pk=pk)
-    return render(request, 'gestion_trajets/demande_detail.html', {
+    return render(request, 'gestion_trajets_offres/demande_detail.html', {
         'active_tab': 'demandes', 'demande': demande,
         'deja_postule': demande.offres_transport.filter(transporteur=request.user).exists(),
     })
@@ -45,21 +46,21 @@ def demande_detail(request, pk):
 
 @transporteur_required
 def trajets(request):
-    return render(request, 'gestion_trajets/trajets.html', {
+    return render(request, 'gestion_trajets_offres/trajets.html', {
         'active_tab': 'trajets', 'trajets': Trajet.objects.filter(transporteur=request.user),
     })
 
 
 @transporteur_required
 def offres(request):
-    return render(request, 'gestion_trajets/offres.html', {
+    return render(request, 'gestion_trajets_offres/offres.html', {
         'active_tab': 'offres', 'offres': OffreTransport.objects.filter(transporteur=request.user).select_related('demande', 'trajet'),
     })
 
 
 @transporteur_required
 def transports(request):
-    return render(request, 'gestion_trajets/transports.html', {
+    return render(request, 'gestion_trajets_offres/transports.html', {
         'active_tab': 'transports',
         'trajets': Trajet.objects.filter(transporteur=request.user).prefetch_related('offres__demande'),
     })
@@ -79,8 +80,41 @@ def suivi_form(request, pk):
 
 
 def _popup(request, context, status=200):
-    html = render_to_string('gestion_trajets/popup.html', context, request=request)
+    html = render_to_string('gestion_trajets_offres/popup.html', context, request=request)
     return JsonResponse({'html': html}, status=status)
+
+
+@require_GET
+def demande_offres(request, pk):
+    demande = get_object_or_404(_owned_demands(request), pk=pk)
+    return _offres_popup(request, demande)
+
+
+def _offres_popup(request, demande):
+    offres = demande.offres_transport.select_related('transporteur', 'trajet')
+    html = render_to_string('gestion_trajets_offres/demande_offres.html', {
+        'demande': demande, 'offres': offres,
+        'peut_accepter': demande.statut == DemandeTransport.Statut.OUVERTE
+        and not offres.filter(statut=OffreTransport.Statut.ACCEPTEE).exists(),
+    }, request=request)
+    return JsonResponse({'html': html})
+
+
+@require_POST
+def accepter_offre(request, pk, offre_pk):
+    with transaction.atomic():
+        demande = get_object_or_404(_owned_demands(request).select_for_update(), pk=pk)
+        offre = get_object_or_404(demande.offres_transport, pk=offre_pk)
+        if (demande.statut != DemandeTransport.Statut.OUVERTE
+                or offre.statut != OffreTransport.Statut.EN_ATTENTE
+                or demande.offres_transport.filter(statut=OffreTransport.Statut.ACCEPTEE).exists()):
+            return JsonResponse({'error': 'Cette offre ne peut plus être acceptée.'}, status=409)
+        offre.statut = OffreTransport.Statut.ACCEPTEE
+        offre.save(update_fields=['statut', 'updated_at'])
+        demande.offres_transport.filter(statut=OffreTransport.Statut.EN_ATTENTE).update(
+            statut=OffreTransport.Statut.REFUSEE, updated_at=offre.updated_at,
+        )
+    return _offres_popup(request, demande)
 
 
 @transporteur_required
@@ -105,7 +139,8 @@ def offre_form(request, demande_pk=None, pk=None):
     else:
         demande = get_object_or_404(_demandes(), pk=demande_pk)
         offre = OffreTransport(transporteur=request.user, demande=demande)
-    if demande.statut != DemandeTransport.Statut.OUVERTE:
+    if (demande.statut != DemandeTransport.Statut.OUVERTE
+            or demande.offres_transport.filter(statut=OffreTransport.Statut.ACCEPTEE).exists()):
         return JsonResponse({'error': 'Cette demande est fermée.'}, status=409)
     form = OffreTransportForm(request.POST if request.method == 'POST' else None, instance=offre, transporteur=request.user, demande=demande)
     if request.method == 'POST' and form.is_valid():
