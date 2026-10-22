@@ -136,6 +136,11 @@ class Reclamation(models.Model):
     def est_close(self):
         return not self.TRANSITIONS[self.statut]
 
+    @property
+    def est_modifiable(self):
+        """L'auteur peut modifier ou supprimer sa réclamation tant que l'administrateur ne l'a pas prise en charge."""
+        return self.statut == self.Statut.OUVERTE
+
     def statuts_suivants(self):
         """Statuts que l'administrateur peut choisir à partir du statut actuel."""
         return [(value, self.Statut(value).label) for value in self.TRANSITIONS[self.statut]]
