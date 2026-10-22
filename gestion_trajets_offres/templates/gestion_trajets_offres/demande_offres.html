@@ -1,0 +1,29 @@
+<div class="module-dialog-heading">
+  <h2 id="module-dialog-title">Offres reçues</h2>
+  <button type="button" class="module-close" data-close-dialog aria-label="Fermer">×</button>
+</div>
+<p class="module-subtitle">{{ demande }} · {{ demande.depart_ville }} → {{ demande.arrivee_ville }}</p>
+<p class="module-error" data-popup-error role="alert" hidden></p>
+{% for offre in offres %}
+  <article class="received-offer">
+    <div class="received-offer-heading">
+      <strong>{{ offre.transporteur.full_name|default:offre.transporteur.email }}</strong>
+      <strong>{{ offre.prix|floatformat:2 }} TND</strong>
+    </div>
+    <p class="module-small">Départ : {{ offre.trajet.date_depart|date:"d/m/Y H:i" }} · {{ offre.trajet.vehicule }}</p>
+    <span class="badge {% if offre.statut == 'acceptee' %}badge-active{% else %}badge-pending{% endif %}">{{ offre.get_statut_display }}</span>
+    {% if offre.message %}<p class="received-offer-message">{{ offre.message|linebreaksbr }}</p>{% endif %}
+    {% if peut_accepter and offre.statut == 'en_attente' %}
+      <form method="post" action="{% url 'pme:accepter_offre' demande.pk offre.pk %}" data-module-form class="module-dialog-actions">
+        {% csrf_token %}
+        <p class="module-error" data-popup-error role="alert" hidden></p>
+        <button type="submit" class="btn-primary">Accepter</button>
+      </form>
+    {% endif %}
+  </article>
+{% empty %}
+  <p class="module-subtitle">Aucune offre reçue pour cette demande pour le moment.</p>
+{% endfor %}
+<div class="module-dialog-actions">
+  <button type="button" class="btn-secondary" data-close-dialog>Fermer</button>
+</div>

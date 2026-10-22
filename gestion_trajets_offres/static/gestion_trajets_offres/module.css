@@ -12,3 +12,7 @@
 @keyframes module-spin{to{transform:rotate(360deg)}}button[aria-busy=true]{opacity:.75;cursor:wait}.module-toast{position:fixed;bottom:24px;right:24px;max-width:min(420px,80vw);padding:16px 20px;border:1px solid #e1a9ad;border-radius:12px;background:#fff1f2;color:#a4202c;box-shadow:0 8px 30px #0002;z-index:1000}
 @media(max-width:700px){.module-dialog{padding:20px}.module-dialog .form-grid-2{grid-template-columns:1fr}.module-dialog-actions>*{flex:1}.module-demand-actions{width:100%}.available-demand-card{padding:16px!important}}
 @media(prefers-reduced-motion:reduce){.module-spinner{animation-duration:1.5s}.available-demand-card{transition:none}}
+.received-offer{padding:18px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.received-offer-heading{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.received-offer .module-small{margin:8px 0 12px}
+.received-offer-message{font-size:14px;margin:12px 0 0;white-space:normal}
