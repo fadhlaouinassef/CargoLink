@@ -18,6 +18,7 @@ from vehicules.admin_views import (
     AdminVehiculeListView,
     AdminVehiculeUpdateView,
 )
+from suivi_transport import views as suivi_views
 
 app_name = 'authentification'
 
@@ -45,6 +46,19 @@ urlpatterns = [
     path('dashboard/maintenances/<int:pk>/', AdminMaintenanceDetailView.as_view(), name='admin_maintenance_detail'),
     path('dashboard/maintenances/<int:pk>/modifier/', AdminMaintenanceUpdateView.as_view(), name='admin_maintenance_update'),
     path('dashboard/maintenances/<int:pk>/supprimer/', AdminMaintenanceDeleteView.as_view(), name='admin_maintenance_delete'),
+    path('dashboard/transports/', suivi_views.admin_transports, name='admin_transports'),
+    path('dashboard/transports/<int:pk>/', suivi_views.admin_transport_detail, name='admin_transport_detail'),
+    path('dashboard/transports/<int:pk>/evenement/', suivi_views.admin_transport_event, name='admin_transport_event'),
+    path(
+        'dashboard/transports/<int:pk>/evenement/<int:event_pk>/modifier/',
+        suivi_views.admin_transport_event_edit,
+        name='admin_transport_event_edit',
+    ),
+    path(
+        'dashboard/transports/<int:pk>/evenement/<int:event_pk>/supprimer/',
+        suivi_views.admin_transport_event_delete,
+        name='admin_transport_event_delete',
+    ),
     path(
         'signin/',
         views.RoleBasedLoginView.as_view(

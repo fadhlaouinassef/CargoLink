@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Q
-from django.http import HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
@@ -25,6 +25,16 @@ def _role_required(role):
             return view(request, *args, **kwargs)
         return wrapped
     return decorator
+
+
+def _admin_required(view):
+    @login_required(login_url='authentification:login')
+    @wraps(view)
+    def wrapped(request, *args, **kwargs):
+        if request.user.role != 'admin':
+            raise Http404
+        return view(request, *args, **kwargs)
+    return wrapped
 
 
 def _pme_access_required(view):
@@ -67,8 +77,7 @@ def _carrier_transport(request, pk, *, lock=False):
 def _sync_transport_status(transport):
     events = transport.evenements.order_by('date_evenement', 'pk')
     latest = events.last()
-    if latest:
-        transport.statut = latest.statut
+    transport.statut = latest.statut if latest else Transport.Statut.PLANIFIE
     if transport.date_confirmation_reception:
         transport.statut = Transport.Statut.LIVRE
     transport.date_prise_en_charge = events.filter(
@@ -80,6 +89,144 @@ def _sync_transport_status(transport):
     transport.save(update_fields=[
         'statut', 'date_prise_en_charge', 'date_arrivee', 'updated_at',
     ])
+
+
+def _admin_transports_queryset():
+    return Transport.objects.select_related(
+        'offre__demande', 'offre__trajet', 'offre__transporteur',
+    ).prefetch_related('evenements')
+
+
+@_admin_required
+def admin_transports(request):
+    transports = _admin_transports_queryset()
+    query = request.GET.get('q', '').strip() or request.GET.get('reference', '').strip()
+    status = request.GET.get('status', '').strip() or request.GET.get('statut', '').strip()
+    transporter = (
+        request.GET.get('transporter', '').strip()
+        or request.GET.get('transporteur', '').strip()
+    )
+    destination = request.GET.get('destination', '').strip()
+
+    if query:
+        search_filter = (
+            Q(offre__demande__arrivee_ville__icontains=query)
+            | Q(offre__demande__arrivee_adresse__icontains=query)
+            | Q(offre__transporteur__full_name__icontains=query)
+            | Q(offre__transporteur__email__icontains=query)
+        )
+        reference = query.upper().replace('TR-', '').replace('DEM-', '').lstrip('#')
+        if reference.isdigit():
+            number = int(reference)
+            search_filter |= Q(pk=number) | Q(offre__demande__pk=number)
+        transports = transports.filter(search_filter)
+    if status in Transport.Statut.values:
+        transports = transports.filter(statut=status)
+    if transporter.isdigit():
+        transports = transports.filter(offre__transporteur_id=int(transporter))
+    if destination:
+        transports = transports.filter(offre__demande__arrivee_ville__icontains=destination)
+
+    user_model = request.user.__class__
+    transporteurs = user_model.objects.filter(
+        role='transporteur', is_active=True,
+    ).order_by('full_name', 'email')
+    return render(request, 'dashboard/admin-transports.html', {
+        'transports': transports,
+        'query': query,
+        'selected_status': status,
+        'selected_transporter': transporter,
+        'selected_destination': destination,
+        'status_choices': Transport.Statut.choices,
+        'transporteurs': transporteurs,
+        'total_transports': Transport.objects.count(),
+        'active_transports': Transport.objects.exclude(
+            statut__in=(Transport.Statut.LIVRE, Transport.Statut.ANNULE),
+        ).count(),
+        'incident_transports': Transport.objects.filter(
+            statut=Transport.Statut.INCIDENT,
+        ).count(),
+    })
+
+
+@_admin_required
+def admin_transport_detail(request, pk):
+    transport = get_object_or_404(_admin_transports_queryset(), pk=pk)
+    return render(request, 'dashboard/admin-transport-detail.html', {
+        'transport': transport,
+        'form': EvenementSuiviForm(initial={
+            'statut': transport.statut,
+            'date_evenement': timezone.localtime().strftime('%Y-%m-%dT%H:%M'),
+        }),
+    })
+
+
+@_admin_required
+@require_POST
+def admin_transport_event(request, pk):
+    with transaction.atomic():
+        transport = get_object_or_404(
+            Transport.objects.select_for_update(), pk=pk,
+        )
+        form = EvenementSuiviForm(request.POST)
+        if not form.is_valid():
+            transport = get_object_or_404(_admin_transports_queryset(), pk=pk)
+            return render(request, 'dashboard/admin-transport-detail.html', {
+                'transport': transport, 'form': form,
+            }, status=422)
+        event = form.save(commit=False)
+        event.transport = transport
+        event.cree_par = request.user
+        event.save()
+        _sync_transport_status(transport)
+        messages.success(request, f'Événement « {event.titre} » enregistré.')
+    return redirect('authentification:admin_transport_detail', pk=pk)
+
+
+@_admin_required
+@require_http_methods(['GET', 'POST'])
+def admin_transport_event_edit(request, pk, event_pk):
+    transport = get_object_or_404(Transport.objects.all(), pk=pk)
+    event = get_object_or_404(EvenementSuivi, pk=event_pk, transport=transport)
+    form = EvenementSuiviForm(
+        request.POST if request.method == 'POST' else None,
+        instance=event,
+    )
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            transport = get_object_or_404(
+                Transport.objects.select_for_update(), pk=pk,
+            )
+            event = get_object_or_404(
+                EvenementSuivi, pk=event_pk, transport=transport,
+            )
+            form = EvenementSuiviForm(request.POST, instance=event)
+            event = form.save()
+            _sync_transport_status(transport)
+        messages.success(request, f'Événement « {event.titre} » corrigé.')
+        return redirect('authentification:admin_transport_detail', pk=pk)
+    return render(request, 'dashboard/admin-transport-detail.html', {
+        'transport': _admin_transports_queryset().get(pk=pk),
+        'form': form,
+        'edit_event': event,
+        'edit_form': form,
+    }, status=422 if request.method == 'POST' else 200)
+
+
+@_admin_required
+@require_POST
+def admin_transport_event_delete(request, pk, event_pk):
+    with transaction.atomic():
+        transport = get_object_or_404(
+            Transport.objects.select_for_update(), pk=pk,
+        )
+        event = get_object_or_404(
+            EvenementSuivi, pk=event_pk, transport=transport,
+        )
+        event.delete()
+        _sync_transport_status(transport)
+    messages.success(request, 'Événement supprimé.')
+    return redirect('authentification:admin_transport_detail', pk=pk)
 
 
 @_pme_access_required

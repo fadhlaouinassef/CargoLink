@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ transport }} · Suivi | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+  <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil"><img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink"></a>
+        <button class="sidebar-close" type="button" aria-label="Fermer le menu">×</button>
+      </div>
+      <div class="admin-profile">
+        <span class="avatar avatar-admin">{{ request.user.full_name|slice:":1"|upper }}</span>
+        <span><strong>{{ request.user.full_name }}</strong><small>Administrateur</small></span>
+      </div>
+      <nav class="sidebar-nav" aria-label="Navigation administrateur">
+        <p class="nav-label">MENU PRINCIPAL</p>
+        <a class="nav-link" href="{% url 'authentification:admin_dashboard' %}">Comptes utilisateurs</a>
+        <a class="nav-link" href="{% url 'authentification:admin_demandes' %}">Publications PME</a>
+        <a class="nav-link active" href="{% url 'authentification:admin_transports' %}" aria-current="page">Suivi des transports</a>
+        <a class="nav-link" href="{% url 'authentification:admin_vehicles' %}">Véhicules & disponibilités</a>
+        <a class="nav-link" href="{% url 'avis_admin:reclamation_list' %}">Réclamations</a>
+        <a class="nav-link" href="{% url 'avis_admin:avis_list' %}">Avis</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="nav-link" href="{% url 'home' %}">Retour au site</a>
+        <span class="sidebar-version">CargoLink · Administration</span>
+      </div>
+    </aside>
+
+    <div class="dashboard-content">
+      <header class="topbar">
+        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span></button>
+        <div class="breadcrumb"><a href="{% url 'authentification:admin_transports' %}">Suivi des transports</a><b>/</b><strong>{{ transport }}</strong></div>
+        <span class="topbar-avatar">{{ request.user.full_name|slice:":1"|upper }}</span>
+      </header>
+
+      <main class="main-content admin-transport-detail-page">
+        {% if messages %}
+          <div class="messages">{% for message in messages %}<p class="{{ message.tags }}">{{ message }}</p>{% endfor %}</div>
+        {% endif %}
+
+        <a class="back-link" href="{% url 'authentification:admin_transports' %}">← Retour à la liste des transports</a>
+
+        <section class="transport-detail-hero">
+          <div>
+            <p class="eyebrow">DÉTAIL DU TRANSPORT</p>
+            <div class="transport-detail-title">
+              <div>
+                <h1>{{ transport }}</h1>
+                <p>{{ transport.trajet.depart_ville }} <span aria-hidden="true">→</span> {{ transport.trajet.arrivee_ville }}</p>
+              </div>
+              <span class="status-badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span>
+            </div>
+            <p class="transport-detail-reference">Demande n°{{ transport.demande.pk }} · Créé le {{ transport.created_at|date:"d/m/Y à H:i" }}</p>
+          </div>
+          <div class="transport-hero-route">
+            <div><span class="route-point route-start"></span><span><small>Départ</small><strong>{{ transport.trajet.depart_ville }}</strong><em>{{ transport.trajet.date_depart|date:"d/m/Y à H:i" }}</em></span></div>
+            <div class="route-line"></div>
+            <div><span class="route-point route-end"></span><span><small>Destination</small><strong>{{ transport.demande.arrivee_ville }}</strong><em>{{ transport.demande.arrivee_adresse }}</em></span></div>
+          </div>
+        </section>
+
+        <div class="transport-detail-columns">
+          <div class="transport-detail-main">
+            <section class="users-panel transport-info-panel">
+              <div class="panel-heading"><div><h2>Informations du transport</h2><p>Les données associées à la demande et au trajet sélectionné.</p></div></div>
+              <div class="transport-info-grid">
+                <div class="transport-info-item"><span class="info-icon">↗</span><span><small>Transporteur</small><strong>{{ transport.transporteur.full_name|default:transport.transporteur.email }}</strong><em>{{ transport.transporteur.email }}</em></span></div>
+                <div class="transport-info-item"><span class="info-icon">◎</span><span><small>Client / expéditeur</small><strong>{{ transport.demande.created_by.full_name|default:"Client CargoLink" }}</strong><em>{{ transport.demande.created_by.email|default:"" }}</em></span></div>
+                <div class="transport-info-item"><span class="info-icon">▣</span><span><small>Véhicule</small><strong>{{ transport.trajet.vehicule }}</strong><em>{{ transport.trajet.capacite_kg|floatformat:0 }} kg · {{ transport.trajet.volume_m3 }} m³ disponibles</em></span></div>
+                <div class="transport-info-item"><span class="info-icon">⌖</span><span><small>Contact destinataire</small><strong>{{ transport.demande.destinataire_nom }}</strong><em>{{ transport.demande.destinataire_tel }}</em></span></div>
+              </div>
+            </section>
+
+            <section class="users-panel transport-events-panel">
+              <div class="panel-heading"><div><h2>Historique des événements</h2><p>{{ transport.evenements.count }} événement{{ transport.evenements.count|pluralize }} enregistré{{ transport.evenements.count|pluralize }} pour ce transport.</p></div></div>
+              <div class="admin-event-list">
+                {% for event in transport.evenements.all %}
+                  <article class="admin-event">
+                    <div class="admin-event-marker"><span class="event-dot {{ event.badge_class }}"></span><span class="event-connector"></span></div>
+                    <div class="admin-event-content">
+                      <div class="admin-event-heading"><div><strong>{{ event.titre }}</strong><span class="status-badge {{ event.badge_class }}">{{ event.get_statut_display }}</span></div><time datetime="{{ event.date_evenement|date:'c' }}">{{ event.date_evenement|date:"d/m/Y H:i" }}</time></div>
+                      {% if event.lieu %}<p class="admin-event-location">⌖ {{ event.lieu }}</p>{% endif %}
+                      {% if event.description %}<p class="admin-event-description">{{ event.description }}</p>{% endif %}
+                      <small class="admin-event-author">Créé par {% if event.cree_par %}{{ event.cree_par.full_name|default:event.cree_par.email }}{% else %}Utilisateur supprimé{% endif %}</small>
+                      <div class="row-actions admin-event-actions"><a class="secondary-button" href="{% url 'authentification:admin_transport_event_edit' transport.pk event.pk %}">Modifier</a><form method="post" action="{% url 'authentification:admin_transport_event_delete' transport.pk event.pk %}" onsubmit="return confirm('Supprimer cet événement ?');">{% csrf_token %}<button class="danger-button" type="submit">Supprimer</button></form></div>
+                    </div>
+                  </article>
+                {% empty %}
+                  <div class="transport-empty-events"><span>◷</span><strong>Aucun événement de suivi</strong><p>Ajoutez le premier événement pour commencer l’historique de ce transport.</p></div>
+                {% endfor %}
+              </div>
+            </section>
+          </div>
+
+          <aside class="transport-detail-aside">
+            <section class="users-panel transport-dates-panel">
+              <div class="panel-heading"><div><h2>Chronologie</h2><p>Les principales étapes du transport.</p></div></div>
+              <div class="transport-date-list">
+                <div><span class="date-status date-done">✓</span><span><small>Création</small><strong>{{ transport.created_at|date:"d/m/Y H:i" }}</strong></span></div>
+                <div><span class="date-status {% if transport.date_prise_en_charge %}date-done{% endif %}">{% if transport.date_prise_en_charge %}✓{% else %}2{% endif %}</span><span><small>Prise en charge</small><strong>{{ transport.date_prise_en_charge|date:"d/m/Y H:i"|default:"En attente" }}</strong></span></div>
+                <div><span class="date-status {% if transport.date_arrivee %}date-done{% endif %}">{% if transport.date_arrivee %}✓{% else %}3{% endif %}</span><span><small>Arrivée</small><strong>{{ transport.date_arrivee|date:"d/m/Y H:i"|default:"En attente" }}</strong></span></div>
+                <div><span class="date-status {% if transport.date_confirmation_reception %}date-done{% endif %}">{% if transport.date_confirmation_reception %}✓{% else %}4{% endif %}</span><span><small>Réception confirmée</small><strong>{{ transport.date_confirmation_reception|date:"d/m/Y H:i"|default:"En attente" }}</strong></span></div>
+              </div>
+            </section>
+
+            <section class="users-panel transport-add-event-panel">
+              <div class="panel-heading"><div><h2>{% if edit_event %}Modifier l’événement{% else %}Ajouter un événement{% endif %}</h2><p>Actualisez le suivi depuis l’espace ADMIN.</p></div></div>
+              <form method="post" action="{% if edit_event %}{% url 'authentification:admin_transport_event_edit' transport.pk edit_event.pk %}{% else %}{% url 'authentification:admin_transport_event' transport.pk %}{% endif %}" class="admin-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}<div class="form-error-summary" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+                {% for field in form %}<label>{{ field.label }}{{ field }}{% for error in field.errors %}<span class="field-error" role="alert">{{ error }}</span>{% endfor %}</label>{% endfor %}
+                <button class="primary-button" type="submit">{% if edit_event %}Enregistrer la correction{% else %}Enregistrer l’événement{% endif %}</button>
+                {% if edit_event %}<a class="cancel-event-link" href="{% url 'authentification:admin_transport_detail' transport.pk %}">Annuler la modification</a>{% endif %}
+              </form>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

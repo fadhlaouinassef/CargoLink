@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi des transports | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+  <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a class="brand" href="{% url 'home' %}" aria-label="CargoLink, accueil"><img src="{% static 'images/LogoCargoLink.png' %}" alt="CargoLink"></a><button class="sidebar-close" type="button" aria-label="Fermer le menu">×</button></div>
+      <div class="admin-profile"><span class="avatar avatar-admin">{{ request.user.full_name|slice:":1"|upper }}</span><span><strong>{{ request.user.full_name }}</strong><small>Administrateur</small></span></div>
+      <nav class="sidebar-nav" aria-label="Navigation administrateur">
+        <p class="nav-label">MENU PRINCIPAL</p>
+        <a class="nav-link" href="{% url 'authentification:admin_dashboard' %}">Comptes utilisateurs</a>
+        <a class="nav-link" href="{% url 'authentification:admin_demandes' %}">Publications PME</a>
+        <a class="nav-link active" href="{% url 'authentification:admin_transports' %}" aria-current="page">Suivi des transports <span class="nav-count">{{ total_transports }}</span></a>
+        <a class="nav-link" href="{% url 'authentification:admin_vehicles' %}">Véhicules & disponibilités</a>
+        <a class="nav-link" href="{% url 'avis_admin:reclamation_list' %}">Réclamations</a>
+        <a class="nav-link" href="{% url 'avis_admin:avis_list' %}">Avis</a>
+      </nav>
+      <div class="sidebar-footer"><a class="nav-link" href="{% url 'home' %}">Retour au site</a><span class="sidebar-version">CargoLink · Administration</span></div>
+    </aside>
+    <div class="dashboard-content">
+      <header class="topbar"><button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false"><span></span><span></span><span></span></button><div class="breadcrumb"><span>Administration</span><b>/</b><strong>Suivi des transports</strong></div><span class="topbar-avatar">{{ request.user.full_name|slice:":1"|upper }}</span></header>
+      <main class="main-content">
+        {% if messages %}<div class="messages">{% for message in messages %}<p class="{{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+        <section class="page-heading"><div><p class="eyebrow">ESPACE ADMINISTRATEUR</p><h1>Suivi des transports</h1><p>Supervisez le suivi des transports et l’historique de leurs événements.</p></div></section>
+        <section class="stats-grid" aria-label="Résumé des transports">
+          <article class="stat-card"><span class="stat-icon green">◎</span><span><small>Total transports</small><strong>{{ total_transports }}</strong><em>Tous les transports</em></span></article>
+          <article class="stat-card"><span class="stat-icon blue">◷</span><span><small>En cours</small><strong>{{ active_transports }}</strong><em>À surveiller</em></span></article>
+          <article class="stat-card"><span class="stat-icon purple">!</span><span><small>Incidents</small><strong>{{ incident_transports }}</strong><em class="warning-text">À traiter</em></span></article>
+        </section>
+        <section class="users-panel" aria-labelledby="transports-title">
+          <div class="panel-heading"><div><h2 id="transports-title">Tous les transports</h2><p>Recherchez par référence, destination ou transporteur.</p></div></div>
+          <form class="toolbar" method="get">
+            <label class="search-box" for="transport-search">Rechercher <input id="transport-search" name="q" type="search" value="{{ query }}" placeholder="Référence, destination..." autocomplete="off"></label>
+            <label class="select-box" for="transport-status"><span>Statut :</span><select id="transport-status" name="status"><option value="">Tous les statuts</option>{% for value, label in status_choices %}<option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+            <label class="select-box" for="transport-carrier"><span>Transporteur :</span><select id="transport-carrier" name="transporter"><option value="">Tous les transporteurs</option>{% for carrier in transporteurs %}<option value="{{ carrier.pk }}" {% if selected_transporter == carrier.pk|stringformat:"s" %}selected{% endif %}>{{ carrier.full_name|default:carrier.email }}</option>{% endfor %}</select></label>
+            <label class="search-box" for="transport-destination">Destination <input id="transport-destination" name="destination" type="search" value="{{ selected_destination }}" placeholder="Ville d’arrivée"></label>
+            <button class="secondary-button" type="submit">Filtrer</button>
+          </form>
+          <div class="table-wrap">
+            <table>
+              <caption class="sr-only">Liste des transports</caption>
+              <thead><tr><th>Référence</th><th>Trajet</th><th>Transporteur</th><th>Statut</th><th>Dernière activité</th><th>Actions</th></tr></thead>
+              <tbody>
+                {% for transport in transports %}
+                <tr>
+                  <td><a class="user-cell" href="{% url 'authentification:admin_transport_detail' transport.pk %}"><span class="user-avatar">TR</span><span><strong>{{ transport }}</strong><small>Demande n°{{ transport.demande.pk }}</small></span></a></td>
+                  <td>{{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}<small>{{ transport.trajet.date_depart|date:"d/m/Y H:i" }}</small></td>
+                  <td>{{ transport.transporteur.full_name|default:transport.transporteur.email }}</td>
+                  <td><span class="status-badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span></td>
+                  <td>{% with event=transport.evenements.all|first %}{% if event %}{{ event.date_evenement|date:"d/m/Y H:i" }}{% else %}Aucun événement{% endif %}{% endwith %}</td>
+                  <td><a class="action-icon" href="{% url 'authentification:admin_transport_detail' transport.pk %}" title="Voir le transport {{ transport }}" aria-label="Voir le transport {{ transport }}">⌕</a></td>
+                </tr>
+                {% empty %}<tr><td colspan="6"><p class="empty-state">Aucun transport ne correspond à vos critères.</p></td></tr>{% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
