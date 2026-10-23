@@ -6,7 +6,7 @@ from django.db.models import Avg, Count
 # Limites de saisie, partagées par les modèles et les formulaires.
 AVIS_COMMENTAIRE_MIN = 10
 AVIS_COMMENTAIRE_MAX = 1000
-RECLAMATION_DESCRIPTION_MIN = 20
+RECLAMATION_DESCRIPTION_MIN = 15
 RECLAMATION_DESCRIPTION_MAX = 2000
 REPONSE_MIN = 10
 REPONSE_MAX = 2000
@@ -135,6 +135,11 @@ class Reclamation(models.Model):
     @property
     def est_close(self):
         return not self.TRANSITIONS[self.statut]
+
+    @property
+    def est_modifiable(self):
+        """L'auteur peut modifier ou supprimer sa réclamation tant que l'administrateur ne l'a pas prise en charge."""
+        return self.statut == self.Statut.OUVERTE
 
     def statuts_suivants(self):
         """Statuts que l'administrateur peut choisir à partir du statut actuel."""

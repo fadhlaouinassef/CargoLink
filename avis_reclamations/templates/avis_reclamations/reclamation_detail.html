@@ -15,8 +15,18 @@
     </div>
     <div class="portal-header-actions">
       <a href="{% url url_list %}" class="btn-secondary">← Mes réclamations</a>
+      {% if reclamation.est_modifiable %}
+        <a href="{% url url_update reclamation.pk %}" class="btn-primary">Modifier</a>
+        <a href="{% url url_delete reclamation.pk %}" class="btn-danger">Supprimer</a>
+      {% endif %}
     </div>
   </div>
+
+  {% if reclamation.est_modifiable %}
+    <p class="ar-note">Votre dossier n’est pas encore pris en charge : vous pouvez le modifier ou le supprimer. Dès que l’administrateur l’instruit, cela ne sera plus possible.</p>
+  {% else %}
+    <p class="ar-note">Ce dossier est pris en charge ou clôturé : il ne peut plus être modifié ni supprimé.</p>
+  {% endif %}
 
   <div class="ar-detail-grid">
     <div class="portal-card">

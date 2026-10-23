@@ -10,6 +10,7 @@ urlpatterns = [
     path('demandes/<int:demande_pk>/postuler/', views.offre_form, name='offre_create'),
     path('trajets/', views.trajets, name='trajets'),
     path('trajets/ajouter/', views.trajet_form, name='trajet_create'),
+    path('trajets/<int:pk>/rapport/', views.rapport_trajet, name='trajet_rapport'),
     path('trajets/<int:pk>/modifier/', views.trajet_form, name='trajet_update'),
     path('trajets/<int:pk>/supprimer/', views.supprimer, {'kind': 'trajet'}, name='trajet_delete'),
     path('transports/', views.transports, name='transports'),

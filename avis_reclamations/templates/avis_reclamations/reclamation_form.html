@@ -1,8 +1,8 @@
 {% extends base_template %}
 {% load static %}
 
-{% block title %}Déposer une réclamation | CargoLink{% endblock %}
-{% block breadcrumb %}Déposer une réclamation{% endblock %}
+{% block title %}{% if modification %}Modifier {{ reclamation.reference }}{% else %}Déposer une réclamation{% endif %} | CargoLink{% endblock %}
+{% block breadcrumb %}{% if modification %}Modifier {{ reclamation.reference }}{% else %}Déposer une réclamation{% endif %}{% endblock %}
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">
   <script src="{% static 'avis_reclamations/module.js' %}" defer></script>
@@ -13,11 +13,16 @@
   <div class="portal-page-header">
     <div>
       <div class="portal-eyebrow">Avis & réclamations</div>
-      <h1 class="portal-page-title">Déposer une réclamation</h1>
-      <p class="portal-page-subtitle">En cas de problème sur un transport, l’administrateur CargoLink instruit votre dossier et vous répond.</p>
+      {% if modification %}
+        <h1 class="portal-page-title">Modifier la réclamation {{ reclamation.reference }}</h1>
+        <p class="portal-page-subtitle">Vous pouvez corriger votre dossier tant que l’administrateur ne l’a pas pris en charge. La demande concernée ne peut pas être changée.</p>
+      {% else %}
+        <h1 class="portal-page-title">Déposer une réclamation</h1>
+        <p class="portal-page-subtitle">En cas de problème sur un transport, l’administrateur CargoLink instruit votre dossier et vous répond.</p>
+      {% endif %}
     </div>
     <div class="portal-header-actions">
-      <a href="{% url url_list %}" class="btn-secondary">Mes réclamations</a>
+      <a href="{% if modification %}{% url url_detail reclamation.pk %}{% else %}{% url url_list %}{% endif %}" class="btn-secondary">{% if modification %}← Retour au dossier{% else %}Mes réclamations{% endif %}</a>
     </div>
   </div>
 
@@ -43,7 +48,7 @@
         <div class="portal-card">
           <div class="portal-card-header"><h2 class="portal-card-title">2. Le problème</h2></div>
           {% include 'avis_reclamations/form_field.html' with field=form.motif %}
-          {% include 'avis_reclamations/form_field.html' with field=form.description hint='Décrivez les faits dans l’ordre : ce qui était prévu, ce qui s’est passé, les réserves émises.' %}
+          {% include 'avis_reclamations/form_field.html' with field=form.description hint='Décrivez les faits dans l’ordre : ce qui était prévu, ce qui s’est passé, les réserves émises. Les propos injurieux sont refusés.' %}
           {% include 'avis_reclamations/form_field.html' with field=form.montant_prejudice hint='Laissez vide si vous ne pouvez pas encore l’estimer.' %}
 
           <p class="ar-help">
@@ -51,8 +56,8 @@
           </p>
 
           <div class="ar-form-actions">
-            <a href="{% url url_list %}" class="btn-secondary">Annuler</a>
-            <button type="submit" class="btn-danger">Transmettre la réclamation</button>
+            <a href="{% if modification %}{% url url_detail reclamation.pk %}{% else %}{% url url_list %}{% endif %}" class="btn-secondary">Annuler</a>
+            <button type="submit" class="btn-danger">{% if modification %}Enregistrer les modifications{% else %}Transmettre la réclamation{% endif %}</button>
           </div>
         </div>
       </form>

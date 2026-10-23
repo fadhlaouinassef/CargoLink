@@ -1,0 +1,34 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Supprimer {{ reclamation.reference }} | CargoLink{% endblock %}
+{% block breadcrumb %}Supprimer {{ reclamation.reference }}{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'avis_reclamations/module.css' %}">{% endblock %}
+
+{% block content %}
+<div class="ar-page">
+  <div class="portal-page-header">
+    <div>
+      <div class="portal-eyebrow">Avis & réclamations</div>
+      <h1 class="portal-page-title">Supprimer la réclamation {{ reclamation.reference }} ?</h1>
+      <p class="portal-page-subtitle">Cette action est définitive : le dossier ne sera plus visible, ni par vous ni par l’administrateur.</p>
+    </div>
+  </div>
+
+  <div class="portal-card" style="max-width: 640px;">
+    <dl class="ar-facts">
+      <div><dt>Demande</dt><dd>{{ reclamation.demande }}</dd></div>
+      <div><dt>Motif</dt><dd>{{ reclamation.get_motif_display }}</dd></div>
+    </dl>
+    <p class="ar-text-block">{{ reclamation.description|truncatechars:240 }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="ar-form-actions">
+        <a href="{% url url_detail reclamation.pk %}" class="btn-secondary">Annuler</a>
+        <button type="submit" class="btn-danger">Supprimer définitivement</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

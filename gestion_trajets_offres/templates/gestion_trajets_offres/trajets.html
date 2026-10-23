@@ -3,13 +3,98 @@
 {% block title %}Mes trajets | CargoLink{% endblock %}
 {% block breadcrumb %}Mes trajets{% endblock %}
 {% block content %}
-<div class="portal-page-header"><div><div class="portal-eyebrow">Gestion des trajets et des offres</div><h1 class="portal-page-title">Mes trajets</h1><p class="portal-page-subtitle">Publiez vos itinéraires et actualisez leur état : publié, en cours, terminé ou annulé.</p></div><button class="btn-primary" data-popup-url="{% url 'transporteur:trajet_create' %}">+ Publier un trajet</button></div>
-<section class="portal-card"><div class="portal-card-header"><h2 class="portal-card-title">Trajets enregistrés</h2><span class="badge badge-active">{{ trajets|length }} trajet{{ trajets|length|pluralize }}</span></div>
-<div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>Trajet</th><th>Départ</th><th>Véhicule</th><th>Capacité</th><th>État</th><th>Actions</th></tr></thead><tbody>
-{% for trajet in trajets %}<tr><td>{{ trajet.depart_ville }} → {{ trajet.arrivee_ville }}</td><td>{{ trajet.date_depart|date:"d/m/Y H:i" }}</td><td>{{ trajet.vehicule }}</td><td>{{ trajet.capacite_kg }} kg · {{ trajet.volume_m3 }} m³</td><td><span class="badge badge-active">{{ trajet.get_statut_display }}</span></td><td><div class="module-actions"><button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:trajet_update' trajet.pk %}">Modifier / Suivre</button><button type="button" class="btn-secondary module-delete" data-popup-url="{% url 'transporteur:trajet_delete' trajet.pk %}">Supprimer</button></div></td></tr>
-{% empty %}<tr><td colspan="6"><div class="demand-empty-state"><h3>Aucun trajet publié</h3><p>Ajoutez votre premier trajet pour proposer une offre aux PME.</p></div></td></tr>{% endfor %}
-</tbody></table></div></section>
-{% endblock %}
-{% block extra_js %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Gestion des trajets et des offres</div>
+    <h1 class="portal-page-title">Mes trajets</h1>
+    <p class="portal-page-subtitle">
+      Publiez vos itinéraires et actualisez leur état : publié, en cours,
+      terminé ou annulé.
+    </p>
+  </div>
+  <button
+    class="btn-primary"
+    data-popup-url="{% url 'transporteur:trajet_create' %}"
+  >
+    + Publier un trajet
+  </button>
+</div>
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Trajets enregistrés</h2>
+    <span class="badge badge-active"
+      >{{ trajets|length }} trajet{{ trajets|length|pluralize }}</span
+    >
+  </div>
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Trajet</th>
+          <th>Départ</th>
+          <th>Véhicule</th>
+          <th>Capacité</th>
+          <th>État</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trajet in trajets %}
+        <tr>
+          <td>{{ trajet.depart_ville }} → {{ trajet.arrivee_ville }}</td>
+          <td>{{ trajet.date_depart|date:"d/m/Y H:i" }}</td>
+          <td>{{ trajet.vehicule }}</td>
+          <td>{{ trajet.capacite_kg }} kg · {{ trajet.volume_m3 }} m³</td>
+          <td>
+            <span class="badge badge-active"
+              >{{ trajet.get_statut_display }}</span
+            >
+          </td>
+          <td>
+            <div class="module-actions">
+              <form
+                method="post"
+                action="{% url 'transporteur:trajet_rapport' trajet.pk %}"
+                data-rapport-form
+                data-filename="rapport-trajet-{{ trajet.pk }}.pdf"
+              >
+                {% csrf_token %}<button type="submit" class="btn-secondary">
+                  Générer Rapport
+                </button>
+              </form>
+              <button
+                type="button"
+                class="btn-secondary"
+                data-popup-url="{% url 'transporteur:trajet_update' trajet.pk %}"
+              >
+                Modifier / Suivre</button
+              ><button
+                type="button"
+                class="btn-secondary module-delete"
+                data-popup-url="{% url 'transporteur:trajet_delete' trajet.pk %}"
+              >
+                Supprimer
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">
+            <div class="demand-empty-state">
+              <h3>Aucun trajet publié</h3>
+              <p>
+                Ajoutez votre premier trajet pour proposer une offre aux PME.
+              </p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %} {% block extra_js %}
 <script src="{% static 'gestion_trajets_offres/trajet.js' %}" defer></script>
+<script src="{% static 'gestion_trajets_offres/rapport.js' %}" defer></script>
 {% endblock %}

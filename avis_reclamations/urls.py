@@ -19,12 +19,16 @@ pme_urls = [
     path('reclamations/', views.reclamation_list, name='reclamation_list'),
     path('reclamations/nouvelle/', views.reclamation_create, name='reclamation_create'),
     path('reclamations/<int:pk>/', views.reclamation_detail, name='reclamation_detail'),
+    path('reclamations/<int:pk>/modifier/', views.reclamation_update, name='reclamation_update'),
+    path('reclamations/<int:pk>/supprimer/', views.reclamation_delete, name='reclamation_delete'),
 ]
 
 destinataire_urls = [
     path('reclamation/', views.reclamation_create, name='reclamation'),
     path('reclamations/', views.reclamation_list, name='reclamation_list'),
     path('reclamations/<int:pk>/', views.reclamation_detail, name='reclamation_detail'),
+    path('reclamations/<int:pk>/modifier/', views.reclamation_update, name='reclamation_update'),
+    path('reclamations/<int:pk>/supprimer/', views.reclamation_delete, name='reclamation_delete'),
 ]
 
 transporteur_urls = [

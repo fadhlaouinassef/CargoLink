@@ -1,5 +1,6 @@
 from django.urls import include, path
 from avis_reclamations.urls import pme_urls
+from matching_des_offres.urls import pme_urls as matching_urls
 from demandes.views import dashboard, demande_detail
 from . import views_pme
 from suivi_transport import views as suivi_views
@@ -16,4 +17,5 @@ urlpatterns = [
     path('transports/<int:pk>/', suivi_views.pme_detail, name='transport_detail'),
     path('transports/<int:pk>/confirmer/', suivi_views.confirmer_reception, name='confirmer_reception'),
     *pme_urls,
+    *matching_urls,
 ]

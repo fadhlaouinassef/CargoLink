@@ -1,7 +1,7 @@
 from django.db import IntegrityError, transaction
 from django.db.models import Exists, OuterRef, Q
 from django.db.models.deletion import ProtectedError
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
@@ -11,6 +11,7 @@ from demandes.views import _owned_demands
 from .decorators import transporteur_required
 from .forms import OffreTransportForm, SuiviForm, TrajetForm
 from .models import OffreTransport, Trajet
+from .services import RapportErreur, generer_pdf_rapport
 
 
 def _demandes():
@@ -49,6 +50,20 @@ def trajets(request):
     return render(request, 'gestion_trajets_offres/trajets.html', {
         'active_tab': 'trajets', 'trajets': Trajet.objects.filter(transporteur=request.user),
     })
+
+
+@transporteur_required
+@require_POST
+def rapport_trajet(request, pk):
+    trajet = get_object_or_404(Trajet, pk=pk, transporteur=request.user)
+    try:
+        pdf = generer_pdf_rapport(trajet)
+    except RapportErreur as exc:
+        return JsonResponse({'error': str(exc)}, status=503)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="rapport-trajet-{trajet.pk}.pdf"'
+    response['Cache-Control'] = 'no-store'
+    return response
 
 
 @transporteur_required
@@ -91,11 +106,8 @@ def demande_offres(request, pk):
 
 
 def _offres_popup(request, demande):
-    offres = demande.offres_transport.select_related('transporteur', 'trajet')
     html = render_to_string('gestion_trajets_offres/demande_offres.html', {
-        'demande': demande, 'offres': offres,
-        'peut_accepter': demande.statut == DemandeTransport.Statut.OUVERTE
-        and not offres.filter(statut=OffreTransport.Statut.ACCEPTEE).exists(),
+        'demande': demande,
     }, request=request)
     return JsonResponse({'html': html})
 

@@ -228,9 +228,9 @@ class GestionTrajetsTests(TestCase):
         url = reverse('pme:demande_offres', args=[self.demande.pk])
         self.client.force_login(self.pme)
         html = self.client.get(url).json()['html']
-        self.assertIn('200.00 TND', html)
-        self.assertIn(self.carrier.email, html)
-        self.assertIn('&lt;script&gt;', html)
+        self.assertIn(reverse('pme:offres_classees', args=[self.demande.pk]), html)
+        self.assertIn('Chargement du classement des offres', html)
+        self.assertNotIn(self.carrier.email, html)
         self.assertNotIn('<script>', html)
         self.assertEqual(self.client.post(url).status_code, 405)
         self.client.force_login(self.other)
@@ -242,7 +242,9 @@ class GestionTrajetsTests(TestCase):
         self.client.force_login(self.pme)
         url = reverse('pme:demande_offres', args=[self.demande.pk])
         self.assertContains(self.client.get(reverse('pme:demandes_list')), f'data-popup-url="{url}"')
-        self.assertIn('Aucune offre reçue', self.client.get(url).json()['html'])
+        popup = self.client.get(url).json()['html']
+        self.assertIn('data-ranking-url=', popup)
+        self.assertIn('Chargement du classement des offres', popup)
 
     def test_session_owner_can_read_their_demand_offers(self):
         self.client.logout()
@@ -265,12 +267,12 @@ class GestionTrajetsTests(TestCase):
         self.client.force_login(self.pme)
         url = reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk])
         popup_url = reverse('pme:demande_offres', args=[self.demande.pk])
-        self.assertIn('>Accepter</button>', self.client.get(popup_url).json()['html'])
+        self.assertIn(reverse('pme:offres_classees', args=[self.demande.pk]),
+                      self.client.get(popup_url).json()['html'])
         self.assertEqual(self.client.get(url).status_code, 405)
         response = self.client.post(url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Acceptée', response.json()['html'])
-        self.assertNotIn('>Accepter</button>', response.json()['html'])
+        self.assertIn('data-ranking-url=', response.json()['html'])
         offre.refresh_from_db()
         other.refresh_from_db()
         self.assertEqual(offre.statut, OffreTransport.Statut.ACCEPTEE)

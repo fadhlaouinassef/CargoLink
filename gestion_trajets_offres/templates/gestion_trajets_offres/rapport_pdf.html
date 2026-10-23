@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Rapport {{ trajet.reference }} | CargoLink</title>
+  <style>
+    @page {
+      size: a4 portrait;
+      margin: 18mm 16mm 22mm;
+      @frame footer_frame {
+        -pdf-frame-content: footer;
+        left: 16mm; top: 278mm; width: 178mm; height: 10mm;
+      }
+    }
+    body { font-family: Helvetica; font-size: 10pt; color: #25352f; line-height: 1.5; }
+    h1 { font-size: 25pt; color: #163e32; margin: 0 0 6pt; }
+    h2 { font-size: 15pt; color: #163e32; margin: 20pt 0 8pt; -pdf-keep-with-next: true; }
+    h3 { font-size: 11pt; color: #163e32; margin: 12pt 0 5pt; -pdf-keep-with-next: true; }
+    p { margin: 0 0 8pt; }
+    .brand { width: 100%; margin-bottom: 18pt; border-bottom: 2pt solid #a8ce49; }
+    .brand td { padding-bottom: 10pt; vertical-align: middle; }
+    .meta { text-align: right; color: #65776e; font-size: 9pt; }
+    .eyebrow { color: #668b29; font-size: 9pt; letter-spacing: 1pt; }
+    .muted { color: #65776e; font-size: 9pt; }
+    .details { width: 100%; background-color: #f1f5f2; margin: 12pt 0; }
+    .details td { padding: 9pt 12pt; vertical-align: top; }
+    .label { font-size: 8pt; color: #65776e; }
+    .stats { width: 100%; margin: 12pt 0; }
+    .stats td { width: 33.33%; padding: 10pt; background-color: #163e32; color: #ffffff; vertical-align: top; border: 3pt solid white; }
+    .number { font-size: 19pt; font-weight: bold; }
+    .stats-label { font-size: 9pt; }
+    .offers { width: 100%; margin: 8pt 0; }
+    .offers th { background-color: #eaf1ed; color: #163e32; font-size: 9pt; padding: 8pt 6pt; text-align: left; }
+    .offers td { padding: 8pt 6pt; border-bottom: 0.5pt solid #dde6e0; vertical-align: top; font-size: 9pt; }
+    .price { text-align: right; }
+    .offers .section-heading { background-color: white; font-size: 15pt; padding: 12pt 0 6pt; }
+    .offers .section-total { background-color: white; font-size: 10pt; padding: 0 0 8pt; }
+    .empty { padding: 10pt; color: #65776e; background-color: #f5f7f5; }
+    .note { border-left: 3pt solid #a8ce49; padding: 8pt 10pt; background-color: #f1f5f2; }
+    #footer { font-size: 8pt; color: #65776e; border-top: 0.5pt solid #dde6e0; padding-top: 6pt; }
+  </style>
+</head>
+<body>
+  <div id="footer">CargoLink · {{ trajet.reference }} · Rapport des offres décidées <span> | Page <pdf:pagenumber /> / <pdf:pagecount /></span></div>
+  <table class="brand"><tr>
+    <td width="45%"><img src="{{ logo }}" width="155" alt="CargoLink"></td>
+    <td class="meta" width="55%">{{ trajet.reference }}<br>Édité le {{ genere_le|date:"d/m/Y à H:i" }}<br>Heure de Tunisie</td>
+  </tr></table>
+  <p class="eyebrow">RAPPORT DE TRAJET</p>
+  <h1>{{ trajet.depart }} vers {{ trajet.arrivee }}</h1>
+  <p class="muted">Bilan des offres acceptées et refusées · Analyse assistée par Gemini</p>
+
+  <table class="details"><tr>
+    <td width="50%"><span class="label">DÉPART PRÉVU</span><br><b>{{ trajet.date_depart }}</b><br><span class="label">VÉHICULE</span><br>{{ trajet.vehicule }}</td>
+    <td width="50%"><span class="label">ÉTAT DU TRAJET</span><br><b>{{ trajet.statut }}</b><br><span class="label">CAPACITÉ DISPONIBLE</span><br>{{ trajet.capacite_kg }} kg · {{ trajet.volume_m3 }} m³</td>
+  </tr></table>
+
+  <table class="stats"><tr>
+    <td><span class="number">{{ indicateurs.nombre_acceptees }}</span><br><span class="stats-label">Offres acceptées</span></td>
+    <td><span class="number">{{ indicateurs.nombre_refusees }}</span><br><span class="stats-label">Offres refusées</span></td>
+    <td><span class="number">{% if indicateurs.taux_acceptation != None %}{{ indicateurs.taux_acceptation }} %{% else %}N/D{% endif %}</span><br><span class="stats-label">Taux d'acceptation</span></td>
+  </tr></table>
+  <p class="muted">Le taux porte uniquement sur les offres décidées. Les offres en attente sont exclues de ce rapport et des données envoyées à l'IA.</p>
+
+  <h2>01 · Synthèse du trajet</h2>
+  <p>{{ analyse.synthese|linebreaksbr }}</p>
+
+  {% if offres.acceptees %}
+  <table class="offers" repeat="3"><thead>
+    <tr><th colspan="4" class="section-heading">02 · Offres acceptées</th></tr>
+    <tr><th colspan="4" class="section-total">Montant proposé accepté : {{ indicateurs.total_accepte_tnd }} TND</th></tr>
+    <tr><th width="18%">Offre</th><th width="27%">Demande</th><th width="35%">Itinéraire demandé</th><th width="20%" class="price">Prix (TND)</th></tr></thead><tbody>
+    {% for offre in offres.acceptees %}<tr><td>{{ offre.reference }}</td><td>{{ offre.demande }}</td><td>{{ offre.itineraire }}</td><td class="price">{{ offre.prix_tnd }}</td></tr>{% endfor %}
+  </tbody></table>
+  {% else %}<h2>02 · Offres acceptées</h2><p class="empty">Aucune offre acceptée pour ce trajet.</p>{% endif %}
+  <p>{{ analyse.analyse_acceptees|linebreaksbr }}</p>
+
+  {% if offres.refusees %}
+  <table class="offers" repeat="3"><thead>
+    <tr><th colspan="4" class="section-heading">03 · Offres refusées</th></tr>
+    <tr><th colspan="4" class="section-total">Montant proposé refusé : {{ indicateurs.total_refuse_tnd }} TND</th></tr>
+    <tr><th width="18%">Offre</th><th width="27%">Demande</th><th width="35%">Itinéraire demandé</th><th width="20%" class="price">Prix (TND)</th></tr></thead><tbody>
+    {% for offre in offres.refusees %}<tr><td>{{ offre.reference }}</td><td>{{ offre.demande }}</td><td>{{ offre.itineraire }}</td><td class="price">{{ offre.prix_tnd }}</td></tr>{% endfor %}
+  </tbody></table>
+  {% else %}<h2>03 · Offres refusées</h2><p class="empty">Aucune offre refusée pour ce trajet.</p>{% endif %}
+  <p>{{ analyse.analyse_refusees|linebreaksbr }}</p>
+
+  <h2>04 · Recommandations</h2>
+  <ol>{% for action in analyse.recommandations %}<li>{{ action }}</li>{% endfor %}</ol>
+  <p class="note">Les tableaux et indicateurs proviennent des données CargoLink à la date de génération. Les commentaires sont générés par IA et doivent être relus. Les montants acceptés ne constituent pas un encaissement ; les montants refusés ne constituent pas une perte constatée.</p>
+</body>
+</html>
