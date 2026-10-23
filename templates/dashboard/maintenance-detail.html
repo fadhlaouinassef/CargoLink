@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Détail maintenance | CargoLink</title>
+  <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+</head>
+<body>
+<main class="main-content standalone-admin-form">
+  <a class="back-link" href="{% url 'authentification:admin_vehicle_detail' maintenance.vehicule.pk %}">← Retour au véhicule</a>
+  {% if messages %}
+    {% for message in messages %}
+      <p class="admin-message {{ message.tags }}" role="status">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+  <section class="users-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">SUPERVISION ADMINISTRATEUR</p>
+        <h1>Maintenance {{ maintenance.get_motif_display }}</h1>
+        <p>Véhicule {{ maintenance.vehicule.immatriculation }} · {{ maintenance.vehicule.transporteur.full_name }}</p>
+      </div>
+      <div>
+        {% if maintenance.statut != 'terminee' %}
+          <a class="primary-button" href="{% url 'authentification:admin_maintenance_update' maintenance.pk %}">Modifier</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <span class="detail-label">Véhicule</span>
+        <strong>{{ maintenance.vehicule.marque }} {{ maintenance.vehicule.modele }} ({{ maintenance.vehicule.immatriculation }})</strong>
+      </div>
+      <div>
+        <span class="detail-label">Transporteur</span>
+        <strong>{{ maintenance.vehicule.transporteur.full_name }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Motif</span>
+        <strong>{{ maintenance.get_motif_display }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Statut</span>
+        <strong><span class="status-badge {% if maintenance.statut == 'planifiee' %}pending{% elif maintenance.statut == 'en_cours' %}active{% elif maintenance.statut == 'terminee' %}inactive{% else %}inactive{% endif %}">{{ maintenance.get_statut_display }}</span></strong>
+      </div>
+      <div>
+        <span class="detail-label">Date de début</span>
+        <strong>{{ maintenance.date_debut|date:"d/m/Y H:i" }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Date de fin</span>
+        <strong>{{ maintenance.date_fin|date:"d/m/Y H:i" }}</strong>
+      </div>
+      <div>
+        <span class="detail-label">Kilométrage relevé</span>
+        <strong>{% if maintenance.kilometrage_releve %}{{ maintenance.kilometrage_releve }} km{% else %}—{% endif %}</strong>
+      </div>
+    </div>
+    {% if maintenance.commentaire %}
+      <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-card, #f8f9fa); border-radius: 8px;">
+        <span class="detail-label">Commentaire</span>
+        <p style="margin: 0.5rem 0 0 0;">{{ maintenance.commentaire }}</p>
+      </div>
+    {% endif %}
+    {% if maintenance.statut == 'planifiee' %}
+      <div class="detail-actions" style="margin-top: 1.5rem;">
+        <form class="delete-form" method="post" action="{% url 'authentification:admin_maintenance_delete' maintenance.pk %}" data-confirm-delete="Supprimer cette maintenance planifiée ?">
+          {% csrf_token %}
+          <button class="danger-button" type="submit">Supprimer la maintenance</button>
+        </form>
+      </div>
+    {% endif %}
+  </section>
+</main>
+<div class="confirm-modal" id="confirm-modal" hidden>
+  <div class="confirm-modal-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+    <button class="confirm-modal-close" type="button" aria-label="Fermer">×</button>
+    <span class="confirm-modal-icon">!</span>
+    <h2 id="confirm-title">Confirmer la suppression</h2>
+    <p id="confirm-message"></p>
+    <div class="confirm-modal-actions">
+      <button class="secondary-button" type="button" data-confirm-cancel>Annuler</button>
+      <button class="danger-button" type="button" data-confirm-submit>Supprimer</button>
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/transporteur.js' %}"></script>
+</body>
+</html>

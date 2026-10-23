@@ -65,6 +65,16 @@ class Vehicule(models.Model):
         choices=Statut.choices,
         default=Statut.ACTIF,
     )
+    kilometrage = models.PositiveIntegerField(
+        'kilométrage actuel (km)',
+        blank=True,
+        null=True,
+    )
+    date_releve_km = models.DateField(
+        'date du relevé kilométrique',
+        blank=True,
+        null=True,
+    )
     photo = models.ImageField(
         'photo',
         upload_to='vehicules/',
@@ -182,8 +192,259 @@ class Disponibilite(models.Model):
                     errors['date_debut'] = (
                         'Cette période chevauche une disponibilité active existante.'
                     )
+
+                # Règle Sens 2 : refuse la création/modification d'une disponibilité chevauchant une maintenance
+                from .models import Maintenance
+                maint_overlap = Maintenance.objects.filter(
+                    vehicule_id=self.vehicule_id,
+                    statut__in=[Maintenance.Statut.PLANIFIEE, Maintenance.Statut.EN_COURS],
+                    date_debut__lt=self.date_fin,
+                    date_fin__gt=self.date_debut,
+                )
+                if maint_overlap.exists():
+                    errors['date_debut'] = (
+                        'Une maintenance est planifiée ou en cours pour ce véhicule sur cette période.'
+                    )
         if errors:
             raise ValidationError(errors)
 
     def __str__(self):
         return f'{self.vehicule.immatriculation} — {self.zone_depart} → {self.zone_arrivee}'
+
+
+class Maintenance(models.Model):
+    class Motif(models.TextChoices):
+        ENTRETIEN_PERIODIQUE = 'entretien_periodique', 'Entretien périodique'
+        REPARATION = 'reparation', 'Réparation'
+        CONTROLE_TECHNIQUE = 'controle_technique', 'Contrôle technique'
+        PNEUS = 'pneus', 'Pneumatiques'
+        AUTRE = 'autre', 'Autre'
+
+    class Statut(models.TextChoices):
+        PLANIFIEE = 'planifiee', 'Planifiée'
+        EN_COURS = 'en_cours', 'En cours'
+        TERMINEE = 'terminee', 'Terminée'
+        ANNULEE = 'annulee', 'Annulée'
+
+    vehicule = models.ForeignKey(
+        Vehicule,
+        on_delete=models.CASCADE,
+        related_name='maintenances',
+        verbose_name='véhicule',
+    )
+    date_debut = models.DateTimeField('date de début')
+    date_fin = models.DateTimeField('date de fin')
+    motif = models.CharField(
+        'motif',
+        max_length=30,
+        choices=Motif.choices,
+        default=Motif.ENTRETIEN_PERIODIQUE,
+    )
+    statut = models.CharField(
+        'statut',
+        max_length=20,
+        choices=Statut.choices,
+        default=Statut.PLANIFIEE,
+    )
+    commentaire = models.TextField('commentaire', blank=True)
+    kilometrage_releve = models.PositiveIntegerField(
+        'kilométrage relevé lors de la maintenance (km)',
+        blank=True,
+        null=True,
+    )
+    date_creation = models.DateTimeField('date de création', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_debut', '-pk']
+        verbose_name = 'maintenance'
+        verbose_name_plural = 'maintenances'
+        indexes = [
+            models.Index(fields=['vehicule', 'date_debut', 'date_fin']),
+            models.Index(fields=['vehicule', 'statut']),
+            models.Index(fields=['date_debut', 'date_fin']),
+        ]
+
+    def clean(self):
+        errors = {}
+
+        # 7. Une maintenance "terminee" n'est ni modifiable ni supprimable (historique).
+        if self.pk:
+            old = Maintenance.objects.filter(pk=self.pk).first()
+            if old and old.statut == self.Statut.TERMINEE and self.statut == self.Statut.TERMINEE:
+                # Vérifier si des champs de dates/motif/véhicule ont été altérés
+                if (old.date_debut != self.date_debut or old.date_fin != self.date_fin
+                        or old.motif != self.motif or old.vehicule_id != self.vehicule_id):
+                    raise ValidationError("Une maintenance terminée ne peut plus être modifiée (archivage historique).")
+
+        # 1. date_fin > date_debut
+        if self.date_debut and self.date_fin and self.date_fin <= self.date_debut:
+            errors['date_fin'] = 'La date de fin doit être postérieure à la date de début.'
+
+        # 2. Une nouvelle maintenance ne commence pas dans le passé (à la création uniquement)
+        if self._state.adding and self.date_debut and self.date_debut < timezone.now():
+            errors['date_debut'] = 'La date de début ne peut pas être passée.'
+
+        if self.vehicule_id and self.date_debut and self.date_fin:
+            # 3. Pas de chevauchement avec une autre maintenance du même véhicule (planifiee ou en_cours)
+            # Règle de chevauchement strict : debut_A < fin_B ET fin_A > debut_B (fin == début autorisé)
+            if self.statut in {self.Statut.PLANIFIEE, self.Statut.EN_COURS}:
+                chevauchement_maint = Maintenance.objects.filter(
+                    vehicule_id=self.vehicule_id,
+                    statut__in=[self.Statut.PLANIFIEE, self.Statut.EN_COURS],
+                    date_debut__lt=self.date_fin,
+                    date_fin__gt=self.date_debut,
+                )
+                if self.pk:
+                    chevauchement_maint = chevauchement_maint.exclude(pk=self.pk)
+                if chevauchement_maint.exists():
+                    errors['date_debut'] = (
+                        'Cette période chevauche une autre maintenance planifiée ou en cours pour ce véhicule.'
+                    )
+
+            # 5. Pas de chevauchement avec une Disponibilite de statut "reserve"
+            dispo_reserve = Disponibilite.objects.filter(
+                vehicule_id=self.vehicule_id,
+                statut=Disponibilite.Statut.RESERVE,
+                date_debut__lt=self.date_fin,
+                date_fin__gt=self.date_debut,
+            )
+            if dispo_reserve.exists():
+                errors['date_debut'] = (
+                    'Ce véhicule possède une disponibilité réservée (transport confirmé) sur cette période.'
+                )
+
+            # 4. Règle clé : Pas de chevauchement avec un trajet confirmé (ou en cours) du même véhicule
+            if self.statut in {self.Statut.PLANIFIEE, self.Statut.EN_COURS}:
+                from .services import trajets_actifs_en_conflit, formater_conflit_trajet
+                conflits = trajets_actifs_en_conflit(self.vehicule, self.date_debut, self.date_fin)
+                if conflits:
+                    descriptions = [formater_conflit_trajet(c) for c in conflits]
+                    if len(descriptions) == 1:
+                        msg = (
+                            f"Impossible de programmer cette maintenance : le véhicule est affecté au "
+                            f"{descriptions[0]}. Réaffectez le trajet à un autre véhicule ou choisissez "
+                            f"une autre période de maintenance."
+                        )
+                    else:
+                        liste_str = " ; ".join(descriptions)
+                        msg = (
+                            f"Impossible de programmer cette maintenance : le véhicule est affecté aux trajets suivants : "
+                            f"{liste_str}. Réaffectez ces trajets à un autre véhicule ou choisissez une autre période de maintenance."
+                        )
+                    errors['date_debut'] = msg
+
+        if errors:
+            raise ValidationError(errors)
+
+    def delete(self, using=None, keep_parents=False):
+        if self.statut == self.Statut.TERMINEE:
+            raise ValidationError("Une maintenance terminée ne peut pas être supprimée (archivage historique).")
+        return super().delete(using=using, keep_parents=keep_parents)
+
+    def __str__(self):
+        return f'{self.vehicule.immatriculation} — {self.get_motif_display()} ({self.date_debut:%d/%m/%Y})'
+
+
+class AnalyseRisque(models.Model):
+    """Modèle stockant l'analyse du risque de maintenance d'un véhicule.
+
+    Approche hybride : score à règles transparent enrichi par une analyse IA (LLM).
+    Historique complet conservé, horodaté et associé à un hash des variables d'entrée.
+    """
+    class Niveau(models.TextChoices):
+        FAIBLE = 'faible', 'Faible'
+        MOYEN = 'moyen', 'Moyen'
+        ELEVE = 'eleve', 'Élevé'
+
+    class Source(models.TextChoices):
+        IA = 'ia', 'IA (enrichi)'
+        REGLES = 'regles', 'Règles (déterministe)'
+
+    class Urgence(models.TextChoices):
+        IMMEDIATE = 'immediate', 'Immédiate'
+        SOUS_7_JOURS = 'sous_7_jours', 'Sous 7 jours'
+        SOUS_30_JOURS = 'sous_30_jours', 'Sous 30 jours'
+        AUCUNE = 'aucune', 'Aucune'
+
+    vehicule = models.ForeignKey(
+        Vehicule,
+        on_delete=models.CASCADE,
+        related_name='analyses_risque',
+        verbose_name='véhicule',
+    )
+    niveau = models.CharField(
+        'niveau de risque',
+        max_length=15,
+        choices=Niveau.choices,
+    )
+    score = models.PositiveSmallIntegerField(
+        'score de risque (0-100)',
+    )
+    facteurs = models.JSONField(
+        'facteurs explicatifs',
+        default=list,
+    )
+    recommandation = models.TextField(
+        'recommandation indicative',
+        blank=True,
+    )
+    motif_suggere = models.CharField(
+        'motif suggéré de maintenance',
+        max_length=30,
+        choices=Maintenance.Motif.choices,
+        blank=True,
+        null=True,
+    )
+    urgence = models.CharField(
+        'urgence indicative',
+        max_length=20,
+        choices=Urgence.choices,
+        default=Urgence.AUCUNE,
+    )
+    source = models.CharField(
+        'source de l’analyse',
+        max_length=10,
+        choices=Source.choices,
+        default=Source.REGLES,
+    )
+    modele_utilise = models.CharField(
+        'modèle IA utilisé',
+        max_length=80,
+        blank=True,
+        default='',
+    )
+    confiance = models.FloatField(
+        'indice de confiance (0-1)',
+        default=1.0,
+    )
+    divergence = models.BooleanField(
+        'divergence entre règles et IA (à vérifier)',
+        default=False,
+    )
+    donnees_hash = models.CharField(
+        'empreinte des variables d’entrée',
+        max_length=64,
+        db_index=True,
+    )
+    duree_ms = models.PositiveIntegerField(
+        'durée de calcul / appel (ms)',
+        default=0,
+    )
+    date_analyse = models.DateTimeField(
+        'date de l’analyse',
+        default=timezone.now,
+        db_index=True,
+    )
+
+    class Meta:
+        ordering = ['-date_analyse', '-pk']
+        verbose_name = 'analyse du risque'
+        verbose_name_plural = 'analyses du risque'
+        indexes = [
+            models.Index(fields=['vehicule', '-date_analyse']),
+            models.Index(fields=['vehicule', 'donnees_hash']),
+        ]
+
+    def __str__(self):
+        return f"Analyse {self.vehicule.immatriculation} : {self.get_niveau_display()} ({self.score}/100) [{self.source}]"
+

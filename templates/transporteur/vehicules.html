@@ -11,7 +11,10 @@
   <div>
     <div class="portal-eyebrow">Espace transporteur</div>
     <h1 class="portal-page-title">Véhicules & disponibilités</h1>
-    <p class="portal-page-subtitle">Organisez votre flotte et vos créneaux disponibles.</p>
+    <p class="portal-page-subtitle">Organisez votre flotte, vos créneaux disponibles et vos maintenances.</p>
+  </div>
+  <div class="portal-header-actions">
+    <a class="btn-secondary" href="{% url 'transporteur:maintenances' %}">🔧 Maintenances planifiées</a>
   </div>
 </div>
 
@@ -34,7 +37,7 @@
   </form>
   <div class="portal-table-wrap">
     <table class="portal-table">
-      <thead><tr><th>Véhicule</th><th>Immatriculation</th><th>Type</th><th>Capacités</th><th>État</th><th>Actions</th></tr></thead>
+      <thead><tr><th>Véhicule</th><th>Immatriculation</th><th>Type</th><th>Capacités</th><th>État</th><th>Risque indicatif</th><th>Actions</th></tr></thead>
       <tbody>
         {% for vehicle in vehicles %}
           <tr>
@@ -43,10 +46,25 @@
             <td>{{ vehicle.get_type_vehicule_display }}</td>
             <td>{{ vehicle.capacite_poids_kg }} kg · {{ vehicle.capacite_volume_m3 }} m³</td>
             <td><span class="badge {% if vehicle.statut == 'actif' %}badge-success{% elif vehicle.statut == 'en_maintenance' %}badge-warning{% else %}badge-muted{% endif %}">{{ vehicle.get_statut_display }}</span></td>
+            <td>
+              {% with derniere=vehicle.analyses_recentes.0 %}
+                {% if derniere %}
+                  {% if derniere.niveau == 'faible' %}
+                    <span class="badge" style="background-color:#dcfce7; color:#166534;" title="Score : {{ derniere.score }}/100 - {{ derniere.date_analyse|date:'d/m/Y' }}">● Faible</span>
+                  {% elif derniere.niveau == 'moyen' %}
+                    <span class="badge" style="background-color:#fef3c7; color:#92400e;" title="Score : {{ derniere.score }}/100 - {{ derniere.date_analyse|date:'d/m/Y' }}">▲ Modéré</span>
+                  {% else %}
+                    <span class="badge" style="background-color:#fee2e2; color:#991b1b; font-weight:600;" title="Score : {{ derniere.score }}/100 - {{ derniere.date_analyse|date:'d/m/Y' }}">⚠️ Élevé</span>
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted" style="font-size:0.8rem;">Non analysé</span>
+                {% endif %}
+              {% endwith %}
+            </td>
             <td class="table-actions"><a href="{% url 'transporteur:vehicule_detail' vehicle.pk %}">Détails</a><a href="{% url 'transporteur:vehicule_update' vehicle.pk %}">Modifier</a><form class="delete-form" method="post" action="{% url 'transporteur:vehicule_delete' vehicle.pk %}" data-confirm-delete="Supprimer ce véhicule ? Cette action est irréversible."><button class="danger-link" type="submit">Supprimer</button>{% csrf_token %}</form></td>
           </tr>
         {% empty %}
-          <tr><td colspan="6"><div class="empty-module-state">Aucun véhicule enregistré. Ajoutez votre premier véhicule pour définir une disponibilité.</div></td></tr>
+          <tr><td colspan="7"><div class="empty-module-state">Aucun véhicule enregistré. Ajoutez votre premier véhicule pour définir une disponibilité.</div></td></tr>
         {% endfor %}
       </tbody>
     </table>

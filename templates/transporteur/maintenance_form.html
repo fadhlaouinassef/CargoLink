@@ -1,0 +1,36 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Modifier la maintenance | CargoLink{% endblock %}
+{% block breadcrumb %}Modifier maintenance{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Maintenances</div>
+    <h1 class="portal-page-title">Modifier la maintenance</h1>
+    <p class="portal-page-subtitle">{{ maintenance.vehicule.immatriculation }} — {{ maintenance.get_motif_display }}</p>
+  </div>
+  <div class="portal-header-actions">
+    <a class="btn-secondary" href="{% url 'transporteur:maintenances' %}">← Annuler et retourner</a>
+  </div>
+</div>
+
+<section class="portal-card">
+  <form method="post" action="{% url 'transporteur:maintenance_update' maintenance.pk %}">
+    {% csrf_token %}
+    {% include 'transporteur/includes/form_errors.html' with form=form %}
+    <div class="form-grid-2">
+      {% for field in form %}
+        <label class="portal-form-group">
+          <span class="portal-label">{{ field.label }}{% if field.field.required %} *{% endif %}</span>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {% for error in field.errors %}
+            <span class="field-error" role="alert">{{ error }}</span>
+          {% endfor %}
+        </label>
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn-primary">Enregistrer les modifications</button>
+  </form>
+</section>
+{% endblock %}

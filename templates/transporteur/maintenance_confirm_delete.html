@@ -1,0 +1,16 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Supprimer une maintenance | CargoLink{% endblock %}
+{% block breadcrumb %}Supprimer une maintenance{% endblock %}
+{% block content %}
+<section class="portal-card confirmation-card">
+  <div class="portal-eyebrow">Confirmation</div>
+  <h1 class="portal-page-title">Supprimer la maintenance ?</h1>
+  <p>Vous êtes sur le point de supprimer la maintenance planifiée pour le véhicule <strong>{{ object.vehicule }}</strong> (du {{ object.date_debut|date:"d/m/Y H:i" }} au {{ object.date_fin|date:"d/m/Y H:i" }}).</p>
+  <p class="text-muted">Seules les maintenances planifiées peuvent être supprimées. Une maintenance terminée ou en cours ne peut être supprimée.</p>
+  <form method="post" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+    {% csrf_token %}
+    <button class="btn-danger" type="submit">Confirmer la suppression</button>
+    <a class="btn-secondary" href="{% url 'transporteur:maintenance_detail' object.pk %}">Annuler</a>
+  </form>
+</section>
+{% endblock %}
