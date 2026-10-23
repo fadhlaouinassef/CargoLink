@@ -68,17 +68,21 @@
     list.append(item);
   }
 
-  function renderOffer(offer, index, csrfToken) {
-    const card = node('article', `received-offer ranking-offer${index === 0 ? ' ranking-offer-best' : ''}`);
+  function renderOffer(offer, index, csrfToken, ranked = true) {
+    const card = node('article', `received-offer ranking-offer${ranked && index === 0 ? ' ranking-offer-best' : ''}`);
     const heading = node('div', 'received-offer-heading');
     const identity = node('div', 'ranking-offer-identity');
     identity.append(node('strong', '', offer.transporteur.nom || 'Transporteur'));
-    if (index === 0) identity.append(node('span', 'matching-best-badge', 'Meilleur score de matching'));
+    if (ranked && index === 0) identity.append(node('span', 'matching-best-badge', 'Meilleur score de matching'));
     heading.append(identity, node('strong', 'ranking-price', `${Number(offer.prix).toLocaleString('fr-FR')} TND`));
     card.append(heading);
 
-    const ranking = node('p', 'ranking-score', `Rang ${offer.rang} · Score de classement : ${offer.score}`);
-    card.append(ranking);
+    if (ranked) {
+      const ranking = node('p', 'ranking-score', `Rang ${offer.rang} · Score de classement : ${offer.score}`);
+      card.append(ranking);
+    } else {
+      card.append(node('p', 'ranking-score', 'Offre à comparer sans classement automatique.'));
+    }
 
     const details = node('ul', 'ranking-details');
     const vehicle = offer.details_vehicule
@@ -92,8 +96,10 @@
       `${formattedCalendarDate(offer.demande_date_depart)} – ${formattedCalendarDate(offer.demande_date_limite)}`);
     card.append(details);
 
-    const status = node('p', 'module-small', `Transporteur : ${offer.transporteur.note}/5 (${offer.transporteur.nombre_avis} avis)`);
-    card.append(status);
+    if (offer.transporteur.note !== null && offer.transporteur.note !== undefined) {
+      const status = node('p', 'module-small', `Transporteur : ${offer.transporteur.note}/5 (${offer.transporteur.nombre_avis} avis)`);
+      card.append(status);
+    }
 
     if (offer.url_accepter) {
       const form = document.createElement('form');
@@ -159,6 +165,13 @@
           offer.demande_date_depart = data.demande.date_depart;
           offer.demande_date_limite = data.demande.date_limite;
           state.append(renderOffer(offer, index, root.querySelector('[name="csrfmiddlewaretoken"]')?.value || ''));
+        });
+      } else if (data.statut === 'modele_indisponible') {
+        stateMessage(state, `${data.message} Les offres ci-dessous ne sont pas classées.`);
+        (data.offres_secours || []).forEach((offer, index) => {
+          offer.demande_date_depart = data.demande.date_depart;
+          offer.demande_date_limite = data.demande.date_limite;
+          state.append(renderOffer(offer, index, root.querySelector('[name="csrfmiddlewaretoken"]')?.value || '', false));
         });
       } else {
         stateMessage(state, data.message);

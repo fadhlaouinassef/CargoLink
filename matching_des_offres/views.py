@@ -141,6 +141,28 @@ def _offre_ecartee(resultat):
     return {**_identite(resultat.offre), 'motifs': resultat.motifs_rejet}
 
 
+def _offre_sans_classement(offre, vehicules, demande, peut_accepter):
+    """Données de comparaison non classées si le bundle de matching est indisponible."""
+    donnees = _identite(offre)
+    vehicule = vehicules.get(offre.trajet.vehicule)
+    donnees['transporteur'].update({'note': None, 'nombre_avis': None})
+    donnees.update({
+        'details_vehicule': {
+            'description': f'{vehicule.marque} {vehicule.modele}',
+            'type': vehicule.get_type_vehicule_display(),
+        } if vehicule else None,
+        'rang': None,
+        'score': None,
+        'criteres': [],
+        'motifs': [],
+        'url_accepter': (
+            reverse('pme:accepter_offre', args=[demande.pk, offre.pk])
+            if peut_accepter and offre.statut == OffreTransport.Statut.EN_ATTENTE else None
+        ),
+    })
+    return donnees
+
+
 @never_cache
 @require_GET
 def offres_classees(request, pk):
@@ -168,7 +190,20 @@ def offres_classees(request, pk):
         resultat = services.evaluate_and_rank_offres(demande, offres)
     except Exception:  # fichier absent ou illisible, bibliothèque manquante, version incompatible…
         logger.exception("Classement des offres indisponible pour la demande %s", demande.pk)
-        return _reponse('modele_indisponible', demande, http=503)
+        vehicules = {
+            vehicule.immatriculation: vehicule
+            for vehicule in Vehicule.objects.filter(
+                immatriculation__in={offre.trajet.vehicule for offre in offres}
+            )
+        }
+        peut_accepter = (
+            demande.statut == DemandeTransport.Statut.OUVERTE
+            and not any(offre.statut == OffreTransport.Statut.ACCEPTEE for offre in offres)
+        )
+        return _reponse(
+            'modele_indisponible', demande,
+            offres_secours=[_offre_sans_classement(o, vehicules, demande, peut_accepter) for o in offres],
+        )
 
     vehicules = {
         vehicule.immatriculation: vehicule

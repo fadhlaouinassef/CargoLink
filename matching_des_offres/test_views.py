@@ -244,7 +244,9 @@ class SituationsParticulieresTests(BaseEndpointTests):
     def verifier_modele_indisponible(self):
         with self.assertLogs('matching_des_offres.views', level='ERROR'):
             response, donnees = self.charger()
-        self.assertEqual((response.status_code, donnees['statut']), (503, 'modele_indisponible'))
+        self.assertEqual((response.status_code, donnees['statut']), (200, 'modele_indisponible'))
+        self.assertEqual(len(donnees['offres_secours']), 1)
+        self.assertIsNone(donnees['offres_secours'][0]['score'])
         self.assertEqual(donnees['offres'], [])
         corps = response.content.decode()
         for detail_technique in ('Traceback', 'FileNotFoundError', 'joblib', 'artifacts', 'sklearn'):

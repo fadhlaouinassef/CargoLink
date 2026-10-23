@@ -1,0 +1,215 @@
+{
+  "selected_model": "logistic_C_0.1",
+  "seed": 42,
+  "selection_objective": "Précision maximale sur validation, rappel >= min_validation_recall ; départage Precision@3 puis F1",
+  "min_validation_recall": 0.5,
+  "threshold": 0.5465432739347147,
+  "test_at_threshold_0_5": {
+    "accuracy": 0.7373974208675264,
+    "precision": 0.7030075187969925,
+    "recall": 0.5632530120481928,
+    "f1": 0.6254180602006689,
+    "roc_auc": 0.786670675022547,
+    "precision_at_3": 0.4467787114845938,
+    "threshold": 0.5,
+    "predicted_positive": 266,
+    "demandes_avec_candidats": 238,
+    "offres_admissibles": 853
+  },
+  "previous_method_model": "logistic_regression",
+  "previous_method_test": {
+    "accuracy": 0.7362250879249707,
+    "precision": 0.6988847583643123,
+    "recall": 0.5662650602409639,
+    "f1": 0.6256239600665557,
+    "roc_auc": 0.7857514511019125,
+    "precision_at_3": 0.44817927170868344,
+    "threshold": 0.5,
+    "predicted_positive": 269,
+    "demandes_avec_candidats": 238,
+    "offres_admissibles": 853
+  },
+  "delta_precision_previous_method": 0.04550986046976846,
+  "data_sha256": "7eff6a6783a96501c0f55aa153efaafd3c8754c42e4718455f3f2bda62a1643c",
+  "provenance": "Détails dans data_provenance ; le CSV d'expéditions ne fournit pas de labels de pertinence.",
+  "versions": {
+    "python": "3.13.7",
+    "sklearn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "joblib": "1.6.0"
+  },
+  "features": [
+    "ratio_prix_budget",
+    "budget_absent",
+    "ecart_horaire_heures",
+    "detour_km",
+    "ratio_poids",
+    "ratio_volume",
+    "note_transporteur",
+    "nombre_avis",
+    "type_vehicule",
+    "categorie_marchandise"
+  ],
+  "validation": {
+    "baseline": {
+      "accuracy": 0.5471478463329453,
+      "precision": 0.46534653465346537,
+      "recall": 0.9676470588235294,
+      "f1": 0.6284622731614136,
+      "roc_auc": 0.8056386716536325,
+      "precision_at_3": 0.46241134751773044,
+      "threshold": 0.5,
+      "predicted_positive": 707,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "logistic_regression": {
+      "accuracy": 0.7392316647264261,
+      "precision": 0.7589285714285714,
+      "recall": 0.5,
+      "f1": 0.6028368794326241,
+      "roc_auc": 0.808766859344894,
+      "precision_at_3": 0.46382978723404256,
+      "threshold": 0.5573635018428105,
+      "predicted_positive": 224,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "random_forest": {
+      "accuracy": 0.729918509895227,
+      "precision": 0.7327586206896551,
+      "recall": 0.5,
+      "f1": 0.5944055944055944,
+      "roc_auc": 0.7899127280970191,
+      "precision_at_3": 0.4567375886524823,
+      "threshold": 0.4951093350616057,
+      "predicted_positive": 232,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "logistic_C_0.1": {
+      "accuracy": 0.740395809080326,
+      "precision": 0.76,
+      "recall": 0.5029411764705882,
+      "f1": 0.6053097345132743,
+      "roc_auc": 0.8090615436926216,
+      "precision_at_3": 0.46382978723404256,
+      "threshold": 0.5465432739347147,
+      "predicted_positive": 225,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "logistic_C_10": {
+      "accuracy": 0.7392316647264261,
+      "precision": 0.7589285714285714,
+      "recall": 0.5,
+      "f1": 0.6028368794326241,
+      "roc_auc": 0.8086648532245269,
+      "precision_at_3": 0.46382978723404256,
+      "threshold": 0.5580586932718296,
+      "predicted_positive": 224,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "random_forest_leaf_12": {
+      "accuracy": 0.7357392316647264,
+      "precision": 0.748898678414097,
+      "recall": 0.5,
+      "f1": 0.599647266313933,
+      "roc_auc": 0.7944916695001698,
+      "precision_at_3": 0.4581560283687943,
+      "threshold": 0.4995348439605321,
+      "predicted_positive": 227,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "random_forest_leaf_24": {
+      "accuracy": 0.7392316647264261,
+      "precision": 0.7589285714285714,
+      "recall": 0.5,
+      "f1": 0.6028368794326241,
+      "roc_auc": 0.7945426725603536,
+      "precision_at_3": 0.4652482269503546,
+      "threshold": 0.4844123670924729,
+      "predicted_positive": 224,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "hist_gradient_boosting_7": {
+      "accuracy": 0.7264260768335273,
+      "precision": 0.7196652719665272,
+      "recall": 0.5058823529411764,
+      "f1": 0.5941278065630398,
+      "roc_auc": 0.7910971324946163,
+      "precision_at_3": 0.4595744680851064,
+      "threshold": 0.5179023783642872,
+      "predicted_positive": 239,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    },
+    "hist_gradient_boosting_15": {
+      "accuracy": 0.719441210710128,
+      "precision": 0.6987951807228916,
+      "recall": 0.5117647058823529,
+      "f1": 0.5908319185059423,
+      "roc_auc": 0.7806868412104726,
+      "precision_at_3": 0.4539007092198582,
+      "threshold": 0.5194121327515894,
+      "predicted_positive": 249,
+      "demandes_avec_candidats": 235,
+      "offres_admissibles": 859
+    }
+  },
+  "test": {
+    "accuracy": 0.738569753810082,
+    "precision": 0.7443946188340808,
+    "recall": 0.5,
+    "f1": 0.5981981981981982,
+    "roc_auc": 0.786670675022547,
+    "precision_at_3": 0.4467787114845938,
+    "threshold": 0.5465432739347147,
+    "predicted_positive": 223,
+    "demandes_avec_candidats": 238,
+    "offres_admissibles": 853
+  },
+  "baseline_test": {
+    "accuracy": 0.5427901524032825,
+    "precision": 0.4578488372093023,
+    "recall": 0.9487951807228916,
+    "f1": 0.6176470588235294,
+    "roc_auc": 0.790434289942881,
+    "precision_at_3": 0.45238095238095233,
+    "threshold": 0.5,
+    "predicted_positive": 688,
+    "demandes_avec_candidats": 238,
+    "offres_admissibles": 853
+  },
+  "delta_precision_at_3": -0.0056022408963585235,
+  "split": {
+    "train": {
+      "demandes": 720,
+      "offres_total": 4622,
+      "offres_admissibles": 2530
+    },
+    "validation": {
+      "demandes": 240,
+      "offres_total": 1550,
+      "offres_admissibles": 859
+    },
+    "test": {
+      "demandes": 240,
+      "offres_total": 1566,
+      "offres_admissibles": 853
+    }
+  },
+  "group_overlap": 0,
+  "data_provenance": {
+    "synthetic": true,
+    "labels_synthetic": true,
+    "seed": 42,
+    "requests": 1200,
+    "rows": 7738,
+    "labels": "Utilité simulée bruitée, sans décisions utilisateur réelles"
+  }
+}

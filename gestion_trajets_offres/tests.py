@@ -1,4 +1,6 @@
 from datetime import timedelta
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
@@ -246,6 +248,24 @@ class GestionTrajetsTests(TestCase):
         self.assertIn('data-ranking-url=', popup)
         self.assertIn('Chargement du classement des offres', popup)
 
+    def test_model_failure_returns_manual_comparison_without_score(self):
+        offre = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
+        )
+        self.client.force_login(self.pme)
+        fake_service = SimpleNamespace(evaluate_and_rank_offres=Mock(side_effect=RuntimeError('model unavailable')))
+        with patch.dict('sys.modules', {'matching_des_offres.services': fake_service}):
+            response = self.client.get(reverse('pme:offres_classees', args=[self.demande.pk]))
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['statut'], 'modele_indisponible')
+        self.assertEqual(len(data['offres_secours']), 1)
+        fallback = data['offres_secours'][0]
+        self.assertIsNone(fallback['score'])
+        self.assertIsNone(fallback['rang'])
+        self.assertTrue(fallback['url_accepter'].endswith(f'/offres/{offre.pk}/accepter/'))
+
     def test_session_owner_can_read_their_demand_offers(self):
         self.client.logout()
         session = self.client.session
@@ -301,3 +321,59 @@ class GestionTrajetsTests(TestCase):
         self.assertEqual(self.client.post(url).status_code, 409)
         offre.refresh_from_db()
         self.assertEqual(offre.statut, OffreTransport.Statut.EN_ATTENTE)
+
+    def test_accept_offer_rechecks_route_vehicle_and_capacities(self):
+        offre = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
+        )
+        self.client.force_login(self.pme)
+        url = reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk])
+
+        self.vehicule.capacite_poids_kg = 50
+        self.vehicule.save()
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 409)
+        offre.refresh_from_db()
+        self.assertEqual(offre.statut, OffreTransport.Statut.EN_ATTENTE)
+
+        self.vehicule.capacite_poids_kg = 1000
+        self.vehicule.save()
+        self.trajet.statut = Trajet.Statut.ANNULE
+        self.trajet.save()
+        self.assertEqual(self.client.post(url).status_code, 409)
+        offre.refresh_from_db()
+        self.assertEqual(offre.statut, OffreTransport.Statut.EN_ATTENTE)
+
+    def test_accept_offer_rejects_vehicle_unavailability_and_duplicate_booking(self):
+        from vehicules.models import Disponibilite
+
+        unavailable_offer = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
+        )
+        Disponibilite.objects.create(
+            vehicule=self.vehicule,
+            date_debut=self.depart.replace(hour=0, minute=0),
+            date_fin=self.depart.replace(hour=0, minute=0) + timedelta(days=1),
+            zone_depart='Tunis', zone_arrivee='Sfax', statut=Disponibilite.Statut.INDISPONIBLE,
+        )
+        self.client.force_login(self.pme)
+        url = reverse('pme:accepter_offre', args=[self.demande.pk, unavailable_offer.pk])
+        self.assertEqual(self.client.post(url).status_code, 409)
+        unavailable_offer.refresh_from_db()
+        self.assertEqual(unavailable_offer.statut, OffreTransport.Statut.EN_ATTENTE)
+
+        # Le même véhicule ne peut pas être confirmé deux fois sur sa journée de départ.
+        Disponibilite.objects.all().delete()
+        booked_demand = DemandeTransport.objects.create(
+            created_by=self.pme, depart_ville='Tunis', depart_adresse='A',
+            arrivee_ville='Sfax', arrivee_adresse='B',
+            date_depart=self.depart.date(), date_limite=self.depart.date() + timedelta(days=2),
+            destinataire_nom='Client', destinataire_contact='Contact', destinataire_tel='12345678',
+        )
+        Marchandise.objects.create(demande=booked_demand, description='Palette', poids=100, volume=2)
+        booked_offer = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=booked_demand, trajet=self.trajet,
+            prix=200, statut=OffreTransport.Statut.ACCEPTEE,
+        )
+        self.assertEqual(booked_offer.statut, OffreTransport.Statut.ACCEPTEE)
+        self.assertEqual(self.client.post(url).status_code, 409)
