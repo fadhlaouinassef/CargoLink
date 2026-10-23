@@ -54,6 +54,9 @@ class MatchingResult:
     type_vehicule: str
     categorie_marchandise: str
     rang: Optional[int] = None
+    # Vrai quand une donnée indispensable manque (aucune marchandise, volume non renseigné) :
+    # l'offre n'est alors ni classée ni jugée incompatible, elle n'est « pas évaluable ».
+    donnees_insuffisantes: bool = False
 
 
 def get_matching_bundle(model_path: Optional[Path] = None) -> Dict[str, Any]:
@@ -249,15 +252,31 @@ def evaluate_and_rank_offres(demande, offres: Optional[List[Any]] = None) -> Dic
                 nombre_avis=0,
                 type_vehicule="inconnu",
                 categorie_marchandise="inconnu",
+                donnees_insuffisantes=True,
             ))
             continue
 
-        # Si le volume de la marchandise n'est pas renseigné, on utilise une valeur par défaut de sécurité
-        # sans inventer : si manquant, le ratio volume utilise une estimation proportionnelle minimale
-        donnees_completes = (row["volume_m3"] is not None)
+        # Volume non renseigné : on n'invente aucune valeur. La capacité en volume ne peut pas être
+        # vérifiée, l'offre n'est donc pas évaluable (elle n'est ni classée, ni déclarée incompatible).
+        donnees_completes = True
         if row["volume_m3"] is None:
-            # Pour ne pas bloquer l'appel du modèle, on lui assigne 0.01 si la capacité est suffisante
-            row["volume_m3"] = 0.01
+            exclues_results.append(MatchingResult(
+                offre_id=offre.pk,
+                offre=offre,
+                score=0.0,
+                pertinent_predit=False,
+                rejetee=True,
+                motifs_rejet=["Volume des marchandises non renseigné : capacité en volume impossible à vérifier"],
+                criteres_verifies=[],
+                depasse_budget=False,
+                donnees_completes=False,
+                note_transporteur=row["note_transporteur"],
+                nombre_avis=row["nombre_avis"],
+                type_vehicule=row["type_vehicule"],
+                categorie_marchandise=row["categorie_marchandise"],
+                donnees_insuffisantes=True,
+            ))
+            continue
 
         # Vérification des contraintes métier dures
         motifs = rejection_reasons(row)
