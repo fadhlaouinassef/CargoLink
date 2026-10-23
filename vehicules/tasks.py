@@ -27,7 +27,10 @@ except ImportError:
         bind = kwargs.get('bind', False)
         def decorator(func):
             def delay(*fargs, **fkwargs):
-                mock_self = MagicMock() if 'MagicMock' in globals() else object()
+                class _MockSelf:
+                    request = type('_Req', (), {'id': 'mock-task-id', 'retries': 0})()
+                    def retry(self, *a, **kw): pass
+                mock_self = _MockSelf()
                 res = func(mock_self, *fargs, **fkwargs) if bind else func(*fargs, **fkwargs)
                 return _MockTaskResult(res)
             func.delay = delay
