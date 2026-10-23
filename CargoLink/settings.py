@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'vehicules',
     'demandes.apps.DemandesConfig',
     'gestion_trajets_offres.apps.GestionTrajetsOffresConfig',
+    'suivi_transport.apps.SuiviTransportConfig',
     'avis_reclamations.apps.AvisReclamationsConfig',
 ]
 

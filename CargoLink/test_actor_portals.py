@@ -20,10 +20,17 @@ class ActorPortalsTests(TestCase):
                 response = self.client.get(reverse(f'transporteur:{page}'))
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(response, 'Espace transporteur')
-                if page != 'vehicules':
+                if page not in ('vehicules', 'transports'):
                     self.assertContains(response, 'Données fictives')
 
     def test_pme_portal_urls(self):
+        pme = User.objects.create_user(
+            email='portal-pme@example.com',
+            password='Strong-password-872!',
+            full_name='PME Portal',
+            role=User.Role.PME,
+        )
+        self.client.force_login(pme)
         urls = [
             'pme:dashboard',
             'pme:demandes_list',

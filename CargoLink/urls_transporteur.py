@@ -16,10 +16,18 @@ from vehicules.views import (
     VehiculeUpdateView,
 )
 from vehicules.ia_views import AssistantDisponibiliteIAView
+from suivi_transport import views as suivi_views
 
 app_name = 'transporteur'
 
-urlpatterns = trajet_urls + [
+urlpatterns = [
+    path('transports/', suivi_views.transporteur_list, name='transports'),
+    path('transports/<int:pk>/', suivi_views.transporteur_detail, name='transport_detail'),
+    path('transports/<int:pk>/evenement/', suivi_views.ajouter_evenement, name='transport_evenement'),
+    path('transports/<int:pk>/evenement/<int:event_pk>/modifier/', suivi_views.modifier_evenement, name='transport_evenement_edit'),
+    path('transports/<int:pk>/evenement/<int:event_pk>/supprimer/', suivi_views.supprimer_evenement, name='transport_evenement_delete'),
+    path('transports/<int:pk>/supprimer/', suivi_views.supprimer_transport, name='transport_delete'),
+] + [url for url in trajet_urls if url.name != 'transports'] + [
     path(
         '',
         transporteur_required(TemplateView.as_view(

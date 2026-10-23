@@ -1,0 +1,103 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Suivi des transports | CargoLink{% endblock %}
+{% block breadcrumb %}Suivi des transports{% endblock %}
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace transporteur</div>
+    <h1 class="portal-page-title">Suivi des transports</h1>
+    <p class="portal-page-subtitle">
+      Consultez vos transports confirmés et publiez les étapes de leur acheminement.
+    </p>
+  </div>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Transports confirmés</h2>
+  </div>
+  <p class="portal-input-hint">Le <strong>Trajet</strong> décrit la tournée publiée ; le <strong>Transport</strong> décrit l’acheminement de cette offre acceptée.</p>
+  {% if transports %}
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Transport</th>
+          <th>Trajet / Client</th>
+          <th>Date de départ</th>
+          <th>Statut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transport in transports %}
+        <tr>
+          <td><strong>{{ transport }}</strong></td>
+          <td>
+            {{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}<br>
+            <small class="module-small">{{ transport.demande.created_by.full_name|default:'Client CargoLink' }}</small>
+          </td>
+          <td>{{ transport.trajet.date_depart|date:'d/m/Y H:i' }}</td>
+          <td>
+            <span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span>
+          </td>
+          <td>
+            <a class="btn-secondary" href="{% url 'transporteur:transport_detail' transport.pk %}">Gérer le suivi</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Aucun transport confirmé pour le moment. Les offres acceptées apparaîtront ici.</p>
+  {% endif %}
+</section>
+
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Mes trajets à suivre</h2>
+  </div>
+  {% if trajets %}
+  <div class="portal-table-wrap" tabindex="0" aria-label="Suivi des trajets, défilement horizontal possible">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Trajet / Véhicule</th>
+          <th>Départ prévu</th>
+          <th>Demandes associées</th>
+          <th>État du trajet</th>
+          <th>Dernière mise à jour</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trajet in trajets %}
+        <tr>
+          <td>
+            {{ trajet.depart_ville }} → {{ trajet.arrivee_ville }}
+            <small class="module-small" style="display: block;">{{ trajet.vehicule }}</small>
+          </td>
+          <td>{{ trajet.date_depart|date:"d/m/Y H:i" }}</td>
+          <td>
+            {% for offre in trajet.offres.all %}
+              <small class="module-small" style="display: block;">{{ offre.demande }} · {{ offre.get_statut_display }}</small>
+            {% empty %}
+              <small class="module-small" style="color: var(--muted, #64748b);">Aucune offre associée</small>
+            {% endfor %}
+          </td>
+          <td><span class="badge badge-active">{{ trajet.get_statut_display }}</span></td>
+          <td>{{ trajet.updated_at|date:"d/m/Y H:i" }}</td>
+          <td>
+            <button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:trajet_suivi' trajet.pk %}">Actualiser le suivi</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Aucun trajet à suivre. Publiez un trajet pour commencer.</p>
+  {% endif %}
+</section>
+{% endblock %}

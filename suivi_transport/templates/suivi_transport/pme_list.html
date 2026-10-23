@@ -1,0 +1,60 @@
+{% extends 'pme/base.html' %}
+{% block title %}Suivi des transports | CargoLink{% endblock %}
+{% block breadcrumb %}Suivi des transports{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Espace PME</div>
+    <h1 class="portal-page-title">Suivi des transports</h1>
+    <p class="portal-page-subtitle">
+      Suivez l’acheminement de vos marchandises en temps réel et confirmez leur bonne réception.
+    </p>
+  </div>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Mes transports confirmés</h2>
+  </div>
+  {% if transports %}
+  <div class="portal-table-wrap" tabindex="0" aria-label="Liste de mes transports">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>Transport</th>
+          <th>Trajet & Départ</th>
+          <th>Transporteur</th>
+          <th>Statut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transport in transports %}
+        <tr>
+          <td><strong>{{ transport }}</strong></td>
+          <td>
+            <strong>{{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}</strong>
+            <small class="module-small" style="display: block; color: var(--muted, #64748b);">
+              Départ : {{ transport.trajet.date_depart|date:"d/m/Y H:i" }}
+            </small>
+          </td>
+          <td>{{ transport.transporteur.full_name|default:transport.transporteur.email }}</td>
+          <td>
+            <span class="badge {{ transport.badge_class }}">
+              {{ transport.get_statut_display }}
+            </span>
+          </td>
+          <td>
+            <a class="btn-secondary" href="{% url 'pme:transport_detail' transport.pk %}">Voir le suivi</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Aucun transport confirmé pour le moment. Dès qu'une offre de transporteur est acceptée, le transport apparaît ici.</p>
+  {% endif %}
+</section>
+{% endblock %}
