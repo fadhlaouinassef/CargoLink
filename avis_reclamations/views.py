@@ -96,13 +96,17 @@ class Portail:
     url_create: str
     url_list: str
     url_detail: str
+    url_update: str
+    url_delete: str
 
 
 PORTAILS = {
     'pme': Portail(User.Role.PME, 'pme/base.html', 'reclamation_create',
-                   'pme:reclamation_create', 'pme:reclamation_list', 'pme:reclamation_detail'),
+                   'pme:reclamation_create', 'pme:reclamation_list', 'pme:reclamation_detail',
+                   'pme:reclamation_update', 'pme:reclamation_delete'),
     'destinataire': Portail(User.Role.DESTINATAIRE, 'destinataire/base.html', 'reclamation',
-                            'destinataire:reclamation', 'destinataire:reclamation_list', 'destinataire:reclamation_detail'),
+                            'destinataire:reclamation', 'destinataire:reclamation_list', 'destinataire:reclamation_detail',
+                            'destinataire:reclamation_update', 'destinataire:reclamation_delete'),
 }
 
 
@@ -120,6 +124,8 @@ def _contexte(portail, active_tab, **extra):
         'url_create': portail.url_create,
         'url_list': portail.url_list,
         'url_detail': portail.url_detail,
+        'url_update': portail.url_update,
+        'url_delete': portail.url_delete,
         **extra,
     }
 
@@ -162,6 +168,60 @@ def reclamation_detail(request, pk):
         request.user.reclamations_deposees.select_related('demande', 'transporteur', 'traitee_par'), pk=pk,
     )
     return render(request, 'avis_reclamations/reclamation_detail.html', _contexte(
+        portail, 'reclamation_list', reclamation=reclamation,
+    ))
+
+
+def _dossier_verrouille(request, portail, reclamation):
+    """Réclamation déjà prise en charge ou clôturée : plus de modification ni de suppression."""
+    messages.error(
+        request,
+        f'La réclamation {reclamation.reference} est en cours de traitement ou clôturée : '
+        'elle ne peut plus être modifiée ni supprimée.',
+    )
+    return redirect(portail.url_detail, pk=reclamation.pk)
+
+
+@role_required(User.Role.PME, User.Role.DESTINATAIRE)
+@require_http_methods(['GET', 'POST'])
+def reclamation_update(request, pk):
+    portail = _portail(request)
+    reclamation = get_object_or_404(request.user.reclamations_deposees.select_related('demande', 'transporteur'), pk=pk)
+    if not reclamation.est_modifiable:
+        return _dossier_verrouille(request, portail, reclamation)
+    form = ReclamationForm(request.POST if request.method == 'POST' else None, instance=reclamation, user=request.user)
+    if request.method == 'POST' and form.is_valid():
+        champs = {nom: form.cleaned_data[nom] for nom in ('motif', 'transporteur', 'description', 'montant_prejudice')}
+        # Mise à jour conditionnelle : si l'administrateur a pris le dossier en charge entre-temps, rien n'est modifié.
+        modifiees = Reclamation.objects.filter(
+            pk=reclamation.pk, auteur=request.user, statut=Reclamation.Statut.OUVERTE,
+        ).update(**champs, updated_at=timezone.now())
+        if not modifiees:
+            return _dossier_verrouille(request, portail, reclamation)
+        messages.success(request, f'Votre réclamation {reclamation.reference} a été modifiée.')
+        return redirect(portail.url_detail, pk=reclamation.pk)
+    return render(request, 'avis_reclamations/reclamation_form.html', _contexte(
+        portail, 'reclamation_list', form=form, reclamation=reclamation, modification=True,
+    ))
+
+
+@role_required(User.Role.PME, User.Role.DESTINATAIRE)
+@require_http_methods(['GET', 'POST'])
+def reclamation_delete(request, pk):
+    portail = _portail(request)
+    reclamation = get_object_or_404(request.user.reclamations_deposees.select_related('demande'), pk=pk)
+    if not reclamation.est_modifiable:
+        return _dossier_verrouille(request, portail, reclamation)
+    if request.method == 'POST':
+        # Suppression conditionnelle : impossible si l'administrateur a pris le dossier en charge entre-temps.
+        supprimees, _ = Reclamation.objects.filter(
+            pk=reclamation.pk, auteur=request.user, statut=Reclamation.Statut.OUVERTE,
+        ).delete()
+        if not supprimees:
+            return _dossier_verrouille(request, portail, reclamation)
+        messages.success(request, f'La réclamation {reclamation.reference} a été supprimée.')
+        return redirect(portail.url_list)
+    return render(request, 'avis_reclamations/reclamation_confirm_delete.html', _contexte(
         portail, 'reclamation_list', reclamation=reclamation,
     ))
 
