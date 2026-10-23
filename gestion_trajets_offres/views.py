@@ -106,11 +106,8 @@ def demande_offres(request, pk):
 
 
 def _offres_popup(request, demande):
-    offres = demande.offres_transport.select_related('transporteur', 'trajet')
     html = render_to_string('gestion_trajets_offres/demande_offres.html', {
-        'demande': demande, 'offres': offres,
-        'peut_accepter': demande.statut == DemandeTransport.Statut.OUVERTE
-        and not offres.filter(statut=OffreTransport.Statut.ACCEPTEE).exists(),
+        'demande': demande,
     }, request=request)
     return JsonResponse({'html': html})
 

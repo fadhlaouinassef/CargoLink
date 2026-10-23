@@ -53,6 +53,8 @@ def _reponse(statut, demande, http=200, **contenu):
             'reference': str(demande),
             'depart': demande.depart_ville,
             'arrivee': demande.arrivee_ville,
+            'date_depart': demande.date_depart.isoformat(),
+            'date_limite': demande.date_limite.isoformat(),
             'budget': float(demande.budget) if demande.budget is not None else None,
         },
         'avertissement': AVERTISSEMENT_SCORE,
@@ -74,6 +76,11 @@ def _identite(offre):
             'depart': trajet.depart_ville,
             'arrivee': trajet.arrivee_ville,
             'date_depart': trajet.date_depart.isoformat(),
+        },
+        'vehicule_reference': trajet.vehicule,
+        'capacites': {
+            'poids_kg': float(trajet.capacite_kg),
+            'volume_m3': float(trajet.volume_m3),
         },
         'statut_offre': offre.statut,
     }
@@ -104,9 +111,10 @@ def _criteres(resultat, demande, vehicule_reference):
     ]
 
 
-def _offre_classee(resultat, demande, vehicules_references, peut_accepter):
+def _offre_classee(resultat, demande, vehicules, peut_accepter):
     offre = resultat.offre
-    vehicule_reference = offre.trajet.vehicule in vehicules_references
+    vehicule = vehicules.get(offre.trajet.vehicule)
+    vehicule_reference = vehicule is not None
     donnees = _identite(offre)
     donnees['transporteur'].update({'note': resultat.note_transporteur, 'nombre_avis': resultat.nombre_avis})
     donnees.update({
@@ -116,6 +124,10 @@ def _offre_classee(resultat, demande, vehicules_references, peut_accepter):
         'depasse_budget': resultat.depasse_budget,
         # Un véhicule hors catalogue reçoit un type par défaut dans le service : on ne l'affiche pas.
         'type_vehicule': resultat.type_vehicule if vehicule_reference else None,
+        'details_vehicule': {
+            'description': f'{vehicule.marque} {vehicule.modele}',
+            'type': vehicule.get_type_vehicule_display(),
+        } if vehicule_reference else None,
         'criteres': _criteres(resultat, demande, vehicule_reference),
         'url_accepter': (
             reverse('pme:accepter_offre', args=[demande.pk, offre.pk])
@@ -158,15 +170,17 @@ def offres_classees(request, pk):
         logger.exception("Classement des offres indisponible pour la demande %s", demande.pk)
         return _reponse('modele_indisponible', demande, http=503)
 
-    vehicules_references = set(
-        Vehicule.objects.filter(immatriculation__in={offre.trajet.vehicule for offre in offres})
-        .values_list('immatriculation', flat=True)
-    )
+    vehicules = {
+        vehicule.immatriculation: vehicule
+        for vehicule in Vehicule.objects.filter(
+            immatriculation__in={offre.trajet.vehicule for offre in offres}
+        )
+    }
     peut_accepter = (
         demande.statut == DemandeTransport.Statut.OUVERTE
         and not any(offre.statut == OffreTransport.Statut.ACCEPTEE for offre in offres)
     )
-    classees = [_offre_classee(r, demande, vehicules_references, peut_accepter) for r in resultat['classement']]
+    classees = [_offre_classee(r, demande, vehicules, peut_accepter) for r in resultat['classement']]
     exclues = [_offre_ecartee(r) for r in resultat['offres_exclues'] if not r.donnees_insuffisantes]
     non_evaluables = [_offre_ecartee(r) for r in resultat['offres_exclues'] if r.donnees_insuffisantes]
 
