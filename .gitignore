@@ -6,3 +6,4 @@ db.sqlite3-journal
 .env
 
 comptes.txt
+etapes_rapport.md
