@@ -65,6 +65,16 @@ class Vehicule(models.Model):
         choices=Statut.choices,
         default=Statut.ACTIF,
     )
+    kilometrage = models.PositiveIntegerField(
+        'kilométrage actuel (km)',
+        blank=True,
+        null=True,
+    )
+    date_releve_km = models.DateField(
+        'date du relevé kilométrique',
+        blank=True,
+        null=True,
+    )
     photo = models.ImageField(
         'photo',
         upload_to='vehicules/',
@@ -237,6 +247,11 @@ class Maintenance(models.Model):
         default=Statut.PLANIFIEE,
     )
     commentaire = models.TextField('commentaire', blank=True)
+    kilometrage_releve = models.PositiveIntegerField(
+        'kilométrage relevé lors de la maintenance (km)',
+        blank=True,
+        null=True,
+    )
     date_creation = models.DateTimeField('date de création', auto_now_add=True)
 
     class Meta:
@@ -328,3 +343,108 @@ class Maintenance(models.Model):
 
     def __str__(self):
         return f'{self.vehicule.immatriculation} — {self.get_motif_display()} ({self.date_debut:%d/%m/%Y})'
+
+
+class AnalyseRisque(models.Model):
+    """Modèle stockant l'analyse du risque de maintenance d'un véhicule.
+
+    Approche hybride : score à règles transparent enrichi par une analyse IA (LLM).
+    Historique complet conservé, horodaté et associé à un hash des variables d'entrée.
+    """
+    class Niveau(models.TextChoices):
+        FAIBLE = 'faible', 'Faible'
+        MOYEN = 'moyen', 'Moyen'
+        ELEVE = 'eleve', 'Élevé'
+
+    class Source(models.TextChoices):
+        IA = 'ia', 'IA (enrichi)'
+        REGLES = 'regles', 'Règles (déterministe)'
+
+    class Urgence(models.TextChoices):
+        IMMEDIATE = 'immediate', 'Immédiate'
+        SOUS_7_JOURS = 'sous_7_jours', 'Sous 7 jours'
+        SOUS_30_JOURS = 'sous_30_jours', 'Sous 30 jours'
+        AUCUNE = 'aucune', 'Aucune'
+
+    vehicule = models.ForeignKey(
+        Vehicule,
+        on_delete=models.CASCADE,
+        related_name='analyses_risque',
+        verbose_name='véhicule',
+    )
+    niveau = models.CharField(
+        'niveau de risque',
+        max_length=15,
+        choices=Niveau.choices,
+    )
+    score = models.PositiveSmallIntegerField(
+        'score de risque (0-100)',
+    )
+    facteurs = models.JSONField(
+        'facteurs explicatifs',
+        default=list,
+    )
+    recommandation = models.TextField(
+        'recommandation indicative',
+        blank=True,
+    )
+    motif_suggere = models.CharField(
+        'motif suggéré de maintenance',
+        max_length=30,
+        choices=Maintenance.Motif.choices,
+        blank=True,
+        null=True,
+    )
+    urgence = models.CharField(
+        'urgence indicative',
+        max_length=20,
+        choices=Urgence.choices,
+        default=Urgence.AUCUNE,
+    )
+    source = models.CharField(
+        'source de l’analyse',
+        max_length=10,
+        choices=Source.choices,
+        default=Source.REGLES,
+    )
+    modele_utilise = models.CharField(
+        'modèle IA utilisé',
+        max_length=80,
+        blank=True,
+        default='',
+    )
+    confiance = models.FloatField(
+        'indice de confiance (0-1)',
+        default=1.0,
+    )
+    divergence = models.BooleanField(
+        'divergence entre règles et IA (à vérifier)',
+        default=False,
+    )
+    donnees_hash = models.CharField(
+        'empreinte des variables d’entrée',
+        max_length=64,
+        db_index=True,
+    )
+    duree_ms = models.PositiveIntegerField(
+        'durée de calcul / appel (ms)',
+        default=0,
+    )
+    date_analyse = models.DateTimeField(
+        'date de l’analyse',
+        default=timezone.now,
+        db_index=True,
+    )
+
+    class Meta:
+        ordering = ['-date_analyse', '-pk']
+        verbose_name = 'analyse du risque'
+        verbose_name_plural = 'analyses du risque'
+        indexes = [
+            models.Index(fields=['vehicule', '-date_analyse']),
+            models.Index(fields=['vehicule', 'donnees_hash']),
+        ]
+
+    def __str__(self):
+        return f"Analyse {self.vehicule.immatriculation} : {self.get_niveau_display()} ({self.score}/100) [{self.source}]"
+

@@ -22,12 +22,22 @@ from vehicules.views import (
     VehiculeDeleteView,
     VehiculeListView,
     VehiculeUpdateView,
+    AnalyserRisqueVehiculeView,
+    StatutTacheRisqueView,
 )
 from vehicules.ia_views import AssistantDisponibiliteIAView
+from suivi_transport import views as suivi_views
 
 app_name = 'transporteur'
 
-urlpatterns = trajet_urls + [
+urlpatterns = [
+    path('transports/', suivi_views.transporteur_list, name='transports'),
+    path('transports/<int:pk>/', suivi_views.transporteur_detail, name='transport_detail'),
+    path('transports/<int:pk>/evenement/', suivi_views.ajouter_evenement, name='transport_evenement'),
+    path('transports/<int:pk>/evenement/<int:event_pk>/modifier/', suivi_views.modifier_evenement, name='transport_evenement_edit'),
+    path('transports/<int:pk>/evenement/<int:event_pk>/supprimer/', suivi_views.supprimer_evenement, name='transport_evenement_delete'),
+    path('transports/<int:pk>/supprimer/', suivi_views.supprimer_transport, name='transport_delete'),
+] + [url for url in trajet_urls if url.name != 'transports'] + [
     path(
         '',
         transporteur_required(TemplateView.as_view(
@@ -41,6 +51,8 @@ urlpatterns = trajet_urls + [
     path('vehicules/<int:pk>/modifier/', VehiculeUpdateView.as_view(), name='vehicule_update'),
     path('vehicules/<int:pk>/', TransporteurVehiculeDetailView.as_view(), name='vehicule_detail'),
     path('vehicules/<int:pk>/supprimer/', VehiculeDeleteView.as_view(), name='vehicule_delete'),
+    path('vehicules/<int:pk>/analyser-risque/', AnalyserRisqueVehiculeView.as_view(), name='vehicule_analyser_risque'),
+    path('taches/risque/<str:task_id>/statut/', StatutTacheRisqueView.as_view(), name='tache_risque_statut'),
     path('disponibilites/nouvelle/', DisponibiliteCreateView.as_view(), name='disponibilite_create'),
     path('disponibilites/<int:pk>/modifier/', DisponibiliteUpdateView.as_view(), name='disponibilite_update'),
     path('disponibilites/<int:pk>/', TransporteurDisponibiliteDetailView.as_view(), name='disponibilite_detail'),

@@ -1,0 +1,96 @@
+{% extends 'pme/base.html' %}
+{% block title %}{{ transport }} · Suivi | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'pme:transports_list' %}">Suivi des transports</a>
+<span>/</span>
+<span class="current">{{ transport }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Suivi de votre envoi</div>
+    <h1 class="portal-page-title">
+      {{ transport }} · {{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}
+    </h1>
+    <p class="portal-page-subtitle">
+      Transporteur : {{ transport.transporteur.full_name|default:transport.transporteur.email }} · départ prévu le {{ transport.trajet.date_depart|date:"d/m/Y à H:i" }}
+    </p>
+  </div>
+  <div>
+    <span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span>
+  </div>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Détails de l’expédition et réception</h2>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Destinataire</span>
+      <strong>{{ transport.demande.destinataire_nom }}</strong>
+      <div style="font-size: 13px; color: var(--muted, #64748b);">{{ transport.demande.destinataire_contact }} · {{ transport.demande.destinataire_tel }}</div>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Lieu de livraison</span>
+      <strong>{{ transport.demande.arrivee_ville }}</strong>
+      <div style="font-size: 13px; color: var(--muted, #64748b);">{{ transport.demande.arrivee_adresse }}</div>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Date prise en charge</span>
+      <strong>{{ transport.date_prise_en_charge|date:"d/m/Y H:i"|default:"À venir" }}</strong>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Date d’arrivée</span>
+      <strong>{{ transport.date_arrivee|date:"d/m/Y H:i"|default:"À venir" }}</strong>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid var(--portal-border, #e2e8f0); padding-top: 1.25rem;">
+    {% if transport.date_confirmation_reception %}
+      <div style="background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 0.85rem 1.2rem; border-radius: 8px; font-weight: 500;">
+        ✓ Réception confirmée le {{ transport.date_confirmation_reception|date:"d/m/Y à H:i" }}
+      </div>
+    {% elif transport.statut == 'arrive' or transport.statut == 'livre' %}
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 1.25rem; border-radius: 8px;">
+        <p style="margin-bottom: 0.75rem; font-weight: 500;">Le transporteur indique que la marchandise est arrivée à destination. Veuillez confirmer la bonne réception :</p>
+        <form method="post" action="{% url 'pme:confirmer_reception' transport.pk %}">
+          {% csrf_token %}
+          <button class="btn-primary" type="submit">Confirmer la réception de la marchandise</button>
+        </form>
+      </div>
+    {% else %}
+      <p class="portal-input-hint" style="color: var(--muted, #64748b); font-size: 14px;">
+        ℹ️ La confirmation de réception sera disponible dès l’arrivée des marchandises à destination.
+      </p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Historique du suivi</h2>
+  </div>
+  <div class="event-log-list">
+    {% for event in transport.evenements.all %}
+    <div class="event-log-item">
+      <div class="event-log-time">
+        {{ event.date_evenement|date:"d/m/Y H:i" }}{% if event.lieu %} · {{ event.lieu }}{% endif %}
+      </div>
+      <div class="event-log-title">
+        {{ event.titre }} · <span class="badge {{ event.badge_class }}">{{ event.get_statut_display }}</span>
+      </div>
+      {% if event.description %}
+      <p class="event-log-desc">{{ event.description }}</p>
+      {% endif %}
+      {% if event.cree_par %}
+      <small class="module-small" style="color: var(--muted, #64748b);">Par {{ event.cree_par.full_name|default:event.cree_par.email }}</small>
+      {% endif %}
+    </div>
+    {% empty %}
+    <p>Aucun événement enregistré pour ce transport.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

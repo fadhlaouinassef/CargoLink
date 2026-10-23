@@ -1,8 +1,13 @@
+import json
+import logging
+import time
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.cache import cache
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -13,6 +18,8 @@ from authentification.models import User
 
 from .forms import DisponibiliteForm, VehiculeForm
 from .models import Disponibilite, Vehicule
+
+logger = logging.getLogger(__name__)
 
 
 class TransporteurRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -32,7 +39,13 @@ class VehiculeListView(TransporteurRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        vehicles = Vehicule.objects.filter(transporteur=self.request.user)
+        from django.db.models import Prefetch
+        analyses_prefetch = Prefetch(
+            'analyses_risque',
+            queryset=AnalyseRisque.objects.order_by('-date_analyse'),
+            to_attr='analyses_recentes'
+        )
+        vehicles = Vehicule.objects.filter(transporteur=self.request.user).prefetch_related(analyses_prefetch)
         availabilities = Disponibilite.objects.filter(
             vehicule__transporteur=self.request.user,
         ).select_related('vehicule')
@@ -247,6 +260,7 @@ class TransporteurVehiculeDetailView(TransporteurRequiredMixin, TemplateView):
         context['vehicle'] = vehicle
         context['availabilities'] = vehicle.disponibilites.all()
         context['maintenances'] = vehicle.maintenances.all()
+        context['derniere_analyse'] = vehicle.analyses_risque.order_by('-date_analyse').first()
         return context
 
 
@@ -421,4 +435,103 @@ class MaintenanceAnnulerView(TransporteurRequiredMixin, View):
         except ValidationError as err:
             messages.error(request, str(err.message if hasattr(err, 'message') else err))
         return redirect('transporteur:maintenances')
+
+
+# ==============================================================================
+# VUES : ANALYSE DU RISQUE DE MAINTENANCE (ASYNC + RATE-LIMITING)
+# ==============================================================================
+from .models import AnalyseRisque
+from .services import analyser_vehicule
+
+
+class AnalyserRisqueVehiculeView(TransporteurRequiredMixin, View):
+    """Déclenche une analyse de risque pour un véhicule appartenant au transporteur.
+
+    - Rate-limiting : max 10 déclenchements / minute par utilisateur (en cache).
+    - Asynchrone via Celery si disponible, sinon exécution synchrone immédiate.
+    - Renvoie un JSON avec task_id (ou analyse_id directement en mode synchrone).
+    """
+
+    def post(self, request, pk):
+        # Vérification d'accès : le véhicule doit appartenir au transporteur
+        vehicule = Vehicule.objects.filter(pk=pk, transporteur=request.user).first()
+        if not vehicule:
+            return JsonResponse({'error': 'Véhicule introuvable ou non autorisé.'}, status=404)
+
+        # Rate-limiting utilisateur (10 requêtes / minute)
+        cache_key = f"ia_risque_rl_{request.user.pk}"
+        count = cache.get(cache_key, 0)
+        if count >= 10:
+            return JsonResponse(
+                {'error': 'Limite de requêtes atteinte (10 par minute). Veuillez patienter.'},
+                status=429,
+            )
+        cache.set(cache_key, count + 1, timeout=60)
+
+        # Paramètre force pour recalculer malgré le cache hash
+        force = request.POST.get('force', 'false').lower() in ('true', '1', 'yes')
+
+        # Tentative d'exécution asynchrone Celery
+        try:
+            from .tasks import analyser_vehicule_task
+            task = analyser_vehicule_task.delay(vehicule.pk, force=force)
+            return JsonResponse({
+                'status': 'started',
+                'task_id': task.id,
+                'vehicule_id': vehicule.pk,
+            })
+        except Exception as e:
+            logger.info("Celery/Redis non disponible pour analyse async (%s), exécution synchrone.", e)
+            # Repli synchrone gracieux si Celery ou Redis non démarré
+            analyse = analyser_vehicule(vehicule.pk, force=force)
+            if not analyse:
+                return JsonResponse({'error': "Échec de l'analyse du risque."}, status=500)
+            return JsonResponse({
+                'status': 'completed',
+                'analyse_id': analyse.pk,
+                'niveau': analyse.niveau,
+                'score': analyse.score,
+                'source': analyse.source,
+                'recommandation': analyse.recommandation,
+                'facteurs': analyse.facteurs,
+                'urgence': analyse.urgence,
+                'date_analyse': analyse.date_analyse.strftime('%d/%m/%Y %H:%M'),
+                'divergence': analyse.divergence,
+            })
+
+
+class StatutTacheRisqueView(TransporteurRequiredMixin, View):
+    """Interroge l'état d'une tâche d'analyse Celery (polling court)."""
+
+    def get(self, request, task_id):
+        try:
+            from celery.result import AsyncResult
+            res = AsyncResult(task_id)
+            state = res.state
+            if state == 'SUCCESS':
+                data = res.result or {}
+                analyse_id = data.get('analyse_id')
+                analyse = AnalyseRisque.objects.filter(pk=analyse_id).first() if analyse_id else None
+                if analyse:
+                    return JsonResponse({
+                        'status': 'completed',
+                        'analyse_id': analyse.pk,
+                        'niveau': analyse.niveau,
+                        'score': analyse.score,
+                        'source': analyse.source,
+                        'recommandation': analyse.recommandation,
+                        'facteurs': analyse.facteurs,
+                        'urgence': analyse.urgence,
+                        'date_analyse': analyse.date_analyse.strftime('%d/%m/%Y %H:%M'),
+                        'divergence': analyse.divergence,
+                    })
+                return JsonResponse({'status': 'completed', 'data': data})
+            elif state in ('FAILURE', 'REVOKED'):
+                return JsonResponse({'status': 'failed', 'error': "L'analyse a échoué."}, status=500)
+            else:
+                return JsonResponse({'status': 'pending', 'state': state})
+        except Exception as e:
+            logger.warning("Erreur interrogation statut Celery (%s).", e)
+            return JsonResponse({'status': 'unknown', 'error': str(e)}, status=200)
+
 

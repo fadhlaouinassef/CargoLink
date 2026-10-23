@@ -1,0 +1,124 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}{{ transport }} · Suivi | CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'transporteur:transports' %}">Suivi des transports</a>
+<span>/</span>
+<span class="current">{{ transport }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Transport confirmé</div>
+    <h1 class="portal-page-title">
+      {{ transport }} · {{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}
+    </h1>
+    <p class="portal-page-subtitle">
+      Demande n°{{ transport.demande.pk }} · départ prévu le {{ transport.trajet.date_depart|date:"d/m/Y à H:i" }}
+    </p>
+  </div>
+  <div>
+    <span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span>
+  </div>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Informations du transport</h2>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Expéditeur / Client</span>
+      <strong>{{ transport.demande.created_by.full_name|default:"Client CargoLink" }}</strong>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Destinataire</span>
+      <strong>{{ transport.demande.destinataire_nom }}</strong>
+      <div style="font-size: 13px; color: var(--muted, #64748b);">{{ transport.demande.destinataire_contact }} · {{ transport.demande.destinataire_tel }}</div>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Destination</span>
+      <strong>{{ transport.demande.arrivee_ville }}</strong>
+      <div style="font-size: 13px; color: var(--muted, #64748b);">{{ transport.demande.arrivee_adresse }}</div>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Prise en charge</span>
+      <strong>{{ transport.date_prise_en_charge|date:"d/m/Y H:i"|default:"À venir" }}</strong>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Arrivée</span>
+      <strong>{{ transport.date_arrivee|date:"d/m/Y H:i"|default:"À venir" }}</strong>
+    </div>
+    <div>
+      <span class="detail-label" style="display: block; font-size: 12px; color: var(--muted, #64748b);">Confirmation réception</span>
+      <strong>{{ transport.date_confirmation_reception|date:"d/m/Y à H:i"|default:"En attente de confirmation PME" }}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Historique des événements</h2>
+  </div>
+  <div class="event-log-list">
+    {% for event in transport.evenements.all %}
+    <div class="event-log-item">
+      <div class="event-log-time">
+        {{ event.date_evenement|date:"d/m/Y H:i" }}{% if event.lieu %} · {{ event.lieu }}{% endif %}
+      </div>
+      <div class="event-log-title">
+        {{ event.titre }} · <span class="badge {{ event.badge_class }}">{{ event.get_statut_display }}</span>
+      </div>
+      {% if event.description %}
+      <p class="event-log-desc">{{ event.description }}</p>
+      {% endif %}
+      {% if event.cree_par %}
+      <small class="module-small" style="color: var(--muted, #64748b);">Publié par {{ event.cree_par.full_name|default:event.cree_par.email }}</small>
+      {% endif %}
+    </div>
+    {% empty %}
+    <p>Aucun événement de suivi.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% if not transport.date_confirmation_reception and transport.statut != 'annule' %}
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title">Ajouter une étape au suivi & actualiser le statut</h2>
+  </div>
+  <form method="post" action="{% url 'transporteur:transport_evenement' transport.pk %}">
+    {% csrf_token %}
+    <div class="form-grid-2">
+      {% for field in form %}
+      <label class="portal-form-group">
+        <span class="portal-label">{{ field.label }}</span>
+        {{ field }}
+        {% for error in field.errors %}
+        <span class="form-error" role="alert" style="color: #dc2626; font-size: 13px;">{{ error }}</span>
+        {% endfor %}
+      </label>
+      {% endfor %}
+    </div>
+    <div style="margin-top: 1.25rem;">
+      <button class="btn-primary" type="submit">Enregistrer l’événement</button>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+{% if transport.statut == 'planifie' and not transport.date_prise_en_charge %}
+<section class="portal-card" style="margin-top: 1.5rem; border-color: rgba(220, 38, 38, 0.2);">
+  <div class="portal-card-header">
+    <h2 class="portal-card-title" style="color: #b91c1c;">Annulation et suppression du transport</h2>
+  </div>
+  <p style="font-size: 14px; color: var(--muted, #64748b); margin-bottom: 1rem;">
+    Ce transport est encore à l'état planifié et n'a pas encore fait l'objet d'une prise en charge. Vous pouvez le supprimer si nécessaire.
+  </p>
+  <form method="post" action="{% url 'transporteur:transport_delete' transport.pk %}" onsubmit="return confirm('Confirmer la suppression de ce transport planifié ? Cette action est irréversible.');">
+    {% csrf_token %}
+    <button class="btn-secondary" type="submit" style="color: #b91c1c; border-color: #fca5a5;">Supprimer le transport planifié</button>
+  </form>
+</section>
+{% endif %}
+{% endblock %}

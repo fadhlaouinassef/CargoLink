@@ -101,7 +101,7 @@
           {% endfor %}
         {% endif %}
 
-        {% if active_tab != 'demandes' and active_tab != 'avis' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
+        {% if active_tab != 'demandes' and active_tab != 'avis' and active_tab != 'transports' %}<p class="demo-notice">Espace de démonstration · Données fictives, aucune modification enregistrée sur le serveur.</p>{% endif %}
         <p id="demo-feedback" class="portal-card demo-feedback" role="status" hidden>
 </p>
         {% block content %}{% endblock %}

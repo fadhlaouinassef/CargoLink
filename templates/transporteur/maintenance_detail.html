@@ -38,6 +38,10 @@
       </span>
     </div>
     <div>
+      <span class="detail-label">Kilométrage relevé</span>
+      <strong>{% if maintenance.kilometrage_releve %}{{ maintenance.kilometrage_releve }} km{% else %}<span class="text-muted">Non renseigné</span>{% endif %}</strong>
+    </div>
+    <div>
       <span class="detail-label">Date d'enregistrement</span>
       <strong>{{ maintenance.date_creation|date:"d/m/Y H:i" }}</strong>
     </div>
