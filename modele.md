@@ -23,7 +23,16 @@ uv run --no-sync python -m matching_des_offres predict --input matching_des_offr
 uv run --no-sync python -m unittest matching_des_offres.tests -v
 ```
 
-Si le venv n'existe pas, le créer avec `uv venv --python 3.13 .venv`. Garder `--no-sync` : les bibliothèques du modèle sont dans son `requirements.txt`, indépendamment du `pyproject.toml` Django. Le parcours détaillé est dans [scenario.md](scenario.md).
+Pour utiliser le classement depuis le site, installer les dépendances puis entraîner le modèle avant de lancer Django :
+
+```powershell
+uv pip install --python .venv\Scripts\python.exe -r matching_des_offres\requirements.txt
+uv run --no-sync python -m matching_des_offres generate --source datasets\shippments_dataset.csv --offers-per-request 30 --seed 42
+uv run --no-sync python -m matching_des_offres train --min-recall 0.5 --seed 42
+uv run --no-sync python manage.py runserver
+```
+
+Le modèle `matching_des_offres\artifacts\model.joblib` et les bibliothèques sont ignorés par `uv sync` car ils restent séparés des dépendances Django. Après un `uv sync`, réinstaller les dépendances du modèle et relancer `generate` puis `train`. Garder `--no-sync` pour les commandes `uv run` tant que ces dépendances restent séparées. Si le venv n'existe pas, le créer avec `uv venv --python 3.13 .venv`. Le parcours détaillé est dans [scenario.md](scenario.md).
 
 ## Utilisation du dataset : ce qui est réellement lu
 

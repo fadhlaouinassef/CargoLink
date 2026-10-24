@@ -1,5 +1,5 @@
 from django.db import IntegrityError, transaction
-from django.db.models import Exists, OuterRef, Q
+from django.db.models import Exists, OuterRef, Q, Sum
 from django.db.models.deletion import ProtectedError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -12,6 +12,64 @@ from .decorators import transporteur_required
 from .forms import OffreTransportForm, SuiviForm, TrajetForm
 from .models import OffreTransport, Trajet
 from .services import RapportErreur, generer_pdf_rapport
+
+
+def _verifier_offre_acceptation(demande, offre):
+    """Revalide les contraintes qui peuvent changer depuis l'affichage du classement."""
+    from datetime import datetime, time, timedelta
+    from django.utils import timezone
+    from vehicules.models import Disponibilite, Maintenance, Vehicule
+
+    trajet = Trajet.objects.select_for_update().get(pk=offre.trajet_id)
+    offre.trajet = trajet
+    date_depart = timezone.localtime(trajet.date_depart).date()
+    if trajet.statut != Trajet.Statut.PUBLIE or trajet.date_depart <= timezone.now():
+        return 'Le trajet n’est plus disponible.'
+    if date_depart < demande.date_depart or date_depart > demande.date_limite:
+        return 'La date du trajet ne respecte plus la période de la demande.'
+
+    vehicule = Vehicule.objects.select_for_update().filter(
+        immatriculation__iexact=trajet.vehicule,
+        transporteur=offre.transporteur,
+    ).first()
+    if vehicule is None or vehicule.statut != Vehicule.Statut.ACTIF:
+        return 'Le véhicule lié au trajet n’est plus disponible.'
+
+    poids = demande.marchandises.aggregate(total=Sum('poids'))['total']
+    volume = demande.marchandises.aggregate(total=Sum('volume'))['total']
+    if poids is None or poids <= 0:
+        return 'Le poids des marchandises est manquant ou invalide.'
+    if poids > trajet.capacite_kg or poids > vehicule.capacite_poids_kg:
+        return 'La capacité de poids disponible est désormais insuffisante.'
+    if volume is not None and (volume > trajet.volume_m3 or volume > vehicule.capacite_volume_m3):
+        return 'La capacité de volume disponible est désormais insuffisante.'
+
+    # La durée du trajet n'est pas stockée : les blocages déclarés et les trajets
+    # déjà acceptés le jour du départ sont vérifiés sur la date connue.
+    tz = timezone.get_current_timezone()
+    debut = timezone.make_aware(datetime.combine(date_depart, time.min), tz)
+    fin = debut + timedelta(days=1)
+    if Disponibilite.objects.select_for_update().filter(
+        vehicule=vehicule,
+        statut=Disponibilite.Statut.INDISPONIBLE,
+        date_debut__lt=fin,
+        date_fin__gt=debut,
+    ).exists():
+        return 'Le véhicule est déclaré indisponible à la date du trajet.'
+    if Maintenance.objects.select_for_update().filter(
+        vehicule=vehicule,
+        statut__in=[Maintenance.Statut.PLANIFIEE, Maintenance.Statut.EN_COURS],
+        date_debut__lt=fin,
+        date_fin__gt=debut,
+    ).exists():
+        return 'Une maintenance bloque le véhicule à la date du trajet.'
+    if OffreTransport.objects.select_for_update().filter(
+        trajet__vehicule__iexact=trajet.vehicule,
+        trajet__date_depart__date=date_depart,
+        statut=OffreTransport.Statut.ACCEPTEE,
+    ).exclude(pk=offre.pk).exists():
+        return 'Ce véhicule est déjà affecté à un transport accepté ce jour-là.'
+    return None
 
 
 def _demandes():
@@ -106,11 +164,8 @@ def demande_offres(request, pk):
 
 
 def _offres_popup(request, demande):
-    offres = demande.offres_transport.select_related('transporteur', 'trajet')
     html = render_to_string('gestion_trajets_offres/demande_offres.html', {
-        'demande': demande, 'offres': offres,
-        'peut_accepter': demande.statut == DemandeTransport.Statut.OUVERTE
-        and not offres.filter(statut=OffreTransport.Statut.ACCEPTEE).exists(),
+        'demande': demande,
     }, request=request)
     return JsonResponse({'html': html})
 
@@ -119,11 +174,16 @@ def _offres_popup(request, demande):
 def accepter_offre(request, pk, offre_pk):
     with transaction.atomic():
         demande = get_object_or_404(_owned_demands(request).select_for_update(), pk=pk)
-        offre = get_object_or_404(demande.offres_transport, pk=offre_pk)
+        offre = get_object_or_404(
+            demande.offres_transport.select_related('trajet', 'transporteur'), pk=offre_pk,
+        )
         if (demande.statut != DemandeTransport.Statut.OUVERTE
                 or offre.statut != OffreTransport.Statut.EN_ATTENTE
                 or demande.offres_transport.filter(statut=OffreTransport.Statut.ACCEPTEE).exists()):
             return JsonResponse({'error': 'Cette offre ne peut plus être acceptée.'}, status=409)
+        erreur = _verifier_offre_acceptation(demande, offre)
+        if erreur:
+            return JsonResponse({'error': erreur}, status=409)
         offre.statut = OffreTransport.Statut.ACCEPTEE
         offre.save(update_fields=['statut', 'updated_at'])
         demande.offres_transport.filter(statut=OffreTransport.Statut.EN_ATTENTE).update(

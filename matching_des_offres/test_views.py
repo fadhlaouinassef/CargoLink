@@ -141,6 +141,9 @@ class ClassementTests(BaseEndpointTests):
         self.assertEqual([o['score'] for o in donnees['offres']], [60.0, 55.0])
         self.assertEqual([o['prix'] for o in donnees['offres']], [160.0, 180.0])
         self.assertTrue(all(o['pertinent_predit'] for o in donnees['offres']))
+        self.assertEqual(donnees['offres'][0]['capacites'], {'poids_kg': 1000.0, 'volume_m3': 8.0})
+        self.assertEqual(donnees['demande']['date_depart'], self.demande.date_depart.isoformat())
+        self.assertEqual(donnees['demande']['date_limite'], self.demande.date_limite.isoformat())
 
         # Motifs d'exclusion.
         self.assertEqual([o['offre_id'] for o in donnees['exclues']], [trop_petite.pk])
@@ -160,6 +163,9 @@ class ClassementTests(BaseEndpointTests):
 
         # Identité, réputation et lien d'acceptation pour le popup.
         self.assertEqual(second['transporteur'], {'id': self.transporteurs[0].pk, 'nom': 'Mohamed Triki', 'note': 0.0, 'nombre_avis': 0})
+        self.assertEqual(second['vehicule_reference'], '123-TN-456')
+        self.assertEqual(second['details_vehicule'], {'description': 'Isuzu NPR', 'type': 'Camionnette'})
+        self.assertEqual(second['trajet']['date_depart'], bonne.trajet.date_depart.isoformat())
         self.assertEqual(second['url_accepter'], reverse('pme:accepter_offre', args=[self.demande.pk, bonne.pk]))
         self.assertEqual(donnees['modele'], {'seuil_pertinence': 0.5})
 
@@ -238,7 +244,9 @@ class SituationsParticulieresTests(BaseEndpointTests):
     def verifier_modele_indisponible(self):
         with self.assertLogs('matching_des_offres.views', level='ERROR'):
             response, donnees = self.charger()
-        self.assertEqual((response.status_code, donnees['statut']), (503, 'modele_indisponible'))
+        self.assertEqual((response.status_code, donnees['statut']), (200, 'modele_indisponible'))
+        self.assertEqual(len(donnees['offres_secours']), 1)
+        self.assertIsNone(donnees['offres_secours'][0]['score'])
         self.assertEqual(donnees['offres'], [])
         corps = response.content.decode()
         for detail_technique in ('Traceback', 'FileNotFoundError', 'joblib', 'artifacts', 'sklearn'):

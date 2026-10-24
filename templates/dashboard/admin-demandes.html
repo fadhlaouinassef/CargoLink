@@ -22,6 +22,7 @@
         <p class="nav-label">MENU PRINCIPAL</p>
         <a class="nav-link" href="{% url 'authentification:admin_dashboard' %}">Comptes utilisateurs</a>
         <a class="nav-link active" href="{% url 'authentification:admin_demandes' %}" aria-current="page">Publications PME <span class="nav-count">{{ total_demandes }}</span></a>
+        <a class="nav-link" href="{% url 'authentification:admin_transports' %}">Suivi des transports</a>
         <a class="nav-link" href="{% url 'authentification:admin_vehicles' %}">Véhicules & disponibilités</a>
       </nav>
       <div class="sidebar-footer">
