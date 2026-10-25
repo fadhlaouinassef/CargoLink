@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'gestion_trajets_offres.apps.GestionTrajetsOffresConfig',
     'suivi_transport.apps.SuiviTransportConfig',
     'avis_reclamations.apps.AvisReclamationsConfig',
+    'accessibilite.apps.AccessibiliteConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accessibilite.middleware.AccessibiliteMiddleware',  # bouton « Accessibilité » sur toutes les pages
 ]
 
 ROOT_URLCONF = 'CargoLink.urls'
