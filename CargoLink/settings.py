@@ -32,6 +32,16 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+for variable in (
+    "VERCEL_URL",
+    "VERCEL_BRANCH_URL",
+    "VERCEL_PROJECT_PRODUCTION_URL",
+):
+    host = os.getenv(variable, "").strip()
+    if host and host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+        
+
 CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
