@@ -13,6 +13,15 @@
 @media(max-width:700px){.module-dialog{padding:20px}.module-dialog .form-grid-2{grid-template-columns:1fr}.module-dialog-actions>*{flex:1}.module-demand-actions{width:100%}.available-demand-card{padding:16px!important}}
 @media(prefers-reduced-motion:reduce){.module-spinner{animation-duration:1.5s}.available-demand-card{transition:none}}
 .received-offer{padding:18px 0;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.lecture-vocale { margin-bottom: 20px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.lecture-vocale h2 { margin: 0 0 8px; font-size: 18px; }
+.lecture-vocale p { margin: 8px 0; }
+.lecture-commandes { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.lecture-commandes select { width: auto; max-width: 100%; }
+.lecture-commandes button, .lecture-commandes select, [data-lecture-cible] { min-height: 44px; }
+.lecture-commandes button:focus-visible, .lecture-commandes select:focus-visible, [data-lecture-cible]:focus-visible { outline: 3px solid var(--green, #254735); outline-offset: 3px; }
+[data-lecture-cible][aria-pressed="true"] { outline: 2px solid var(--green, #254735); outline-offset: 2px; }
+.lecture-commandes button:disabled, [data-lecture-cible]:disabled { cursor: not-allowed; opacity: .6; }
 .received-offer-heading{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .received-offer .module-small{margin:8px 0 12px}
 .received-offer-message{font-size:14px;margin:12px 0 0;white-space:normal}

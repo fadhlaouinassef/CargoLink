@@ -1,10 +1,34 @@
 {% extends 'transporteur/base.html' %}
+{% load static %}
+{% load i18n %}
 {% block title %}Mes offres | CargoLink{% endblock %}
 {% block breadcrumb %}Mes offres{% endblock %}
 {% block content %}
 <div class="portal-page-header"><div><div class="portal-eyebrow">Gestion des trajets et des offres</div><h1 class="portal-page-title">Mes offres</h1><p class="portal-page-subtitle">Suivez vos propositions. Vous pouvez modifier ou supprimer une offre en attente de réponse de la PME.</p></div><a class="btn-primary" href="{% url 'transporteur:demandes' %}">Trouver une demande</a></div>
+{% include 'gestion_trajets_offres/lecture_vocale.html' %}
 <section class="portal-card"><div class="portal-card-header"><h2 class="portal-card-title">Propositions envoyées</h2><span class="badge badge-active">{{ offres|length }} offre{{ offres|length|pluralize }}</span></div><div class="portal-table-wrap"><table class="portal-table"><thead><tr><th>Offre</th><th>Demande / Trajet</th><th>Prix</th><th>État</th><th>Actions</th></tr></thead><tbody>
-{% for offre in offres %}<tr><td>OFF-{{ offre.pk }}<small class="module-small">{{ offre.created_at|date:"d/m/Y" }}</small></td><td>{{ offre.demande }}<small class="module-small">{{ offre.trajet }}</small>{% if offre.message %}<small class="module-small">{{ offre.message|linebreaksbr }}</small>{% endif %}</td><td>{{ offre.prix|floatformat:2 }} TND</td><td><span class="badge badge-pending">{{ offre.get_statut_display }}</span></td><td>{% if offre.statut == 'en_attente' %}<div class="module-actions"><button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:offre_update' offre.pk %}">Modifier</button><button type="button" class="btn-secondary module-delete" data-popup-url="{% url 'transporteur:offre_delete' offre.pk %}">Supprimer</button></div>{% else %}{{ offre.get_statut_display }} par la PME{% endif %}</td></tr>
+{% for offre in offres %}
+<tr>
+  <td>OFF-{{ offre.pk }}<small class="module-small">{{ offre.created_at|date:"d/m/Y" }}</small></td>
+  <td>{{ offre.demande }}<small class="module-small">{{ offre.trajet }}</small>{% if offre.message %}<small class="module-small">{{ offre.message|linebreaksbr }}</small>{% endif %}</td>
+  <td>{{ offre.prix|floatformat:2 }} TND</td>
+  <td><span class="badge badge-pending">{{ offre.get_statut_display }}</span></td>
+  <td>
+    <div class="module-actions">
+      {% language 'fr' %}
+      <span id="lecture-offre-{{ offre.pk }}" hidden>Offre numéro {{ offre.pk }}, pour la demande {{ offre.demande }}. Trajet de {{ offre.trajet.depart_ville }} vers {{ offre.trajet.arrivee_ville }}. Prix proposé : {{ offre.prix|floatformat:2 }} dinars tunisiens. État : {{ offre.get_statut_display }}.</span>
+      {% endlanguage %}
+      <button type="button" class="btn-secondary" data-lecture-cible="lecture-offre-{{ offre.pk }}" data-lecture-nom="l’offre {{ offre.pk }}" aria-label="Écouter les détails de l’offre {{ offre.pk }}">Écouter les détails</button>
+      {% if offre.statut == 'en_attente' %}
+      <button type="button" class="btn-secondary" data-popup-url="{% url 'transporteur:offre_update' offre.pk %}">Modifier</button>
+      <button type="button" class="btn-secondary module-delete" data-popup-url="{% url 'transporteur:offre_delete' offre.pk %}">Supprimer</button>
+      {% else %}<span>{{ offre.get_statut_display }} par la PME</span>{% endif %}
+    </div>
+  </td>
+</tr>
 {% empty %}<tr><td colspan="5"><div class="demand-empty-state"><h3>Aucune offre envoyée</h3><p>Consultez les demandes disponibles et proposez votre prix.</p></div></td></tr>{% endfor %}
 </tbody></table></div></section>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'gestion_trajets_offres/lecture_vocale.js' %}" defer></script>
 {% endblock %}
