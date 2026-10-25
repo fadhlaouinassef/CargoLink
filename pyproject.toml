@@ -3,9 +3,15 @@ name = "cargolink"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
+    "celery>=5.6.3",
     "django>=6.1.2",
+    "joblib>=1.6.0",
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
     "pillow>=11.0.0",
+    "redis>=8.1.0",
+    "scikit-learn>=1.9.1",
     "psycopg[binary]>=3.3.6",
     "python-dotenv>=1.2.4",
-    "xhtml2pdf>=0.2.27,<0.3",
+    "xhtml2pdf>=0.2.27,<0.3"
 ]

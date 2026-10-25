@@ -48,29 +48,29 @@
       </div>
 
       <div class="portal-form-group">
-        <label class="portal-label">État constaté au déchargement *</label>
-        <div class="actor-flex-row" style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
-          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid var(--green); border-radius: var(--radius-md); background: #fbfdfc; cursor: pointer;">
-            <input type="radio" name="etat_conformite" value="conforme" checked style="width: 18px; height: 18px; accent-color: var(--green);">
+        <label class="portal-label" id="label-etat-conformite">État constaté au déchargement *</label>
+        <div class="actor-flex-row" role="radiogroup" aria-labelledby="label-etat-conformite" style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;">
+          <label for="radio-conforme" style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid var(--green); border-radius: var(--radius-md); background: #fbfdfc; cursor: pointer;">
+            <input type="radio" id="radio-conforme" name="etat_conformite" value="conforme" checked aria-describedby="desc-conforme" style="width: 18px; height: 18px; accent-color: var(--green);">
             <div>
               <strong style="color: var(--ink);">✅ Conforme sans réserve</strong>
-              <div style="font-size: 12.5px; color: var(--muted);">Les 4 palettes sont intactes, emballage d'origine scellé, aucun dommage constaté.</div>
+              <div id="desc-conforme" style="font-size: 12.5px; color: var(--muted);">Les 4 palettes sont intactes, emballage d'origine scellé, aucun dommage constaté.</div>
             </div>
           </label>
 
-          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
-            <input type="radio" name="etat_conformite" value="reserves" style="width: 18px; height: 18px; accent-color: var(--warning);">
+          <label for="radio-reserves" style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
+            <input type="radio" id="radio-reserves" name="etat_conformite" value="reserves" aria-describedby="desc-reserves" style="width: 18px; height: 18px; accent-color: var(--warning);">
             <div>
               <strong style="color: var(--warning);">⚠️ Reçu avec réserves</strong>
-              <div style="font-size: 12.5px; color: var(--muted);">Emballage abîmé, film déchiré ou léger déséquilibre de palette (réserves obligatoires ci-dessous).</div>
+              <div id="desc-reserves" style="font-size: 12.5px; color: var(--muted);">Emballage abîmé, film déchiré ou léger déséquilibre de palette (réserves obligatoires ci-dessous).</div>
             </div>
           </label>
 
-          <label style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
-            <input type="radio" name="etat_conformite" value="refuse" style="width: 18px; height: 18px; accent-color: var(--error);">
+          <label for="radio-refuse" style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); cursor: pointer;">
+            <input type="radio" id="radio-refuse" name="etat_conformite" value="refuse" aria-describedby="desc-refuse" style="width: 18px; height: 18px; accent-color: var(--error);">
             <div>
               <strong style="color: var(--error);">❌ Refus partiel ou total pour avarie grave</strong>
-              <div style="font-size: 12.5px; color: var(--muted);">Bouteilles cassées, fuite constatée ou lot non conforme au bon de commande.</div>
+              <div id="desc-refuse" style="font-size: 12.5px; color: var(--muted);">Bouteilles cassées, fuite constatée ou lot non conforme au bon de commande.</div>
             </div>
           </label>
         </div>
@@ -110,12 +110,12 @@
           </div>
 
           <div class="otp-container">
-            <input type="text" maxlength="1" class="otp-digit" value="8" autocomplete="off" autofocus>
-            <input type="text" maxlength="1" class="otp-digit" value="4" autocomplete="off">
-            <input type="text" maxlength="1" class="otp-digit" value="2" autocomplete="off">
-            <input type="text" maxlength="1" class="otp-digit" value="1" autocomplete="off">
-            <input type="text" maxlength="1" class="otp-digit" value="9" autocomplete="off">
-            <input type="text" maxlength="1" class="otp-digit" value="0" autocomplete="off">
+            <input type="text" maxlength="1" class="otp-digit" value="8" autocomplete="off" autofocus aria-label="Premier chiffre du code OTP">
+            <input type="text" maxlength="1" class="otp-digit" value="4" autocomplete="off" aria-label="Deuxième chiffre du code OTP">
+            <input type="text" maxlength="1" class="otp-digit" value="2" autocomplete="off" aria-label="Troisième chiffre du code OTP">
+            <input type="text" maxlength="1" class="otp-digit" value="1" autocomplete="off" aria-label="Quatrième chiffre du code OTP">
+            <input type="text" maxlength="1" class="otp-digit" value="9" autocomplete="off" aria-label="Cinquième chiffre du code OTP">
+            <input type="text" maxlength="1" class="otp-digit" value="0" autocomplete="off" aria-label="Sixième chiffre du code OTP">
           </div>
 
           <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--green); font-weight: 600;">
@@ -134,7 +134,7 @@
           <canvas class="signature-canvas" id="signature-canvas"></canvas>
           <div class="signature-toolbar">
             <span>Tracez votre signature au doigt ou à la souris</span>
-            <button type="button" id="btn-clear-sig" class="btn-secondary" style="font-size: 11.5px; padding: 0.25rem 0.65rem;">
+            <button type="button" id="btn-clear-sig" class="btn-secondary" style="font-size: 11.5px; padding: 0.25rem 0.65rem;" aria-label="Effacer le tracé de la signature">
               ✕ Effacer la signature
             </button>
           </div>
@@ -142,12 +142,12 @@
 
         <div class="form-grid-2" style="margin-top: 1rem;">
           <div>
-            <label class="portal-label">Nom et prénom du signataire *</label>
-            <input type="text" class="portal-input" name="signataire_nom" value="Ahmed Trabelsi">
+            <label class="portal-label" for="signataire_nom">Nom et prénom du signataire *</label>
+            <input type="text" id="signataire_nom" class="portal-input" name="signataire_nom" value="Ahmed Trabelsi" aria-required="true">
           </div>
           <div>
-            <label class="portal-label">Fonction au sein de l'entreprise *</label>
-            <input type="text" class="portal-input" name="signataire_fonction" value="Chef de quai / Responsable Réception">
+            <label class="portal-label" for="signataire_fonction">Fonction au sein de l'entreprise *</label>
+            <input type="text" id="signataire_fonction" class="portal-input" name="signataire_fonction" value="Chef de quai / Responsable Réception" aria-required="true">
           </div>
         </div>
       </div>
