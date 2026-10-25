@@ -43,13 +43,9 @@ def _pme_access_required(view):
 
 def _pme_scope(request):
     if request.user.is_authenticated:
-        scope = Q(offre__demande__created_by=request.user)
-    else:
-        scope = Q(pk__isnull=True)
+        return Q(offre__demande__created_by=request.user)
     session_key = request.session.session_key
-    if session_key:
-        scope |= Q(offre__demande__owner_session=session_key)
-    return scope
+    return Q(offre__demande__owner_session=session_key) if session_key else Q(pk__isnull=True)
 
 
 def pme_transports(request):

@@ -12,6 +12,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from authentification.decorators import role_or_anonymous_required
+from authentification.models import User
 from .forms import DemandeTransportForm, MarchandiseFormSet
 from .models import DemandeTransport
 
@@ -26,6 +28,7 @@ def _owned_demands(request):
     return DemandeTransport.objects.none()
 
 
+@role_or_anonymous_required(User.Role.PME)
 def dashboard(request):
     demandes = _owned_demands(request).prefetch_related('marchandises')
     return render(request, 'pme/dashboard.html', {
@@ -37,6 +40,7 @@ def dashboard(request):
     })
 
 
+@role_or_anonymous_required(User.Role.PME)
 def demande_create(request):
     form = DemandeTransportForm(request.POST or None)
     formset = MarchandiseFormSet(request.POST or None, prefix='marchandises')
@@ -71,6 +75,7 @@ def demande_create(request):
 
 
 @require_POST
+@role_or_anonymous_required(User.Role.PME)
 def ai_improve_description(request):
     if not settings.GEMINI_API_KEY:
         return JsonResponse(
@@ -155,6 +160,7 @@ def ai_improve_description(request):
     return JsonResponse({'description': description})
 
 
+@role_or_anonymous_required(User.Role.PME)
 def demande_update(request, pk):
     demande = get_object_or_404(_owned_demands(request), pk=pk)
     form = DemandeTransportForm(request.POST or None, instance=demande)
@@ -184,6 +190,7 @@ def demande_update(request, pk):
     })
 
 
+@role_or_anonymous_required(User.Role.PME)
 def demande_delete(request, pk):
     demande = get_object_or_404(_owned_demands(request), pk=pk)
     if request.method == 'POST':
@@ -196,6 +203,7 @@ def demande_delete(request, pk):
     })
 
 
+@role_or_anonymous_required(User.Role.PME)
 def demandes_list(request):
     demandes = _owned_demands(request).prefetch_related('marchandises')
     query = request.GET.get('q', '').strip()
@@ -221,6 +229,7 @@ def demandes_list(request):
     })
 
 
+@role_or_anonymous_required(User.Role.PME)
 def demande_detail(request, pk=None):
     demands = _owned_demands(request).prefetch_related('marchandises')
     if pk is None:

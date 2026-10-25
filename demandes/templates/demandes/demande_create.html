@@ -91,11 +91,13 @@
                     <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
                   {% elif field.name == 'description' %}
                     <div class="goods-description-field">
+                      <label class="sr-only" for="{{ field.id_for_label }}">{{ field.label }}</label>
                       {{ field }}
                       <button type="button" class="btn-ai-description" data-ai-url="{% url 'pme:ai_improve_description' %}">Améliorer avec IA</button>
                       <span class="ai-description-status" role="status" aria-live="polite"></span>
                     </div>
                   {% else %}
+                    <label class="sr-only" for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
                   {% endif %}
                   {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
@@ -118,11 +120,13 @@
               <button type="button" class="btn-remove-row" aria-label="Supprimer cette marchandise">×</button>
             {% elif field.name == 'description' %}
               <div class="goods-description-field">
+                <label class="sr-only" for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
                 <button type="button" class="btn-ai-description" data-ai-url="{% url 'pme:ai_improve_description' %}">Améliorer avec IA</button>
                 <span class="ai-description-status" role="status" aria-live="polite"></span>
               </div>
             {% else %}
+              <label class="sr-only" for="{{ field.id_for_label }}">{{ field.label }}</label>
               {{ field }}
             {% endif %}
           </td>

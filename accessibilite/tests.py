@@ -1,3 +1,5 @@
+from html.parser import HTMLParser
+from pathlib import Path
 from unittest import mock
 
 from django.contrib.staticfiles import finders
@@ -108,6 +110,15 @@ class SurLesVraiesPagesTests(TestCase):
     def test_fichiers_statiques_presents(self):
         self.assertIsNotNone(finders.find('accessibilite/accessibilite.css'))
         self.assertIsNotNone(finders.find('accessibilite/accessibilite.js'))
+        with open(finders.find('accessibilite/accessibilite.js'), encoding='utf-8') as fichier:
+            script = fichier.read()
+        with open(finders.find('accessibilite/accessibilite.css'), encoding='utf-8') as fichier:
+            styles = fichier.read()
+        self.assertIn('a11y-help-tooltip', script)
+        self.assertIn("label.querySelector('.portal-label') || label", script)
+        self.assertIn('aria-describedby', script)
+        self.assertIn('.a11y-help-label', styles)
+        self.assertIn(':focus-visible + .a11y-help-tooltip', styles)
 
     def test_meme_cle_de_memorisation_dans_le_script_et_dans_le_middleware(self):
         with open(finders.find('accessibilite/accessibilite.js'), encoding='utf-8') as fichier:
@@ -117,3 +128,27 @@ class SurLesVraiesPagesTests(TestCase):
         with open(finders.find('accessibilite/accessibilite.css'), encoding='utf-8') as fichier:
             css = fichier.read()
         self.assertIn('@media print', css)
+
+    def test_toutes_les_images_des_templates_ont_un_texte_alternatif(self):
+        class Images(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.images_sans_alt = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == 'img' and 'alt' not in dict(attrs):
+                    self.images_sans_alt.append(self.get_starttag_text())
+
+        racine = Path(__file__).resolve().parent.parent
+        parser = Images()
+        repertoires_templates = [
+            racine / 'templates',
+            racine / 'authentification' / 'templates',
+            racine / 'avis_reclamations' / 'templates',
+            racine / 'demandes' / 'templates',
+            racine / 'gestion_trajets_offres' / 'templates',
+        ]
+        for repertoire in repertoires_templates:
+            for template in repertoire.rglob('*.html'):
+                parser.feed(template.read_text(encoding='utf-8'))
+        self.assertEqual(parser.images_sans_alt, [])

@@ -365,5 +365,185 @@
     });
   }
 
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', demarrer); } else { demarrer(); }
+  var AIDES = {
+    depart_ville: 'Indiquez la ville où les marchandises seront enlevées.',
+    depart_adresse: 'Saisissez l’adresse précise du lieu d’enlèvement.',
+    date_depart: 'Choisissez la date souhaitée pour l’enlèvement.',
+    arrivee_ville: 'Indiquez la ville de livraison.',
+    arrivee_adresse: 'Saisissez l’adresse précise de livraison.',
+    date_limite: 'Choisissez la date au plus tard à laquelle la livraison doit être reçue.',
+    destinataire_nom: 'Indiquez le nom de l’entreprise ou de la personne qui recevra les marchandises.',
+    destinataire_contact: 'Indiquez le nom du responsable à contacter pour la réception.',
+    destinataire_tel: 'Saisissez un numéro de téléphone composé uniquement de chiffres.',
+    description: 'Décrivez la marchandise et son conditionnement sans ajouter d’informations confidentielles.',
+    type: 'Choisissez le type de conditionnement ou de marchandise.',
+    poids: 'Saisissez le poids total correspondant, en kilogrammes.',
+    volume: 'Saisissez le volume total correspondant, en mètres cubes.',
+    fragile: 'Cochez cette case si la marchandise doit être manipulée avec précaution.',
+    budget: 'Indiquez le budget maximal souhaité en dinars tunisiens. Ce champ peut rester vide.',
+    modalite_paiement: 'Choisissez le moment auquel vous souhaitez régler le transport.',
+    validite_offres: 'Choisissez la durée pendant laquelle les transporteurs pourront répondre.',
+    immatriculation: 'Saisissez l’immatriculation du véhicule, sans erreur.',
+    marque: 'Indiquez la marque du véhicule.',
+    modele: 'Indiquez le modèle du véhicule.',
+    annee: 'Indiquez l’année de mise en circulation du véhicule.',
+    type_vehicule: 'Choisissez le type de véhicule correspondant à ses caractéristiques.',
+    capacite_poids_kg: 'Indiquez la charge maximale autorisée du véhicule, en kilogrammes.',
+    capacite_volume_m3: 'Indiquez le volume maximal du véhicule, en mètres cubes.',
+    capacite_kg: 'Cette valeur est reprise de la capacité du véhicule sélectionné.',
+    volume_m3: 'Cette valeur est reprise du volume disponible du véhicule sélectionné.',
+    kilometrage: 'Indiquez le kilométrage actuellement affiché au compteur, si vous le connaissez.',
+    kilometrage_releve: 'Indiquez le kilométrage relevé au compteur lors de cette opération.',
+    date_releve_km: 'Indiquez la date à laquelle le kilométrage a été relevé.',
+    photo: 'Ajoutez une photo nette du véhicule, au format JPG, PNG ou WebP.',
+    date_debut: 'Choisissez la date et l’heure de début de la période.',
+    date_fin: 'Choisissez la date et l’heure de fin de la période.',
+    zone_depart: 'Indiquez la zone où le véhicule sera disponible au départ.',
+    zone_arrivee: 'Indiquez la zone où le véhicule sera disponible à l’arrivée.',
+    motif: 'Choisissez le motif qui décrit le mieux la situation.',
+    motif_moderation: 'Expliquez brièvement la raison de la décision de modération.',
+    trajet: 'Choisissez l’un de vos trajets publiés qui correspond à cette demande.',
+    prix: 'Saisissez le prix proposé en dinars tunisiens.',
+    message: 'Ajoutez un message utile au sujet de votre proposition.',
+    statut: 'Choisissez le statut correspondant à la situation actuelle.',
+    titre: 'Résumez cette étape du transport en quelques mots.',
+    lieu: 'Indiquez la ville ou le lieu où se trouve actuellement le transport.',
+    note: 'Choisissez une note de 1 à 5 selon votre expérience.',
+    commentaire: 'Décrivez les faits de façon claire, précise et respectueuse.',
+    montant_prejudice: 'Indiquez le montant estimé du préjudice en dinars tunisiens, si vous le connaissez.',
+    reponse: 'Rédigez une réponse claire à destination de l’auteur du dossier.',
+    email: 'Saisissez une adresse e-mail valide.',
+    username: 'Saisissez l’adresse e-mail associée à votre compte.',
+    full_name: 'Saisissez le nom complet de la personne ou de l’entreprise.',
+    role: 'Choisissez le rôle qui correspond à cet utilisateur.',
+    code: 'Saisissez le code à six chiffres reçu par e-mail.',
+    password: 'Saisissez le mot de passe de votre compte.',
+    password1: 'Choisissez un mot de passe conforme aux règles affichées.',
+    password2: 'Saisissez à nouveau le même mot de passe.',
+    consignes: 'Ajoutez toute consigne utile à la préparation, à l’enlèvement ou à la livraison.'
+  };
+
+  function aidePour(champ, label) {
+    var aides = champ.getAttribute('data-help') || champ.getAttribute('title') ||
+      (label && label.getAttribute('data-help'));
+    var references = (champ.getAttribute('aria-describedby') || '').split(/\s+/);
+    if (!aides) {
+      references.some(function (reference) {
+        var element = document.getElementById(reference);
+        if (element && !element.closest('[role="alert"], .field-error, .form-error, .errorlist') &&
+            element.textContent.trim()) {
+          aides = element.textContent.trim();
+          return true;
+        }
+        return false;
+      });
+    }
+    if (!aides && champ.parentElement) {
+      var aideVisible = champ.parentElement.querySelector('.portal-input-hint, .field-help, .helptext, .help-text, [data-field-help]');
+      if (aideVisible) { aides = aideVisible.textContent.trim(); }
+    }
+    var identifiant = (champ.name || champ.id || '').split('-').pop();
+    if (aides) { return aides; }
+    if (identifiant === 'description' &&
+        !/marchandise/i.test(label ? label.textContent : '') &&
+        !/marchandises/i.test(champ.name || '')) {
+      return 'Décrivez les faits et les informations utiles de façon claire, précise et respectueuse.';
+    }
+    if (identifiant === 'type' && !/conditionnement/i.test(label ? label.textContent : '')) {
+      return 'Choisissez l’option qui correspond à votre situation.';
+    }
+    if (AIDES[identifiant]) { return AIDES[identifiant]; }
+    if (champ.placeholder) { return 'Exemple : ' + champ.placeholder; }
+    if (champ.type === 'email') { return 'Saisissez une adresse e-mail valide.'; }
+    if (champ.type === 'password') { return 'Saisissez le mot de passe demandé.'; }
+    if (champ.type === 'date' || champ.type === 'datetime-local') { return 'Choisissez la date demandée.'; }
+    if (champ.type === 'number') { return 'Saisissez une valeur numérique dans l’unité indiquée.'; }
+    if (champ.type === 'checkbox') { return 'Cochez cette case si cette option s’applique.'; }
+    if (champ.tagName === 'SELECT') { return 'Choisissez l’option qui correspond à votre situation.'; }
+    if (champ.tagName === 'TEXTAREA') { return 'Ajoutez les informations utiles de façon claire et précise.'; }
+    var libelle = label ? label.textContent.replace(/\*/g, '').trim() : '';
+    return libelle ? 'Saisissez les informations demandées pour « ' + libelle + ' ».' : '';
+  }
+
+  function preparerAidesFormulaires(racine) {
+    var libelles = (racine || document).querySelectorAll('form label');
+    Array.prototype.forEach.call(libelles, function (label) {
+      if (label.querySelector('.a11y-help-button')) { return; }
+      var champ = label.control || (label.htmlFor && document.getElementById(label.htmlFor)) ||
+        label.querySelector('input, select, textarea');
+      if (!champ || champ.type === 'hidden' || champ.type === 'radio' ||
+          champ.type === 'submit' || champ.type === 'button' || champ.type === 'reset') { return; }
+      var description = aidePour(champ, label);
+      if (!description) { return; }
+
+      var conteneur = label.parentElement;
+      var nombre = document.querySelectorAll('.a11y-help-tooltip').length + 1;
+      var tooltipId = 'a11y-aide-champ-' + nombre;
+      var boutonAide = document.createElement('button');
+      boutonAide.type = 'button';
+      boutonAide.className = 'a11y-help-button';
+      boutonAide.textContent = '?';
+      boutonAide.setAttribute('aria-label', 'Aide pour ' + label.textContent.replace(/\*/g, '').trim());
+      boutonAide.setAttribute('aria-expanded', 'false');
+      boutonAide.setAttribute('aria-controls', tooltipId);
+
+      var tooltip = document.createElement('span');
+      tooltip.className = 'a11y-help-tooltip';
+      tooltip.id = tooltipId;
+      tooltip.setAttribute('role', 'tooltip');
+      tooltip.textContent = description;
+
+      var libelle = label.querySelector('.portal-label') || label;
+      libelle.classList.add('a11y-help-label');
+      libelle.insertAdjacentElement('afterend', boutonAide);
+      boutonAide.insertAdjacentElement('afterend', tooltip);
+      if (conteneur) { conteneur.classList.add('a11y-help-container'); }
+
+      var describedBy = (champ.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+      if (describedBy.indexOf(tooltipId) === -1) { describedBy.push(tooltipId); }
+      champ.setAttribute('aria-describedby', describedBy.join(' '));
+    });
+  }
+
+  function initialiserAidesFormulaires() {
+    preparerAidesFormulaires(document);
+    var observateurAides = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        Array.prototype.forEach.call(mutation.addedNodes, function (node) {
+          if (node.nodeType === 1) { preparerAidesFormulaires(node); }
+        });
+      });
+    });
+    observateurAides.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener('click', function (evenement) {
+      var boutonAide = evenement.target.closest('.a11y-help-button');
+      if (boutonAide) {
+        if (boutonAide.closest('label')) {
+          evenement.preventDefault();
+          evenement.stopPropagation();
+        }
+        var ouvrir = boutonAide.getAttribute('aria-expanded') !== 'true';
+        boutonAide.setAttribute('aria-expanded', ouvrir ? 'true' : 'false');
+        return;
+      }
+      Array.prototype.forEach.call(document.querySelectorAll('.a11y-help-button[aria-expanded="true"]'), function (bouton) {
+        bouton.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.addEventListener('keydown', function (evenement) {
+      if (evenement.key === 'Escape') {
+        Array.prototype.forEach.call(document.querySelectorAll('.a11y-help-button[aria-expanded="true"]'), function (bouton) {
+          bouton.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+
+  function demarrerAccessibilite() {
+    demarrer();
+    initialiserAidesFormulaires();
+  }
+
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', demarrerAccessibilite); } else { demarrerAccessibilite(); }
 })();
