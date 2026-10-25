@@ -1,5 +1,6 @@
 {% extends 'transporteur/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Mes trajets | CargoLink{% endblock %}
 {% block breadcrumb %}Mes trajets{% endblock %}
 {% block content %}
@@ -19,6 +20,7 @@
     + Publier un trajet
   </button>
 </div>
+{% include 'gestion_trajets_offres/lecture_vocale.html' %}
 <section class="portal-card">
   <div class="portal-card-header">
     <h2 class="portal-card-title">Trajets enregistrés</h2>
@@ -52,6 +54,10 @@
           </td>
           <td>
             <div class="module-actions">
+              {% language 'fr' %}
+              <span id="lecture-trajet-{{ trajet.pk }}" hidden>Trajet de {{ trajet.depart_ville }} vers {{ trajet.arrivee_ville }}. Départ le {{ trajet.date_depart|date:"j F Y" }} à {{ trajet.date_depart|date:"H:i" }}. Véhicule : {{ trajet.vehicule }}. Capacité disponible : {{ trajet.capacite_kg }} kilogrammes et {{ trajet.volume_m3 }} mètres cubes. État : {{ trajet.get_statut_display }}.</span>
+              {% endlanguage %}
+              <button type="button" class="btn-secondary" data-lecture-cible="lecture-trajet-{{ trajet.pk }}" data-lecture-nom="ce trajet" aria-label="Écouter les détails du trajet de {{ trajet.depart_ville }} vers {{ trajet.arrivee_ville }}">Écouter les détails</button>
               <form
                 method="post"
                 action="{% url 'transporteur:trajet_rapport' trajet.pk %}"
@@ -97,4 +103,5 @@
 {% endblock %} {% block extra_js %}
 <script src="{% static 'gestion_trajets_offres/trajet.js' %}" defer></script>
 <script src="{% static 'gestion_trajets_offres/rapport.js' %}" defer></script>
+<script src="{% static 'gestion_trajets_offres/lecture_vocale.js' %}" defer></script>
 {% endblock %}
