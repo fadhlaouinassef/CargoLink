@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 
+from authentification.decorators import role_or_anonymous_required
+from authentification.models import User
 from demandes.models import DemandeTransport
 from demandes.views import _owned_demands
 from .decorators import transporteur_required
@@ -74,7 +76,9 @@ def _verifier_offre_acceptation(demande, offre):
 
 def _demandes():
     return DemandeTransport.objects.filter(
-        statut=DemandeTransport.Statut.OUVERTE
+        statut=DemandeTransport.Statut.OUVERTE,
+    ).filter(
+        Q(created_by__isnull=True) | Q(created_by__role=User.Role.PME)
     ).exclude(offres_transport__statut=OffreTransport.Statut.ACCEPTEE).select_related('created_by').prefetch_related('marchandises')
 
 
@@ -157,6 +161,7 @@ def _popup(request, context, status=200):
     return JsonResponse({'html': html}, status=status)
 
 
+@role_or_anonymous_required(User.Role.PME)
 @require_GET
 def demande_offres(request, pk):
     demande = get_object_or_404(_owned_demands(request), pk=pk)
@@ -170,6 +175,7 @@ def _offres_popup(request, demande):
     return JsonResponse({'html': html})
 
 
+@role_or_anonymous_required(User.Role.PME)
 @require_POST
 def accepter_offre(request, pk, offre_pk):
     with transaction.atomic():

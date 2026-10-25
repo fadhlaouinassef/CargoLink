@@ -236,7 +236,7 @@ class GestionTrajetsTests(TestCase):
         self.assertNotIn('<script>', html)
         self.assertEqual(self.client.post(url).status_code, 405)
         self.client.force_login(self.other)
-        self.assertEqual(self.client.get(url).status_code, 404)
+        self.assertEqual(self.client.get(url).status_code, 403)
         self.client.logout()
         self.assertEqual(self.client.get(url).status_code, 404)
 
@@ -308,7 +308,7 @@ class GestionTrajetsTests(TestCase):
             transporteur=self.carrier, demande=self.demande, trajet=self.trajet, prix=200,
         )
         url = reverse('pme:accepter_offre', args=[self.demande.pk, offre.pk])
-        self.assertEqual(self.client.post(url).status_code, 404)
+        self.assertEqual(self.client.post(url).status_code, 403)
         self.client.logout()
         self.assertEqual(self.client.post(url).status_code, 404)
         self.client.force_login(self.pme)

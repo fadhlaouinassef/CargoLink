@@ -24,3 +24,35 @@
 
 /* Mode contraste lisible : le texte d'exemple des champs reste lisible (les couleurs des textes sont corrigées par le script). */
 html.a11y-contraste ::placeholder { color: #4a4a4a !important; opacity: 1 !important; }
+
+.a11y-help-container { position: relative; }
+.a11y-help-label {
+  display: inline-block !important;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.a11y-help-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; margin: 0 0 0 6px; padding: 0;
+  border: 1px solid #496b58; border-radius: 50%;
+  background: #fff; color: #254735; font: 700 14px/1 system-ui, sans-serif;
+  vertical-align: middle; cursor: help;
+}
+.a11y-help-button:hover, .a11y-help-button:focus-visible,
+.a11y-help-button[aria-expanded="true"] { background: #254735; color: #fff; }
+.a11y-help-button:focus-visible { outline: 3px solid #dca565; outline-offset: 2px; }
+.a11y-help-tooltip {
+  position: absolute; z-index: 2147482999; top: calc(100% + 6px); left: 0;
+  display: none; width: max-content; max-width: min(300px, calc(100vw - 40px));
+  padding: 10px 12px; border: 1px solid #254735; border-radius: 8px;
+  background: #173a2c; color: #fff; font: 400 13px/1.45 system-ui, sans-serif;
+  white-space: normal; box-shadow: 0 4px 16px #0003;
+}
+.a11y-help-button:hover + .a11y-help-tooltip,
+.a11y-help-button:focus-visible + .a11y-help-tooltip,
+.a11y-help-button[aria-expanded="true"] + .a11y-help-tooltip { display: block; }
+html.a11y-contraste .a11y-help-tooltip { background: #000; color: #fff; border-color: #ffd54f; }
+@media (max-width: 520px) {
+  .a11y-help-tooltip { position: fixed; top: auto; left: 16px; right: 16px; bottom: 76px; width: auto; max-width: none; }
+}
+@media print { .a11y-help-button, .a11y-help-tooltip { display: none !important; } }

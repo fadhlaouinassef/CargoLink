@@ -53,6 +53,30 @@ class SuiviTransportTests(TestCase):
         self.assertNotContains(self.client.get(reverse('pme:transports_list')), str(transport))
         self.assertEqual(self.client.get(reverse('pme:transport_detail', args=[transport.pk])).status_code, 404)
 
+    def test_authenticated_pme_does_not_inherit_guest_session_transports(self):
+        self.client.force_login(self.pme)
+        session_key = self.client.session.session_key
+        guest_demand = DemandeTransport.objects.create(
+            owner_session=session_key, depart_ville='Tunis', depart_adresse='Dépôt invité',
+            date_depart=timezone.now().date(), arrivee_ville='Gabès', arrivee_adresse='Dépôt invité',
+            date_limite=timezone.now().date() + timedelta(days=1),
+            destinataire_nom='Invité', destinataire_contact='Contact', destinataire_tel='12345678',
+        )
+        guest_trajet = Trajet.objects.create(
+            transporteur=self.carrier, depart_ville='Tunis', arrivee_ville='Gabès',
+            date_depart=timezone.now() + timedelta(days=1), vehicule='INVITE',
+            capacite_kg=1000, volume_m3=10,
+        )
+        guest_offre = OffreTransport.objects.create(
+            transporteur=self.carrier, demande=guest_demand, trajet=guest_trajet, prix=200,
+            statut=OffreTransport.Statut.ACCEPTEE,
+        )
+        transport = guest_offre.transport_suivi
+
+        response = self.client.get(reverse('pme:transports_list'))
+        self.assertNotContains(response, str(transport))
+        self.assertEqual(response.context['transports'].count(), 0)
+
     def test_transport_can_be_deleted_only_by_its_carrier_before_tracking(self):
         transport = Transport.objects.create(offre=self.offre)
         self.client.force_login(self.other_pme)
