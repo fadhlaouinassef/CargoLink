@@ -4,13 +4,15 @@ import mimetypes
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Count, Q, Sum
 from django.http import FileResponse, Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
 
-from gestion_trajets_offres.models import Trajet
+from demandes.models import DemandeTransport
+from gestion_trajets_offres.models import OffreTransport, Trajet
+from gestion_trajets_offres.views import _verifier_offre_acceptation
 
 from .forms import EvenementSuiviForm, IncidentTransportForm, TraitementIncidentForm
 from .models import EvenementSuivi, HistoriqueIncident, IncidentTransport, Transport
@@ -239,9 +241,120 @@ def pme_detail(request, pk):
     transport = get_object_or_404(
         pme_transports(request).prefetch_related('incidents__historique__auteur'), pk=pk,
     )
+    incident_remplacement = None
+    if (transport.statut != Transport.Statut.ANNULE
+            and not transport.date_confirmation_reception
+            and transport.offre.statut == OffreTransport.Statut.ACCEPTEE):
+        incident_remplacement = transport.incidents.filter(
+            categorie__in=[IncidentTransport.Categorie.ACCIDENT, IncidentTransport.Categorie.PANNE],
+        ).exclude(etat=IncidentTransport.Etat.RESOLU).first()
+    offres_recommandees = OffreTransport.objects.none()
+    if incident_remplacement:
+        marchandises = transport.demande.marchandises.aggregate(
+            poids_total=Sum('poids'), volume_total=Sum('volume'),
+            nombre=Count('pk'), volumes_renseignes=Count('volume'),
+        )
+        if marchandises['poids_total'] is not None:
+            offres_recommandees = OffreTransport.objects.filter(
+                demande=transport.demande,
+                statut=OffreTransport.Statut.REFUSEE,
+                trajet__statut=Trajet.Statut.PUBLIE,
+                trajet__depart_ville__iexact=transport.trajet.depart_ville.strip(),
+                trajet__arrivee_ville__iexact=transport.trajet.arrivee_ville.strip(),
+                trajet__date_depart__gte=timezone.now(),
+                trajet__capacite_kg__gte=marchandises['poids_total'],
+                transporteur__role='transporteur',
+                transport_suivi__isnull=True,
+            ).exclude(transporteur_id=transport.offre.transporteur_id)
+        if (marchandises['volume_total'] is not None
+                and marchandises['volumes_renseignes'] == marchandises['nombre']):
+            offres_recommandees = offres_recommandees.filter(
+                trajet__volume_m3__gte=marchandises['volume_total'],
+            )
+        offres_recommandees = offres_recommandees.select_related(
+            'transporteur', 'trajet',
+        ).order_by('trajet__date_depart', 'prix')[:5]
     return render(request, 'suivi_transport/pme_detail.html', {
         'active_tab': 'transports_list', 'transport': transport,
+        'incident_remplacement': incident_remplacement,
+        'offres_recommandees': offres_recommandees,
     })
+
+
+@_pme_access_required
+@require_POST
+def accepter_offre_remplacement(request, pk, offre_pk):
+    with transaction.atomic():
+        transport_actuel = get_object_or_404(
+            Transport.objects.select_for_update().select_related(
+                'offre__trajet', 'offre__transporteur',
+            ).filter(_pme_scope(request)),
+            pk=pk,
+        )
+        demande = get_object_or_404(
+            DemandeTransport.objects.select_for_update(),
+            pk=transport_actuel.offre.demande_id, created_by=request.user,
+        )
+        offre = get_object_or_404(
+            OffreTransport.objects.select_for_update(of=('self',)).select_related(
+                'trajet', 'transporteur',
+            ),
+            pk=offre_pk, demande=demande, statut=OffreTransport.Statut.REFUSEE,
+            transport_suivi__isnull=True,
+        )
+        incident_actif = transport_actuel.incidents.filter(
+            categorie__in=[IncidentTransport.Categorie.ACCIDENT, IncidentTransport.Categorie.PANNE],
+        ).exclude(etat=IncidentTransport.Etat.RESOLU).exists()
+        trajet_actuel = transport_actuel.trajet
+        meme_itineraire = (
+            offre.trajet.depart_ville.strip().casefold() == trajet_actuel.depart_ville.strip().casefold()
+            and offre.trajet.arrivee_ville.strip().casefold() == trajet_actuel.arrivee_ville.strip().casefold()
+        )
+        if (not incident_actif or transport_actuel.statut == Transport.Statut.ANNULE
+                or transport_actuel.date_confirmation_reception
+                or transport_actuel.offre.statut != OffreTransport.Statut.ACCEPTEE
+                or offre.transporteur_id == transport_actuel.offre.transporteur_id
+                or not meme_itineraire):
+            messages.error(request, 'Cette offre de remplacement ne peut plus être acceptée.')
+            return redirect('pme:transport_detail', pk=pk)
+
+        erreur = _verifier_offre_acceptation(demande, offre)
+        if erreur:
+            messages.error(request, erreur)
+            return redirect('pme:transport_detail', pk=pk)
+
+        ancien_transporteur = transport_actuel.offre.transporteur.full_name or transport_actuel.offre.transporteur.email
+        transport_actuel.statut = Transport.Statut.ANNULE
+        transport_actuel.save(update_fields=['statut', 'updated_at'])
+        EvenementSuivi.objects.create(
+            transport=transport_actuel,
+            statut=Transport.Statut.ANNULE,
+            titre='Transport annulé — remplacé après incident',
+            description='La PME a accepté une nouvelle offre de remplacement.',
+            cree_par=request.user,
+        )
+        transport_actuel.offre.statut = OffreTransport.Statut.REFUSEE
+        transport_actuel.offre.save(update_fields=['statut', 'updated_at'])
+        offre.statut = OffreTransport.Statut.ACCEPTEE
+        offre.save(update_fields=['statut', 'updated_at'])
+        nouveau_transport = Transport.objects.get(offre=offre)
+        evenement_nouveau_transport = EvenementSuivi.objects.filter(
+            transport=nouveau_transport,
+        ).latest('pk')
+        evenement_nouveau_transport.titre = 'Transport de remplacement planifie'
+        evenement_nouveau_transport.description = (
+            f'Ce transport remplace {transport_actuel} apres un incident. '
+            f'Offre de {offre.prix} TND acceptee par la PME.'
+        )
+        evenement_nouveau_transport.save(update_fields=['titre', 'description'])
+        evenement_annulation = EvenementSuivi.objects.filter(transport=transport_actuel).latest('pk')
+        evenement_annulation.description = (
+            f'Ancien transporteur : {ancien_transporteur}. Le transport de remplacement '
+            f'{nouveau_transport} a été accepté par la PME.'
+        )
+        evenement_annulation.save(update_fields=['description'])
+        messages.success(request, f'L’offre de remplacement a été acceptée. Le suivi continue sur {nouveau_transport}.')
+    return redirect('pme:transport_detail', pk=nouveau_transport.pk)
 
 
 @_pme_access_required

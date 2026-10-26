@@ -68,6 +68,24 @@
   </div>
 </section>
 
+{% if incident_remplacement %}
+<section class="portal-card incident-replacement-card" aria-labelledby="incident-replacement-title">
+  <div class="portal-card-header"><div><div class="portal-eyebrow">Remplacement suite &agrave; un incident</div><h2 class="portal-card-title" id="incident-replacement-title">Offres de transport sur le m&ecirc;me trajet</h2></div></div>
+  <p class="portal-input-hint">Ces offres tarif&eacute;es ont &eacute;t&eacute; soumises pour votre demande par d&#39;autres transporteurs. Accepter une offre annulera le transport actuel et ouvrira un nouveau suivi.</p>
+  {% if offres_recommandees %}<div class="incident-replacement-list">
+    {% for offre in offres_recommandees %}<article class="incident-replacement-item">
+      <div><span>Transporteur et v&eacute;hicule</span><strong>{{ offre.transporteur.full_name|default:offre.transporteur.email }}</strong><small>{{ offre.trajet.vehicule }}</small></div>
+      <div><span>D&eacute;part pr&eacute;vu</span><strong>{{ offre.trajet.date_depart|date:"d/m/Y H:i" }}</strong></div>
+      <div><span>Capacit&eacute; disponible</span><strong>{{ offre.trajet.capacite_kg|floatformat:0 }} kg / {{ offre.trajet.volume_m3|floatformat:1 }} m&sup3;</strong></div>
+      <div><span>Prix propos&eacute;</span><strong>{{ offre.prix }} TND</strong></div>
+      <form method="post" action="{% url 'pme:accepter_offre_remplacement' transport.pk offre.pk %}" onsubmit="return confirm('Accepter cette offre annulera le transport actuel et cr&eacute;era un nouveau suivi. Continuer ?');">
+        {% csrf_token %}<button class="btn-primary" type="submit">Accepter cette nouvelle offre</button>
+      </form>
+    </article>{% endfor %}
+  </div>{% else %}<p class="incident-replacement-empty">Aucune autre offre tarif&eacute;e n&#39;a &eacute;t&eacute; soumise pour le moment sur ce m&ecirc;me itin&eacute;raire.</p>{% endif %}
+</section>
+{% endif %}
+
 <section class="portal-card" style="margin-top: 1.5rem;">
   <div class="portal-card-header">
     <h2 class="portal-card-title">Historique du suivi</h2>

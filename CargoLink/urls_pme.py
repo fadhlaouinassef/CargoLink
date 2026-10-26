@@ -15,6 +15,7 @@ urlpatterns = [
     path('transports/', suivi_views.pme_list, name='transports_list'),
     path('transports/suivi/', suivi_views.pme_list, name='transport_suivi'),
     path('transports/<int:pk>/', suivi_views.pme_detail, name='transport_detail'),
+    path('transports/<int:pk>/offres/<int:offre_pk>/accepter-remplacement/', suivi_views.accepter_offre_remplacement, name='accepter_offre_remplacement'),
     path('transports/<int:pk>/confirmer/', suivi_views.confirmer_reception, name='confirmer_reception'),
     *pme_urls,
     *matching_urls,
