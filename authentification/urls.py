@@ -49,6 +49,10 @@ urlpatterns = [
     path('dashboard/transports/', suivi_views.admin_transports, name='admin_transports'),
     path('dashboard/transports/<int:pk>/', suivi_views.admin_transport_detail, name='admin_transport_detail'),
     path('dashboard/transports/<int:pk>/evenement/', suivi_views.admin_transport_event, name='admin_transport_event'),
+    path('dashboard/incidents/', suivi_views.admin_incidents, name='admin_incidents'),
+    path('dashboard/incidents/<int:pk>/', suivi_views.admin_incident_detail, name='admin_incident_detail'),
+    path('dashboard/incidents/<int:pk>/traitement/', suivi_views.admin_incident_update, name='admin_incident_update'),
+    path('incidents/<int:pk>/photo/', suivi_views.photo_incident, name='incident_photo'),
     path(
         'dashboard/transports/<int:pk>/evenement/<int:event_pk>/modifier/',
         suivi_views.admin_transport_event_edit,

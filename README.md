@@ -132,6 +132,26 @@ EMAIL_HOST_PASSWORD=votre-mot-de-passe-application
 
 Sans identifiants, les e-mails sont affichés dans la console de développement. Le fichier `.env` est exclu du suivi Git.
 
+### Configuration des services IA et de la base de données
+
+Les services IA sont appelés uniquement côté serveur. Ajouter leurs identifiants dans
+`.env` sans les inclure dans le dépôt :
+
+```dotenv
+GROQ_API_KEY=votre-cle-groq
+MODERATION_SEUIL=0.4
+GEMINI_API_KEY=votre-cle-gemini
+GEMINI_MODEL=gemini-3.5-flash-lite
+IA_TIMEOUT_SECONDS=15
+GEMINI_RAPPORT_API_KEY=votre-cle-gemini-rapport
+GEMINI_RAPPORT_MODEL=gemini-3.1-flash-lite
+```
+
+Pour utiliser PostgreSQL, renseigner également `PGHOST`, `PGDATABASE`, `PGUSER`,
+`PGPASSWORD` et `PGPORT`. En leur absence, le projet utilise SQLite pour le
+développement local. `DJANGO_SECRET_KEY` est obligatoire et `DJANGO_DEBUG=true`
+est réservé au développement.
+
 ## Organisation du projet
 
 ```text

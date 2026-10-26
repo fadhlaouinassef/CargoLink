@@ -1,0 +1,30 @@
+{% extends 'transporteur/base.html' %}
+{% block title %}Signaler un incident · CargoLink{% endblock %}
+{% block breadcrumb %}
+<a href="{% url 'transporteur:transports' %}">Suivi des transports</a>
+<span>/</span><a href="{% url 'transporteur:transport_detail' transport.pk %}">{{ transport }}</a>
+<span>/</span><span class="current">Signaler un incident</span>
+{% endblock %}
+{% block content %}
+<div class="portal-page-header">
+  <div><div class="portal-eyebrow">Suivi et sécurité</div><h1 class="portal-page-title">Signaler un incident</h1>
+    <p class="portal-page-subtitle">{{ transport }} · {{ transport.trajet.depart_ville }} → {{ transport.trajet.arrivee_ville }}</p></div>
+</div>
+<section class="portal-card incident-form-card">
+  <div class="portal-card-header"><h2 class="portal-card-title">Décrivez la situation</h2></div>
+  <p class="portal-input-hint">Le signalement sera transmis à l’administration et visible par la PME concernée. L’état du transport ne sera pas modifié.</p>
+  <form method="post" enctype="multipart/form-data" class="incident-form">
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}
+      <label class="portal-form-group incident-form-field incident-form-field-{{ field.name }}" for="{{ field.id_for_label }}">
+        <span class="portal-label">{{ field.label }}</span>
+        {{ field }}
+        {% if field.name == 'photo' %}<small class="portal-input-hint">JPEG, PNG ou WebP · 2 Mo maximum.</small>{% endif %}
+        {% for error in field.errors %}<span class="form-error" role="alert">{{ error }}</span>{% endfor %}
+      </label>
+    {% endfor %}
+    <div class="incident-form-actions"><a class="btn-secondary" href="{% url 'transporteur:transport_detail' transport.pk %}">Annuler</a><button class="btn-primary" type="submit">Envoyer le signalement</button></div>
+  </form>
+</section>
+{% endblock %}

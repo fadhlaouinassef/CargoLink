@@ -73,6 +73,16 @@
     <h2 class="portal-card-title">Historique du suivi</h2>
   </div>
   <div class="event-log-list">
+    {% for incident in transport.incidents.all %}
+    <div class="event-log-item incident-event-log">
+      <div class="event-log-time">{{ incident.created_at|date:"d/m/Y H:i" }} · Signalement transporteur</div>
+      <div class="event-log-title">{{ incident.get_categorie_display }} · <span class="badge badge-danger">Incident signalé</span></div>
+      <p class="incident-log-state">Résolution : <span class="badge {{ incident.badge_class }}">{{ incident.get_etat_display }}</span> · Priorité : {{ incident.get_priorite_display }}</p>
+      <p class="event-log-desc">{{ incident.description|linebreaksbr }}</p>
+      {% if incident.photo %}<a class="incident-photo-link" href="{% url 'authentification:incident_photo' incident.pk %}" target="_blank" rel="noopener"><img src="{% url 'authentification:incident_photo' incident.pk %}" alt="Photo de l’incident" loading="lazy"><span>Consulter la photo jointe</span></a>{% endif %}
+      <div class="incident-portal-history"><strong>Suivi de résolution</strong>{% for entry in incident.historique.all %}<div><span class="badge {% if entry.etat == 'resolu' %}badge-success{% elif entry.etat == 'en_cours' %}badge-pending{% else %}badge-danger{% endif %}">{{ entry.get_etat_display }}</span><time>{{ entry.created_at|date:"d/m/Y H:i" }}</time>{% if entry.commentaire %}<p>{{ entry.commentaire }}</p>{% endif %}</div>{% endfor %}</div>
+    </div>
+    {% endfor %}
     {% for event in transport.evenements.all %}
     <div class="event-log-item">
       <div class="event-log-time">
@@ -88,9 +98,8 @@
       <small class="module-small" style="color: var(--muted, #64748b);">Par {{ event.cree_par.full_name|default:event.cree_par.email }}</small>
       {% endif %}
     </div>
-    {% empty %}
-    <p>Aucun événement enregistré pour ce transport.</p>
     {% endfor %}
+    {% if not transport.incidents.all and not transport.evenements.all %}<p>Aucun événement ni incident enregistré pour ce transport.</p>{% endif %}
   </div>
 </section>
 {% endblock %}

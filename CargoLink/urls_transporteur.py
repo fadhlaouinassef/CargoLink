@@ -33,6 +33,7 @@ app_name = 'transporteur'
 urlpatterns = [
     path('transports/', suivi_views.transporteur_list, name='transports'),
     path('transports/<int:pk>/', suivi_views.transporteur_detail, name='transport_detail'),
+    path('transports/<int:pk>/incidents/nouveau/', suivi_views.signaler_incident, name='incident_create'),
     path('transports/<int:pk>/evenement/', suivi_views.ajouter_evenement, name='transport_evenement'),
     path('transports/<int:pk>/evenement/<int:event_pk>/modifier/', suivi_views.modifier_evenement, name='transport_evenement_edit'),
     path('transports/<int:pk>/evenement/<int:event_pk>/supprimer/', suivi_views.supprimer_evenement, name='transport_evenement_delete'),

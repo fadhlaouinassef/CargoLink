@@ -1,18 +1,19 @@
 from functools import wraps
+import mimetypes
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Q
-from django.http import Http404, HttpResponseForbidden
+from django.http import FileResponse, Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
 
 from gestion_trajets_offres.models import Trajet
 
-from .forms import EvenementSuiviForm
-from .models import EvenementSuivi, Transport
+from .forms import EvenementSuiviForm, IncidentTransportForm, TraitementIncidentForm
+from .models import EvenementSuivi, HistoriqueIncident, IncidentTransport, Transport
 
 
 def _role_required(role):
@@ -58,7 +59,6 @@ TRANSPORTEUR_EVENT_STATUSES = (
     Transport.Statut.PRIS_EN_CHARGE,
     Transport.Statut.EN_TRANSIT,
     Transport.Statut.ARRIVE,
-    Transport.Statut.INCIDENT,
     Transport.Statut.ANNULE,
 )
 
@@ -72,7 +72,9 @@ def _carrier_transport(request, pk, *, lock=False):
 
 def _sync_transport_status(transport):
     events = transport.evenements.order_by('date_evenement', 'pk')
-    latest = events.last()
+    # Ignore the legacy transport-status value `incident`; incidents now have
+    # their own resolution workflow and this value must not affect the route.
+    latest = events.exclude(statut='incident').last()
     transport.statut = latest.statut if latest else Transport.Statut.PLANIFIE
     if transport.date_confirmation_reception:
         transport.statut = Transport.Statut.LIVRE
@@ -139,8 +141,8 @@ def admin_transports(request):
         'active_transports': Transport.objects.exclude(
             statut__in=(Transport.Statut.LIVRE, Transport.Statut.ANNULE),
         ).count(),
-        'incident_transports': Transport.objects.filter(
-            statut=Transport.Statut.INCIDENT,
+        'incident_transports': IncidentTransport.objects.exclude(
+            etat=IncidentTransport.Etat.RESOLU,
         ).count(),
     })
 
@@ -234,7 +236,9 @@ def pme_list(request):
 
 @_pme_access_required
 def pme_detail(request, pk):
-    transport = get_object_or_404(pme_transports(request), pk=pk)
+    transport = get_object_or_404(
+        pme_transports(request).prefetch_related('incidents__historique__auteur'), pk=pk,
+    )
     return render(request, 'suivi_transport/pme_detail.html', {
         'active_tab': 'transports_list', 'transport': transport,
     })
@@ -283,7 +287,8 @@ def transporteur_list(request):
 def transporteur_detail(request, pk):
     transport = get_object_or_404(
         Transport.objects.select_related('offre__demande', 'offre__trajet', 'offre__transporteur')
-        .prefetch_related('evenements'), pk=pk, offre__transporteur=request.user,
+        .prefetch_related('evenements', 'incidents__historique__auteur'), pk=pk,
+        offre__transporteur=request.user,
     )
     return render(request, 'suivi_transport/transporteur_detail.html', {
         'active_tab': 'transports',
@@ -310,7 +315,8 @@ def ajouter_evenement(request, pk):
         if not form.is_valid():
             transport = get_object_or_404(
                 Transport.objects.select_related('offre__demande', 'offre__trajet', 'offre__transporteur')
-                .prefetch_related('evenements'), pk=pk, offre__transporteur=request.user,
+                .prefetch_related('evenements', 'incidents__historique__auteur'),
+                pk=pk, offre__transporteur=request.user,
             )
             return render(request, 'suivi_transport/transporteur_detail.html', {
                 'active_tab': 'transports', 'transport': transport, 'form': form,
@@ -355,11 +361,12 @@ def modifier_evenement(request, pk, event_pk):
                 return redirect('transporteur:transport_detail', pk=pk)
     if request.method == 'POST':
         messages.error(request, 'Les données de l’événement sont invalides.')
+    transport = Transport.objects.select_related(
+        'offre__demande', 'offre__trajet', 'offre__transporteur',
+    ).prefetch_related('evenements', 'incidents__historique__auteur').get(pk=pk)
     return render(request, 'suivi_transport/transporteur_detail.html', {
         'active_tab': 'transports',
-        'transport': Transport.objects.select_related(
-            'offre__demande', 'offre__trajet', 'offre__transporteur',
-        ).prefetch_related('evenements').get(pk=pk),
+        'transport': transport,
         'form': EvenementSuiviForm(
             initial={'statut': transport.statut,
                      'date_evenement': timezone.localtime().strftime('%Y-%m-%dT%H:%M')},
@@ -397,3 +404,150 @@ def supprimer_transport(request, pk):
     transport.delete()
     messages.success(request, 'Le transport planifié a été supprimé.')
     return redirect('transporteur:transports')
+
+
+@_role_required('transporteur')
+@require_http_methods(['GET', 'POST'])
+def signaler_incident(request, pk):
+    transport = _carrier_transport(request, pk)
+    if transport.date_confirmation_reception or transport.statut == Transport.Statut.ANNULE:
+        return HttpResponseForbidden('Un incident ne peut plus être signalé sur un transport clôturé.')
+
+    form = IncidentTransportForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            transport = _carrier_transport(request, pk, lock=True)
+            if transport.date_confirmation_reception or transport.statut == Transport.Statut.ANNULE:
+                return HttpResponseForbidden('Un incident ne peut plus être signalé sur un transport clôturé.')
+            incident = form.save(commit=False)
+            incident.transport = transport
+            incident.signale_par = request.user
+            incident.save()
+            HistoriqueIncident.objects.create(
+                incident=incident, etat=incident.etat, auteur=request.user,
+                commentaire='Incident signalé par le transporteur.',
+            )
+        messages.success(request, 'Votre incident a été signalé. Son suivi est disponible sur cette page.')
+        return redirect('transporteur:transport_detail', pk=pk)
+    return render(request, 'suivi_transport/incident_form.html', {
+        'transport': transport, 'form': form,
+    }, status=422 if request.method == 'POST' else 200)
+
+
+@_admin_required
+def admin_incidents(request):
+    incidents = IncidentTransport.objects.select_related(
+        'transport__offre__demande', 'transport__offre__trajet',
+        'transport__offre__transporteur', 'signale_par',
+    )
+    query = request.GET.get('q', '').strip()
+    etat = request.GET.get('etat', '').strip()
+    priorite = request.GET.get('priorite', '').strip()
+    categorie = request.GET.get('categorie', '').strip()
+    if query:
+        filtres = (
+            Q(description__icontains=query)
+            | Q(transport__offre__transporteur__full_name__icontains=query)
+            | Q(transport__offre__transporteur__email__icontains=query)
+            | Q(transport__offre__demande__arrivee_ville__icontains=query)
+        )
+        reference = query.upper().replace('TR-', '').replace('INC-', '').lstrip('#')
+        if reference.isdigit():
+            filtres |= Q(pk=int(reference)) | Q(transport_id=int(reference))
+        incidents = incidents.filter(filtres)
+    if etat in IncidentTransport.Etat.values:
+        incidents = incidents.filter(etat=etat)
+    if priorite in IncidentTransport.Priorite.values:
+        incidents = incidents.filter(priorite=priorite)
+    if categorie in IncidentTransport.Categorie.values:
+        incidents = incidents.filter(categorie=categorie)
+    return render(request, 'dashboard/admin-incidents.html', {
+        'incidents': incidents,
+        'query': query,
+        'selected_etat': etat,
+        'selected_etat_label': dict(IncidentTransport.Etat.choices).get(etat),
+        'selected_priorite': priorite,
+        'selected_priorite_label': dict(IncidentTransport.Priorite.choices).get(priorite),
+        'selected_categorie': categorie,
+        'selected_categorie_label': dict(IncidentTransport.Categorie.choices).get(categorie),
+        'etat_choices': IncidentTransport.Etat.choices,
+        'priorite_choices': IncidentTransport.Priorite.choices,
+        'categorie_choices': IncidentTransport.Categorie.choices,
+        'total_incidents': IncidentTransport.objects.count(),
+        'open_incidents': IncidentTransport.objects.exclude(etat=IncidentTransport.Etat.RESOLU).count(),
+        'urgent_incidents': IncidentTransport.objects.filter(
+            priorite=IncidentTransport.Priorite.URGENTE,
+        ).exclude(etat=IncidentTransport.Etat.RESOLU).count(),
+    })
+
+
+@_admin_required
+def admin_incident_detail(request, pk):
+    incident = get_object_or_404(
+        IncidentTransport.objects.select_related(
+            'transport__offre__demande', 'transport__offre__trajet',
+            'transport__offre__transporteur', 'signale_par',
+        ).prefetch_related('historique__auteur'), pk=pk,
+    )
+    return render(request, 'dashboard/admin-incident-detail.html', {
+        'incident': incident,
+        'form': TraitementIncidentForm(initial={'etat': incident.etat}),
+    })
+
+
+@_admin_required
+@require_POST
+def admin_incident_update(request, pk):
+    form = TraitementIncidentForm(request.POST)
+    if not form.is_valid():
+        incident = get_object_or_404(IncidentTransport, pk=pk)
+        return render(request, 'dashboard/admin-incident-detail.html', {
+            'incident': incident, 'form': form,
+        }, status=422)
+    with transaction.atomic():
+        incident = get_object_or_404(
+            IncidentTransport.objects.select_for_update().select_related(
+                'transport__offre__demande', 'transport__offre__trajet',
+                'transport__offre__transporteur', 'signale_par',
+            ).prefetch_related('historique__auteur'), pk=pk,
+        )
+        nouvel_etat = form.cleaned_data['etat']
+        commentaire = form.cleaned_data['commentaire'].strip()
+        ancien_etat = incident.etat
+        incident.etat = nouvel_etat
+        if nouvel_etat == IncidentTransport.Etat.RESOLU:
+            incident.resolved_at = incident.resolved_at or timezone.now()
+        else:
+            incident.resolved_at = None
+        incident.save(update_fields=['etat', 'resolved_at', 'updated_at'])
+        if ancien_etat != nouvel_etat or commentaire:
+            HistoriqueIncident.objects.create(
+                incident=incident, etat=nouvel_etat, commentaire=commentaire,
+                auteur=request.user,
+            )
+    messages.success(request, 'Le suivi de l’incident a été mis à jour.')
+    return redirect('authentification:admin_incident_detail', pk=pk)
+
+
+@login_required(login_url='authentification:login')
+def photo_incident(request, pk):
+    incident = get_object_or_404(
+        IncidentTransport.objects.select_related('transport__offre__demande', 'transport__offre__transporteur'),
+        pk=pk,
+    )
+    role = request.user.role
+    allowed = (
+        role == 'admin'
+        or (role == 'transporteur' and incident.transport.offre.transporteur_id == request.user.pk)
+        or (role == 'PME' and incident.transport.offre.demande.created_by_id == request.user.pk)
+    )
+    if not allowed:
+        raise Http404
+    if not incident.photo:
+        raise Http404
+    content_type = mimetypes.guess_type(incident.photo.name)[0] or 'application/octet-stream'
+    response = FileResponse(incident.photo.open('rb'), content_type=content_type)
+    response['Cache-Control'] = 'private, no-store'
+    response['X-Content-Type-Options'] = 'nosniff'
+    response['Content-Disposition'] = 'inline'
+    return response

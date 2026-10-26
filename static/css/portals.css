@@ -1071,3 +1071,46 @@ button {
     display: none;
   }
 }
+
+.incident-portal-card { margin-top: 1.5rem; }
+.incident-portal-heading { align-items: center; gap: 1rem; }
+.incident-portal-heading .btn-secondary { flex: none; }
+.incident-portal-list { display: grid; gap: 1rem; }
+.incident-portal-item { padding: 1.1rem 1.2rem; border: 1px solid var(--portal-border, #e2e8f0); border-radius: 10px; background: #fff; }
+.incident-portal-item-head, .incident-portal-item-head>div { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; }
+.incident-portal-item-head { justify-content: space-between; }
+.incident-portal-item>p { margin: .85rem 0 .55rem; white-space: normal; line-height: 1.65; }
+.incident-priority { display: inline-flex; align-items: center; padding: .25rem .65rem; border-radius: 999px; font-size: .75rem; font-weight: 700; }
+.incident-priority-low { background: #eef2f0; color: #52635a; }
+.incident-priority-normal { background: #eaf2e9; color: #315540; }
+.incident-priority-high { background: #fff0dc; color: #925b13; }
+.incident-priority-urgent { background: #fee2e2; color: #991b1b; }
+.incident-photo-link { display: flex; width: fit-content; align-items: center; gap: .7rem; margin-top: .8rem; color: var(--primary, #2a6049); font-size: .85rem; font-weight: 600; }
+.incident-photo-link img { width: 76px; height: 60px; object-fit: cover; border-radius: 7px; border: 1px solid var(--portal-border, #e2e8f0); }
+.incident-portal-history { display: grid; gap: .6rem; margin-top: 1rem; padding-top: .9rem; border-top: 1px solid var(--portal-border, #e2e8f0); }
+.incident-portal-history>div { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .35rem .6rem; }
+.incident-portal-history time { color: var(--muted, #64748b); font-size: .78rem; }
+.incident-portal-history p { grid-column: 1 / -1; margin: 0; color: var(--ink, #334155); font-size: .88rem; }
+.incident-form-card { max-width: 780px; }
+.incident-form-card>.portal-input-hint { margin: 0 1.25rem .75rem; font-size: .84rem; }
+.incident-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1rem; padding: .25rem 1.25rem 1.1rem; }
+.incident-form .portal-form-group { display: grid; gap: .35rem; margin: 0; }
+.incident-form-field-description, .incident-form-actions { grid-column: 1 / -1; }
+.incident-form .portal-input { min-height: 40px; padding: .55rem .7rem; font-size: .9rem; }
+.incident-form textarea.portal-input { min-height: 92px; resize: vertical; }
+.incident-form input[type=file] { padding: .45rem; }
+.incident-form .portal-input-hint { margin: 0; font-size: .76rem; }
+.incident-form-actions { display: flex; justify-content: flex-end; gap: .75rem; margin-top: .3rem; }
+.incident-tracking-header { flex-wrap: wrap; gap: .75rem; }
+.incident-tracking-header .portal-card-title { margin-right: auto; }
+.incident-log-state { margin: .55rem 0; color: var(--muted, #64748b); font-size: .85rem; }
+.incident-log-state .badge { margin-inline: .2rem; }
+@media (max-width: 600px) {
+  .incident-portal-heading { align-items: flex-start; flex-direction: column; }
+  .incident-tracking-header { align-items: flex-start; flex-direction: column; }
+  .incident-form-actions { flex-direction: column-reverse; }
+  .incident-form { grid-template-columns: 1fr; padding-inline: .25rem; }
+  .incident-form-field-description, .incident-form-actions { grid-column: auto; }
+  .incident-form-actions>* { width: 100%; text-align: center; }
+  .incident-portal-item { padding: .9rem; }
+}

@@ -173,6 +173,11 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# Les photos d'incident sont conservées dans le stockage média, mais servies
+# uniquement par la vue authentifiée `authentification:incident_photo`.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Gemini is called only from the server; never expose this key in browser code.
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '').strip()
 GEMINI_MODEL = os.environ.get('GEMINI_MODEL', '').strip() or 'gemini-2.5-flash'
