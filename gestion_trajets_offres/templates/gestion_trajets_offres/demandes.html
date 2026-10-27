@@ -25,15 +25,15 @@
 
 <section class="portal-card">
   <div class="portal-card-header">
-    <h2 class="portal-card-title">Demandes ouvertes</h2>
-    <span class="badge badge-active">{{ total_demandes }} disponible{{ total_demandes|pluralize }}</span>
+    <h2 class="portal-card-title">Demandes de transport</h2>
+    <span class="badge badge-active">{{ total_demandes }} demande{{ total_demandes|pluralize }}</span>
   </div>
   {% for demande in demandes %}
     <article class="available-demand-card">
       <div class="available-demand-summary">
         <div class="available-demand-heading">
           <strong>{{ demande }}</strong><span class="module-small">{{ demande.created_by.full_name|default:"PME / Expéditeur" }}</span>
-          <span class="badge badge-active">{{ demande.get_statut_display }}</span>
+          <span class="badge {% if demande.offre_acceptee_par_moi %}badge-offers{% else %}badge-active{% endif %}">{% if demande.offre_acceptee_par_moi %}Acceptée{% else %}{{ demande.get_statut_display }}{% endif %}</span>
         </div>
         <h3 class="available-demand-route">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</h3>
         <div class="available-demand-meta">

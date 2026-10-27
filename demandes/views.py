@@ -7,13 +7,14 @@ from urllib.request import Request, urlopen
 from django.contrib import messages
 from django.conf import settings
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Exists, OuterRef, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from authentification.decorators import role_or_anonymous_required
 from authentification.models import User
+from gestion_trajets_offres.models import OffreTransport
 from .forms import DemandeTransportForm, MarchandiseFormSet
 from .models import DemandeTransport
 
@@ -205,7 +206,11 @@ def demande_delete(request, pk):
 
 @role_or_anonymous_required(User.Role.PME)
 def demandes_list(request):
-    demandes = _owned_demands(request).prefetch_related('marchandises')
+    demandes = _owned_demands(request).prefetch_related('marchandises').annotate(
+        offre_acceptee=Exists(OffreTransport.objects.filter(
+            demande=OuterRef('pk'), statut=OffreTransport.Statut.ACCEPTEE,
+        )),
+    )
     query = request.GET.get('q', '').strip()
     statut = request.GET.get('status', '').strip()
     if query:
@@ -218,8 +223,12 @@ def demandes_list(request):
         if numeric_reference.isdigit():
             query_filter |= Q(pk=int(numeric_reference))
         demandes = demandes.filter(query_filter)
-    if statut in DemandeTransport.Statut.values:
+    if statut == 'acceptee':
+        demandes = demandes.filter(offre_acceptee=True)
+    elif statut in DemandeTransport.Statut.values:
         demandes = demandes.filter(statut=statut)
+        if statut == DemandeTransport.Statut.OUVERTE:
+            demandes = demandes.filter(offre_acceptee=False)
     return render(request, 'demandes/demandes_list.html', {
         'active_tab': 'demandes_list',
         'demandes': demandes,

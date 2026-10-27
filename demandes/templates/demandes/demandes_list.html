@@ -26,6 +26,7 @@
     <select id="demand-status" name="status" class="portal-select">
       <option value="">Tous les statuts</option>
       <option value="ouverte" {% if status == 'ouverte' %}selected{% endif %}>En recherche de transporteur</option>
+      <option value="acceptee" {% if status == 'acceptee' %}selected{% endif %}>Acceptée</option>
       <option value="brouillon" {% if status == 'brouillon' %}selected{% endif %}>Brouillon</option>
       <option value="masquee" {% if status == 'masquee' %}selected{% endif %}>Masquée par l’administration</option>
     </select>
@@ -39,7 +40,7 @@
     <div class="demand-list-main">
       <div class="demand-title-row">
         <strong>{{ demande }}</strong>
-        <span class="badge {% if demande.statut == 'ouverte' %}badge-active{% elif demande.statut == 'masquee' %}badge-pending{% else %}badge-offers{% endif %}">{{ demande.get_statut_display }}</span>
+        <span class="badge {% if demande.offre_acceptee %}badge-offers{% elif demande.statut == 'ouverte' %}badge-active{% elif demande.statut == 'masquee' %}badge-pending{% else %}badge-offers{% endif %}">{% if demande.offre_acceptee %}Acceptée{% else %}{{ demande.get_statut_display }}{% endif %}</span>
       </div>
       <p class="demand-route">{{ demande.depart_ville }} → {{ demande.arrivee_ville }}</p>
       <div class="demand-meta">

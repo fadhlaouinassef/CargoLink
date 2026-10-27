@@ -84,9 +84,24 @@ def _demandes():
 
 @transporteur_required
 def demandes(request):
-    items = _demandes().annotate(deja_postule=Exists(
-        OffreTransport.objects.filter(transporteur=request.user, demande=OuterRef('pk'))
-    ))
+    accepted_offers = OffreTransport.objects.filter(
+        demande=OuterRef('pk'), statut=OffreTransport.Statut.ACCEPTEE,
+    )
+    accepted_by_me = accepted_offers.filter(transporteur=request.user)
+    items = DemandeTransport.objects.filter(
+        statut=DemandeTransport.Statut.OUVERTE,
+    ).filter(
+        Q(created_by__isnull=True) | Q(created_by__role=User.Role.PME)
+    ).annotate(
+        has_accepted_offer=Exists(accepted_offers),
+        offre_acceptee_par_moi=Exists(accepted_by_me),
+    ).filter(
+        Q(has_accepted_offer=False) | Q(offre_acceptee_par_moi=True),
+    ).annotate(
+        deja_postule=Exists(
+            OffreTransport.objects.filter(transporteur=request.user, demande=OuterRef('pk'))
+        ),
+    ).select_related('created_by').prefetch_related('marchandises')
     query = request.GET.get('q', '').strip()
     if query:
         items = items.filter(
