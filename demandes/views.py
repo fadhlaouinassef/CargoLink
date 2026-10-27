@@ -31,12 +31,18 @@ def _owned_demands(request):
 
 @role_or_anonymous_required(User.Role.PME)
 def dashboard(request):
-    demandes = _owned_demands(request).prefetch_related('marchandises')
+    demandes = _owned_demands(request).prefetch_related('marchandises').annotate(
+        offre_acceptee=Exists(OffreTransport.objects.filter(
+            demande=OuterRef('pk'), statut=OffreTransport.Statut.ACCEPTEE,
+        )),
+    )
     return render(request, 'pme/dashboard.html', {
         'active_tab': 'dashboard',
         'demandes_recentes': demandes[:5],
         'total_demandes': demandes.count(),
-        'demandes_ouvertes': demandes.filter(statut=DemandeTransport.Statut.OUVERTE).count(),
+        'demandes_ouvertes': demandes.filter(
+            statut=DemandeTransport.Statut.OUVERTE, offre_acceptee=False,
+        ).count(),
         'brouillons': demandes.filter(statut=DemandeTransport.Statut.BROUILLON).count(),
     })
 

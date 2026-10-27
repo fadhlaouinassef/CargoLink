@@ -1,206 +1,38 @@
 {% extends 'destinataire/base.html' %}
-
-{% block title %}Suivi de votre livraison #TR-8842 | CargoLink{% endblock %}
-{% block breadcrumb %}
-<a href="{% url 'destinataire:dashboard' %}">Réceptions</a>
-<span>/</span>
-<span class="current">Suivi #TR-8842</span>
-{% endblock %}
+{% block title %}Suivi de mes livraisons | CargoLink{% endblock %}
+{% block breadcrumb %}<a href="{% url 'destinataire:dashboard' %}">Réceptions</a><span>/</span><span class="current">Suivi des livraisons</span>{% endblock %}
 
 {% block content %}
 <div class="portal-page-header">
   <div>
-    <div class="actor-flex-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-      <span class="portal-eyebrow">Module 4 : Gestion des transports et du suivi</span>
-      <span class="badge badge-active">Chauffeur en approche</span>
-    </div>
-    <h1 class="portal-page-title">Suivi de votre livraison #TR-8842</h1>
-    <p class="portal-page-subtitle">Expédiée par <strong>AgroMed Distribution SARL</strong> à destination de <strong>Huiles du Sud SARL (Sfax)</strong>.</p>
-  </div>
-  <div class="portal-header-actions">
-    <a href="{% url 'destinataire:confirmation' %}" class="btn-primary">
-      ✍️ Confirmer la réception à quai
-    </a>
+    <div class="portal-eyebrow">Réceptions et suivi</div>
+    <h1 class="portal-page-title">Suivi de mes livraisons</h1>
+    <p class="portal-page-subtitle">Consultez les étapes, la dernière position communiquée et confirmez une réception à destination.</p>
   </div>
 </div>
 
-<!-- Stepper Visuel de Suivi -->
-<div class="portal-card">
-  <div class="actor-flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-    <div>
-      <span style="font-size: 13px; color: var(--muted);">Progression du transport :</span>
-      <strong style="font-size: 17px; color: var(--green); display: block;">Étape 3 sur 5 : En approche de Sfax (~30 min restantes)</strong>
-    </div>
-    <div style="text-align: right;">
-      <span style="font-size: 13px; color: var(--muted);">Heure estimée d'arrivée à votre quai :</span>
-      <strong style="font-size: 18px; color: var(--ink); display: block;">Aujourd'hui à 15h15</strong>
-    </div>
+<section class="portal-card">
+  <div class="portal-card-header"><h2 class="portal-card-title">Transports adressés à votre attention</h2></div>
+  {% if transports %}
+  <div class="portal-table-wrap" tabindex="0" aria-label="Liste de vos livraisons">
+    <table class="portal-table">
+      <thead><tr><th>Transport</th><th>Itinéraire</th><th>Départ prévu</th><th>Transporteur</th><th>Statut</th><th>Suivi</th></tr></thead>
+      <tbody>
+      {% for transport in transports %}
+        <tr>
+          <td><strong>{{ transport }}</strong><small class="module-small" style="display:block">{{ transport.demande }}</small></td>
+          <td><strong>{{ transport.trajet.depart_ville }} → {{ transport.demande.arrivee_ville }}</strong><small class="module-small" style="display:block">{{ transport.demande.arrivee_adresse }}</small></td>
+          <td>{{ transport.trajet.date_depart|date:"d/m/Y H:i" }}</td>
+          <td>{{ transport.transporteur.full_name|default:transport.transporteur.email }}</td>
+          <td><span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span></td>
+          <td><a class="btn-secondary" href="{% url 'destinataire:suivi_detail' transport.pk %}">Voir le suivi</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
-
-  <div class="tracking-stepper">
-    <div class="tracking-stepper-inner">
-      <div class="stepper-progress-fill" style="width: 70%;"></div>
-
-      <!-- Étape 1 -->
-      <div class="stepper-step completed">
-        <div class="step-bubble">✓</div>
-        <div class="step-label">Expédition validée</div>
-        <div class="step-timestamp">21 Oct • 07h45</div>
-      </div>
-
-      <!-- Étape 2 -->
-      <div class="stepper-step completed">
-        <div class="step-bubble">✓</div>
-        <div class="step-label">Pris en charge au quai</div>
-        <div class="step-timestamp">21 Oct • 08h30</div>
-      </div>
-
-      <!-- Étape 3 (En cours) -->
-      <div class="stepper-step current">
-        <div class="step-bubble">🚚</div>
-        <div class="step-label">En approche de Sfax</div>
-        <div class="step-timestamp">Péage El Jem (13h42)</div>
-      </div>
-
-      <!-- Étape 4 -->
-      <div class="stepper-step">
-        <div class="step-bubble">📍</div>
-        <div class="step-label">Mise à quai</div>
-        <div class="step-timestamp">Prévu 15h15</div>
-      </div>
-
-      <!-- Étape 5 -->
-      <div class="stepper-step">
-        <div class="step-bubble">✍️</div>
-        <div class="step-label">Validation réception</div>
-        <div class="step-timestamp">Code ou Signature</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="actor-grid-detail" style="display: grid;  gap: 1.5rem;">
-  <!-- Détails Marchandises & Consignes -->
-  <div>
-    <!-- Marchandises attendues -->
-    <div class="portal-card">
-      <div class="portal-card-header">
-        <h2 class="portal-card-title">📦 Marchandises attendues (Entité Marchandise)</h2>
-      </div>
-
-      <div class="portal-table-wrap">
-        <table class="portal-table">
-          <thead>
-            <tr>
-              <th>Désignation</th>
-              <th>Conditionnement</th>
-              <th>Poids total</th>
-              <th>Volume</th>
-              <th>Consigne</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <strong>Palettes bouteilles huile d'olive vierge</strong>
-                <div style="font-size: 11px; color: var(--muted);">Lot N° LOT-2026-904</div>
-              </td>
-              <td>4 Palettes Euro (80x120)</td>
-              <td>1 850 kg</td>
-              <td>4.8 m³</td>
-              <td><span style="color: var(--warning); font-weight: 600;">⚠️ Fragile • Déchargement transpalette</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div style="margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: var(--radius-md); font-size: 13px;">
-        <strong style="color: var(--ink);">Instructions pour votre équipe de quai :</strong>
-        <p style="margin: 4px 0 0; color: var(--muted);">
-          Vérifier l'intégrité du filmage plastique des palettes et le calage avant déchargement. Déchargement via hayon élévateur au Quai N° 2.
-        </p>
-      </div>
-    </div>
-
-    <!-- Journal des événements -->
-    <div class="portal-card">
-      <div class="portal-card-header">
-        <h2 class="portal-card-title">📜 Historique des points d'étape (EvenementSuivi)</h2>
-      </div>
-
-      <div class="event-log-list">
-        <div class="event-log-item">
-          <div class="event-log-time">13h42 • El Jem</div>
-          <div class="event-log-title">Passage péage El Jem</div>
-          <p class="event-log-desc">Le chauffeur approche de la périphérie nord de Sfax.</p>
-        </div>
-        <div class="event-log-item">
-          <div class="event-log-time">11h15 • Enfidha</div>
-          <div class="event-log-title">Pause sécurité & Contrôle arrimage</div>
-          <p class="event-log-desc">Contrôle de stabilité de la cargaison effectué par le transporteur.</p>
-        </div>
-        <div class="event-log-item">
-          <div class="event-log-time">08h30 • Tunis</div>
-          <div class="event-log-title">Enlèvement effectué chez AgroMed Distribution</div>
-          <p class="event-log-desc">Palettes chargées et bon d'enlèvement émis.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Transporteur & Procédure de Réception -->
-  <div>
-    <!-- Transporteur -->
-    <div class="portal-card">
-      <div class="portal-card-header">
-        <h2 class="portal-card-title">🚚 Votre chauffeur livreur</h2>
-      </div>
-
-      <div class="actor-flex-row" style="display: flex; gap: 12px; align-items: center; margin-bottom: 1rem;">
-        <div class="carrier-avatar" style="width: 48px; height: 48px; background: var(--primary-light); color: var(--primary);">MT</div>
-        <div>
-          <strong style="font-size: 15px; color: var(--ink);">Mohamed Triki</strong>
-          <div style="font-size: 12px; color: var(--muted);">Express Sahel Transport</div>
-          <div style="font-size: 12px; color: var(--sand-dark);">★★★★★ 4.9/5 (42 livraisons)</div>
-        </div>
-      </div>
-
-      <div style="background: var(--bg); padding: 0.85rem; border-radius: var(--radius-md); font-size: 13px; line-height: 1.6; margin-bottom: 1rem;">
-        <div><strong>Véhicule :</strong> Isuzu NPR 3.5T (Immat: 184 TU 4920)</div>
-        <div><strong>Téléphone direct :</strong> <a href="tel:+21698223344" style="font-weight: 700;">+216 98 223 344</a></div>
-      </div>
-
-      <a href="tel:+21698223344" class="btn-secondary" style="width: 100%; justify-content: center; font-size: 13px;">
-        📞 Appeler le chauffeur
-      </a>
-    </div>
-
-    <!-- Sécurisation de la réception -->
-    <div class="portal-card" style="border: 1px solid var(--sand); background: var(--sand-light);">
-      <div class="portal-card-header" style="border-color: rgba(220,165,101,0.3);">
-        <h2 class="portal-card-title" style="color: var(--sand-dark);">🔑 Votre code de réception</h2>
-      </div>
-
-      <p style="font-size: 13px; color: var(--muted); margin-bottom: 1rem;">
-        Pour attester de la bonne réception physique des colis, vous devrez transmettre ce code secret au chauffeur ou signer directement sur sa tablette / votre écran.
-      </p>
-
-      <div style="background: #fff; border: 2px dashed var(--sand); padding: 12px; text-align: center; border-radius: var(--radius-md); margin-bottom: 1rem;">
-        <span style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 700; display: block; margin-bottom: 4px;">Code de décharge sécurisé</span>
-        <span style="font-size: 26px; font-weight: 800; font-family: var(--font-heading); color: var(--primary); letter-spacing: 4px;">842-190</span>
-      </div>
-
-      <a href="{% url 'destinataire:confirmation' %}" class="btn-sand" style="width: 100%; justify-content: center;">
-        Aller à l'écran de validation →
-      </a>
-    </div>
-
-    <!-- Signaler un problème -->
-    <div style="text-align: center; margin-top: 1rem;">
-      <a href="{% url 'destinataire:reclamation' %}" style="font-size: 12.5px; color: var(--error);">
-        ⚠️ Signaler un colis manquant ou endommagé
-      </a>
-    </div>
-  </div>
-</div>
+  {% else %}
+  <div class="demand-empty-state"><h3>Aucune livraison associée à votre compte</h3><p>Les transports où vous êtes indiqué comme contact de réception apparaîtront ici.</p></div>
+  {% endif %}
+</section>
 {% endblock %}

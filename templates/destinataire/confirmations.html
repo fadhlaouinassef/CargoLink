@@ -1,0 +1,11 @@
+{% extends 'destinataire/base.html' %}
+{% block title %}Confirmer une réception | CargoLink{% endblock %}
+{% block breadcrumb %}<a href="{% url 'destinataire:dashboard' %}">Réceptions</a><span>/</span><span class="current">Confirmer une réception</span>{% endblock %}
+{% block content %}
+<div class="portal-page-header"><div><div class="portal-eyebrow">Réception à quai</div><h1 class="portal-page-title">Confirmer une réception</h1><p class="portal-page-subtitle">Sélectionnez un transport arrivé pour consulter les détails et confirmer la livraison.</p></div></div>
+<section class="portal-card"><div class="portal-card-header"><h2 class="portal-card-title">Transports arrivés</h2></div>
+  {% for transport in arrived_transports %}
+    <article class="available-demand-card"><div class="available-demand-summary"><strong>{{ transport }}</strong><h3 class="available-demand-route">{{ transport.trajet.depart_ville }} → {{ transport.demande.arrivee_ville }}</h3><div class="available-demand-meta"><span>Transporteur : {{ transport.transporteur.full_name|default:transport.transporteur.email }}</span><span>Arrivée : {{ transport.date_arrivee|date:"d/m/Y H:i"|default:"En attente de confirmation" }}</span><span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span></div></div><div class="module-demand-actions"><a class="btn-secondary" href="{% url 'destinataire:suivi_detail' transport.pk %}">Voir le suivi</a>{% if not transport.date_confirmation_reception %}<form method="post" action="{% url 'destinataire:confirmer_reception' transport.pk %}">{% csrf_token %}<button class="btn-primary" type="submit">Confirmer la réception</button></form>{% else %}<span class="badge badge-success">Réception confirmée</span>{% endif %}</div></article>
+  {% empty %}<p>Aucune livraison arrivée n’attend votre confirmation.</p>{% endfor %}
+</section>
+{% endblock %}

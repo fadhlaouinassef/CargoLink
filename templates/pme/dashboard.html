@@ -53,7 +53,7 @@
                 {% endwith %}
               </td>
               <td>{{ demande.date_depart|date:"d/m/Y" }}</td>
-              <td><span class="badge {% if demande.statut == 'ouverte' %}badge-active{% else %}badge-offers{% endif %}">{{ demande.get_statut_display }}</span></td>
+              <td><span class="badge {% if demande.offre_acceptee %}badge-offers{% elif demande.statut == 'ouverte' %}badge-active{% else %}badge-offers{% endif %}">{% if demande.offre_acceptee %}Acceptée{% else %}{{ demande.get_statut_display }}{% endif %}</span></td>
               <td><a href="{% url 'pme:demande_detail_item' demande.pk %}" class="btn-secondary">Détail</a></td>
             </tr>
           {% endfor %}

@@ -1,0 +1,78 @@
+{% extends 'destinataire/base.html' %}
+{% block extra_head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% block title %}{{ transport }} · Suivi de livraison | CargoLink{% endblock %}
+{% block breadcrumb %}<a href="{% url 'destinataire:suivi' %}">Suivi des livraisons</a><span>/</span><span class="current">{{ transport }}</span>{% endblock %}
+
+{% block content %}
+<div class="portal-page-header">
+  <div>
+    <div class="portal-eyebrow">Suivi de votre livraison</div>
+    <h1 class="portal-page-title">{{ transport }} · {{ transport.trajet.depart_ville }} → {{ transport.demande.arrivee_ville }}</h1>
+    <p class="portal-page-subtitle">Transporteur : {{ transport.transporteur.full_name|default:transport.transporteur.email }} · départ prévu le {{ transport.trajet.date_depart|date:"d/m/Y à H:i" }}</p>
+  </div>
+  <span class="badge {{ transport.badge_class }}">{{ transport.get_statut_display }}</span>
+</div>
+
+<section class="portal-card">
+  <div class="portal-card-header"><h2 class="portal-card-title">Détails de la livraison</h2></div>
+  <div class="detail-grid">
+    <div><span class="detail-label">Contact de réception</span><strong>{{ transport.demande.destinataire_contact }}</strong></div>
+    <div><span class="detail-label">Destination</span><strong>{{ transport.demande.arrivee_ville }}</strong><small>{{ transport.demande.arrivee_adresse }}</small></div>
+    <div><span class="detail-label">Prise en charge</span><strong>{{ transport.date_prise_en_charge|date:"d/m/Y H:i"|default:"À venir" }}</strong></div>
+    <div><span class="detail-label">Arrivée</span><strong>{{ transport.date_arrivee|date:"d/m/Y H:i"|default:"À venir" }}</strong></div>
+  </div>
+  <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--portal-border,#e2e8f0)">
+    {% if transport.date_confirmation_reception %}
+      <p class="incident-log-state">Réception confirmée le {{ transport.date_confirmation_reception|date:"d/m/Y à H:i" }}.</p>
+    {% elif transport.statut == 'arrive' or transport.statut == 'livre' %}
+      <p>Le transporteur a indiqué que la marchandise est arrivée. Confirmez la réception après vérification à quai.</p>
+      <form method="post" action="{% url 'destinataire:confirmer_reception' transport.pk %}">{% csrf_token %}<button class="btn-primary" type="submit">Confirmer la réception</button></form>
+    {% else %}<p class="portal-input-hint">La confirmation sera disponible lorsque le transport sera signalé comme arrivé.</p>{% endif %}
+  </div>
+</section>
+
+<section class="portal-card" style="margin-top:1.5rem">
+  <div class="portal-card-header"><h2 class="portal-card-title">Dernière position connue</h2></div>
+  {% if latest_position %}
+    <div id="recipient-transport-map" data-lat="{{ latest_position.latitude }}" data-lng="{{ latest_position.longitude }}" style="height:320px;border-radius:8px;overflow:hidden"></div>
+    <p class="portal-input-hint" style="margin-top:.75rem">Position enregistrée le {{ latest_position.date|date:"d/m/Y à H:i" }}.</p>
+  {% else %}<p class="portal-input-hint">Aucune position n’a encore été enregistrée pour ce transport.</p>{% endif %}
+</section>
+
+<section class="portal-card" style="margin-top:1.5rem">
+  <div class="portal-card-header"><h2 class="portal-card-title">Historique du suivi</h2></div>
+  <div class="event-log-list">
+    {% for event in transport.evenements.all %}
+      <article class="event-log-item">
+        <div class="event-log-time">{{ event.date_evenement|date:"d/m/Y H:i" }}{% if event.lieu %} · {{ event.lieu }}{% endif %}</div>
+        <div class="event-log-title">{{ event.titre }} · <span class="badge {{ event.badge_class }}">{{ event.get_statut_display }}</span></div>
+        {% if event.description %}<p class="event-log-desc">{{ event.description|linebreaksbr }}</p>{% endif %}
+      </article>
+    {% endfor %}
+    {% for incident in transport.incidents.all %}
+      <article class="event-log-item incident-event-log">
+        <div class="event-log-time">{{ incident.created_at|date:"d/m/Y H:i" }} · Signalement transporteur</div>
+        <div class="event-log-title">{{ incident.get_categorie_display }} · <span class="badge badge-danger">Incident signalé</span></div>
+        <p class="incident-log-state">État : <span class="badge {{ incident.badge_class }}">{{ incident.get_etat_display }}</span> · Priorité : {{ incident.get_priorite_display }}</p>
+        <p class="event-log-desc">{{ incident.description|linebreaksbr }}</p>
+        <div class="incident-portal-history"><strong>Suivi de résolution</strong>{% for entry in incident.historique.all %}<div><span class="badge {% if entry.etat == 'resolu' %}badge-success{% elif entry.etat == 'en_cours' %}badge-pending{% else %}badge-danger{% endif %}">{{ entry.get_etat_display }}</span><time>{{ entry.created_at|date:"d/m/Y H:i" }}</time>{% if entry.commentaire %}<p>{{ entry.commentaire }}</p>{% endif %}</div>{% empty %}<small>Aucune mise à jour de résolution.</small>{% endfor %}</div>
+      </article>
+    {% endfor %}
+    {% if not transport.evenements.all and not transport.incidents.all %}<p>Aucun événement de suivi n’a encore été enregistré.</p>{% endif %}
+  </div>
+</section>
+<p style="margin-top:1rem"><a class="btn-secondary" href="{% url 'destinataire:suivi' %}">Retour à mes livraisons</a></p>
+{% endblock %}
+
+{% block extra_js %}
+{% if latest_position %}<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  (() => {
+    const element = document.getElementById('recipient-transport-map');
+    const lat = Number(element.dataset.lat), lng = Number(element.dataset.lng);
+    const map = L.map(element, {scrollWheelZoom: false}).setView([lat, lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
+    L.marker([lat, lng]).addTo(map);
+  })();
+</script>{% endif %}
+{% endblock %}
