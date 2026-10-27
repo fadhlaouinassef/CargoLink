@@ -1,5 +1,6 @@
 {% extends 'destinataire/base.html' %}
-{% block extra_head %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">{% endblock %}
+{% load static %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'vendor/leaflet/leaflet.css' %}">{% endblock %}
 {% block title %}{{ transport }} · Suivi de livraison | CargoLink{% endblock %}
 {% block breadcrumb %}<a href="{% url 'destinataire:suivi' %}">Suivi des livraisons</a><span>/</span><span class="current">{{ transport }}</span>{% endblock %}
 
@@ -65,7 +66,7 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if latest_position %}<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% if latest_position %}<script src="{% static 'vendor/leaflet/leaflet.js' %}"></script>
 <script>
   (() => {
     const element = document.getElementById('recipient-transport-map');

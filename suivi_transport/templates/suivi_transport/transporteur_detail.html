@@ -1,6 +1,7 @@
 {% extends 'transporteur/base.html' %}
+{% load static %}
 {% block extra_head %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{% static 'vendor/leaflet/leaflet.css' %}">
 {% endblock %}
 {% block title %}{{ transport }} · Suivi | CargoLink{% endblock %}
 {% block breadcrumb %}
@@ -176,7 +177,7 @@
 {% endif %}
 {% endblock %}
 {% block extra_js %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% static 'vendor/leaflet/leaflet.js' %}"></script>
 <script>
   (() => {
     const positionMap = document.getElementById('transport-position-map');
