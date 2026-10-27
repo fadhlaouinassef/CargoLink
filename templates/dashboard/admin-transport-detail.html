@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ transport }} · Suivi | CargoLink</title>
   <link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script src="{% static 'js/admin-dashboard.js' %}" defer></script>
 </head>
 <body>
@@ -82,6 +84,9 @@
 
             <section class="users-panel transport-events-panel">
               <div class="panel-heading"><div><h2>Historique des événements</h2><p>{{ transport.evenements.count }} événement{{ transport.evenements.count|pluralize }} enregistré{{ transport.evenements.count|pluralize }} pour ce transport.</p></div></div>
+              {% if latest_position %}
+              <div style="padding:1.25rem 1.5rem 0"><h3 style="margin:0 0 .75rem">Dernière position connue</h3><div class="admin-transport-map" data-lat="{{ latest_position.latitude }}" data-lng="{{ latest_position.longitude }}" style="height:280px;border-radius:8px;overflow:hidden"></div><p class="admin-event-author" style="margin-top:.75rem">Position enregistrée le {{ latest_position.date|date:"d/m/Y à H:i" }}.</p></div>
+              {% endif %}
               <div class="admin-event-list">
                 {% for event in transport.evenements.all %}
                   <article class="admin-event">
@@ -89,6 +94,7 @@
                     <div class="admin-event-content">
                       <div class="admin-event-heading"><div><strong>{{ event.titre }}</strong><span class="status-badge {{ event.badge_class }}">{{ event.get_statut_display }}</span></div><time datetime="{{ event.date_evenement|date:'c' }}">{{ event.date_evenement|date:"d/m/Y H:i" }}</time></div>
                       {% if event.lieu %}<p class="admin-event-location">⌖ {{ event.lieu }}</p>{% endif %}
+                      {% if event.latitude != None and event.longitude != None %}<div class="admin-transport-map" data-lat="{{ event.latitude }}" data-lng="{{ event.longitude }}" style="height:220px;border-radius:8px;overflow:hidden;margin:.75rem 0"></div>{% endif %}
                       {% if event.description %}<p class="admin-event-description">{{ event.description }}</p>{% endif %}
                       <small class="admin-event-author">Créé par {% if event.cree_par %}{{ event.cree_par.full_name|default:event.cree_par.email }}{% else %}Utilisateur supprimé{% endif %}</small>
                       <div class="row-actions admin-event-actions"><a class="secondary-button" href="{% url 'authentification:admin_transport_event_edit' transport.pk event.pk %}">Modifier</a><form method="post" action="{% url 'authentification:admin_transport_event_delete' transport.pk event.pk %}" onsubmit="return confirm('Supprimer cet événement ?');">{% csrf_token %}<button class="danger-button" type="submit">Supprimer</button></form></div>
@@ -127,5 +133,15 @@
       </main>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.admin-transport-map').forEach(function (element) {
+        var lat = Number(element.dataset.lat), lng = Number(element.dataset.lng);
+        var map = L.map(element, {scrollWheelZoom: false}).setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
+        L.marker([lat, lng]).addTo(map);
+      });
+    });
+  </script>
 </body>
 </html>

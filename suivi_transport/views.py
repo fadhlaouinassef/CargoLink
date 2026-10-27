@@ -1,11 +1,14 @@
 from functools import wraps
+import json
 import mimetypes
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Count, Q, Sum
-from django.http import FileResponse, Http404, HttpResponseForbidden
+from django.http import FileResponse, Http404, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
@@ -112,6 +115,37 @@ def _latest_position(transport):
     }
 
 
+def _reverse_geocode(latitude, longitude):
+    """Resolve coordinates through Nominatim from the server, with a short timeout."""
+    query = urlencode({
+        'format': 'jsonv2', 'lat': str(latitude), 'lon': str(longitude),
+        'zoom': 18, 'addressdetails': 1,
+    })
+    request = Request(
+        f'https://nominatim.openstreetmap.org/reverse?{query}',
+        headers={'User-Agent': 'CargoLink/1.0 (transport location lookup)'},
+    )
+    try:
+        with urlopen(request, timeout=3) as response:
+            data = json.loads(response.read().decode('utf-8'))
+        return data.get('name') or data.get('display_name', '')
+    except Exception:
+        return ''
+
+
+@_role_required('transporteur')
+@require_http_methods(['GET'])
+def transporteur_reverse_geocode(request):
+    try:
+        latitude = float(request.GET['lat'])
+        longitude = float(request.GET['lon'])
+        if not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+            raise ValueError
+    except (KeyError, TypeError, ValueError):
+        return JsonResponse({'lieu': ''}, status=400)
+    return JsonResponse({'lieu': _reverse_geocode(latitude, longitude)})
+
+
 def _admin_transports_queryset():
     return Transport.objects.select_related(
         'offre__demande', 'offre__trajet', 'offre__transporteur',
@@ -175,6 +209,7 @@ def admin_transport_detail(request, pk):
     transport = get_object_or_404(_admin_transports_queryset(), pk=pk)
     return render(request, 'dashboard/admin-transport-detail.html', {
         'transport': transport,
+        'latest_position': _latest_position(transport),
         'form': EvenementSuiviForm(initial={
             'statut': transport.statut,
             'date_evenement': timezone.localtime().strftime('%Y-%m-%dT%H:%M'),

@@ -31,6 +31,7 @@ from suivi_transport import views as suivi_views
 app_name = 'transporteur'
 
 urlpatterns = [
+    path('transports/geocodage-inverse/', suivi_views.transporteur_reverse_geocode, name='reverse_geocode'),
     path('transports/', suivi_views.transporteur_list, name='transports'),
     path('transports/<int:pk>/', suivi_views.transporteur_detail, name='transport_detail'),
     path('transports/<int:pk>/incidents/nouveau/', suivi_views.signaler_incident, name='incident_create'),

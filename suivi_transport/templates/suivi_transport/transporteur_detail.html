@@ -194,6 +194,7 @@
     if (!eventMapElement) return;
     const latitude = document.querySelector('[name="latitude"]');
     const longitude = document.querySelector('[name="longitude"]');
+    const place = document.querySelector('[name="lieu"]');
     const message = document.getElementById('event-position-message');
     const initialLat = Number(latitude.value) || 34;
     const initialLng = Number(longitude.value) || 9;
@@ -202,16 +203,26 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
     let marker;
-    const setPosition = (lat, lng) => {
+    const setPosition = (lat, lng, lookupPlace = false) => {
       latitude.value = lat.toFixed(6);
       longitude.value = lng.toFixed(6);
       if (marker) marker.setLatLng([lat, lng]);
       else marker = L.marker([lat, lng]).addTo(map);
       map.setView([lat, lng], 13);
       message.textContent = 'Position sélectionnée.';
+      if (lookupPlace && place) {
+        message.textContent = 'Position sélectionnée, recherche du lieu…';
+        fetch('{% url "transporteur:reverse_geocode" %}?lat=' + encodeURIComponent(lat) + '&lon=' + encodeURIComponent(lng))
+          .then((response) => response.ok ? response.json() : Promise.reject())
+          .then((data) => {
+            if (data.lieu) place.value = data.lieu.slice(0, 150);
+            message.textContent = data.lieu ? 'Lieu renseigné automatiquement.' : 'Position sélectionnée. Nom du lieu indisponible.';
+          })
+          .catch(() => { message.textContent = 'Position sélectionnée. Nom du lieu indisponible.'; });
+      }
     };
     if (latitude.value && longitude.value) setPosition(Number(latitude.value), Number(longitude.value));
-    map.on('click', (event) => setPosition(event.latlng.lat, event.latlng.lng));
+    map.on('click', (event) => setPosition(event.latlng.lat, event.latlng.lng, true));
     document.getElementById('use-event-position').addEventListener('click', () => {
       if (!navigator.geolocation) {
         message.textContent = 'La géolocalisation n’est pas disponible sur ce navigateur.';
@@ -219,7 +230,7 @@
       }
       message.textContent = 'Recherche de votre position…';
       navigator.geolocation.getCurrentPosition(
-        (position) => setPosition(position.coords.latitude, position.coords.longitude),
+        (position) => setPosition(position.coords.latitude, position.coords.longitude, true),
         (error) => {
           message.textContent = error.code === error.PERMISSION_DENIED
             ? 'Accès à votre position refusé. Autorisez la géolocalisation ou cliquez sur la carte.'

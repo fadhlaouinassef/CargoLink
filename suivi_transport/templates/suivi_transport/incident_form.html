@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 {% endblock %}
 {% block title %}Signaler un incident · CargoLink{% endblock %}
+{% block container_class %}incident-page-container{% endblock %}
 {% block breadcrumb %}
 <a href="{% url 'transporteur:transports' %}">Suivi des transports</a>
 <span>/</span><a href="{% url 'transporteur:transport_detail' transport.pk %}">{{ transport }}</a>
@@ -20,7 +21,7 @@
     {% csrf_token %}
     {% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
     <div id="incident-position-map" style="height: 280px; border-radius: 8px; overflow: hidden;"></div>
-    <div style="display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+    <div class="incident-position-controls" style="display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
       <button class="btn-secondary" type="button" id="use-incident-position">Utiliser ma position</button>
       <span id="incident-position-message" class="portal-input-hint" role="status">Cliquez sur la carte pour renseigner la position.</span>
     </div>
