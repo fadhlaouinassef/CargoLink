@@ -1,4 +1,7 @@
 {% extends 'pme/base.html' %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
 {% block title %}{{ transport }} · Suivi | CargoLink{% endblock %}
 {% block breadcrumb %}
 <a href="{% url 'pme:transports_list' %}">Suivi des transports</a>
@@ -68,6 +71,17 @@
   </div>
 </section>
 
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header"><h2 class="portal-card-title">Dernière position connue</h2></div>
+  {% if latest_position %}
+  <div id="transport-position-map" style="height: 280px; border-radius: 8px; overflow: hidden;"
+       data-lat="{{ latest_position.latitude }}" data-lng="{{ latest_position.longitude }}"></div>
+  <p class="portal-input-hint" style="margin-top: .75rem;">Position enregistrée le {{ latest_position.date|date:"d/m/Y à H:i" }}.</p>
+  {% else %}
+  <p class="portal-input-hint">Aucune position enregistrée.</p>
+  {% endif %}
+</section>
+
 {% if incident_remplacement %}
 <section class="portal-card incident-replacement-card" aria-labelledby="incident-replacement-title">
   <div class="portal-card-header"><div><div class="portal-eyebrow">Remplacement suite &agrave; un incident</div><h2 class="portal-card-title" id="incident-replacement-title">Offres de transport sur le m&ecirc;me trajet</h2></div></div>
@@ -120,4 +134,19 @@
     {% if not transport.incidents.all and not transport.evenements.all %}<p>Aucun événement ni incident enregistré pour ce transport.</p>{% endif %}
   </div>
 </section>
+{% endblock %}
+{% block extra_js %}
+{% if latest_position %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const positionMap = document.getElementById('transport-position-map');
+  const lat = Number(positionMap.dataset.lat);
+  const lng = Number(positionMap.dataset.lng);
+  const map = L.map(positionMap, {scrollWheelZoom: false}).setView([lat, lng], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker([lat, lng]).addTo(map);
+</script>
+{% endif %}
 {% endblock %}

@@ -13,17 +13,21 @@ class EvenementSuiviForm(forms.ModelForm):
 
     class Meta:
         model = EvenementSuivi
-        fields = ['statut', 'titre', 'lieu', 'description', 'date_evenement']
+        fields = ['statut', 'titre', 'lieu', 'latitude', 'longitude', 'description', 'date_evenement']
         labels = {
             'statut': 'Statut du transport',
             'titre': 'Titre de l’étape',
             'lieu': 'Lieu actuel',
+            'latitude': 'Latitude',
+            'longitude': 'Longitude',
             'description': 'Description / Observations',
             'date_evenement': 'Date et heure de l’événement',
         }
         widgets = {
             'titre': forms.TextInput(attrs={'placeholder': 'Ex. Prise en charge quai, Passage péage...', 'class': 'portal-input'}),
             'lieu': forms.TextInput(attrs={'placeholder': 'Ex. Tunis, Sousse, Sfax...', 'class': 'portal-input'}),
+            'latitude': forms.NumberInput(attrs={'class': 'portal-input', 'step': '0.000001', 'placeholder': 'Ex. 36.8065'}),
+            'longitude': forms.NumberInput(attrs={'class': 'portal-input', 'step': '0.000001', 'placeholder': 'Ex. 10.1815'}),
             'description': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Observations complémentaires...', 'class': 'portal-input'}),
         }
 
@@ -39,6 +43,18 @@ class EvenementSuiviForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'portal-input')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        latitude = cleaned_data.get('latitude')
+        longitude = cleaned_data.get('longitude')
+        if (latitude is None) != (longitude is None):
+            raise forms.ValidationError('Renseignez la latitude et la longitude ensemble.')
+        if latitude is not None and not -90 <= latitude <= 90:
+            self.add_error('latitude', 'La latitude doit être comprise entre -90 et 90.')
+        if longitude is not None and not -180 <= longitude <= 180:
+            self.add_error('longitude', 'La longitude doit être comprise entre -180 et 180.')
+        return cleaned_data
+
 
 class IncidentTransportForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -48,11 +64,13 @@ class IncidentTransportForm(forms.ModelForm):
 
     class Meta:
         model = IncidentTransport
-        fields = ['categorie', 'description', 'priorite', 'photo']
+        fields = ['categorie', 'description', 'priorite', 'latitude', 'longitude', 'photo']
         labels = {
             'categorie': 'Catégorie de l’incident',
             'description': 'Description',
             'priorite': 'Priorité',
+            'latitude': 'Latitude',
+            'longitude': 'Longitude',
             'photo': 'Photo (facultative)',
         }
         widgets = {
@@ -62,6 +80,8 @@ class IncidentTransportForm(forms.ModelForm):
                 'placeholder': 'Décrivez les faits, le lieu et les conséquences constatées…',
             }),
             'priorite': forms.Select(attrs={'class': 'portal-input'}),
+            'latitude': forms.NumberInput(attrs={'class': 'portal-input', 'step': '0.000001', 'placeholder': 'Ex. 36.8065'}),
+            'longitude': forms.NumberInput(attrs={'class': 'portal-input', 'step': '0.000001', 'placeholder': 'Ex. 10.1815'}),
             'photo': forms.ClearableFileInput(attrs={'class': 'portal-input', 'accept': 'image/jpeg,image/png,image/webp'}),
         }
 
@@ -70,6 +90,25 @@ class IncidentTransportForm(forms.ModelForm):
         if len(description) < 10:
             raise forms.ValidationError('Ajoutez quelques précisions (10 caractères minimum).')
         return description
+
+    def clean(self):
+        cleaned_data = super().clean()
+        latitude = cleaned_data.get('latitude')
+        longitude = cleaned_data.get('longitude')
+        if (latitude is None) != (longitude is None):
+            raise forms.ValidationError('Renseignez la latitude et la longitude ensemble.')
+        if cleaned_data.get('categorie') in {
+            IncidentTransport.Categorie.ACCIDENT,
+            IncidentTransport.Categorie.PANNE,
+        } and (latitude is None or longitude is None):
+            raise forms.ValidationError(
+                'La position est obligatoire pour un accident ou une panne.',
+            )
+        if latitude is not None and not -90 <= latitude <= 90:
+            self.add_error('latitude', 'La latitude doit être comprise entre -90 et 90.')
+        if longitude is not None and not -180 <= longitude <= 180:
+            self.add_error('longitude', 'La longitude doit être comprise entre -180 et 180.')
+        return cleaned_data
 
 
 class TraitementIncidentForm(forms.Form):

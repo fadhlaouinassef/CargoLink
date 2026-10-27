@@ -1,4 +1,7 @@
 {% extends 'transporteur/base.html' %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{% endblock %}
 {% block title %}{{ transport }} · Suivi | CargoLink{% endblock %}
 {% block breadcrumb %}
 <a href="{% url 'transporteur:transports' %}">Suivi des transports</a>
@@ -54,6 +57,17 @@
       <strong>{{ transport.date_confirmation_reception|date:"d/m/Y à H:i"|default:"En attente de confirmation PME" }}</strong>
     </div>
   </div>
+</section>
+
+<section class="portal-card" style="margin-top: 1.5rem;">
+  <div class="portal-card-header"><h2 class="portal-card-title">Dernière position connue</h2></div>
+  {% if latest_position %}
+  <div id="transport-position-map" style="height: 280px; border-radius: 8px; overflow: hidden;"
+       data-lat="{{ latest_position.latitude }}" data-lng="{{ latest_position.longitude }}"></div>
+  <p class="portal-input-hint" style="margin-top: .75rem;">Position enregistrée le {{ latest_position.date|date:"d/m/Y à H:i" }}.</p>
+  {% else %}
+  <p class="portal-input-hint">Aucune position enregistrée.</p>
+  {% endif %}
 </section>
 
 <section class="portal-card" style="margin-top: 1.5rem;">
@@ -123,6 +137,11 @@
   </div>
   <form method="post" action="{% url 'transporteur:transport_evenement' transport.pk %}">
     {% csrf_token %}
+    <div id="event-position-map" style="height: 280px; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;"></div>
+    <div style="display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+      <button class="btn-secondary" type="button" id="use-event-position">Utiliser ma position</button>
+      <span id="event-position-message" class="portal-input-hint" role="status">Cliquez sur la carte pour renseigner la position.</span>
+    </div>
     <div class="form-grid-2">
       {% for field in form %}
       <label class="portal-form-group">
@@ -155,4 +174,60 @@
   </form>
 </section>
 {% endif %}
+{% endblock %}
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  (() => {
+    const positionMap = document.getElementById('transport-position-map');
+    if (positionMap) {
+      const map = L.map(positionMap, {scrollWheelZoom: false}).setView(
+        [Number(positionMap.dataset.lat), Number(positionMap.dataset.lng)], 13
+      );
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([Number(positionMap.dataset.lat), Number(positionMap.dataset.lng)]).addTo(map);
+    }
+
+    const eventMapElement = document.getElementById('event-position-map');
+    if (!eventMapElement) return;
+    const latitude = document.querySelector('[name="latitude"]');
+    const longitude = document.querySelector('[name="longitude"]');
+    const message = document.getElementById('event-position-message');
+    const initialLat = Number(latitude.value) || 34;
+    const initialLng = Number(longitude.value) || 9;
+    const map = L.map(eventMapElement).setView([initialLat, initialLng], latitude.value && longitude.value ? 13 : 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    let marker;
+    const setPosition = (lat, lng) => {
+      latitude.value = lat.toFixed(6);
+      longitude.value = lng.toFixed(6);
+      if (marker) marker.setLatLng([lat, lng]);
+      else marker = L.marker([lat, lng]).addTo(map);
+      map.setView([lat, lng], 13);
+      message.textContent = 'Position sélectionnée.';
+    };
+    if (latitude.value && longitude.value) setPosition(Number(latitude.value), Number(longitude.value));
+    map.on('click', (event) => setPosition(event.latlng.lat, event.latlng.lng));
+    document.getElementById('use-event-position').addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        message.textContent = 'La géolocalisation n’est pas disponible sur ce navigateur.';
+        return;
+      }
+      message.textContent = 'Recherche de votre position…';
+      navigator.geolocation.getCurrentPosition(
+        (position) => setPosition(position.coords.latitude, position.coords.longitude),
+        (error) => {
+          message.textContent = error.code === error.PERMISSION_DENIED
+            ? 'Accès à votre position refusé. Autorisez la géolocalisation ou cliquez sur la carte.'
+            : 'Impossible de récupérer votre position. Cliquez sur la carte pour la renseigner.';
+        },
+        {enableHighAccuracy: true, timeout: 10000}
+      );
+    });
+  })();
+</script>
 {% endblock %}

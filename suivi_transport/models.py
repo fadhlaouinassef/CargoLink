@@ -67,6 +67,8 @@ class EvenementSuivi(models.Model):
     titre = models.CharField(max_length=150)
     description = models.TextField(blank=True, max_length=2000)
     lieu = models.CharField(max_length=150, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     date_evenement = models.DateTimeField(default=timezone.now)
     cree_par = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
@@ -125,6 +127,8 @@ class IncidentTransport(models.Model):
     categorie = models.CharField(max_length=20, choices=Categorie.choices)
     description = models.TextField(max_length=3000)
     priorite = models.CharField(max_length=10, choices=Priorite.choices, default=Priorite.NORMALE)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     photo = models.ImageField(
         upload_to='incidents-transport/', blank=True,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp']), validate_photo_size],

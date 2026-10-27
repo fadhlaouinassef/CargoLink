@@ -91,6 +91,27 @@ def _sync_transport_status(transport):
     ])
 
 
+def _latest_position(transport):
+    positions = [
+        (event.date_evenement, event)
+        for event in transport.evenements.all()
+        if event.latitude is not None and event.longitude is not None
+    ]
+    positions.extend(
+        (incident.created_at, incident)
+        for incident in transport.incidents.all()
+        if incident.latitude is not None and incident.longitude is not None
+    )
+    if not positions:
+        return None
+    date_position, position = max(positions, key=lambda item: item[0])
+    return {
+        'latitude': position.latitude,
+        'longitude': position.longitude,
+        'date': date_position,
+    }
+
+
 def _admin_transports_queryset():
     return Transport.objects.select_related(
         'offre__demande', 'offre__trajet', 'offre__transporteur',
@@ -278,6 +299,7 @@ def pme_detail(request, pk):
         'active_tab': 'transports_list', 'transport': transport,
         'incident_remplacement': incident_remplacement,
         'offres_recommandees': offres_recommandees,
+        'latest_position': _latest_position(transport),
     })
 
 
@@ -406,6 +428,7 @@ def transporteur_detail(request, pk):
     return render(request, 'suivi_transport/transporteur_detail.html', {
         'active_tab': 'transports',
         'transport': transport,
+        'latest_position': _latest_position(transport),
         'form': EvenementSuiviForm(initial={
             'statut': transport.statut,
             'date_evenement': timezone.localtime().strftime('%Y-%m-%dT%H:%M'),
