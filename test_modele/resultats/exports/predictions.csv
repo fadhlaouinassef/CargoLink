@@ -1,0 +1,3001 @@
+﻿ensemble,demande_id,offre_id,pertinent_reel,score,pertinent_predit,motifs_exclusion
+train,SHP_0003,OFF-SHP_0003-0,0,,,Véhicule indisponible
+train,SHP_0003,OFF-SHP_0003-1,0,0.26331195267215785,0.0,
+train,SHP_0003,OFF-SHP_0003-2,0,0.11912984151501789,0.0,
+train,SHP_0003,OFF-SHP_0003-3,1,0.45612742013284924,0.0,
+train,SHP_0003,OFF-SHP_0003-4,0,0.20445255987106717,0.0,
+train,SHP_0003,OFF-SHP_0003-5,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-6,0,0.45578266386027155,0.0,
+train,SHP_0003,OFF-SHP_0003-7,0,0.19735506364080405,0.0,
+train,SHP_0003,OFF-SHP_0003-8,0,0.16342462567037377,0.0,
+train,SHP_0003,OFF-SHP_0003-9,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-10,0,0.09618678078736881,0.0,
+train,SHP_0003,OFF-SHP_0003-11,0,,,Capacité en poids insuffisante
+train,SHP_0003,OFF-SHP_0003-12,1,0.3989926462938385,0.0,
+train,SHP_0003,OFF-SHP_0003-13,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-14,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-15,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-16,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-17,1,0.3915198227499584,0.0,
+train,SHP_0003,OFF-SHP_0003-18,1,0.32168013849313826,0.0,
+train,SHP_0003,OFF-SHP_0003-19,1,0.33007411999773745,0.0,
+train,SHP_0003,OFF-SHP_0003-20,0,0.4227043651435826,0.0,
+train,SHP_0003,OFF-SHP_0003-21,1,0.4059450232055357,0.0,
+train,SHP_0003,OFF-SHP_0003-22,0,,,Capacité en volume insuffisante
+train,SHP_0003,OFF-SHP_0003-23,0,0.07118009581834114,0.0,
+train,SHP_0003,OFF-SHP_0003-24,0,0.3368203794610023,0.0,
+train,SHP_0003,OFF-SHP_0003-25,0,0.3694630912089176,0.0,
+train,SHP_0003,OFF-SHP_0003-26,0,0.437050529095492,0.0,
+train,SHP_0003,OFF-SHP_0003-27,0,0.210029154954809,0.0,
+train,SHP_0003,OFF-SHP_0003-28,1,0.5782800080770469,1.0,
+train,SHP_0003,OFF-SHP_0003-29,0,0.18055140384326893,0.0,
+train,SHP_0004,OFF-SHP_0004-0,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0004,OFF-SHP_0004-1,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-2,0,,,Capacité en poids insuffisante
+train,SHP_0004,OFF-SHP_0004-3,0,0.23039214808188735,0.0,
+train,SHP_0004,OFF-SHP_0004-4,1,0.7048498589645414,1.0,
+train,SHP_0004,OFF-SHP_0004-5,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-6,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-7,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-8,0,,,Véhicule indisponible
+train,SHP_0004,OFF-SHP_0004-9,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-10,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-11,0,0.34126996199397297,0.0,
+train,SHP_0004,OFF-SHP_0004-12,0,0.2075664634135344,0.0,
+train,SHP_0004,OFF-SHP_0004-13,0,,,Capacité en poids insuffisante
+train,SHP_0004,OFF-SHP_0004-14,0,0.2886886365101834,0.0,
+train,SHP_0004,OFF-SHP_0004-15,0,0.22445539738847492,0.0,
+train,SHP_0004,OFF-SHP_0004-16,1,0.46031813634540664,0.0,
+train,SHP_0004,OFF-SHP_0004-17,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-18,1,0.4445964711469319,0.0,
+train,SHP_0004,OFF-SHP_0004-19,0,,,Capacité en volume insuffisante
+train,SHP_0004,OFF-SHP_0004-20,1,0.5836442765808895,1.0,
+train,SHP_0004,OFF-SHP_0004-21,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0004,OFF-SHP_0004-22,1,0.5774139645178515,1.0,
+train,SHP_0004,OFF-SHP_0004-23,0,0.509263529139874,1.0,
+train,SHP_0004,OFF-SHP_0004-24,0,,,Capacité en poids insuffisante
+train,SHP_0004,OFF-SHP_0004-25,1,0.5304087860831567,1.0,
+train,SHP_0004,OFF-SHP_0004-26,0,0.42089535769187086,0.0,
+train,SHP_0004,OFF-SHP_0004-27,0,0.09999581268258241,0.0,
+train,SHP_0004,OFF-SHP_0004-28,0,0.3441367960947719,0.0,
+train,SHP_0004,OFF-SHP_0004-29,0,0.5213644814650038,1.0,
+train,SHP_0006,OFF-SHP_0006-0,0,0.4195910694640308,0.0,
+train,SHP_0006,OFF-SHP_0006-1,0,,,Capacité en volume insuffisante
+train,SHP_0006,OFF-SHP_0006-2,0,,,Capacité en volume insuffisante
+train,SHP_0006,OFF-SHP_0006-3,1,0.4997044771811154,1.0,
+train,SHP_0006,OFF-SHP_0006-4,0,0.2671975501824292,0.0,
+train,SHP_0006,OFF-SHP_0006-5,0,,,Véhicule indisponible
+train,SHP_0006,OFF-SHP_0006-6,0,0.23416744994901306,0.0,
+train,SHP_0006,OFF-SHP_0006-7,1,0.6235182488021738,1.0,
+train,SHP_0006,OFF-SHP_0006-8,0,,,Marchandise incompatible
+train,SHP_0006,OFF-SHP_0006-9,0,,,Capacité en poids insuffisante
+train,SHP_0006,OFF-SHP_0006-10,0,0.25079952653390314,0.0,
+train,SHP_0006,OFF-SHP_0006-11,1,0.4614236370572659,0.0,
+train,SHP_0006,OFF-SHP_0006-12,1,0.35349747197520803,0.0,
+train,SHP_0006,OFF-SHP_0006-13,0,,,Marchandise incompatible
+train,SHP_0006,OFF-SHP_0006-14,1,0.555603363230467,1.0,
+train,SHP_0006,OFF-SHP_0006-15,0,0.3870495605836806,0.0,
+train,SHP_0006,OFF-SHP_0006-16,0,0.14670886378714462,0.0,
+train,SHP_0006,OFF-SHP_0006-17,1,0.5737571284178533,1.0,
+train,SHP_0006,OFF-SHP_0006-18,0,,,Capacité en poids insuffisante
+train,SHP_0006,OFF-SHP_0006-19,0,0.40472857950726193,0.0,
+train,SHP_0006,OFF-SHP_0006-20,0,,,Capacité en volume insuffisante
+train,SHP_0006,OFF-SHP_0006-21,0,0.3103775649020527,0.0,
+train,SHP_0006,OFF-SHP_0006-22,1,0.5660821900424771,1.0,
+train,SHP_0006,OFF-SHP_0006-23,0,,,Capacité en volume insuffisante
+train,SHP_0006,OFF-SHP_0006-24,0,,,Marchandise incompatible
+train,SHP_0006,OFF-SHP_0006-25,0,,,Marchandise incompatible
+train,SHP_0006,OFF-SHP_0006-26,0,,,Marchandise incompatible
+train,SHP_0006,OFF-SHP_0006-27,0,0.1250878334088784,0.0,
+train,SHP_0006,OFF-SHP_0006-28,0,0.24893514404650027,0.0,
+train,SHP_0006,OFF-SHP_0006-29,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0008,OFF-SHP_0008-0,0,0.5061507647846109,1.0,
+train,SHP_0008,OFF-SHP_0008-1,0,0.17599919317899884,0.0,
+train,SHP_0008,OFF-SHP_0008-2,0,0.2922622439965205,0.0,
+train,SHP_0008,OFF-SHP_0008-3,0,0.3500084793950122,0.0,
+train,SHP_0008,OFF-SHP_0008-4,0,,,Capacité en poids insuffisante
+train,SHP_0008,OFF-SHP_0008-5,0,0.0827067830540898,0.0,
+train,SHP_0008,OFF-SHP_0008-6,0,0.13026569656065284,0.0,
+train,SHP_0008,OFF-SHP_0008-7,0,0.5702547493469708,1.0,
+train,SHP_0008,OFF-SHP_0008-8,1,0.7137539053651094,1.0,
+train,SHP_0008,OFF-SHP_0008-9,0,0.311719362734206,0.0,
+train,SHP_0008,OFF-SHP_0008-10,0,0.2135475983065292,0.0,
+train,SHP_0008,OFF-SHP_0008-11,0,0.1955407531450123,0.0,
+train,SHP_0008,OFF-SHP_0008-12,0,,,Capacité en volume insuffisante
+train,SHP_0008,OFF-SHP_0008-13,1,0.41515870147570655,0.0,
+train,SHP_0008,OFF-SHP_0008-14,0,0.3685398561098074,0.0,
+train,SHP_0008,OFF-SHP_0008-15,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0008,OFF-SHP_0008-16,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0008,OFF-SHP_0008-17,1,0.5171541619721084,1.0,
+train,SHP_0008,OFF-SHP_0008-18,0,0.4361781184075277,0.0,
+train,SHP_0008,OFF-SHP_0008-19,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0008,OFF-SHP_0008-20,0,0.2534069363997494,0.0,
+train,SHP_0008,OFF-SHP_0008-21,0,0.517172309462075,1.0,
+train,SHP_0008,OFF-SHP_0008-22,0,0.491951515790406,1.0,
+train,SHP_0008,OFF-SHP_0008-23,0,,,Capacité en poids insuffisante
+train,SHP_0008,OFF-SHP_0008-24,0,0.5847530035037403,1.0,
+train,SHP_0008,OFF-SHP_0008-25,0,,,Capacité en poids insuffisante
+train,SHP_0008,OFF-SHP_0008-26,0,0.2401730281613563,0.0,
+train,SHP_0008,OFF-SHP_0008-27,0,0.27144749399444545,0.0,
+train,SHP_0008,OFF-SHP_0008-28,0,0.18344487509245722,0.0,
+train,SHP_0008,OFF-SHP_0008-29,0,0.10023591963518268,0.0,
+train,SHP_0009,OFF-SHP_0009-0,0,0.5002688503180407,1.0,
+train,SHP_0009,OFF-SHP_0009-1,0,0.2023509651845539,0.0,
+train,SHP_0009,OFF-SHP_0009-2,0,,,Capacité en volume insuffisante
+train,SHP_0009,OFF-SHP_0009-3,1,0.24650988582156305,0.0,
+train,SHP_0009,OFF-SHP_0009-4,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0009,OFF-SHP_0009-5,0,0.4666982303469598,0.0,
+train,SHP_0009,OFF-SHP_0009-6,0,,,Capacité en volume insuffisante
+train,SHP_0009,OFF-SHP_0009-7,0,0.16700415196879617,0.0,
+train,SHP_0009,OFF-SHP_0009-8,1,0.6473771515585582,1.0,
+train,SHP_0009,OFF-SHP_0009-9,1,0.3011991339598964,0.0,
+train,SHP_0009,OFF-SHP_0009-10,0,,,Trajet incompatible
+train,SHP_0009,OFF-SHP_0009-11,0,0.5282715637917254,1.0,
+train,SHP_0009,OFF-SHP_0009-12,0,,,Capacité en volume insuffisante
+train,SHP_0009,OFF-SHP_0009-13,0,0.26501245772710147,0.0,
+train,SHP_0009,OFF-SHP_0009-14,0,,,Capacité en poids insuffisante
+train,SHP_0009,OFF-SHP_0009-15,0,0.4849943452262853,1.0,
+train,SHP_0009,OFF-SHP_0009-16,0,,,Capacité en poids insuffisante
+train,SHP_0009,OFF-SHP_0009-17,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0009,OFF-SHP_0009-18,1,0.3311725216120058,0.0,
+train,SHP_0009,OFF-SHP_0009-19,0,,,Marchandise incompatible
+train,SHP_0009,OFF-SHP_0009-20,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0009,OFF-SHP_0009-21,0,0.20747707503916746,0.0,
+train,SHP_0009,OFF-SHP_0009-22,0,0.20315652679046248,0.0,
+train,SHP_0009,OFF-SHP_0009-23,0,,,Trajet incompatible
+train,SHP_0009,OFF-SHP_0009-24,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0009,OFF-SHP_0009-25,0,0.4587297900724221,0.0,
+train,SHP_0009,OFF-SHP_0009-26,0,0.1747694862574774,0.0,
+train,SHP_0009,OFF-SHP_0009-27,1,0.27364883931880535,0.0,
+train,SHP_0009,OFF-SHP_0009-28,0,,,Capacité en poids insuffisante
+train,SHP_0009,OFF-SHP_0009-29,1,0.47627308103175275,0.0,
+train,SHP_0010,OFF-SHP_0010-0,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-1,1,0.6961174454619677,1.0,
+train,SHP_0010,OFF-SHP_0010-2,1,0.7205891759374677,1.0,
+train,SHP_0010,OFF-SHP_0010-3,0,,,Capacité en poids insuffisante
+train,SHP_0010,OFF-SHP_0010-4,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-5,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-6,0,,,Véhicule indisponible ; Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-7,0,0.2390601202073034,0.0,
+train,SHP_0010,OFF-SHP_0010-8,1,0.5846401128681548,1.0,
+train,SHP_0010,OFF-SHP_0010-9,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-10,0,,,Capacité en poids insuffisante
+train,SHP_0010,OFF-SHP_0010-11,0,,,Véhicule indisponible ; Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-12,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-13,1,0.6370810400423433,1.0,
+train,SHP_0010,OFF-SHP_0010-14,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-15,1,0.5103605483974836,1.0,
+train,SHP_0010,OFF-SHP_0010-16,1,0.6317942849338366,1.0,
+train,SHP_0010,OFF-SHP_0010-17,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0010,OFF-SHP_0010-18,0,,,Véhicule indisponible ; Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-19,0,,,Capacité en volume insuffisante
+train,SHP_0010,OFF-SHP_0010-20,0,0.17822139088530028,0.0,
+train,SHP_0010,OFF-SHP_0010-21,0,0.48567993027454315,1.0,
+train,SHP_0010,OFF-SHP_0010-22,0,,,Créneau incompatible
+train,SHP_0010,OFF-SHP_0010-23,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-24,1,0.5775090067309079,1.0,
+train,SHP_0010,OFF-SHP_0010-25,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-26,0,,,Capacité en poids insuffisante
+train,SHP_0010,OFF-SHP_0010-27,0,,,Budget strict dépassé
+train,SHP_0010,OFF-SHP_0010-28,0,0.2958351645370072,0.0,
+train,SHP_0010,OFF-SHP_0010-29,1,0.5321640866623474,1.0,
+train,SHP_0012,OFF-SHP_0012-0,0,0.48298963550036184,1.0,
+train,SHP_0012,OFF-SHP_0012-1,0,0.2128502722070888,0.0,
+train,SHP_0012,OFF-SHP_0012-2,0,,,Capacité en poids insuffisante
+train,SHP_0012,OFF-SHP_0012-3,0,,,Capacité en poids insuffisante
+train,SHP_0012,OFF-SHP_0012-4,1,0.4342129429682759,0.0,
+train,SHP_0012,OFF-SHP_0012-5,0,0.20097997690717437,0.0,
+train,SHP_0012,OFF-SHP_0012-6,0,,,Capacité en volume insuffisante
+train,SHP_0012,OFF-SHP_0012-7,0,,,Capacité en volume insuffisante
+train,SHP_0012,OFF-SHP_0012-8,1,0.5574627109823015,1.0,
+train,SHP_0012,OFF-SHP_0012-9,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0012,OFF-SHP_0012-10,1,0.31463602963065357,0.0,
+train,SHP_0012,OFF-SHP_0012-11,0,0.19701983073829535,0.0,
+train,SHP_0012,OFF-SHP_0012-12,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0012,OFF-SHP_0012-13,0,0.21501426195652087,0.0,
+train,SHP_0012,OFF-SHP_0012-14,0,0.3089312721286499,0.0,
+train,SHP_0012,OFF-SHP_0012-15,1,0.35630471263679997,0.0,
+train,SHP_0012,OFF-SHP_0012-16,0,0.49155965098314847,1.0,
+train,SHP_0012,OFF-SHP_0012-17,0,0.2068439236370836,0.0,
+train,SHP_0012,OFF-SHP_0012-18,1,0.3860685643663314,0.0,
+train,SHP_0012,OFF-SHP_0012-19,0,0.1932863272557463,0.0,
+train,SHP_0012,OFF-SHP_0012-20,0,,,Trajet incompatible
+train,SHP_0012,OFF-SHP_0012-21,0,,,Capacité en volume insuffisante
+train,SHP_0012,OFF-SHP_0012-22,1,0.4766954043222893,0.0,
+train,SHP_0012,OFF-SHP_0012-23,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0012,OFF-SHP_0012-24,0,,,Capacité en volume insuffisante
+train,SHP_0012,OFF-SHP_0012-25,0,,,Véhicule indisponible
+train,SHP_0012,OFF-SHP_0012-26,0,,,Créneau incompatible
+train,SHP_0012,OFF-SHP_0012-27,0,0.3114050192178349,0.0,
+train,SHP_0012,OFF-SHP_0012-28,1,0.32253924458953304,0.0,
+train,SHP_0012,OFF-SHP_0012-29,1,0.40723759032615703,0.0,
+train,SHP_0014,OFF-SHP_0014-0,0,0.3496042008159515,0.0,
+train,SHP_0014,OFF-SHP_0014-1,0,,,Capacité en poids insuffisante
+train,SHP_0014,OFF-SHP_0014-2,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0014,OFF-SHP_0014-3,0,,,Capacité en poids insuffisante
+train,SHP_0014,OFF-SHP_0014-4,0,0.3148435597550288,0.0,
+train,SHP_0014,OFF-SHP_0014-5,0,0.13055301927389457,0.0,
+train,SHP_0014,OFF-SHP_0014-6,0,0.31028767913196836,0.0,
+train,SHP_0014,OFF-SHP_0014-7,1,0.5166205482805754,1.0,
+train,SHP_0014,OFF-SHP_0014-8,1,0.3262710971699661,0.0,
+train,SHP_0014,OFF-SHP_0014-9,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+train,SHP_0014,OFF-SHP_0014-10,0,0.1639442933926666,0.0,
+train,SHP_0014,OFF-SHP_0014-11,0,0.5098831668053264,1.0,
+train,SHP_0014,OFF-SHP_0014-12,0,,,Marchandise incompatible
+train,SHP_0014,OFF-SHP_0014-13,1,0.3635279765387677,0.0,
+train,SHP_0014,OFF-SHP_0014-14,0,,,Marchandise incompatible
+train,SHP_0014,OFF-SHP_0014-15,0,0.12913695906301798,0.0,
+train,SHP_0014,OFF-SHP_0014-16,0,,,Capacité en poids insuffisante
+train,SHP_0014,OFF-SHP_0014-17,0,,,Véhicule indisponible
+train,SHP_0014,OFF-SHP_0014-18,0,0.4228169563479488,0.0,
+train,SHP_0014,OFF-SHP_0014-19,1,0.20721284968237227,0.0,
+train,SHP_0014,OFF-SHP_0014-20,0,,,Capacité en poids insuffisante
+train,SHP_0014,OFF-SHP_0014-21,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0014,OFF-SHP_0014-22,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0014,OFF-SHP_0014-23,0,,,Marchandise incompatible
+train,SHP_0014,OFF-SHP_0014-24,0,,,Marchandise incompatible
+train,SHP_0014,OFF-SHP_0014-25,0,,,Capacité en volume insuffisante
+train,SHP_0014,OFF-SHP_0014-26,0,0.33528320841237974,0.0,
+train,SHP_0014,OFF-SHP_0014-27,0,0.4664540873143223,0.0,
+train,SHP_0014,OFF-SHP_0014-28,0,0.19813414428854462,0.0,
+train,SHP_0014,OFF-SHP_0014-29,1,0.5972321479465702,1.0,
+train,SHP_0016,OFF-SHP_0016-0,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0016,OFF-SHP_0016-1,0,,,Marchandise incompatible
+train,SHP_0016,OFF-SHP_0016-2,0,,,Capacité en volume insuffisante
+train,SHP_0016,OFF-SHP_0016-3,1,0.6376382451225527,1.0,
+train,SHP_0016,OFF-SHP_0016-4,0,,,Trajet incompatible
+train,SHP_0016,OFF-SHP_0016-5,0,,,Capacité en poids insuffisante
+train,SHP_0016,OFF-SHP_0016-6,0,,,Capacité en volume insuffisante
+train,SHP_0016,OFF-SHP_0016-7,0,,,Capacité en volume insuffisante
+train,SHP_0016,OFF-SHP_0016-8,0,0.1444840468802597,0.0,
+train,SHP_0016,OFF-SHP_0016-9,0,0.1417376886291723,0.0,
+train,SHP_0016,OFF-SHP_0016-10,0,,,Trajet incompatible
+train,SHP_0016,OFF-SHP_0016-11,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0016,OFF-SHP_0016-12,1,0.5783158059741388,1.0,
+train,SHP_0016,OFF-SHP_0016-13,0,0.10696922774543456,0.0,
+train,SHP_0016,OFF-SHP_0016-14,0,0.3396915771080035,0.0,
+train,SHP_0016,OFF-SHP_0016-15,0,0.08008460497115476,0.0,
+train,SHP_0016,OFF-SHP_0016-16,0,0.25462655766414494,0.0,
+train,SHP_0016,OFF-SHP_0016-17,1,0.4911785952542258,1.0,
+train,SHP_0016,OFF-SHP_0016-18,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0016,OFF-SHP_0016-19,0,0.2817850643990247,0.0,
+train,SHP_0016,OFF-SHP_0016-20,0,,,Marchandise incompatible
+train,SHP_0016,OFF-SHP_0016-21,1,0.5928897545252161,1.0,
+train,SHP_0016,OFF-SHP_0016-22,0,,,Capacité en poids insuffisante
+train,SHP_0016,OFF-SHP_0016-23,0,0.32863441132683113,0.0,
+train,SHP_0016,OFF-SHP_0016-24,1,0.5381593173720745,1.0,
+train,SHP_0016,OFF-SHP_0016-25,1,0.48854134921443715,1.0,
+train,SHP_0016,OFF-SHP_0016-26,0,0.27773643891223765,0.0,
+train,SHP_0016,OFF-SHP_0016-27,0,0.09626240179654318,0.0,
+train,SHP_0016,OFF-SHP_0016-28,0,0.3321831598156747,0.0,
+train,SHP_0016,OFF-SHP_0016-29,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0018,OFF-SHP_0018-0,1,0.37764745215365897,0.0,
+train,SHP_0018,OFF-SHP_0018-1,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0018,OFF-SHP_0018-2,0,0.1774288439112841,0.0,
+train,SHP_0018,OFF-SHP_0018-3,0,,,Capacité en volume insuffisante ; Créneau incompatible ; Marchandise incompatible
+train,SHP_0018,OFF-SHP_0018-4,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0018,OFF-SHP_0018-5,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0018,OFF-SHP_0018-6,1,0.34352733085090637,0.0,
+train,SHP_0018,OFF-SHP_0018-7,0,0.36955879135322034,0.0,
+train,SHP_0018,OFF-SHP_0018-8,0,0.42391142225192413,0.0,
+train,SHP_0018,OFF-SHP_0018-9,1,0.5724346500428555,1.0,
+train,SHP_0018,OFF-SHP_0018-10,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0018,OFF-SHP_0018-11,0,0.3527361755464181,0.0,
+train,SHP_0018,OFF-SHP_0018-12,0,0.259103462127543,0.0,
+train,SHP_0018,OFF-SHP_0018-13,0,0.15281712206573952,0.0,
+train,SHP_0018,OFF-SHP_0018-14,0,0.15120731605345314,0.0,
+train,SHP_0018,OFF-SHP_0018-15,0,0.3912961564752021,0.0,
+train,SHP_0018,OFF-SHP_0018-16,0,0.3257363523451351,0.0,
+train,SHP_0018,OFF-SHP_0018-17,0,,,Capacité en poids insuffisante
+train,SHP_0018,OFF-SHP_0018-18,0,,,Capacité en poids insuffisante
+train,SHP_0018,OFF-SHP_0018-19,0,0.3349075656641406,0.0,
+train,SHP_0018,OFF-SHP_0018-20,1,0.5401611994777247,1.0,
+train,SHP_0018,OFF-SHP_0018-21,1,0.4363687560933058,0.0,
+train,SHP_0018,OFF-SHP_0018-22,0,0.31623963949263,0.0,
+train,SHP_0018,OFF-SHP_0018-23,0,,,Capacité en volume insuffisante
+train,SHP_0018,OFF-SHP_0018-24,0,,,Capacité en volume insuffisante
+train,SHP_0018,OFF-SHP_0018-25,1,0.39954678706831653,0.0,
+train,SHP_0018,OFF-SHP_0018-26,0,0.20842706153527366,0.0,
+train,SHP_0018,OFF-SHP_0018-27,0,,,Capacité en poids insuffisante
+train,SHP_0018,OFF-SHP_0018-28,1,0.2612362842486055,0.0,
+train,SHP_0018,OFF-SHP_0018-29,0,0.18391395502990965,0.0,
+train,SHP_0020,OFF-SHP_0020-0,0,,,Marchandise incompatible
+train,SHP_0020,OFF-SHP_0020-1,0,,,Capacité en poids insuffisante
+train,SHP_0020,OFF-SHP_0020-2,1,0.6475186423119045,1.0,
+train,SHP_0020,OFF-SHP_0020-3,0,0.5682164818402715,1.0,
+train,SHP_0020,OFF-SHP_0020-4,0,,,Capacité en poids insuffisante
+train,SHP_0020,OFF-SHP_0020-5,0,0.15319833084653464,0.0,
+train,SHP_0020,OFF-SHP_0020-6,0,0.10258658389389162,0.0,
+train,SHP_0020,OFF-SHP_0020-7,0,0.1988762188512662,0.0,
+train,SHP_0020,OFF-SHP_0020-8,0,,,Capacité en volume insuffisante
+train,SHP_0020,OFF-SHP_0020-9,0,0.3011049442124409,0.0,
+train,SHP_0020,OFF-SHP_0020-10,0,,,Capacité en volume insuffisante
+train,SHP_0020,OFF-SHP_0020-11,0,,,Capacité en poids insuffisante
+train,SHP_0020,OFF-SHP_0020-12,0,0.1945899442785343,0.0,
+train,SHP_0020,OFF-SHP_0020-13,0,,,Capacité en volume insuffisante ; Créneau incompatible ; Véhicule indisponible
+train,SHP_0020,OFF-SHP_0020-14,0,0.3680318822094362,0.0,
+train,SHP_0020,OFF-SHP_0020-15,0,,,Capacité en volume insuffisante
+train,SHP_0020,OFF-SHP_0020-16,0,,,Trajet incompatible
+train,SHP_0020,OFF-SHP_0020-17,1,0.21070550172526503,0.0,
+train,SHP_0020,OFF-SHP_0020-18,1,0.5992140077166532,1.0,
+train,SHP_0020,OFF-SHP_0020-19,1,0.19649518044889117,0.0,
+train,SHP_0020,OFF-SHP_0020-20,0,0.18648333735631575,0.0,
+train,SHP_0020,OFF-SHP_0020-21,0,0.3893226798729573,0.0,
+train,SHP_0020,OFF-SHP_0020-22,0,,,Véhicule indisponible
+train,SHP_0020,OFF-SHP_0020-23,0,0.20030986856537653,0.0,
+train,SHP_0020,OFF-SHP_0020-24,0,0.29620431777859485,0.0,
+train,SHP_0020,OFF-SHP_0020-25,0,,,Capacité en volume insuffisante
+train,SHP_0020,OFF-SHP_0020-26,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0020,OFF-SHP_0020-27,1,0.43994760261659316,0.0,
+train,SHP_0020,OFF-SHP_0020-28,0,,,Véhicule indisponible
+train,SHP_0020,OFF-SHP_0020-29,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0021,OFF-SHP_0021-0,0,0.13854713978424937,0.0,
+train,SHP_0021,OFF-SHP_0021-1,0,0.5033563512949455,1.0,
+train,SHP_0021,OFF-SHP_0021-2,0,0.07984207955411529,0.0,
+train,SHP_0021,OFF-SHP_0021-3,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0021,OFF-SHP_0021-4,0,0.5978744689016853,1.0,
+train,SHP_0021,OFF-SHP_0021-5,0,,,Capacité en poids insuffisante
+train,SHP_0021,OFF-SHP_0021-6,1,0.6681944222614674,1.0,
+train,SHP_0021,OFF-SHP_0021-7,0,,,Capacité en volume insuffisante
+train,SHP_0021,OFF-SHP_0021-8,0,,,Capacité en poids insuffisante
+train,SHP_0021,OFF-SHP_0021-9,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0021,OFF-SHP_0021-10,0,0.48598775572794717,1.0,
+train,SHP_0021,OFF-SHP_0021-11,0,0.11325583797716113,0.0,
+train,SHP_0021,OFF-SHP_0021-12,1,0.3528565007811202,0.0,
+train,SHP_0021,OFF-SHP_0021-13,0,,,Capacité en poids insuffisante
+train,SHP_0021,OFF-SHP_0021-14,0,,,Marchandise incompatible
+train,SHP_0021,OFF-SHP_0021-15,1,0.29583588737922634,0.0,
+train,SHP_0021,OFF-SHP_0021-16,0,0.19092047002653526,0.0,
+train,SHP_0021,OFF-SHP_0021-17,0,0.44916263904729964,0.0,
+train,SHP_0021,OFF-SHP_0021-18,1,0.4548667168846993,0.0,
+train,SHP_0021,OFF-SHP_0021-19,0,0.2850982759536079,0.0,
+train,SHP_0021,OFF-SHP_0021-20,1,0.40407105693386813,0.0,
+train,SHP_0021,OFF-SHP_0021-21,0,,,Capacité en volume insuffisante
+train,SHP_0021,OFF-SHP_0021-22,1,0.41536618153441685,0.0,
+train,SHP_0021,OFF-SHP_0021-23,1,0.5547192266499267,1.0,
+train,SHP_0021,OFF-SHP_0021-24,0,0.18966924797569534,0.0,
+train,SHP_0021,OFF-SHP_0021-25,0,0.20533535431861524,0.0,
+train,SHP_0021,OFF-SHP_0021-26,0,,,Créneau incompatible
+train,SHP_0021,OFF-SHP_0021-27,0,,,Capacité en poids insuffisante
+train,SHP_0021,OFF-SHP_0021-28,0,,,Capacité en poids insuffisante
+train,SHP_0021,OFF-SHP_0021-29,1,0.5372009833446314,1.0,
+train,SHP_0022,OFF-SHP_0022-0,0,0.15074161001779213,0.0,
+train,SHP_0022,OFF-SHP_0022-1,0,,,Capacité en volume insuffisante
+train,SHP_0022,OFF-SHP_0022-2,0,0.11820413025068773,0.0,
+train,SHP_0022,OFF-SHP_0022-3,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0022,OFF-SHP_0022-4,0,0.20674026732747403,0.0,
+train,SHP_0022,OFF-SHP_0022-5,0,,,Capacité en volume insuffisante
+train,SHP_0022,OFF-SHP_0022-6,0,,,Capacité en poids insuffisante
+train,SHP_0022,OFF-SHP_0022-7,0,,,Capacité en volume insuffisante
+train,SHP_0022,OFF-SHP_0022-8,0,0.15390343101748577,0.0,
+train,SHP_0022,OFF-SHP_0022-9,0,0.37509152360461867,0.0,
+train,SHP_0022,OFF-SHP_0022-10,0,,,Trajet incompatible
+train,SHP_0022,OFF-SHP_0022-11,0,0.2764507920576025,0.0,
+train,SHP_0022,OFF-SHP_0022-12,0,0.2503208131088254,0.0,
+train,SHP_0022,OFF-SHP_0022-13,0,0.457591380926559,0.0,
+train,SHP_0022,OFF-SHP_0022-14,0,0.5468521982940392,1.0,
+train,SHP_0022,OFF-SHP_0022-15,1,0.4477221544903081,0.0,
+train,SHP_0022,OFF-SHP_0022-16,1,0.6758616496835101,1.0,
+train,SHP_0022,OFF-SHP_0022-17,0,0.11273654334641713,0.0,
+train,SHP_0022,OFF-SHP_0022-18,0,,,Créneau incompatible
+train,SHP_0022,OFF-SHP_0022-19,0,0.22250046347052574,0.0,
+train,SHP_0022,OFF-SHP_0022-20,0,0.19317716760899611,0.0,
+train,SHP_0022,OFF-SHP_0022-21,0,,,Capacité en poids insuffisante
+train,SHP_0022,OFF-SHP_0022-22,1,0.4844836260939215,1.0,
+train,SHP_0022,OFF-SHP_0022-23,1,0.44157921897755265,0.0,
+train,SHP_0022,OFF-SHP_0022-24,0,0.20456430622565797,0.0,
+train,SHP_0022,OFF-SHP_0022-25,0,0.18155989565204722,0.0,
+train,SHP_0022,OFF-SHP_0022-26,0,0.17460792690735225,0.0,
+train,SHP_0022,OFF-SHP_0022-27,0,0.265243668223803,0.0,
+train,SHP_0022,OFF-SHP_0022-28,1,0.5112610854923068,1.0,
+train,SHP_0022,OFF-SHP_0022-29,1,0.6155641112310593,1.0,
+train,SHP_0024,OFF-SHP_0024-0,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-1,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-2,0,,,Capacité en poids insuffisante
+train,SHP_0024,OFF-SHP_0024-3,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-4,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-5,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-6,0,0.21067098805599235,0.0,
+train,SHP_0024,OFF-SHP_0024-7,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-8,0,,,Marchandise incompatible
+train,SHP_0024,OFF-SHP_0024-9,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-10,0,0.35174534492506376,0.0,
+train,SHP_0024,OFF-SHP_0024-11,1,0.44956570020555914,0.0,
+train,SHP_0024,OFF-SHP_0024-12,1,0.5887537341139774,1.0,
+train,SHP_0024,OFF-SHP_0024-13,0,,,Capacité en volume insuffisante
+train,SHP_0024,OFF-SHP_0024-14,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-15,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0024,OFF-SHP_0024-16,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-17,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-18,0,,,Capacité en volume insuffisante
+train,SHP_0024,OFF-SHP_0024-19,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-20,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-21,0,,,Marchandise incompatible ; Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-22,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-23,0,,,Capacité en poids insuffisante
+train,SHP_0024,OFF-SHP_0024-24,0,,,Trajet incompatible
+train,SHP_0024,OFF-SHP_0024-25,0,,,Budget strict dépassé
+train,SHP_0024,OFF-SHP_0024-26,0,0.16190951722794938,0.0,
+train,SHP_0024,OFF-SHP_0024-27,0,,,Créneau incompatible
+train,SHP_0024,OFF-SHP_0024-28,1,0.3714010524112837,0.0,
+train,SHP_0024,OFF-SHP_0024-29,0,,,Budget strict dépassé
+train,SHP_0026,OFF-SHP_0026-0,0,0.14233564909339308,0.0,
+train,SHP_0026,OFF-SHP_0026-1,0,0.15201327784688629,0.0,
+train,SHP_0026,OFF-SHP_0026-2,0,0.10744343897474633,0.0,
+train,SHP_0026,OFF-SHP_0026-3,0,0.32643890821357024,0.0,
+train,SHP_0026,OFF-SHP_0026-4,0,,,Capacité en poids insuffisante
+train,SHP_0026,OFF-SHP_0026-5,0,,,Capacité en volume insuffisante
+train,SHP_0026,OFF-SHP_0026-6,0,,,Capacité en poids insuffisante
+train,SHP_0026,OFF-SHP_0026-7,0,0.2566725488977358,0.0,
+train,SHP_0026,OFF-SHP_0026-8,0,,,Capacité en volume insuffisante
+train,SHP_0026,OFF-SHP_0026-9,0,,,Capacité en volume insuffisante
+train,SHP_0026,OFF-SHP_0026-10,1,0.5969616188523189,1.0,
+train,SHP_0026,OFF-SHP_0026-11,0,0.2593607412989383,0.0,
+train,SHP_0026,OFF-SHP_0026-12,0,0.34605754872072597,0.0,
+train,SHP_0026,OFF-SHP_0026-13,0,,,Capacité en poids insuffisante
+train,SHP_0026,OFF-SHP_0026-14,1,0.3555915534111667,0.0,
+train,SHP_0026,OFF-SHP_0026-15,1,0.6257406363192862,1.0,
+train,SHP_0026,OFF-SHP_0026-16,1,0.45361421883944125,0.0,
+train,SHP_0026,OFF-SHP_0026-17,0,,,Capacité en poids insuffisante
+train,SHP_0026,OFF-SHP_0026-18,1,0.4693899204959103,0.0,
+train,SHP_0026,OFF-SHP_0026-19,1,0.48331939107729566,1.0,
+train,SHP_0026,OFF-SHP_0026-20,1,0.6329769520828731,1.0,
+train,SHP_0026,OFF-SHP_0026-21,0,0.4243610977878108,0.0,
+train,SHP_0026,OFF-SHP_0026-22,1,0.7147912645855129,1.0,
+train,SHP_0026,OFF-SHP_0026-23,0,,,Capacité en poids insuffisante
+train,SHP_0026,OFF-SHP_0026-24,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0026,OFF-SHP_0026-25,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+train,SHP_0026,OFF-SHP_0026-26,1,0.7337808827076359,1.0,
+train,SHP_0026,OFF-SHP_0026-27,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0026,OFF-SHP_0026-28,0,0.2578866702586221,0.0,
+train,SHP_0026,OFF-SHP_0026-29,1,0.3113559493717709,0.0,
+train,SHP_0027,OFF-SHP_0027-0,0,0.3566079326814945,0.0,
+train,SHP_0027,OFF-SHP_0027-1,1,0.37838157810245143,0.0,
+train,SHP_0027,OFF-SHP_0027-2,0,0.3013050574962712,0.0,
+train,SHP_0027,OFF-SHP_0027-3,1,0.3548993559320464,0.0,
+train,SHP_0027,OFF-SHP_0027-4,1,0.5655281229080499,1.0,
+train,SHP_0027,OFF-SHP_0027-5,0,,,Créneau incompatible
+train,SHP_0027,OFF-SHP_0027-6,1,0.37037061514776426,0.0,
+train,SHP_0027,OFF-SHP_0027-7,0,0.33967351716967537,0.0,
+train,SHP_0027,OFF-SHP_0027-8,0,,,Créneau incompatible
+train,SHP_0027,OFF-SHP_0027-9,1,0.2974457411138868,0.0,
+train,SHP_0027,OFF-SHP_0027-10,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0027,OFF-SHP_0027-11,0,0.4938554950387321,1.0,
+train,SHP_0027,OFF-SHP_0027-12,0,,,Capacité en poids insuffisante
+train,SHP_0027,OFF-SHP_0027-13,0,,,Capacité en volume insuffisante
+train,SHP_0027,OFF-SHP_0027-14,0,0.3938090576459873,0.0,
+train,SHP_0027,OFF-SHP_0027-15,0,,,Capacité en volume insuffisante
+train,SHP_0027,OFF-SHP_0027-16,1,0.4530470189737916,0.0,
+train,SHP_0027,OFF-SHP_0027-17,1,0.40233752850852705,0.0,
+train,SHP_0027,OFF-SHP_0027-18,0,0.2339062950279599,0.0,
+train,SHP_0027,OFF-SHP_0027-19,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0027,OFF-SHP_0027-20,0,0.33738543155041517,0.0,
+train,SHP_0027,OFF-SHP_0027-21,0,,,Marchandise incompatible
+train,SHP_0027,OFF-SHP_0027-22,1,0.5738014283851162,1.0,
+train,SHP_0027,OFF-SHP_0027-23,1,0.47978723703668835,1.0,
+train,SHP_0027,OFF-SHP_0027-24,0,0.2644244339901159,0.0,
+train,SHP_0027,OFF-SHP_0027-25,0,0.2043271780520503,0.0,
+train,SHP_0027,OFF-SHP_0027-26,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0027,OFF-SHP_0027-27,0,0.15152573840683844,0.0,
+train,SHP_0027,OFF-SHP_0027-28,0,,,Créneau incompatible
+train,SHP_0027,OFF-SHP_0027-29,1,0.44206515465870944,0.0,
+train,SHP_0028,OFF-SHP_0028-0,0,0.12208275460621283,0.0,
+train,SHP_0028,OFF-SHP_0028-1,0,,,Capacité en volume insuffisante
+train,SHP_0028,OFF-SHP_0028-2,1,0.4812101072390842,1.0,
+train,SHP_0028,OFF-SHP_0028-3,0,,,Capacité en poids insuffisante
+train,SHP_0028,OFF-SHP_0028-4,0,0.4805809634645168,1.0,
+train,SHP_0028,OFF-SHP_0028-5,0,,,Créneau incompatible
+train,SHP_0028,OFF-SHP_0028-6,0,,,Marchandise incompatible
+train,SHP_0028,OFF-SHP_0028-7,0,0.2789060995900316,0.0,
+train,SHP_0028,OFF-SHP_0028-8,0,,,Capacité en volume insuffisante
+train,SHP_0028,OFF-SHP_0028-9,0,0.3492328619225181,0.0,
+train,SHP_0028,OFF-SHP_0028-10,0,0.11923480108930196,0.0,
+train,SHP_0028,OFF-SHP_0028-11,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0028,OFF-SHP_0028-12,0,0.14714589447090776,0.0,
+train,SHP_0028,OFF-SHP_0028-13,1,0.5768292539589287,1.0,
+train,SHP_0028,OFF-SHP_0028-14,1,0.505608460748134,1.0,
+train,SHP_0028,OFF-SHP_0028-15,0,,,Capacité en poids insuffisante
+train,SHP_0028,OFF-SHP_0028-16,0,,,Capacité en poids insuffisante
+train,SHP_0028,OFF-SHP_0028-17,1,0.22783978460131912,0.0,
+train,SHP_0028,OFF-SHP_0028-18,0,0.14520590284991075,0.0,
+train,SHP_0028,OFF-SHP_0028-19,1,0.4000951458252837,0.0,
+train,SHP_0028,OFF-SHP_0028-20,1,0.38479780526272067,0.0,
+train,SHP_0028,OFF-SHP_0028-21,0,,,Marchandise incompatible
+train,SHP_0028,OFF-SHP_0028-22,1,0.4270796201781369,0.0,
+train,SHP_0028,OFF-SHP_0028-23,0,,,Capacité en poids insuffisante
+train,SHP_0028,OFF-SHP_0028-24,0,,,Créneau incompatible
+train,SHP_0028,OFF-SHP_0028-25,0,0.23676993346792174,0.0,
+train,SHP_0028,OFF-SHP_0028-26,0,0.14095222113650388,0.0,
+train,SHP_0028,OFF-SHP_0028-27,0,0.4655370200711398,0.0,
+train,SHP_0028,OFF-SHP_0028-28,0,,,Capacité en volume insuffisante
+train,SHP_0028,OFF-SHP_0028-29,0,0.5243100035585085,1.0,
+train,SHP_0030,OFF-SHP_0030-0,1,0.4302617986204658,0.0,
+train,SHP_0030,OFF-SHP_0030-1,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-2,0,0.40687110978178764,0.0,
+train,SHP_0030,OFF-SHP_0030-3,0,0.18081358687760912,0.0,
+train,SHP_0030,OFF-SHP_0030-4,0,,,Marchandise incompatible
+train,SHP_0030,OFF-SHP_0030-5,0,0.08225912016067104,0.0,
+train,SHP_0030,OFF-SHP_0030-6,0,0.600173321247576,1.0,
+train,SHP_0030,OFF-SHP_0030-7,1,0.5596624433874231,1.0,
+train,SHP_0030,OFF-SHP_0030-8,0,0.2424714055962625,0.0,
+train,SHP_0030,OFF-SHP_0030-9,0,0.21443373705346092,0.0,
+train,SHP_0030,OFF-SHP_0030-10,0,,,Marchandise incompatible
+train,SHP_0030,OFF-SHP_0030-11,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-12,1,0.4178337009624558,0.0,
+train,SHP_0030,OFF-SHP_0030-13,0,0.40725971458476845,0.0,
+train,SHP_0030,OFF-SHP_0030-14,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-15,1,0.37812952577247366,0.0,
+train,SHP_0030,OFF-SHP_0030-16,0,0.4855538401000558,1.0,
+train,SHP_0030,OFF-SHP_0030-17,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-18,0,0.41601571283023153,0.0,
+train,SHP_0030,OFF-SHP_0030-19,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-20,0,,,Capacité en volume insuffisante
+train,SHP_0030,OFF-SHP_0030-21,1,0.23701162842355533,0.0,
+train,SHP_0030,OFF-SHP_0030-22,0,0.17370317719197947,0.0,
+train,SHP_0030,OFF-SHP_0030-23,0,0.387944393315907,0.0,
+train,SHP_0030,OFF-SHP_0030-24,1,0.37113249662068964,0.0,
+train,SHP_0030,OFF-SHP_0030-25,0,,,Véhicule indisponible
+train,SHP_0030,OFF-SHP_0030-26,0,,,Capacité en poids insuffisante
+train,SHP_0030,OFF-SHP_0030-27,0,,,Trajet incompatible
+train,SHP_0030,OFF-SHP_0030-28,0,0.08814392827628197,0.0,
+train,SHP_0030,OFF-SHP_0030-29,0,,,Capacité en poids insuffisante
+train,SHP_0033,OFF-SHP_0033-0,0,,,Capacité en poids insuffisante
+train,SHP_0033,OFF-SHP_0033-1,0,0.3193290781673045,0.0,
+train,SHP_0033,OFF-SHP_0033-2,0,,,Capacité en poids insuffisante
+train,SHP_0033,OFF-SHP_0033-3,0,0.5457945841915589,1.0,
+train,SHP_0033,OFF-SHP_0033-4,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-5,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-6,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-7,0,,,Créneau incompatible
+train,SHP_0033,OFF-SHP_0033-8,1,0.5692776733327822,1.0,
+train,SHP_0033,OFF-SHP_0033-9,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0033,OFF-SHP_0033-10,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-11,0,0.24558307165539325,0.0,
+train,SHP_0033,OFF-SHP_0033-12,0,0.2882982661133937,0.0,
+train,SHP_0033,OFF-SHP_0033-13,0,0.1807692378939819,0.0,
+train,SHP_0033,OFF-SHP_0033-14,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-15,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-16,0,,,Véhicule indisponible
+train,SHP_0033,OFF-SHP_0033-17,0,,,Capacité en poids insuffisante
+train,SHP_0033,OFF-SHP_0033-18,0,,,Marchandise incompatible
+train,SHP_0033,OFF-SHP_0033-19,0,,,Capacité en poids insuffisante
+train,SHP_0033,OFF-SHP_0033-20,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-21,0,0.16859867984294324,0.0,
+train,SHP_0033,OFF-SHP_0033-22,1,0.3199038203416112,0.0,
+train,SHP_0033,OFF-SHP_0033-23,0,,,Capacité en volume insuffisante
+train,SHP_0033,OFF-SHP_0033-24,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0033,OFF-SHP_0033-25,0,,,Marchandise incompatible
+train,SHP_0033,OFF-SHP_0033-26,0,0.23778683211993112,0.0,
+train,SHP_0033,OFF-SHP_0033-27,0,0.1960213386282694,0.0,
+train,SHP_0033,OFF-SHP_0033-28,1,0.45351885575718104,0.0,
+train,SHP_0033,OFF-SHP_0033-29,1,0.28677432546213855,0.0,
+train,SHP_0035,OFF-SHP_0035-0,0,0.43032979793700277,0.0,
+train,SHP_0035,OFF-SHP_0035-1,0,0.20493180852047585,0.0,
+train,SHP_0035,OFF-SHP_0035-2,0,,,Capacité en poids insuffisante
+train,SHP_0035,OFF-SHP_0035-3,0,,,Créneau incompatible
+train,SHP_0035,OFF-SHP_0035-4,1,0.559286969235541,1.0,
+train,SHP_0035,OFF-SHP_0035-5,1,0.6125663842306646,1.0,
+train,SHP_0035,OFF-SHP_0035-6,0,0.1787767622557949,0.0,
+train,SHP_0035,OFF-SHP_0035-7,0,0.175394971972519,0.0,
+train,SHP_0035,OFF-SHP_0035-8,0,,,Capacité en volume insuffisante
+train,SHP_0035,OFF-SHP_0035-9,0,,,Capacité en poids insuffisante
+train,SHP_0035,OFF-SHP_0035-10,0,,,Marchandise incompatible
+train,SHP_0035,OFF-SHP_0035-11,1,0.2029877057613122,0.0,
+train,SHP_0035,OFF-SHP_0035-12,0,0.409075174014987,0.0,
+train,SHP_0035,OFF-SHP_0035-13,0,,,Capacité en volume insuffisante
+train,SHP_0035,OFF-SHP_0035-14,1,0.42196157981197857,0.0,
+train,SHP_0035,OFF-SHP_0035-15,0,0.12129103381957475,0.0,
+train,SHP_0035,OFF-SHP_0035-16,0,,,Trajet incompatible
+train,SHP_0035,OFF-SHP_0035-17,0,,,Capacité en volume insuffisante
+train,SHP_0035,OFF-SHP_0035-18,0,,,Capacité en volume insuffisante
+train,SHP_0035,OFF-SHP_0035-19,0,0.2005486469420882,0.0,
+train,SHP_0035,OFF-SHP_0035-20,1,0.6448557766963414,1.0,
+train,SHP_0035,OFF-SHP_0035-21,1,0.6441537972400033,1.0,
+train,SHP_0035,OFF-SHP_0035-22,0,,,Capacité en poids insuffisante
+train,SHP_0035,OFF-SHP_0035-23,1,0.6230800351329238,1.0,
+train,SHP_0035,OFF-SHP_0035-24,1,0.39783768397081537,0.0,
+train,SHP_0035,OFF-SHP_0035-25,0,,,Trajet incompatible
+train,SHP_0035,OFF-SHP_0035-26,0,,,Capacité en volume insuffisante
+train,SHP_0035,OFF-SHP_0035-27,0,,,Marchandise incompatible
+train,SHP_0035,OFF-SHP_0035-28,0,0.5742951851132372,1.0,
+train,SHP_0035,OFF-SHP_0035-29,0,,,Capacité en volume insuffisante
+train,SHP_0036,OFF-SHP_0036-0,0,0.4758234116620683,0.0,
+train,SHP_0036,OFF-SHP_0036-1,0,0.17618811983910188,0.0,
+train,SHP_0036,OFF-SHP_0036-2,0,0.39203666170406676,0.0,
+train,SHP_0036,OFF-SHP_0036-3,0,,,Créneau incompatible
+train,SHP_0036,OFF-SHP_0036-4,0,,,Capacité en poids insuffisante
+train,SHP_0036,OFF-SHP_0036-5,1,0.20989573131517367,0.0,
+train,SHP_0036,OFF-SHP_0036-6,0,,,Capacité en poids insuffisante
+train,SHP_0036,OFF-SHP_0036-7,1,0.44993081412131436,0.0,
+train,SHP_0036,OFF-SHP_0036-8,0,,,Créneau incompatible
+train,SHP_0036,OFF-SHP_0036-9,1,0.5597646269485657,1.0,
+train,SHP_0036,OFF-SHP_0036-10,0,0.4350417473662262,0.0,
+train,SHP_0036,OFF-SHP_0036-11,0,,,Capacité en volume insuffisante
+train,SHP_0036,OFF-SHP_0036-12,1,0.4503333848009796,0.0,
+train,SHP_0036,OFF-SHP_0036-13,0,0.2063660561615992,0.0,
+train,SHP_0036,OFF-SHP_0036-14,0,0.435302844707158,0.0,
+train,SHP_0036,OFF-SHP_0036-15,1,0.5171006740423313,1.0,
+train,SHP_0036,OFF-SHP_0036-16,0,,,Capacité en poids insuffisante
+train,SHP_0036,OFF-SHP_0036-17,0,0.11082992146489178,0.0,
+train,SHP_0036,OFF-SHP_0036-18,1,0.2800042447497654,0.0,
+train,SHP_0036,OFF-SHP_0036-19,0,,,Véhicule indisponible
+train,SHP_0036,OFF-SHP_0036-20,0,,,Trajet incompatible
+train,SHP_0036,OFF-SHP_0036-21,1,0.6949843357689353,1.0,
+train,SHP_0036,OFF-SHP_0036-22,0,0.2398599322705957,0.0,
+train,SHP_0036,OFF-SHP_0036-23,1,0.47616721641519155,0.0,
+train,SHP_0036,OFF-SHP_0036-24,0,0.2972849069991428,0.0,
+train,SHP_0036,OFF-SHP_0036-25,0,,,Trajet incompatible
+train,SHP_0036,OFF-SHP_0036-26,0,,,Capacité en volume insuffisante
+train,SHP_0036,OFF-SHP_0036-27,0,,,Capacité en volume insuffisante
+train,SHP_0036,OFF-SHP_0036-28,0,,,Véhicule indisponible
+train,SHP_0036,OFF-SHP_0036-29,0,,,Capacité en volume insuffisante
+train,SHP_0037,OFF-SHP_0037-0,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-1,0,,,Capacité en poids insuffisante
+train,SHP_0037,OFF-SHP_0037-2,0,,,Capacité en poids insuffisante
+train,SHP_0037,OFF-SHP_0037-3,0,,,Capacité en volume insuffisante ; Véhicule indisponible ; Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-4,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-5,0,0.24505214770582778,0.0,
+train,SHP_0037,OFF-SHP_0037-6,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-7,0,,,Capacité en volume insuffisante
+train,SHP_0037,OFF-SHP_0037-8,0,,,Capacité en poids insuffisante
+train,SHP_0037,OFF-SHP_0037-9,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-10,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-11,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-12,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-13,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-14,1,0.7158612635363174,1.0,
+train,SHP_0037,OFF-SHP_0037-15,0,0.4178263762563438,0.0,
+train,SHP_0037,OFF-SHP_0037-16,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-17,1,0.5702202408249609,1.0,
+train,SHP_0037,OFF-SHP_0037-18,0,,,Capacité en volume insuffisante
+train,SHP_0037,OFF-SHP_0037-19,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-20,1,0.5472564003504531,1.0,
+train,SHP_0037,OFF-SHP_0037-21,0,,,Capacité en poids insuffisante
+train,SHP_0037,OFF-SHP_0037-22,0,,,Créneau incompatible
+train,SHP_0037,OFF-SHP_0037-23,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-24,0,,,Capacité en volume insuffisante
+train,SHP_0037,OFF-SHP_0037-25,1,0.5290819018797412,1.0,
+train,SHP_0037,OFF-SHP_0037-26,0,,,Budget strict dépassé
+train,SHP_0037,OFF-SHP_0037-27,1,0.2521843029733032,0.0,
+train,SHP_0037,OFF-SHP_0037-28,1,0.6102121285586165,1.0,
+train,SHP_0037,OFF-SHP_0037-29,0,,,Budget strict dépassé
+train,SHP_0039,OFF-SHP_0039-0,1,0.47564597328841113,0.0,
+train,SHP_0039,OFF-SHP_0039-1,0,0.14767770756047738,0.0,
+train,SHP_0039,OFF-SHP_0039-2,0,0.2771717469201489,0.0,
+train,SHP_0039,OFF-SHP_0039-3,0,,,Capacité en volume insuffisante
+train,SHP_0039,OFF-SHP_0039-4,1,0.4812773429941294,1.0,
+train,SHP_0039,OFF-SHP_0039-5,0,0.15769940009897696,0.0,
+train,SHP_0039,OFF-SHP_0039-6,0,0.14589330034315348,0.0,
+train,SHP_0039,OFF-SHP_0039-7,0,0.3830186830100119,0.0,
+train,SHP_0039,OFF-SHP_0039-8,0,,,Capacité en poids insuffisante
+train,SHP_0039,OFF-SHP_0039-9,0,0.19484574037658073,0.0,
+train,SHP_0039,OFF-SHP_0039-10,0,,,Capacité en poids insuffisante
+train,SHP_0039,OFF-SHP_0039-11,0,,,Marchandise incompatible
+train,SHP_0039,OFF-SHP_0039-12,1,0.21864260255211584,0.0,
+train,SHP_0039,OFF-SHP_0039-13,0,,,Capacité en poids insuffisante
+train,SHP_0039,OFF-SHP_0039-14,0,,,Capacité en poids insuffisante ; Trajet incompatible ; Marchandise incompatible
+train,SHP_0039,OFF-SHP_0039-15,0,0.19403471259535837,0.0,
+train,SHP_0039,OFF-SHP_0039-16,1,0.5290868302987725,1.0,
+train,SHP_0039,OFF-SHP_0039-17,0,0.276159580439968,0.0,
+train,SHP_0039,OFF-SHP_0039-18,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0039,OFF-SHP_0039-19,0,,,Capacité en volume insuffisante
+train,SHP_0039,OFF-SHP_0039-20,1,0.5556732922131479,1.0,
+train,SHP_0039,OFF-SHP_0039-21,0,0.23164671166067705,0.0,
+train,SHP_0039,OFF-SHP_0039-22,0,0.21479280327879294,0.0,
+train,SHP_0039,OFF-SHP_0039-23,0,0.3093910056148306,0.0,
+train,SHP_0039,OFF-SHP_0039-24,0,0.1917683365593658,0.0,
+train,SHP_0039,OFF-SHP_0039-25,0,0.15111831108575013,0.0,
+train,SHP_0039,OFF-SHP_0039-26,1,0.4136264592879917,0.0,
+train,SHP_0039,OFF-SHP_0039-27,0,0.16169467822589012,0.0,
+train,SHP_0039,OFF-SHP_0039-28,0,,,Capacité en volume insuffisante
+train,SHP_0039,OFF-SHP_0039-29,0,0.311353736286105,0.0,
+train,SHP_0043,OFF-SHP_0043-0,0,,,Créneau incompatible ; Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-1,1,0.6204646355716344,1.0,
+train,SHP_0043,OFF-SHP_0043-2,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-3,0,,,Marchandise incompatible
+train,SHP_0043,OFF-SHP_0043-4,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-5,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-6,0,0.4900794158870443,1.0,
+train,SHP_0043,OFF-SHP_0043-7,1,0.5202871820910566,1.0,
+train,SHP_0043,OFF-SHP_0043-8,0,,,Capacité en poids insuffisante
+train,SHP_0043,OFF-SHP_0043-9,0,,,Capacité en volume insuffisante
+train,SHP_0043,OFF-SHP_0043-10,0,0.49349709017607685,1.0,
+train,SHP_0043,OFF-SHP_0043-11,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-12,0,,,Capacité en poids insuffisante
+train,SHP_0043,OFF-SHP_0043-13,0,0.3995557159693209,0.0,
+train,SHP_0043,OFF-SHP_0043-14,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-15,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-16,1,0.524257393841153,1.0,
+train,SHP_0043,OFF-SHP_0043-17,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-18,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-19,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-20,0,,,Capacité en poids insuffisante
+train,SHP_0043,OFF-SHP_0043-21,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-22,0,,,Créneau incompatible ; Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-23,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-24,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-25,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-26,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible ; Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-27,0,,,Trajet incompatible
+train,SHP_0043,OFF-SHP_0043-28,0,,,Budget strict dépassé
+train,SHP_0043,OFF-SHP_0043-29,0,,,Budget strict dépassé
+train,SHP_0047,OFF-SHP_0047-0,0,,,Trajet incompatible
+train,SHP_0047,OFF-SHP_0047-1,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0047,OFF-SHP_0047-2,0,0.2522480470424684,0.0,
+train,SHP_0047,OFF-SHP_0047-3,0,,,Trajet incompatible
+train,SHP_0047,OFF-SHP_0047-4,0,0.12947062047917882,0.0,
+train,SHP_0047,OFF-SHP_0047-5,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0047,OFF-SHP_0047-6,0,0.25994468882191,0.0,
+train,SHP_0047,OFF-SHP_0047-7,0,0.32464165462746397,0.0,
+train,SHP_0047,OFF-SHP_0047-8,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0047,OFF-SHP_0047-9,0,0.28561251959345163,0.0,
+train,SHP_0047,OFF-SHP_0047-10,0,0.18995647070749583,0.0,
+train,SHP_0047,OFF-SHP_0047-11,0,,,Créneau incompatible
+train,SHP_0047,OFF-SHP_0047-12,0,0.2643644583446455,0.0,
+train,SHP_0047,OFF-SHP_0047-13,0,0.38254884809739553,0.0,
+train,SHP_0047,OFF-SHP_0047-14,0,0.29955144053212107,0.0,
+train,SHP_0047,OFF-SHP_0047-15,0,0.18372788908178894,0.0,
+train,SHP_0047,OFF-SHP_0047-16,0,,,Capacité en poids insuffisante
+train,SHP_0047,OFF-SHP_0047-17,0,0.3701629157018018,0.0,
+train,SHP_0047,OFF-SHP_0047-18,0,,,Capacité en poids insuffisante
+train,SHP_0047,OFF-SHP_0047-19,1,0.6313991175723629,1.0,
+train,SHP_0047,OFF-SHP_0047-20,0,,,Véhicule indisponible
+train,SHP_0047,OFF-SHP_0047-21,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0047,OFF-SHP_0047-22,0,0.2525290345417419,0.0,
+train,SHP_0047,OFF-SHP_0047-23,0,,,Créneau incompatible
+train,SHP_0047,OFF-SHP_0047-24,0,,,Capacité en poids insuffisante
+train,SHP_0047,OFF-SHP_0047-25,0,0.28539379013676897,0.0,
+train,SHP_0047,OFF-SHP_0047-26,0,0.37181353029477165,0.0,
+train,SHP_0047,OFF-SHP_0047-27,1,0.48245420556492935,1.0,
+train,SHP_0047,OFF-SHP_0047-28,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0047,OFF-SHP_0047-29,0,0.24663993740615597,0.0,
+train,SHP_0049,OFF-SHP_0049-0,0,,,Capacité en poids insuffisante
+train,SHP_0049,OFF-SHP_0049-1,0,0.21004303621157575,0.0,
+train,SHP_0049,OFF-SHP_0049-2,0,0.21623666069910008,0.0,
+train,SHP_0049,OFF-SHP_0049-3,0,,,Capacité en poids insuffisante
+train,SHP_0049,OFF-SHP_0049-4,0,0.09773877441849925,0.0,
+train,SHP_0049,OFF-SHP_0049-5,0,0.15575721027691286,0.0,
+train,SHP_0049,OFF-SHP_0049-6,0,,,Véhicule indisponible
+train,SHP_0049,OFF-SHP_0049-7,0,,,Capacité en poids insuffisante
+train,SHP_0049,OFF-SHP_0049-8,0,0.42708189740426794,0.0,
+train,SHP_0049,OFF-SHP_0049-9,0,0.44466478249277963,0.0,
+train,SHP_0049,OFF-SHP_0049-10,0,0.42176013637244564,0.0,
+train,SHP_0049,OFF-SHP_0049-11,0,0.1224728050329678,0.0,
+train,SHP_0049,OFF-SHP_0049-12,0,0.5617837843699712,1.0,
+train,SHP_0049,OFF-SHP_0049-13,0,0.6222523695692341,1.0,
+train,SHP_0049,OFF-SHP_0049-14,0,0.26313286254558016,0.0,
+train,SHP_0049,OFF-SHP_0049-15,0,0.23644367018567308,0.0,
+train,SHP_0049,OFF-SHP_0049-16,0,,,Créneau incompatible
+train,SHP_0049,OFF-SHP_0049-17,0,,,Véhicule indisponible
+train,SHP_0049,OFF-SHP_0049-18,0,0.2664294537170148,0.0,
+train,SHP_0049,OFF-SHP_0049-19,1,0.4853461199176157,1.0,
+train,SHP_0049,OFF-SHP_0049-20,1,0.6689219904046991,1.0,
+train,SHP_0049,OFF-SHP_0049-21,0,0.09965887290292315,0.0,
+train,SHP_0049,OFF-SHP_0049-22,0,0.6303424983490183,1.0,
+train,SHP_0049,OFF-SHP_0049-23,0,,,Capacité en volume insuffisante
+train,SHP_0049,OFF-SHP_0049-24,0,0.25465004130756264,0.0,
+train,SHP_0049,OFF-SHP_0049-25,1,0.44991468644059324,0.0,
+train,SHP_0049,OFF-SHP_0049-26,0,0.35289151828638116,0.0,
+train,SHP_0049,OFF-SHP_0049-27,0,,,Capacité en volume insuffisante
+train,SHP_0049,OFF-SHP_0049-28,1,0.42830770347616226,0.0,
+train,SHP_0049,OFF-SHP_0049-29,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0050,OFF-SHP_0050-0,0,0.4000165088346509,0.0,
+train,SHP_0050,OFF-SHP_0050-1,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0050,OFF-SHP_0050-2,0,,,Capacité en poids insuffisante
+train,SHP_0050,OFF-SHP_0050-3,0,0.3079123051833556,0.0,
+train,SHP_0050,OFF-SHP_0050-4,1,0.6819077562617695,1.0,
+train,SHP_0050,OFF-SHP_0050-5,0,,,Capacité en poids insuffisante
+train,SHP_0050,OFF-SHP_0050-6,0,0.369630576605572,0.0,
+train,SHP_0050,OFF-SHP_0050-7,0,,,Capacité en volume insuffisante
+train,SHP_0050,OFF-SHP_0050-8,0,,,Créneau incompatible
+train,SHP_0050,OFF-SHP_0050-9,0,,,Capacité en poids insuffisante
+train,SHP_0050,OFF-SHP_0050-10,0,0.4384651276655053,0.0,
+train,SHP_0050,OFF-SHP_0050-11,0,0.07822119028955582,0.0,
+train,SHP_0050,OFF-SHP_0050-12,0,0.29891861860759633,0.0,
+train,SHP_0050,OFF-SHP_0050-13,0,0.1962891703556929,0.0,
+train,SHP_0050,OFF-SHP_0050-14,0,0.48951045052234426,1.0,
+train,SHP_0050,OFF-SHP_0050-15,1,0.44816786288185556,0.0,
+train,SHP_0050,OFF-SHP_0050-16,0,0.12121079691070664,0.0,
+train,SHP_0050,OFF-SHP_0050-17,1,0.5506298875784467,1.0,
+train,SHP_0050,OFF-SHP_0050-18,0,0.11105801610300375,0.0,
+train,SHP_0050,OFF-SHP_0050-19,0,0.2807457686353868,0.0,
+train,SHP_0050,OFF-SHP_0050-20,0,0.239504556303437,0.0,
+train,SHP_0050,OFF-SHP_0050-21,0,,,Capacité en volume insuffisante
+train,SHP_0050,OFF-SHP_0050-22,0,,,Capacité en poids insuffisante
+train,SHP_0050,OFF-SHP_0050-23,0,0.12563110255946616,0.0,
+train,SHP_0050,OFF-SHP_0050-24,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0050,OFF-SHP_0050-25,0,0.11126216844259773,0.0,
+train,SHP_0050,OFF-SHP_0050-26,0,0.3036009205616868,0.0,
+train,SHP_0050,OFF-SHP_0050-27,0,,,Véhicule indisponible
+train,SHP_0050,OFF-SHP_0050-28,0,0.4284282105195766,0.0,
+train,SHP_0050,OFF-SHP_0050-29,0,,,Capacité en poids insuffisante
+train,SHP_0051,OFF-SHP_0051-0,0,,,Capacité en poids insuffisante
+train,SHP_0051,OFF-SHP_0051-1,0,,,Capacité en poids insuffisante
+train,SHP_0051,OFF-SHP_0051-2,0,,,Capacité en poids insuffisante
+train,SHP_0051,OFF-SHP_0051-3,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0051,OFF-SHP_0051-4,0,,,Véhicule indisponible
+train,SHP_0051,OFF-SHP_0051-5,0,,,Créneau incompatible
+train,SHP_0051,OFF-SHP_0051-6,0,,,Capacité en volume insuffisante
+train,SHP_0051,OFF-SHP_0051-7,1,0.4643393967083304,0.0,
+train,SHP_0051,OFF-SHP_0051-8,1,0.5052186338565866,1.0,
+train,SHP_0051,OFF-SHP_0051-9,0,0.2423284260851945,0.0,
+train,SHP_0051,OFF-SHP_0051-10,1,0.4906292351530564,1.0,
+train,SHP_0051,OFF-SHP_0051-11,1,0.42604351680170166,0.0,
+train,SHP_0051,OFF-SHP_0051-12,0,,,Marchandise incompatible
+train,SHP_0051,OFF-SHP_0051-13,0,,,Capacité en volume insuffisante
+train,SHP_0051,OFF-SHP_0051-14,1,0.6366999236553215,1.0,
+train,SHP_0051,OFF-SHP_0051-15,0,,,Capacité en volume insuffisante
+train,SHP_0051,OFF-SHP_0051-16,0,,,Capacité en poids insuffisante
+train,SHP_0051,OFF-SHP_0051-17,0,0.5633337713904502,1.0,
+train,SHP_0051,OFF-SHP_0051-18,0,,,Capacité en volume insuffisante
+train,SHP_0051,OFF-SHP_0051-19,0,0.5731240162710759,1.0,
+train,SHP_0051,OFF-SHP_0051-20,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0051,OFF-SHP_0051-21,1,0.6435940005112261,1.0,
+train,SHP_0051,OFF-SHP_0051-22,0,0.537015147322987,1.0,
+train,SHP_0051,OFF-SHP_0051-23,0,0.38836313275589457,0.0,
+train,SHP_0051,OFF-SHP_0051-24,0,0.1445387645030852,0.0,
+train,SHP_0051,OFF-SHP_0051-25,1,0.7113563080264569,1.0,
+train,SHP_0051,OFF-SHP_0051-26,0,0.41143196822563644,0.0,
+train,SHP_0051,OFF-SHP_0051-27,0,0.10695783789149273,0.0,
+train,SHP_0051,OFF-SHP_0051-28,0,0.4513217001022968,0.0,
+train,SHP_0051,OFF-SHP_0051-29,0,0.13294111491810529,0.0,
+train,SHP_0052,OFF-SHP_0052-0,1,0.69104639819788,1.0,
+train,SHP_0052,OFF-SHP_0052-1,0,0.2602156792184436,0.0,
+train,SHP_0052,OFF-SHP_0052-2,0,0.22105881760495033,0.0,
+train,SHP_0052,OFF-SHP_0052-3,0,0.29284610494529456,0.0,
+train,SHP_0052,OFF-SHP_0052-4,0,0.31961585649580804,0.0,
+train,SHP_0052,OFF-SHP_0052-5,0,0.46532349576749943,0.0,
+train,SHP_0052,OFF-SHP_0052-6,0,0.4654028270090133,0.0,
+train,SHP_0052,OFF-SHP_0052-7,0,,,Marchandise incompatible
+train,SHP_0052,OFF-SHP_0052-8,1,0.5388877245171138,1.0,
+train,SHP_0052,OFF-SHP_0052-9,1,0.5716707298128446,1.0,
+train,SHP_0052,OFF-SHP_0052-10,0,0.48903467105891296,1.0,
+train,SHP_0052,OFF-SHP_0052-11,1,0.5618072136713235,1.0,
+train,SHP_0052,OFF-SHP_0052-12,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0052,OFF-SHP_0052-13,0,0.16496553718118598,0.0,
+train,SHP_0052,OFF-SHP_0052-14,0,0.22758676717642912,0.0,
+train,SHP_0052,OFF-SHP_0052-15,0,,,Trajet incompatible
+train,SHP_0052,OFF-SHP_0052-16,1,0.6213728415014154,1.0,
+train,SHP_0052,OFF-SHP_0052-17,0,,,Capacité en volume insuffisante
+train,SHP_0052,OFF-SHP_0052-18,0,,,Véhicule indisponible
+train,SHP_0052,OFF-SHP_0052-19,0,,,Véhicule indisponible
+train,SHP_0052,OFF-SHP_0052-20,0,0.10875728413280338,0.0,
+train,SHP_0052,OFF-SHP_0052-21,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0052,OFF-SHP_0052-22,0,0.46030996771761734,0.0,
+train,SHP_0052,OFF-SHP_0052-23,0,,,Capacité en volume insuffisante
+train,SHP_0052,OFF-SHP_0052-24,0,0.1711819612714456,0.0,
+train,SHP_0052,OFF-SHP_0052-25,1,0.4384298000531456,0.0,
+train,SHP_0052,OFF-SHP_0052-26,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0052,OFF-SHP_0052-27,1,0.34129930881589227,0.0,
+train,SHP_0052,OFF-SHP_0052-28,0,0.20175010642555258,0.0,
+train,SHP_0052,OFF-SHP_0052-29,0,,,Capacité en volume insuffisante ; Créneau incompatible ; Véhicule indisponible
+train,SHP_0055,OFF-SHP_0055-0,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0055,OFF-SHP_0055-1,0,,,Trajet incompatible
+train,SHP_0055,OFF-SHP_0055-2,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0055,OFF-SHP_0055-3,0,,,Capacité en poids insuffisante
+train,SHP_0055,OFF-SHP_0055-4,0,0.2721779712052786,0.0,
+train,SHP_0055,OFF-SHP_0055-5,1,0.5498254639316793,1.0,
+train,SHP_0055,OFF-SHP_0055-6,1,0.5684192578670351,1.0,
+train,SHP_0055,OFF-SHP_0055-7,1,0.5319132629235105,1.0,
+train,SHP_0055,OFF-SHP_0055-8,0,0.1579617549607787,0.0,
+train,SHP_0055,OFF-SHP_0055-9,0,,,Trajet incompatible
+train,SHP_0055,OFF-SHP_0055-10,1,0.4794080485041167,1.0,
+train,SHP_0055,OFF-SHP_0055-11,0,,,Véhicule indisponible
+train,SHP_0055,OFF-SHP_0055-12,1,0.49012164395626284,1.0,
+train,SHP_0055,OFF-SHP_0055-13,0,,,Trajet incompatible
+train,SHP_0055,OFF-SHP_0055-14,0,,,Créneau incompatible
+train,SHP_0055,OFF-SHP_0055-15,0,,,Capacité en volume insuffisante
+train,SHP_0055,OFF-SHP_0055-16,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0055,OFF-SHP_0055-17,1,0.35063665228588825,0.0,
+train,SHP_0055,OFF-SHP_0055-18,0,,,Capacité en poids insuffisante
+train,SHP_0055,OFF-SHP_0055-19,0,0.30234867033734186,0.0,
+train,SHP_0055,OFF-SHP_0055-20,0,,,Marchandise incompatible
+train,SHP_0055,OFF-SHP_0055-21,1,0.5486499631339894,1.0,
+train,SHP_0055,OFF-SHP_0055-22,0,0.19377364105136893,0.0,
+train,SHP_0055,OFF-SHP_0055-23,0,0.18712291729480368,0.0,
+train,SHP_0055,OFF-SHP_0055-24,0,0.1802835822648377,0.0,
+train,SHP_0055,OFF-SHP_0055-25,0,,,Capacité en poids insuffisante
+train,SHP_0055,OFF-SHP_0055-26,0,0.2276267751910239,0.0,
+train,SHP_0055,OFF-SHP_0055-27,1,0.5153228723758747,1.0,
+train,SHP_0055,OFF-SHP_0055-28,0,,,Capacité en poids insuffisante ; Trajet incompatible ; Marchandise incompatible
+train,SHP_0055,OFF-SHP_0055-29,1,0.4178053347094269,0.0,
+train,SHP_0056,OFF-SHP_0056-0,0,0.34094485776263606,0.0,
+train,SHP_0056,OFF-SHP_0056-1,0,0.22402897067510477,0.0,
+train,SHP_0056,OFF-SHP_0056-2,1,0.610452538188262,1.0,
+train,SHP_0056,OFF-SHP_0056-3,0,,,Capacité en poids insuffisante
+train,SHP_0056,OFF-SHP_0056-4,0,0.39883198793392305,0.0,
+train,SHP_0056,OFF-SHP_0056-5,0,0.3539153929686003,0.0,
+train,SHP_0056,OFF-SHP_0056-6,0,0.6222290688890278,1.0,
+train,SHP_0056,OFF-SHP_0056-7,0,,,Marchandise incompatible
+train,SHP_0056,OFF-SHP_0056-8,1,0.42100475238486523,0.0,
+train,SHP_0056,OFF-SHP_0056-9,1,0.5215489245149865,1.0,
+train,SHP_0056,OFF-SHP_0056-10,0,0.39573610562588946,0.0,
+train,SHP_0056,OFF-SHP_0056-11,0,0.11309759415846288,0.0,
+train,SHP_0056,OFF-SHP_0056-12,0,,,Capacité en volume insuffisante
+train,SHP_0056,OFF-SHP_0056-13,0,,,Capacité en volume insuffisante
+train,SHP_0056,OFF-SHP_0056-14,1,0.3129447044530385,0.0,
+train,SHP_0056,OFF-SHP_0056-15,0,,,Capacité en volume insuffisante
+train,SHP_0056,OFF-SHP_0056-16,0,0.4598617671726767,0.0,
+train,SHP_0056,OFF-SHP_0056-17,0,0.1089645160267678,0.0,
+train,SHP_0056,OFF-SHP_0056-18,0,0.4217910201160964,0.0,
+train,SHP_0056,OFF-SHP_0056-19,0,0.21066980668456364,0.0,
+train,SHP_0056,OFF-SHP_0056-20,0,,,Véhicule indisponible
+train,SHP_0056,OFF-SHP_0056-21,0,,,Créneau incompatible
+train,SHP_0056,OFF-SHP_0056-22,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0056,OFF-SHP_0056-23,0,0.13988419191732201,0.0,
+train,SHP_0056,OFF-SHP_0056-24,0,0.25971017526976553,0.0,
+train,SHP_0056,OFF-SHP_0056-25,1,0.2793539255636881,0.0,
+train,SHP_0056,OFF-SHP_0056-26,0,,,Capacité en poids insuffisante
+train,SHP_0056,OFF-SHP_0056-27,0,0.24457751994125923,0.0,
+train,SHP_0056,OFF-SHP_0056-28,0,0.29496275348606776,0.0,
+train,SHP_0056,OFF-SHP_0056-29,0,,,Capacité en volume insuffisante
+train,SHP_0057,OFF-SHP_0057-0,0,0.09352507095154369,0.0,
+train,SHP_0057,OFF-SHP_0057-1,0,0.08966382682748325,0.0,
+train,SHP_0057,OFF-SHP_0057-2,0,0.09003892535742064,0.0,
+train,SHP_0057,OFF-SHP_0057-3,1,0.616551473997197,1.0,
+train,SHP_0057,OFF-SHP_0057-4,0,,,Capacité en volume insuffisante
+train,SHP_0057,OFF-SHP_0057-5,1,0.5406951359610244,1.0,
+train,SHP_0057,OFF-SHP_0057-6,0,,,Véhicule indisponible
+train,SHP_0057,OFF-SHP_0057-7,0,0.222062181722887,0.0,
+train,SHP_0057,OFF-SHP_0057-8,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-9,1,0.6129749964588975,1.0,
+train,SHP_0057,OFF-SHP_0057-10,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-11,1,0.649772154672624,1.0,
+train,SHP_0057,OFF-SHP_0057-12,0,0.1405810311898149,0.0,
+train,SHP_0057,OFF-SHP_0057-13,1,0.7590674482733014,1.0,
+train,SHP_0057,OFF-SHP_0057-14,0,,,Véhicule indisponible
+train,SHP_0057,OFF-SHP_0057-15,1,0.7162034871546828,1.0,
+train,SHP_0057,OFF-SHP_0057-16,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-17,0,0.32767233735451734,0.0,
+train,SHP_0057,OFF-SHP_0057-18,0,,,Véhicule indisponible
+train,SHP_0057,OFF-SHP_0057-19,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-20,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-21,0,0.19726474318585238,0.0,
+train,SHP_0057,OFF-SHP_0057-22,0,,,Capacité en volume insuffisante
+train,SHP_0057,OFF-SHP_0057-23,1,0.6818723029853577,1.0,
+train,SHP_0057,OFF-SHP_0057-24,0,0.2354762541971961,0.0,
+train,SHP_0057,OFF-SHP_0057-25,0,,,Capacité en poids insuffisante
+train,SHP_0057,OFF-SHP_0057-26,0,,,Marchandise incompatible
+train,SHP_0057,OFF-SHP_0057-27,0,,,Créneau incompatible
+train,SHP_0057,OFF-SHP_0057-28,0,0.14370608202814825,0.0,
+train,SHP_0057,OFF-SHP_0057-29,1,0.39418831977316093,0.0,
+train,SHP_0058,OFF-SHP_0058-0,0,,,Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-1,0,,,Créneau incompatible
+train,SHP_0058,OFF-SHP_0058-2,0,0.1169456251784677,0.0,
+train,SHP_0058,OFF-SHP_0058-3,0,0.1070851429178847,0.0,
+train,SHP_0058,OFF-SHP_0058-4,0,,,Créneau incompatible
+train,SHP_0058,OFF-SHP_0058-5,0,,,Créneau incompatible ; Véhicule indisponible
+train,SHP_0058,OFF-SHP_0058-6,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-7,0,,,Créneau incompatible
+train,SHP_0058,OFF-SHP_0058-8,0,0.24718413681044427,0.0,
+train,SHP_0058,OFF-SHP_0058-9,1,0.5836898954458378,1.0,
+train,SHP_0058,OFF-SHP_0058-10,1,0.4863366350541728,1.0,
+train,SHP_0058,OFF-SHP_0058-11,0,,,Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-12,0,,,Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-13,0,,,Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-14,0,,,Créneau incompatible
+train,SHP_0058,OFF-SHP_0058-15,0,0.43420085842015943,0.0,
+train,SHP_0058,OFF-SHP_0058-16,0,0.3227905170536664,0.0,
+train,SHP_0058,OFF-SHP_0058-17,0,0.4475225861782109,0.0,
+train,SHP_0058,OFF-SHP_0058-18,0,0.24911376061834742,0.0,
+train,SHP_0058,OFF-SHP_0058-19,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0058,OFF-SHP_0058-20,0,,,Capacité en poids insuffisante
+train,SHP_0058,OFF-SHP_0058-21,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0058,OFF-SHP_0058-22,0,,,Capacité en poids insuffisante
+train,SHP_0058,OFF-SHP_0058-23,0,,,Véhicule indisponible
+train,SHP_0058,OFF-SHP_0058-24,0,0.1156388499129215,0.0,
+train,SHP_0058,OFF-SHP_0058-25,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0058,OFF-SHP_0058-26,0,0.42885939987998145,0.0,
+train,SHP_0058,OFF-SHP_0058-27,0,,,Véhicule indisponible
+train,SHP_0058,OFF-SHP_0058-28,0,,,Capacité en poids insuffisante
+train,SHP_0058,OFF-SHP_0058-29,0,0.18726685372519833,0.0,
+train,SHP_0060,OFF-SHP_0060-0,0,,,Trajet incompatible
+train,SHP_0060,OFF-SHP_0060-1,0,,,Capacité en poids insuffisante
+train,SHP_0060,OFF-SHP_0060-2,1,0.4683780621009099,0.0,
+train,SHP_0060,OFF-SHP_0060-3,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-4,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-5,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-6,1,0.5653588570192705,1.0,
+train,SHP_0060,OFF-SHP_0060-7,0,,,Capacité en poids insuffisante
+train,SHP_0060,OFF-SHP_0060-8,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-9,0,,,Capacité en poids insuffisante
+train,SHP_0060,OFF-SHP_0060-10,0,,,Capacité en poids insuffisante
+train,SHP_0060,OFF-SHP_0060-11,0,0.08704449533265736,0.0,
+train,SHP_0060,OFF-SHP_0060-12,0,,,Créneau incompatible
+train,SHP_0060,OFF-SHP_0060-13,0,0.4325027773891007,0.0,
+train,SHP_0060,OFF-SHP_0060-14,1,0.4433535287571642,0.0,
+train,SHP_0060,OFF-SHP_0060-15,0,,,Trajet incompatible
+train,SHP_0060,OFF-SHP_0060-16,0,0.6517171296092045,1.0,
+train,SHP_0060,OFF-SHP_0060-17,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-18,0,0.25324771533050755,0.0,
+train,SHP_0060,OFF-SHP_0060-19,0,0.23845414281996363,0.0,
+train,SHP_0060,OFF-SHP_0060-20,1,0.47064152167663414,0.0,
+train,SHP_0060,OFF-SHP_0060-21,0,0.08287765982189943,0.0,
+train,SHP_0060,OFF-SHP_0060-22,0,0.1989661811972771,0.0,
+train,SHP_0060,OFF-SHP_0060-23,0,0.5369048353585875,1.0,
+train,SHP_0060,OFF-SHP_0060-24,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-25,1,0.4905899511567741,1.0,
+train,SHP_0060,OFF-SHP_0060-26,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-27,0,0.16138691156222698,0.0,
+train,SHP_0060,OFF-SHP_0060-28,0,,,Capacité en volume insuffisante
+train,SHP_0060,OFF-SHP_0060-29,0,0.28264461648980255,0.0,
+train,SHP_0061,OFF-SHP_0061-0,0,,,Créneau incompatible ; Marchandise incompatible
+train,SHP_0061,OFF-SHP_0061-1,0,,,Créneau incompatible
+train,SHP_0061,OFF-SHP_0061-2,0,,,Capacité en poids insuffisante
+train,SHP_0061,OFF-SHP_0061-3,0,0.10750440805306868,0.0,
+train,SHP_0061,OFF-SHP_0061-4,1,0.7456382562692677,1.0,
+train,SHP_0061,OFF-SHP_0061-5,0,,,Créneau incompatible
+train,SHP_0061,OFF-SHP_0061-6,0,,,Capacité en volume insuffisante
+train,SHP_0061,OFF-SHP_0061-7,0,,,Capacité en poids insuffisante
+train,SHP_0061,OFF-SHP_0061-8,0,0.07760676724595669,0.0,
+train,SHP_0061,OFF-SHP_0061-9,0,,,Capacité en poids insuffisante
+train,SHP_0061,OFF-SHP_0061-10,0,0.10050652706911833,0.0,
+train,SHP_0061,OFF-SHP_0061-11,0,,,Capacité en volume insuffisante
+train,SHP_0061,OFF-SHP_0061-12,0,,,Capacité en volume insuffisante
+train,SHP_0061,OFF-SHP_0061-13,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0061,OFF-SHP_0061-14,0,0.31586195083139823,0.0,
+train,SHP_0061,OFF-SHP_0061-15,0,0.12385241949722928,0.0,
+train,SHP_0061,OFF-SHP_0061-16,0,0.24015068187788813,0.0,
+train,SHP_0061,OFF-SHP_0061-17,0,0.3721947997823927,0.0,
+train,SHP_0061,OFF-SHP_0061-18,0,,,Capacité en poids insuffisante
+train,SHP_0061,OFF-SHP_0061-19,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0061,OFF-SHP_0061-20,0,,,Capacité en poids insuffisante
+train,SHP_0061,OFF-SHP_0061-21,0,,,Marchandise incompatible
+train,SHP_0061,OFF-SHP_0061-22,0,0.16163992041914033,0.0,
+train,SHP_0061,OFF-SHP_0061-23,0,0.2601480910579737,0.0,
+train,SHP_0061,OFF-SHP_0061-24,0,0.0738318822639781,0.0,
+train,SHP_0061,OFF-SHP_0061-25,0,0.27439522543000405,0.0,
+train,SHP_0061,OFF-SHP_0061-26,0,0.29030363971373263,0.0,
+train,SHP_0061,OFF-SHP_0061-27,0,0.32206749562765435,0.0,
+train,SHP_0061,OFF-SHP_0061-28,1,0.5326962184827011,1.0,
+train,SHP_0061,OFF-SHP_0061-29,0,,,Véhicule indisponible
+train,SHP_0062,OFF-SHP_0062-0,0,0.17066252941305848,0.0,
+train,SHP_0062,OFF-SHP_0062-1,1,0.47920463501460836,1.0,
+train,SHP_0062,OFF-SHP_0062-2,0,,,Capacité en poids insuffisante
+train,SHP_0062,OFF-SHP_0062-3,1,0.6549706370041805,1.0,
+train,SHP_0062,OFF-SHP_0062-4,0,0.4210667186927133,0.0,
+train,SHP_0062,OFF-SHP_0062-5,0,,,Trajet incompatible ; Créneau incompatible
+train,SHP_0062,OFF-SHP_0062-6,1,0.326144281659336,0.0,
+train,SHP_0062,OFF-SHP_0062-7,0,0.4540176093110172,0.0,
+train,SHP_0062,OFF-SHP_0062-8,0,0.29907268069443466,0.0,
+train,SHP_0062,OFF-SHP_0062-9,1,0.34224554452712086,0.0,
+train,SHP_0062,OFF-SHP_0062-10,1,0.421336002400906,0.0,
+train,SHP_0062,OFF-SHP_0062-11,1,0.41212593873564907,0.0,
+train,SHP_0062,OFF-SHP_0062-12,0,,,Capacité en volume insuffisante
+train,SHP_0062,OFF-SHP_0062-13,0,0.32818329345730074,0.0,
+train,SHP_0062,OFF-SHP_0062-14,0,0.3502338263654256,0.0,
+train,SHP_0062,OFF-SHP_0062-15,1,0.6202891651421064,1.0,
+train,SHP_0062,OFF-SHP_0062-16,1,0.5210921954660138,1.0,
+train,SHP_0062,OFF-SHP_0062-17,0,,,Capacité en poids insuffisante
+train,SHP_0062,OFF-SHP_0062-18,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0062,OFF-SHP_0062-19,0,0.6323587266002416,1.0,
+train,SHP_0062,OFF-SHP_0062-20,0,0.11274908538268805,0.0,
+train,SHP_0062,OFF-SHP_0062-21,1,0.4729381205634434,0.0,
+train,SHP_0062,OFF-SHP_0062-22,0,0.27624214581542467,0.0,
+train,SHP_0062,OFF-SHP_0062-23,0,,,Capacité en poids insuffisante
+train,SHP_0062,OFF-SHP_0062-24,1,0.6377302107412914,1.0,
+train,SHP_0062,OFF-SHP_0062-25,0,,,Capacité en poids insuffisante
+train,SHP_0062,OFF-SHP_0062-26,1,0.568739483436018,1.0,
+train,SHP_0062,OFF-SHP_0062-27,0,0.35889775254259776,0.0,
+train,SHP_0062,OFF-SHP_0062-28,0,,,Capacité en volume insuffisante
+train,SHP_0062,OFF-SHP_0062-29,1,0.5220298027032921,1.0,
+train,SHP_0064,OFF-SHP_0064-0,0,0.4494593294328271,0.0,
+train,SHP_0064,OFF-SHP_0064-1,0,,,Capacité en volume insuffisante
+train,SHP_0064,OFF-SHP_0064-2,0,0.39998057205255566,0.0,
+train,SHP_0064,OFF-SHP_0064-3,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0064,OFF-SHP_0064-4,1,0.4677895738419963,0.0,
+train,SHP_0064,OFF-SHP_0064-5,0,,,Capacité en poids insuffisante
+train,SHP_0064,OFF-SHP_0064-6,0,,,Véhicule indisponible
+train,SHP_0064,OFF-SHP_0064-7,0,0.14951193729154774,0.0,
+train,SHP_0064,OFF-SHP_0064-8,0,,,Capacité en volume insuffisante
+train,SHP_0064,OFF-SHP_0064-9,0,,,Capacité en poids insuffisante
+train,SHP_0064,OFF-SHP_0064-10,1,0.5961469996995574,1.0,
+train,SHP_0064,OFF-SHP_0064-11,0,0.3071279587554379,0.0,
+train,SHP_0064,OFF-SHP_0064-12,1,0.5557011126940951,1.0,
+train,SHP_0064,OFF-SHP_0064-13,1,0.636042891871129,1.0,
+train,SHP_0064,OFF-SHP_0064-14,0,,,Capacité en volume insuffisante
+train,SHP_0064,OFF-SHP_0064-15,0,,,Capacité en poids insuffisante
+train,SHP_0064,OFF-SHP_0064-16,1,0.5466594723330838,1.0,
+train,SHP_0064,OFF-SHP_0064-17,0,0.20413026547896207,0.0,
+train,SHP_0064,OFF-SHP_0064-18,1,0.6713569175582115,1.0,
+train,SHP_0064,OFF-SHP_0064-19,0,0.12616762511438306,0.0,
+train,SHP_0064,OFF-SHP_0064-20,1,0.36190389347072904,0.0,
+train,SHP_0064,OFF-SHP_0064-21,0,0.44784015223129614,0.0,
+train,SHP_0064,OFF-SHP_0064-22,0,0.3794217778849327,0.0,
+train,SHP_0064,OFF-SHP_0064-23,0,,,Marchandise incompatible
+train,SHP_0064,OFF-SHP_0064-24,0,,,Capacité en volume insuffisante
+train,SHP_0064,OFF-SHP_0064-25,0,,,Capacité en volume insuffisante
+train,SHP_0064,OFF-SHP_0064-26,1,0.14178885502082536,0.0,
+train,SHP_0064,OFF-SHP_0064-27,0,0.32548071947677887,0.0,
+train,SHP_0064,OFF-SHP_0064-28,0,0.3691942762850525,0.0,
+train,SHP_0064,OFF-SHP_0064-29,0,0.1608781341893009,0.0,
+train,SHP_0065,OFF-SHP_0065-0,0,0.22697149388142815,0.0,
+train,SHP_0065,OFF-SHP_0065-1,0,0.4552494753832402,0.0,
+train,SHP_0065,OFF-SHP_0065-2,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-3,1,0.6274778329609566,1.0,
+train,SHP_0065,OFF-SHP_0065-4,1,0.44559889314083145,0.0,
+train,SHP_0065,OFF-SHP_0065-5,0,0.20744747132424043,0.0,
+train,SHP_0065,OFF-SHP_0065-6,0,,,Capacité en volume insuffisante
+train,SHP_0065,OFF-SHP_0065-7,1,0.6522747705894958,1.0,
+train,SHP_0065,OFF-SHP_0065-8,0,0.2774715635121521,0.0,
+train,SHP_0065,OFF-SHP_0065-9,0,,,Capacité en volume insuffisante
+train,SHP_0065,OFF-SHP_0065-10,0,0.27102875662206294,0.0,
+train,SHP_0065,OFF-SHP_0065-11,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-12,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-13,0,0.1839042481784343,0.0,
+train,SHP_0065,OFF-SHP_0065-14,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0065,OFF-SHP_0065-15,1,0.6302638784279838,1.0,
+train,SHP_0065,OFF-SHP_0065-16,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-17,0,0.4228991491102387,0.0,
+train,SHP_0065,OFF-SHP_0065-18,0,0.24306852532857895,0.0,
+train,SHP_0065,OFF-SHP_0065-19,0,,,Trajet incompatible ; Créneau incompatible
+train,SHP_0065,OFF-SHP_0065-20,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-21,0,0.46628548540884573,0.0,
+train,SHP_0065,OFF-SHP_0065-22,1,0.37190055247670356,0.0,
+train,SHP_0065,OFF-SHP_0065-23,0,,,Capacité en poids insuffisante
+train,SHP_0065,OFF-SHP_0065-24,1,0.6383756065117471,1.0,
+train,SHP_0065,OFF-SHP_0065-25,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0065,OFF-SHP_0065-26,0,0.44252374964307734,0.0,
+train,SHP_0065,OFF-SHP_0065-27,1,0.48309693272279947,1.0,
+train,SHP_0065,OFF-SHP_0065-28,0,0.45641813619271593,0.0,
+train,SHP_0065,OFF-SHP_0065-29,0,0.35850788437782116,0.0,
+train,SHP_0066,OFF-SHP_0066-0,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0066,OFF-SHP_0066-1,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-2,0,0.16299065071205351,0.0,
+train,SHP_0066,OFF-SHP_0066-3,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-4,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-5,0,0.14106854155161774,0.0,
+train,SHP_0066,OFF-SHP_0066-6,0,0.23322524932914976,0.0,
+train,SHP_0066,OFF-SHP_0066-7,0,,,Capacité en volume insuffisante
+train,SHP_0066,OFF-SHP_0066-8,0,0.5664434961904455,1.0,
+train,SHP_0066,OFF-SHP_0066-9,0,,,Créneau incompatible ; Marchandise incompatible
+train,SHP_0066,OFF-SHP_0066-10,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-11,0,,,Capacité en volume insuffisante
+train,SHP_0066,OFF-SHP_0066-12,0,0.13838725494931556,0.0,
+train,SHP_0066,OFF-SHP_0066-13,0,0.16032938390432327,0.0,
+train,SHP_0066,OFF-SHP_0066-14,0,,,Véhicule indisponible
+train,SHP_0066,OFF-SHP_0066-15,0,,,Marchandise incompatible
+train,SHP_0066,OFF-SHP_0066-16,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-17,0,0.10266790290938266,0.0,
+train,SHP_0066,OFF-SHP_0066-18,1,0.5476909986040958,1.0,
+train,SHP_0066,OFF-SHP_0066-19,1,0.4784538919809181,1.0,
+train,SHP_0066,OFF-SHP_0066-20,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-21,0,,,Capacité en poids insuffisante
+train,SHP_0066,OFF-SHP_0066-22,0,,,Capacité en volume insuffisante
+train,SHP_0066,OFF-SHP_0066-23,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0066,OFF-SHP_0066-24,0,0.42958640390775094,0.0,
+train,SHP_0066,OFF-SHP_0066-25,0,0.13522340168598151,0.0,
+train,SHP_0066,OFF-SHP_0066-26,0,,,Trajet incompatible
+train,SHP_0066,OFF-SHP_0066-27,0,0.15565922828235595,0.0,
+train,SHP_0066,OFF-SHP_0066-28,0,0.29995391345247296,0.0,
+train,SHP_0066,OFF-SHP_0066-29,0,,,Trajet incompatible
+train,SHP_0067,OFF-SHP_0067-0,0,,,Capacité en volume insuffisante
+train,SHP_0067,OFF-SHP_0067-1,0,,,Véhicule indisponible
+train,SHP_0067,OFF-SHP_0067-2,0,0.09865084952251955,0.0,
+train,SHP_0067,OFF-SHP_0067-3,0,0.3695553976469652,0.0,
+train,SHP_0067,OFF-SHP_0067-4,0,0.19146523026692072,0.0,
+train,SHP_0067,OFF-SHP_0067-5,0,0.3232881277375133,0.0,
+train,SHP_0067,OFF-SHP_0067-6,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0067,OFF-SHP_0067-7,0,,,Capacité en volume insuffisante
+train,SHP_0067,OFF-SHP_0067-8,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0067,OFF-SHP_0067-9,0,0.09734956541990489,0.0,
+train,SHP_0067,OFF-SHP_0067-10,0,,,Trajet incompatible
+train,SHP_0067,OFF-SHP_0067-11,0,0.11243358777008865,0.0,
+train,SHP_0067,OFF-SHP_0067-12,0,0.13951866793271003,0.0,
+train,SHP_0067,OFF-SHP_0067-13,0,0.3618927237983531,0.0,
+train,SHP_0067,OFF-SHP_0067-14,0,,,Capacité en poids insuffisante
+train,SHP_0067,OFF-SHP_0067-15,0,,,Créneau incompatible
+train,SHP_0067,OFF-SHP_0067-16,0,0.5301908843543048,1.0,
+train,SHP_0067,OFF-SHP_0067-17,0,0.4839792540043842,1.0,
+train,SHP_0067,OFF-SHP_0067-18,0,,,Capacité en poids insuffisante
+train,SHP_0067,OFF-SHP_0067-19,0,,,Marchandise incompatible
+train,SHP_0067,OFF-SHP_0067-20,1,0.3455197593554225,0.0,
+train,SHP_0067,OFF-SHP_0067-21,0,,,Capacité en poids insuffisante
+train,SHP_0067,OFF-SHP_0067-22,1,0.33691978614076756,0.0,
+train,SHP_0067,OFF-SHP_0067-23,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0067,OFF-SHP_0067-24,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0067,OFF-SHP_0067-25,0,,,Capacité en volume insuffisante
+train,SHP_0067,OFF-SHP_0067-26,0,0.26438840297955335,0.0,
+train,SHP_0067,OFF-SHP_0067-27,0,0.62256873503649,1.0,
+train,SHP_0067,OFF-SHP_0067-28,0,,,Capacité en poids insuffisante
+train,SHP_0067,OFF-SHP_0067-29,0,,,Capacité en volume insuffisante
+train,SHP_0068,OFF-SHP_0068-0,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0068,OFF-SHP_0068-1,0,0.2722206768174425,0.0,
+train,SHP_0068,OFF-SHP_0068-2,0,0.10900379538577795,0.0,
+train,SHP_0068,OFF-SHP_0068-3,0,0.3060763185722363,0.0,
+train,SHP_0068,OFF-SHP_0068-4,0,0.1403879894392084,0.0,
+train,SHP_0068,OFF-SHP_0068-5,0,,,Capacité en poids insuffisante
+train,SHP_0068,OFF-SHP_0068-6,0,,,Capacité en poids insuffisante
+train,SHP_0068,OFF-SHP_0068-7,1,0.3424837630838301,0.0,
+train,SHP_0068,OFF-SHP_0068-8,0,0.41280927033511994,0.0,
+train,SHP_0068,OFF-SHP_0068-9,0,,,Capacité en poids insuffisante
+train,SHP_0068,OFF-SHP_0068-10,0,,,Marchandise incompatible
+train,SHP_0068,OFF-SHP_0068-11,0,,,Capacité en poids insuffisante
+train,SHP_0068,OFF-SHP_0068-12,0,,,Véhicule indisponible
+train,SHP_0068,OFF-SHP_0068-13,0,,,Capacité en poids insuffisante
+train,SHP_0068,OFF-SHP_0068-14,0,,,Marchandise incompatible
+train,SHP_0068,OFF-SHP_0068-15,0,,,Marchandise incompatible
+train,SHP_0068,OFF-SHP_0068-16,0,0.39598437227828515,0.0,
+train,SHP_0068,OFF-SHP_0068-17,1,0.5732117728947952,1.0,
+train,SHP_0068,OFF-SHP_0068-18,0,0.13299354439744007,0.0,
+train,SHP_0068,OFF-SHP_0068-19,0,,,Capacité en volume insuffisante
+train,SHP_0068,OFF-SHP_0068-20,0,,,Créneau incompatible ; Véhicule indisponible ; Marchandise incompatible
+train,SHP_0068,OFF-SHP_0068-21,0,,,Capacité en volume insuffisante
+train,SHP_0068,OFF-SHP_0068-22,0,0.1918894337881896,0.0,
+train,SHP_0068,OFF-SHP_0068-23,0,,,Trajet incompatible
+train,SHP_0068,OFF-SHP_0068-24,0,,,Capacité en volume insuffisante
+train,SHP_0068,OFF-SHP_0068-25,0,0.10231630760090159,0.0,
+train,SHP_0068,OFF-SHP_0068-26,0,,,Véhicule indisponible
+train,SHP_0068,OFF-SHP_0068-27,0,0.17815507655816973,0.0,
+train,SHP_0068,OFF-SHP_0068-28,0,0.12350581918623857,0.0,
+train,SHP_0068,OFF-SHP_0068-29,1,0.6401356758532568,1.0,
+train,SHP_0070,OFF-SHP_0070-0,0,0.09908806491349265,0.0,
+train,SHP_0070,OFF-SHP_0070-1,0,,,Capacité en poids insuffisante
+train,SHP_0070,OFF-SHP_0070-2,0,,,Trajet incompatible
+train,SHP_0070,OFF-SHP_0070-3,0,0.3791586321648303,0.0,
+train,SHP_0070,OFF-SHP_0070-4,0,0.14764266667164405,0.0,
+train,SHP_0070,OFF-SHP_0070-5,0,,,Marchandise incompatible
+train,SHP_0070,OFF-SHP_0070-6,1,0.3288673804194552,0.0,
+train,SHP_0070,OFF-SHP_0070-7,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-8,0,0.6784276974775348,1.0,
+train,SHP_0070,OFF-SHP_0070-9,1,0.6759206876843695,1.0,
+train,SHP_0070,OFF-SHP_0070-10,0,,,Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-11,0,,,Capacité en poids insuffisante
+train,SHP_0070,OFF-SHP_0070-12,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0070,OFF-SHP_0070-13,0,0.3929762494460941,0.0,
+train,SHP_0070,OFF-SHP_0070-14,0,0.4955454201322792,1.0,
+train,SHP_0070,OFF-SHP_0070-15,0,0.28994073794735725,0.0,
+train,SHP_0070,OFF-SHP_0070-16,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-17,0,,,Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-18,0,0.10610161209403417,0.0,
+train,SHP_0070,OFF-SHP_0070-19,0,0.18576091400072609,0.0,
+train,SHP_0070,OFF-SHP_0070-20,0,,,Capacité en poids insuffisante
+train,SHP_0070,OFF-SHP_0070-21,0,,,Capacité en poids insuffisante
+train,SHP_0070,OFF-SHP_0070-22,0,,,Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-23,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0070,OFF-SHP_0070-24,1,0.4813397213064544,1.0,
+train,SHP_0070,OFF-SHP_0070-25,0,,,Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-26,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-27,0,,,Capacité en volume insuffisante
+train,SHP_0070,OFF-SHP_0070-28,1,0.41700650069461925,0.0,
+train,SHP_0070,OFF-SHP_0070-29,0,0.07168141297898126,0.0,
+train,SHP_0072,OFF-SHP_0072-0,1,0.3743722199849662,0.0,
+train,SHP_0072,OFF-SHP_0072-1,1,0.4315248736200461,0.0,
+train,SHP_0072,OFF-SHP_0072-2,1,0.4514969866549695,0.0,
+train,SHP_0072,OFF-SHP_0072-3,0,,,Capacité en volume insuffisante
+train,SHP_0072,OFF-SHP_0072-4,0,0.26019760099341466,0.0,
+train,SHP_0072,OFF-SHP_0072-5,1,0.27993779012227993,0.0,
+train,SHP_0072,OFF-SHP_0072-6,0,0.3517520805900893,0.0,
+train,SHP_0072,OFF-SHP_0072-7,0,0.3449489673025472,0.0,
+train,SHP_0072,OFF-SHP_0072-8,1,0.45120499983722406,0.0,
+train,SHP_0072,OFF-SHP_0072-9,0,0.40021964120097164,0.0,
+train,SHP_0072,OFF-SHP_0072-10,0,0.1826306824083634,0.0,
+train,SHP_0072,OFF-SHP_0072-11,0,0.19704827652406437,0.0,
+train,SHP_0072,OFF-SHP_0072-12,0,0.28965770922864387,0.0,
+train,SHP_0072,OFF-SHP_0072-13,1,0.38280037509350356,0.0,
+train,SHP_0072,OFF-SHP_0072-14,0,0.21141949092815068,0.0,
+train,SHP_0072,OFF-SHP_0072-15,1,0.5350980602010466,1.0,
+train,SHP_0072,OFF-SHP_0072-16,0,,,Capacité en poids insuffisante
+train,SHP_0072,OFF-SHP_0072-17,0,0.3399515763618799,0.0,
+train,SHP_0072,OFF-SHP_0072-18,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0072,OFF-SHP_0072-19,0,0.18755242272585368,0.0,
+train,SHP_0072,OFF-SHP_0072-20,1,0.4007246572909915,0.0,
+train,SHP_0072,OFF-SHP_0072-21,0,,,Capacité en poids insuffisante
+train,SHP_0072,OFF-SHP_0072-22,0,0.15850761732648574,0.0,
+train,SHP_0072,OFF-SHP_0072-23,0,0.22141057444200185,0.0,
+train,SHP_0072,OFF-SHP_0072-24,0,,,Capacité en poids insuffisante
+train,SHP_0072,OFF-SHP_0072-25,0,,,Capacité en volume insuffisante
+train,SHP_0072,OFF-SHP_0072-26,0,,,Capacité en volume insuffisante
+train,SHP_0072,OFF-SHP_0072-27,0,0.2637021467108933,0.0,
+train,SHP_0072,OFF-SHP_0072-28,0,0.30004605810132773,0.0,
+train,SHP_0072,OFF-SHP_0072-29,0,0.18216823553748698,0.0,
+train,SHP_0073,OFF-SHP_0073-0,0,0.19182157676426315,0.0,
+train,SHP_0073,OFF-SHP_0073-1,0,0.14247029826040453,0.0,
+train,SHP_0073,OFF-SHP_0073-2,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0073,OFF-SHP_0073-3,1,0.3998715626036889,0.0,
+train,SHP_0073,OFF-SHP_0073-4,0,0.1838757462303788,0.0,
+train,SHP_0073,OFF-SHP_0073-5,0,0.3341626120360271,0.0,
+train,SHP_0073,OFF-SHP_0073-6,1,0.6804985834686462,1.0,
+train,SHP_0073,OFF-SHP_0073-7,0,,,Véhicule indisponible
+train,SHP_0073,OFF-SHP_0073-8,0,0.2228148072721507,0.0,
+train,SHP_0073,OFF-SHP_0073-9,0,0.3960234857642344,0.0,
+train,SHP_0073,OFF-SHP_0073-10,0,0.10658413299146663,0.0,
+train,SHP_0073,OFF-SHP_0073-11,0,,,Véhicule indisponible
+train,SHP_0073,OFF-SHP_0073-12,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0073,OFF-SHP_0073-13,1,0.5602336287778065,1.0,
+train,SHP_0073,OFF-SHP_0073-14,0,,,Capacité en poids insuffisante
+train,SHP_0073,OFF-SHP_0073-15,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0073,OFF-SHP_0073-16,0,,,Capacité en volume insuffisante
+train,SHP_0073,OFF-SHP_0073-17,0,0.13375371965623578,0.0,
+train,SHP_0073,OFF-SHP_0073-18,0,0.20969712025689544,0.0,
+train,SHP_0073,OFF-SHP_0073-19,0,0.421398774440529,0.0,
+train,SHP_0073,OFF-SHP_0073-20,0,,,Capacité en poids insuffisante
+train,SHP_0073,OFF-SHP_0073-21,0,0.4465359843033983,0.0,
+train,SHP_0073,OFF-SHP_0073-22,0,,,Créneau incompatible
+train,SHP_0073,OFF-SHP_0073-23,1,0.3974374358633005,0.0,
+train,SHP_0073,OFF-SHP_0073-24,0,0.49573659596662356,1.0,
+train,SHP_0073,OFF-SHP_0073-25,0,0.4022274835001795,0.0,
+train,SHP_0073,OFF-SHP_0073-26,0,,,Créneau incompatible
+train,SHP_0073,OFF-SHP_0073-27,0,,,Capacité en poids insuffisante
+train,SHP_0073,OFF-SHP_0073-28,0,,,Capacité en volume insuffisante
+train,SHP_0073,OFF-SHP_0073-29,0,0.196718914866196,0.0,
+train,SHP_0075,OFF-SHP_0075-0,0,,,Capacité en volume insuffisante
+train,SHP_0075,OFF-SHP_0075-1,0,0.39547359490766104,0.0,
+train,SHP_0075,OFF-SHP_0075-2,0,0.1553327307879016,0.0,
+train,SHP_0075,OFF-SHP_0075-3,0,0.4643335539902148,0.0,
+train,SHP_0075,OFF-SHP_0075-4,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-5,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-6,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-7,0,,,Capacité en volume insuffisante
+train,SHP_0075,OFF-SHP_0075-8,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-9,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-10,1,0.47561032093052774,0.0,
+train,SHP_0075,OFF-SHP_0075-11,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-12,0,,,Capacité en volume insuffisante
+train,SHP_0075,OFF-SHP_0075-13,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-14,0,,,Trajet incompatible ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-15,0,,,Créneau incompatible ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-16,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0075,OFF-SHP_0075-17,1,0.6610496889905781,1.0,
+train,SHP_0075,OFF-SHP_0075-18,0,,,Capacité en poids insuffisante
+train,SHP_0075,OFF-SHP_0075-19,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-20,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-21,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-22,0,,,Capacité en volume insuffisante
+train,SHP_0075,OFF-SHP_0075-23,1,0.7528930781072346,1.0,
+train,SHP_0075,OFF-SHP_0075-24,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-25,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-26,0,,,Budget strict dépassé
+train,SHP_0075,OFF-SHP_0075-27,1,0.6161727292666975,1.0,
+train,SHP_0075,OFF-SHP_0075-28,0,0.24087034240894156,0.0,
+train,SHP_0075,OFF-SHP_0075-29,0,0.5156031457200128,1.0,
+train,SHP_0076,OFF-SHP_0076-0,1,0.657158816277848,1.0,
+train,SHP_0076,OFF-SHP_0076-1,0,,,Créneau incompatible
+train,SHP_0076,OFF-SHP_0076-2,0,0.604306513608511,1.0,
+train,SHP_0076,OFF-SHP_0076-3,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0076,OFF-SHP_0076-4,0,0.24217980519346302,0.0,
+train,SHP_0076,OFF-SHP_0076-5,0,,,Capacité en poids insuffisante
+train,SHP_0076,OFF-SHP_0076-6,0,0.420306569355196,0.0,
+train,SHP_0076,OFF-SHP_0076-7,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0076,OFF-SHP_0076-8,0,0.27238570127588296,0.0,
+train,SHP_0076,OFF-SHP_0076-9,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0076,OFF-SHP_0076-10,1,0.48214424133651934,1.0,
+train,SHP_0076,OFF-SHP_0076-11,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0076,OFF-SHP_0076-12,0,0.2054859880419748,0.0,
+train,SHP_0076,OFF-SHP_0076-13,0,0.29852527773516413,0.0,
+train,SHP_0076,OFF-SHP_0076-14,0,,,Capacité en volume insuffisante
+train,SHP_0076,OFF-SHP_0076-15,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+train,SHP_0076,OFF-SHP_0076-16,0,,,Trajet incompatible ; Marchandise incompatible
+train,SHP_0076,OFF-SHP_0076-17,0,0.16835590945038637,0.0,
+train,SHP_0076,OFF-SHP_0076-18,1,0.6405180180973497,1.0,
+train,SHP_0076,OFF-SHP_0076-19,0,,,Capacité en poids insuffisante
+train,SHP_0076,OFF-SHP_0076-20,0,0.24147677926783506,0.0,
+train,SHP_0076,OFF-SHP_0076-21,0,,,Capacité en poids insuffisante
+train,SHP_0076,OFF-SHP_0076-22,0,,,Capacité en poids insuffisante
+train,SHP_0076,OFF-SHP_0076-23,0,0.27205470883229776,0.0,
+train,SHP_0076,OFF-SHP_0076-24,0,0.27090243798690256,0.0,
+train,SHP_0076,OFF-SHP_0076-25,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0076,OFF-SHP_0076-26,1,0.3851889766580055,0.0,
+train,SHP_0076,OFF-SHP_0076-27,0,,,Capacité en poids insuffisante
+train,SHP_0076,OFF-SHP_0076-28,0,,,Trajet incompatible
+train,SHP_0076,OFF-SHP_0076-29,0,,,Véhicule indisponible
+train,SHP_0080,OFF-SHP_0080-0,0,,,Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-1,0,0.18153384181801105,0.0,
+train,SHP_0080,OFF-SHP_0080-2,1,0.32793856833063145,0.0,
+train,SHP_0080,OFF-SHP_0080-3,1,0.4098380801057448,0.0,
+train,SHP_0080,OFF-SHP_0080-4,0,,,Trajet incompatible
+train,SHP_0080,OFF-SHP_0080-5,0,,,Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-6,0,,,Capacité en poids insuffisante
+train,SHP_0080,OFF-SHP_0080-7,0,0.1541796937570651,0.0,
+train,SHP_0080,OFF-SHP_0080-8,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0080,OFF-SHP_0080-9,0,,,Capacité en poids insuffisante
+train,SHP_0080,OFF-SHP_0080-10,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-11,0,,,Trajet incompatible
+train,SHP_0080,OFF-SHP_0080-12,0,,,Marchandise incompatible
+train,SHP_0080,OFF-SHP_0080-13,1,0.514395103056345,1.0,
+train,SHP_0080,OFF-SHP_0080-14,0,0.24498549227666822,0.0,
+train,SHP_0080,OFF-SHP_0080-15,0,,,Capacité en poids insuffisante
+train,SHP_0080,OFF-SHP_0080-16,0,,,Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-17,0,0.3761890724113612,0.0,
+train,SHP_0080,OFF-SHP_0080-18,0,0.16765678799705197,0.0,
+train,SHP_0080,OFF-SHP_0080-19,1,0.4798690862497339,1.0,
+train,SHP_0080,OFF-SHP_0080-20,0,0.12208536399764829,0.0,
+train,SHP_0080,OFF-SHP_0080-21,0,,,Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-22,1,0.6863646863399793,1.0,
+train,SHP_0080,OFF-SHP_0080-23,0,0.11274420305817875,0.0,
+train,SHP_0080,OFF-SHP_0080-24,0,0.15311440640102572,0.0,
+train,SHP_0080,OFF-SHP_0080-25,1,0.6233823343091732,1.0,
+train,SHP_0080,OFF-SHP_0080-26,1,0.1776156962374117,0.0,
+train,SHP_0080,OFF-SHP_0080-27,0,0.16091555469272675,0.0,
+train,SHP_0080,OFF-SHP_0080-28,0,,,Capacité en volume insuffisante
+train,SHP_0080,OFF-SHP_0080-29,0,0.15097750312780953,0.0,
+train,SHP_0082,OFF-SHP_0082-0,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-1,1,0.39198637259653857,0.0,
+train,SHP_0082,OFF-SHP_0082-2,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-3,0,,,Capacité en poids insuffisante
+train,SHP_0082,OFF-SHP_0082-4,0,,,Marchandise incompatible
+train,SHP_0082,OFF-SHP_0082-5,0,,,Véhicule indisponible
+train,SHP_0082,OFF-SHP_0082-6,0,,,Capacité en poids insuffisante
+train,SHP_0082,OFF-SHP_0082-7,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-8,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+train,SHP_0082,OFF-SHP_0082-9,0,0.1291207490433288,0.0,
+train,SHP_0082,OFF-SHP_0082-10,1,0.359622641110424,0.0,
+train,SHP_0082,OFF-SHP_0082-11,0,0.2859953530973278,0.0,
+train,SHP_0082,OFF-SHP_0082-12,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0082,OFF-SHP_0082-13,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-14,0,0.1301692407463112,0.0,
+train,SHP_0082,OFF-SHP_0082-15,0,0.21159346883418548,0.0,
+train,SHP_0082,OFF-SHP_0082-16,0,0.14153456615195728,0.0,
+train,SHP_0082,OFF-SHP_0082-17,0,0.10221449686569328,0.0,
+train,SHP_0082,OFF-SHP_0082-18,0,0.17205875536829066,0.0,
+train,SHP_0082,OFF-SHP_0082-19,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-20,0,0.11040470921383046,0.0,
+train,SHP_0082,OFF-SHP_0082-21,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0082,OFF-SHP_0082-22,0,0.3080370897686691,0.0,
+train,SHP_0082,OFF-SHP_0082-23,0,,,Capacité en volume insuffisante
+train,SHP_0082,OFF-SHP_0082-24,0,0.1808907704485057,0.0,
+train,SHP_0082,OFF-SHP_0082-25,0,0.11114664645635819,0.0,
+train,SHP_0082,OFF-SHP_0082-26,1,0.17635929018938543,0.0,
+train,SHP_0082,OFF-SHP_0082-27,0,0.2025540500868817,0.0,
+train,SHP_0082,OFF-SHP_0082-28,1,0.3430367469147927,0.0,
+train,SHP_0082,OFF-SHP_0082-29,0,,,Capacité en volume insuffisante
+train,SHP_0083,OFF-SHP_0083-0,0,,,Capacité en poids insuffisante
+train,SHP_0083,OFF-SHP_0083-1,1,0.24020619082791345,0.0,
+train,SHP_0083,OFF-SHP_0083-2,1,0.42244684342435307,0.0,
+train,SHP_0083,OFF-SHP_0083-3,0,0.33880639266724116,0.0,
+train,SHP_0083,OFF-SHP_0083-4,0,0.38093340306656054,0.0,
+train,SHP_0083,OFF-SHP_0083-5,0,,,Capacité en poids insuffisante
+train,SHP_0083,OFF-SHP_0083-6,0,0.11191088614671678,0.0,
+train,SHP_0083,OFF-SHP_0083-7,0,0.08126048707654052,0.0,
+train,SHP_0083,OFF-SHP_0083-8,1,0.7320913471920067,1.0,
+train,SHP_0083,OFF-SHP_0083-9,0,0.27430433296473067,0.0,
+train,SHP_0083,OFF-SHP_0083-10,0,,,Capacité en poids insuffisante ; Créneau incompatible
+train,SHP_0083,OFF-SHP_0083-11,0,0.16123547554418974,0.0,
+train,SHP_0083,OFF-SHP_0083-12,0,0.24903907514595583,0.0,
+train,SHP_0083,OFF-SHP_0083-13,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0083,OFF-SHP_0083-14,1,0.624912860233953,1.0,
+train,SHP_0083,OFF-SHP_0083-15,0,0.421049785600555,0.0,
+train,SHP_0083,OFF-SHP_0083-16,0,0.3104683669691826,0.0,
+train,SHP_0083,OFF-SHP_0083-17,0,,,Capacité en volume insuffisante
+train,SHP_0083,OFF-SHP_0083-18,1,0.6463440000373419,1.0,
+train,SHP_0083,OFF-SHP_0083-19,0,0.21892021797713868,0.0,
+train,SHP_0083,OFF-SHP_0083-20,1,0.5993781583990809,1.0,
+train,SHP_0083,OFF-SHP_0083-21,1,0.592726593286191,1.0,
+train,SHP_0083,OFF-SHP_0083-22,0,0.1518877575065546,0.0,
+train,SHP_0083,OFF-SHP_0083-23,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0083,OFF-SHP_0083-24,0,,,Véhicule indisponible
+train,SHP_0083,OFF-SHP_0083-25,0,,,Créneau incompatible
+train,SHP_0083,OFF-SHP_0083-26,0,0.2871643187202315,0.0,
+train,SHP_0083,OFF-SHP_0083-27,0,,,Capacité en poids insuffisante
+train,SHP_0083,OFF-SHP_0083-28,1,0.5115691836817342,1.0,
+train,SHP_0083,OFF-SHP_0083-29,0,,,Véhicule indisponible
+train,SHP_0085,OFF-SHP_0085-0,0,0.2420744960179385,0.0,
+train,SHP_0085,OFF-SHP_0085-1,0,,,Véhicule indisponible
+train,SHP_0085,OFF-SHP_0085-2,0,,,Capacité en poids insuffisante
+train,SHP_0085,OFF-SHP_0085-3,0,0.15664535657575787,0.0,
+train,SHP_0085,OFF-SHP_0085-4,0,0.20573533196185342,0.0,
+train,SHP_0085,OFF-SHP_0085-5,0,,,Capacité en poids insuffisante
+train,SHP_0085,OFF-SHP_0085-6,1,0.46894237731394783,0.0,
+train,SHP_0085,OFF-SHP_0085-7,0,0.5840536122438084,1.0,
+train,SHP_0085,OFF-SHP_0085-8,0,,,Marchandise incompatible
+train,SHP_0085,OFF-SHP_0085-9,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0085,OFF-SHP_0085-10,0,,,Capacité en poids insuffisante
+train,SHP_0085,OFF-SHP_0085-11,0,,,Capacité en volume insuffisante
+train,SHP_0085,OFF-SHP_0085-12,0,,,Capacité en volume insuffisante
+train,SHP_0085,OFF-SHP_0085-13,1,0.3291594671716765,0.0,
+train,SHP_0085,OFF-SHP_0085-14,0,,,Capacité en volume insuffisante
+train,SHP_0085,OFF-SHP_0085-15,0,,,Trajet incompatible
+train,SHP_0085,OFF-SHP_0085-16,0,0.24985689540670478,0.0,
+train,SHP_0085,OFF-SHP_0085-17,0,0.1506842282757945,0.0,
+train,SHP_0085,OFF-SHP_0085-18,0,0.13907404452910652,0.0,
+train,SHP_0085,OFF-SHP_0085-19,0,,,Trajet incompatible ; Créneau incompatible ; Marchandise incompatible
+train,SHP_0085,OFF-SHP_0085-20,0,,,Capacité en poids insuffisante
+train,SHP_0085,OFF-SHP_0085-21,0,0.0686920642032598,0.0,
+train,SHP_0085,OFF-SHP_0085-22,0,0.1934073812706164,0.0,
+train,SHP_0085,OFF-SHP_0085-23,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0085,OFF-SHP_0085-24,0,0.2645368764480031,0.0,
+train,SHP_0085,OFF-SHP_0085-25,1,0.5471541236361516,1.0,
+train,SHP_0085,OFF-SHP_0085-26,0,,,Capacité en poids insuffisante
+train,SHP_0085,OFF-SHP_0085-27,1,0.5881654969218708,1.0,
+train,SHP_0085,OFF-SHP_0085-28,0,,,Marchandise incompatible
+train,SHP_0085,OFF-SHP_0085-29,0,,,Capacité en poids insuffisante
+train,SHP_0086,OFF-SHP_0086-0,0,0.24955610248578908,0.0,
+train,SHP_0086,OFF-SHP_0086-1,0,,,Capacité en volume insuffisante
+train,SHP_0086,OFF-SHP_0086-2,1,0.17002087952990996,0.0,
+train,SHP_0086,OFF-SHP_0086-3,0,,,Capacité en volume insuffisante
+train,SHP_0086,OFF-SHP_0086-4,0,0.1195227231132036,0.0,
+train,SHP_0086,OFF-SHP_0086-5,0,0.4068624691115621,0.0,
+train,SHP_0086,OFF-SHP_0086-6,0,0.09602709107110591,0.0,
+train,SHP_0086,OFF-SHP_0086-7,0,0.1424213603602146,0.0,
+train,SHP_0086,OFF-SHP_0086-8,0,,,Capacité en poids insuffisante
+train,SHP_0086,OFF-SHP_0086-9,0,0.12791095231734217,0.0,
+train,SHP_0086,OFF-SHP_0086-10,1,0.5545060032833591,1.0,
+train,SHP_0086,OFF-SHP_0086-11,0,,,Créneau incompatible
+train,SHP_0086,OFF-SHP_0086-12,1,0.6326000945628208,1.0,
+train,SHP_0086,OFF-SHP_0086-13,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0086,OFF-SHP_0086-14,1,0.6549032330119213,1.0,
+train,SHP_0086,OFF-SHP_0086-15,0,,,Capacité en poids insuffisante
+train,SHP_0086,OFF-SHP_0086-16,0,,,Véhicule indisponible
+train,SHP_0086,OFF-SHP_0086-17,0,,,Capacité en volume insuffisante
+train,SHP_0086,OFF-SHP_0086-18,0,0.24583463096957042,0.0,
+train,SHP_0086,OFF-SHP_0086-19,0,,,Trajet incompatible
+train,SHP_0086,OFF-SHP_0086-20,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0086,OFF-SHP_0086-21,0,,,Marchandise incompatible
+train,SHP_0086,OFF-SHP_0086-22,0,0.17237750174153746,0.0,
+train,SHP_0086,OFF-SHP_0086-23,0,,,Capacité en poids insuffisante
+train,SHP_0086,OFF-SHP_0086-24,0,,,Capacité en poids insuffisante
+train,SHP_0086,OFF-SHP_0086-25,0,,,Créneau incompatible
+train,SHP_0086,OFF-SHP_0086-26,0,,,Créneau incompatible
+train,SHP_0086,OFF-SHP_0086-27,1,0.4495584637273094,0.0,
+train,SHP_0086,OFF-SHP_0086-28,0,0.07833603757705404,0.0,
+train,SHP_0086,OFF-SHP_0086-29,0,0.3775387747061473,0.0,
+train,SHP_0089,OFF-SHP_0089-0,1,0.44987042954493955,0.0,
+train,SHP_0089,OFF-SHP_0089-1,0,0.14836405532824304,0.0,
+train,SHP_0089,OFF-SHP_0089-2,0,0.24688887280102123,0.0,
+train,SHP_0089,OFF-SHP_0089-3,0,0.1546739782569636,0.0,
+train,SHP_0089,OFF-SHP_0089-4,0,,,Véhicule indisponible
+train,SHP_0089,OFF-SHP_0089-5,0,0.17292931536760056,0.0,
+train,SHP_0089,OFF-SHP_0089-6,0,,,Capacité en poids insuffisante
+train,SHP_0089,OFF-SHP_0089-7,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0089,OFF-SHP_0089-8,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0089,OFF-SHP_0089-9,1,0.5502647898865176,1.0,
+train,SHP_0089,OFF-SHP_0089-10,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0089,OFF-SHP_0089-11,0,0.3585734687008658,0.0,
+train,SHP_0089,OFF-SHP_0089-12,0,,,Capacité en volume insuffisante
+train,SHP_0089,OFF-SHP_0089-13,0,0.29948962852180794,0.0,
+train,SHP_0089,OFF-SHP_0089-14,0,0.157699014723136,0.0,
+train,SHP_0089,OFF-SHP_0089-15,0,0.4032862200122527,0.0,
+train,SHP_0089,OFF-SHP_0089-16,0,0.3375320972713409,0.0,
+train,SHP_0089,OFF-SHP_0089-17,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0089,OFF-SHP_0089-18,0,,,Capacité en volume insuffisante
+train,SHP_0089,OFF-SHP_0089-19,1,0.4602989969024463,0.0,
+train,SHP_0089,OFF-SHP_0089-20,0,,,Capacité en volume insuffisante
+train,SHP_0089,OFF-SHP_0089-21,0,0.10989775148658873,0.0,
+train,SHP_0089,OFF-SHP_0089-22,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0089,OFF-SHP_0089-23,1,0.4127346205121721,0.0,
+train,SHP_0089,OFF-SHP_0089-24,0,0.28339002046761,0.0,
+train,SHP_0089,OFF-SHP_0089-25,0,,,Capacité en poids insuffisante
+train,SHP_0089,OFF-SHP_0089-26,0,0.45873318796701507,0.0,
+train,SHP_0089,OFF-SHP_0089-27,0,0.3273746018698355,0.0,
+train,SHP_0089,OFF-SHP_0089-28,1,0.38167135312388883,0.0,
+train,SHP_0089,OFF-SHP_0089-29,0,0.31826585978892113,0.0,
+train,SHP_0092,OFF-SHP_0092-0,0,,,Marchandise incompatible
+train,SHP_0092,OFF-SHP_0092-1,0,0.1398776214081674,0.0,
+train,SHP_0092,OFF-SHP_0092-2,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible
+train,SHP_0092,OFF-SHP_0092-3,0,0.10403320227416442,0.0,
+train,SHP_0092,OFF-SHP_0092-4,1,0.5707590795250082,1.0,
+train,SHP_0092,OFF-SHP_0092-5,0,,,Capacité en poids insuffisante
+train,SHP_0092,OFF-SHP_0092-6,0,,,Trajet incompatible
+train,SHP_0092,OFF-SHP_0092-7,1,0.3785191976200917,0.0,
+train,SHP_0092,OFF-SHP_0092-8,0,0.4968381900964729,1.0,
+train,SHP_0092,OFF-SHP_0092-9,0,0.09246859457417678,0.0,
+train,SHP_0092,OFF-SHP_0092-10,0,0.11209283484692865,0.0,
+train,SHP_0092,OFF-SHP_0092-11,0,,,Capacité en poids insuffisante
+train,SHP_0092,OFF-SHP_0092-12,0,0.22649625877417126,0.0,
+train,SHP_0092,OFF-SHP_0092-13,0,0.25676987550747254,0.0,
+train,SHP_0092,OFF-SHP_0092-14,1,0.5051835882750847,1.0,
+train,SHP_0092,OFF-SHP_0092-15,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+train,SHP_0092,OFF-SHP_0092-16,1,0.5752558334427784,1.0,
+train,SHP_0092,OFF-SHP_0092-17,0,,,Capacité en volume insuffisante
+train,SHP_0092,OFF-SHP_0092-18,0,0.11545469844326202,0.0,
+train,SHP_0092,OFF-SHP_0092-19,0,0.33521272398131013,0.0,
+train,SHP_0092,OFF-SHP_0092-20,0,0.305040620656339,0.0,
+train,SHP_0092,OFF-SHP_0092-21,0,,,Capacité en volume insuffisante
+train,SHP_0092,OFF-SHP_0092-22,0,0.1473557264853327,0.0,
+train,SHP_0092,OFF-SHP_0092-23,0,,,Capacité en volume insuffisante
+train,SHP_0092,OFF-SHP_0092-24,1,0.6434478084932279,1.0,
+train,SHP_0092,OFF-SHP_0092-25,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0092,OFF-SHP_0092-26,0,,,Capacité en volume insuffisante ; Trajet incompatible
+train,SHP_0092,OFF-SHP_0092-27,0,0.2099142522331196,0.0,
+train,SHP_0092,OFF-SHP_0092-28,1,0.5366538382234897,1.0,
+train,SHP_0092,OFF-SHP_0092-29,0,,,Marchandise incompatible
+train,SHP_0093,OFF-SHP_0093-0,1,0.5363572852163849,1.0,
+train,SHP_0093,OFF-SHP_0093-1,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-2,0,,,Capacité en poids insuffisante
+train,SHP_0093,OFF-SHP_0093-3,0,0.4516295228030422,0.0,
+train,SHP_0093,OFF-SHP_0093-4,0,,,Capacité en poids insuffisante
+train,SHP_0093,OFF-SHP_0093-5,0,,,Capacité en poids insuffisante
+train,SHP_0093,OFF-SHP_0093-6,0,0.24449511899093626,0.0,
+train,SHP_0093,OFF-SHP_0093-7,0,0.5459555426259188,1.0,
+train,SHP_0093,OFF-SHP_0093-8,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-9,0,0.28028186131247107,0.0,
+train,SHP_0093,OFF-SHP_0093-10,0,,,Trajet incompatible
+train,SHP_0093,OFF-SHP_0093-11,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-12,0,0.3834995033389331,0.0,
+train,SHP_0093,OFF-SHP_0093-13,0,,,Capacité en poids insuffisante
+train,SHP_0093,OFF-SHP_0093-14,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-15,0,0.13511629342956372,0.0,
+train,SHP_0093,OFF-SHP_0093-16,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-17,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-18,0,0.12719137822534307,0.0,
+train,SHP_0093,OFF-SHP_0093-19,0,,,Marchandise incompatible
+train,SHP_0093,OFF-SHP_0093-20,0,0.12174722260720573,0.0,
+train,SHP_0093,OFF-SHP_0093-21,0,0.18594842564413328,0.0,
+train,SHP_0093,OFF-SHP_0093-22,1,0.7455462282441738,1.0,
+train,SHP_0093,OFF-SHP_0093-23,1,0.6209632186910795,1.0,
+train,SHP_0093,OFF-SHP_0093-24,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-25,1,0.7546954787321107,1.0,
+train,SHP_0093,OFF-SHP_0093-26,0,,,Capacité en volume insuffisante
+train,SHP_0093,OFF-SHP_0093-27,0,,,Capacité en poids insuffisante
+train,SHP_0093,OFF-SHP_0093-28,0,,,Créneau incompatible
+train,SHP_0093,OFF-SHP_0093-29,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0095,OFF-SHP_0095-0,0,0.1460482446069195,0.0,
+train,SHP_0095,OFF-SHP_0095-1,0,0.11162556892819656,0.0,
+train,SHP_0095,OFF-SHP_0095-2,0,0.28876185708284996,0.0,
+train,SHP_0095,OFF-SHP_0095-3,0,0.28790251559231106,0.0,
+train,SHP_0095,OFF-SHP_0095-4,1,0.33796088034999766,0.0,
+train,SHP_0095,OFF-SHP_0095-5,0,,,Trajet incompatible
+train,SHP_0095,OFF-SHP_0095-6,0,0.39337400469391637,0.0,
+train,SHP_0095,OFF-SHP_0095-7,1,0.18733370769317464,0.0,
+train,SHP_0095,OFF-SHP_0095-8,1,0.6141106557311987,1.0,
+train,SHP_0095,OFF-SHP_0095-9,0,,,Capacité en poids insuffisante
+train,SHP_0095,OFF-SHP_0095-10,1,0.409932574864718,0.0,
+train,SHP_0095,OFF-SHP_0095-11,0,0.13630653109685267,0.0,
+train,SHP_0095,OFF-SHP_0095-12,0,0.2725916817203257,0.0,
+train,SHP_0095,OFF-SHP_0095-13,0,,,Capacité en poids insuffisante
+train,SHP_0095,OFF-SHP_0095-14,0,0.39635931720688194,0.0,
+train,SHP_0095,OFF-SHP_0095-15,1,0.6687693294612607,1.0,
+train,SHP_0095,OFF-SHP_0095-16,0,,,Capacité en poids insuffisante
+train,SHP_0095,OFF-SHP_0095-17,1,0.4848215684615742,1.0,
+train,SHP_0095,OFF-SHP_0095-18,0,,,Capacité en volume insuffisante
+train,SHP_0095,OFF-SHP_0095-19,0,,,Capacité en poids insuffisante
+train,SHP_0095,OFF-SHP_0095-20,0,,,Capacité en poids insuffisante
+train,SHP_0095,OFF-SHP_0095-21,1,0.5692993460705369,1.0,
+train,SHP_0095,OFF-SHP_0095-22,0,,,Capacité en volume insuffisante
+train,SHP_0095,OFF-SHP_0095-23,1,0.5222952064051614,1.0,
+train,SHP_0095,OFF-SHP_0095-24,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0095,OFF-SHP_0095-25,1,0.41401352439088734,0.0,
+train,SHP_0095,OFF-SHP_0095-26,0,0.339305858567616,0.0,
+train,SHP_0095,OFF-SHP_0095-27,0,0.23319852901251095,0.0,
+train,SHP_0095,OFF-SHP_0095-28,0,,,Marchandise incompatible
+train,SHP_0095,OFF-SHP_0095-29,1,0.5350914172161232,1.0,
+train,SHP_0096,OFF-SHP_0096-0,1,0.5089438498884741,1.0,
+train,SHP_0096,OFF-SHP_0096-1,0,0.2840634945020105,0.0,
+train,SHP_0096,OFF-SHP_0096-2,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-3,0,0.4548093970499475,0.0,
+train,SHP_0096,OFF-SHP_0096-4,1,0.4863404466790979,1.0,
+train,SHP_0096,OFF-SHP_0096-5,0,,,Capacité en volume insuffisante
+train,SHP_0096,OFF-SHP_0096-6,0,0.25478165436487993,0.0,
+train,SHP_0096,OFF-SHP_0096-7,1,0.38823316929371116,0.0,
+train,SHP_0096,OFF-SHP_0096-8,0,0.2290108002117776,0.0,
+train,SHP_0096,OFF-SHP_0096-9,0,,,Créneau incompatible
+train,SHP_0096,OFF-SHP_0096-10,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-11,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-12,0,,,Marchandise incompatible
+train,SHP_0096,OFF-SHP_0096-13,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+train,SHP_0096,OFF-SHP_0096-14,0,0.25027054743474375,0.0,
+train,SHP_0096,OFF-SHP_0096-15,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0096,OFF-SHP_0096-16,0,,,Capacité en volume insuffisante
+train,SHP_0096,OFF-SHP_0096-17,0,0.28735297889040645,0.0,
+train,SHP_0096,OFF-SHP_0096-18,1,0.5770085176231015,1.0,
+train,SHP_0096,OFF-SHP_0096-19,0,0.39917712799460325,0.0,
+train,SHP_0096,OFF-SHP_0096-20,0,0.1201520418915392,0.0,
+train,SHP_0096,OFF-SHP_0096-21,1,0.44134290522069264,0.0,
+train,SHP_0096,OFF-SHP_0096-22,0,0.45155191428335945,0.0,
+train,SHP_0096,OFF-SHP_0096-23,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-24,0,0.2513401138857043,0.0,
+train,SHP_0096,OFF-SHP_0096-25,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-26,0,,,Capacité en poids insuffisante
+train,SHP_0096,OFF-SHP_0096-27,0,0.2346801273400059,0.0,
+train,SHP_0096,OFF-SHP_0096-28,1,0.37009503989817066,0.0,
+train,SHP_0096,OFF-SHP_0096-29,0,0.49559997500305003,1.0,
+train,SHP_0097,OFF-SHP_0097-0,0,0.14210320262161352,0.0,
+train,SHP_0097,OFF-SHP_0097-1,0,,,Capacité en poids insuffisante
+train,SHP_0097,OFF-SHP_0097-2,0,0.25114986022437175,0.0,
+train,SHP_0097,OFF-SHP_0097-3,0,,,Capacité en poids insuffisante
+train,SHP_0097,OFF-SHP_0097-4,0,0.23525383754324028,0.0,
+train,SHP_0097,OFF-SHP_0097-5,0,,,Capacité en volume insuffisante ; Créneau incompatible
+train,SHP_0097,OFF-SHP_0097-6,0,0.273668477970282,0.0,
+train,SHP_0097,OFF-SHP_0097-7,0,,,Capacité en poids insuffisante
+train,SHP_0097,OFF-SHP_0097-8,0,0.4571311447813926,0.0,
+train,SHP_0097,OFF-SHP_0097-9,0,,,Trajet incompatible
+train,SHP_0097,OFF-SHP_0097-10,0,,,Créneau incompatible
+train,SHP_0097,OFF-SHP_0097-11,0,0.6029446851661576,1.0,
+train,SHP_0097,OFF-SHP_0097-12,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-13,0,0.24692628972241948,0.0,
+train,SHP_0097,OFF-SHP_0097-14,1,0.17213937567588045,0.0,
+train,SHP_0097,OFF-SHP_0097-15,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-16,0,0.39145523701734575,0.0,
+train,SHP_0097,OFF-SHP_0097-17,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-18,1,0.43141923525221426,0.0,
+train,SHP_0097,OFF-SHP_0097-19,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-20,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-21,0,,,Marchandise incompatible
+train,SHP_0097,OFF-SHP_0097-22,0,0.31456196693444866,0.0,
+train,SHP_0097,OFF-SHP_0097-23,1,0.5630663466217557,1.0,
+train,SHP_0097,OFF-SHP_0097-24,0,,,Capacité en poids insuffisante
+train,SHP_0097,OFF-SHP_0097-25,0,0.13392961963164557,0.0,
+train,SHP_0097,OFF-SHP_0097-26,0,0.33311653247382583,0.0,
+train,SHP_0097,OFF-SHP_0097-27,1,0.5083836046324225,1.0,
+train,SHP_0097,OFF-SHP_0097-28,0,,,Capacité en volume insuffisante
+train,SHP_0097,OFF-SHP_0097-29,0,0.4429878589759972,0.0,
+train,SHP_0098,OFF-SHP_0098-0,0,,,Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-1,0,,,Capacité en poids insuffisante
+train,SHP_0098,OFF-SHP_0098-2,0,0.16815995721732055,0.0,
+train,SHP_0098,OFF-SHP_0098-3,1,0.4783058670570186,0.0,
+train,SHP_0098,OFF-SHP_0098-4,0,0.2841537412631221,0.0,
+train,SHP_0098,OFF-SHP_0098-5,0,,,Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-6,0,,,Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-7,0,,,Capacité en poids insuffisante
+train,SHP_0098,OFF-SHP_0098-8,1,0.7157870701200229,1.0,
+train,SHP_0098,OFF-SHP_0098-9,0,0.09562121685387785,0.0,
+train,SHP_0098,OFF-SHP_0098-10,0,0.08947647729761217,0.0,
+train,SHP_0098,OFF-SHP_0098-11,1,0.5449451096647188,1.0,
+train,SHP_0098,OFF-SHP_0098-12,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0098,OFF-SHP_0098-13,1,0.42656914772892285,0.0,
+train,SHP_0098,OFF-SHP_0098-14,0,,,Capacité en poids insuffisante ; Trajet incompatible
+train,SHP_0098,OFF-SHP_0098-15,1,0.5125713252869025,1.0,
+train,SHP_0098,OFF-SHP_0098-16,0,0.13998027053340312,0.0,
+train,SHP_0098,OFF-SHP_0098-17,0,,,Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-18,1,0.7215338939962012,1.0,
+train,SHP_0098,OFF-SHP_0098-19,1,0.6227041069704223,1.0,
+train,SHP_0098,OFF-SHP_0098-20,0,,,Véhicule indisponible
+train,SHP_0098,OFF-SHP_0098-21,0,,,Capacité en poids insuffisante
+train,SHP_0098,OFF-SHP_0098-22,1,0.38632880271524533,0.0,
+train,SHP_0098,OFF-SHP_0098-23,0,0.1883251071346788,0.0,
+train,SHP_0098,OFF-SHP_0098-24,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-25,0,0.1528979757854642,0.0,
+train,SHP_0098,OFF-SHP_0098-26,1,0.7544314119410644,1.0,
+train,SHP_0098,OFF-SHP_0098-27,0,,,Capacité en volume insuffisante
+train,SHP_0098,OFF-SHP_0098-28,0,,,Véhicule indisponible
+train,SHP_0098,OFF-SHP_0098-29,0,0.270879573848095,0.0,
+train,SHP_0099,OFF-SHP_0099-0,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-1,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0099,OFF-SHP_0099-2,0,,,Capacité en volume insuffisante
+train,SHP_0099,OFF-SHP_0099-3,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-4,0,,,Marchandise incompatible ; Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-5,1,0.5255888637410963,1.0,
+train,SHP_0099,OFF-SHP_0099-6,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-7,0,0.4478085169571105,0.0,
+train,SHP_0099,OFF-SHP_0099-8,1,0.5523222412920362,1.0,
+train,SHP_0099,OFF-SHP_0099-9,1,0.5951837093842799,1.0,
+train,SHP_0099,OFF-SHP_0099-10,1,0.3860751915837018,0.0,
+train,SHP_0099,OFF-SHP_0099-11,1,0.4971201979845715,1.0,
+train,SHP_0099,OFF-SHP_0099-12,0,,,Capacité en volume insuffisante
+train,SHP_0099,OFF-SHP_0099-13,0,0.49833183196633857,1.0,
+train,SHP_0099,OFF-SHP_0099-14,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-15,0,,,Capacité en volume insuffisante ; Véhicule indisponible ; Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-16,0,,,Capacité en poids insuffisante
+train,SHP_0099,OFF-SHP_0099-17,0,0.6447591794895681,1.0,
+train,SHP_0099,OFF-SHP_0099-18,0,0.25807397045355984,0.0,
+train,SHP_0099,OFF-SHP_0099-19,0,0.3901025545623165,0.0,
+train,SHP_0099,OFF-SHP_0099-20,0,,,Créneau incompatible
+train,SHP_0099,OFF-SHP_0099-21,1,0.679938947949721,1.0,
+train,SHP_0099,OFF-SHP_0099-22,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-23,1,0.6213233085477009,1.0,
+train,SHP_0099,OFF-SHP_0099-24,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+train,SHP_0099,OFF-SHP_0099-25,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-26,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-27,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-28,0,,,Budget strict dépassé
+train,SHP_0099,OFF-SHP_0099-29,0,,,Budget strict dépassé
+train,SHP_0100,OFF-SHP_0100-0,1,0.5249937518370746,1.0,
+train,SHP_0100,OFF-SHP_0100-1,0,,,Créneau incompatible
+train,SHP_0100,OFF-SHP_0100-2,0,0.3291626761726541,0.0,
+train,SHP_0100,OFF-SHP_0100-3,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-4,1,0.6248684457433517,1.0,
+train,SHP_0100,OFF-SHP_0100-5,0,,,Marchandise incompatible
+train,SHP_0100,OFF-SHP_0100-6,0,,,Capacité en poids insuffisante
+train,SHP_0100,OFF-SHP_0100-7,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-8,1,0.5938902695796521,1.0,
+train,SHP_0100,OFF-SHP_0100-9,1,0.5871582136549657,1.0,
+train,SHP_0100,OFF-SHP_0100-10,1,0.5855839842993279,1.0,
+train,SHP_0100,OFF-SHP_0100-11,0,0.23922958986559625,0.0,
+train,SHP_0100,OFF-SHP_0100-12,0,0.19475029649524425,0.0,
+train,SHP_0100,OFF-SHP_0100-13,1,0.5024004796002981,1.0,
+train,SHP_0100,OFF-SHP_0100-14,0,0.1908437171696254,0.0,
+train,SHP_0100,OFF-SHP_0100-15,0,0.5088758403764081,1.0,
+train,SHP_0100,OFF-SHP_0100-16,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-17,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-18,0,0.3173978651868969,0.0,
+train,SHP_0100,OFF-SHP_0100-19,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-20,0,,,Créneau incompatible
+train,SHP_0100,OFF-SHP_0100-21,0,,,Capacité en volume insuffisante
+train,SHP_0100,OFF-SHP_0100-22,0,0.5096980170416829,1.0,
+train,SHP_0100,OFF-SHP_0100-23,0,0.11016451295218045,0.0,
+train,SHP_0100,OFF-SHP_0100-24,0,0.5626488927488256,1.0,
+train,SHP_0100,OFF-SHP_0100-25,0,,,Capacité en poids insuffisante
+train,SHP_0100,OFF-SHP_0100-26,0,0.259304631587034,0.0,
+train,SHP_0100,OFF-SHP_0100-27,0,,,Capacité en poids insuffisante
+train,SHP_0100,OFF-SHP_0100-28,1,0.41458954247046936,0.0,
+train,SHP_0100,OFF-SHP_0100-29,0,0.20433444228252537,0.0,
+validation,SHP_0002,OFF-SHP_0002-0,0,0.410982489376065,0.0,
+validation,SHP_0002,OFF-SHP_0002-1,1,0.5196140424919772,1.0,
+validation,SHP_0002,OFF-SHP_0002-2,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-3,0,0.35535286708307406,0.0,
+validation,SHP_0002,OFF-SHP_0002-4,0,0.20948559153189086,0.0,
+validation,SHP_0002,OFF-SHP_0002-5,1,0.3729154825963742,0.0,
+validation,SHP_0002,OFF-SHP_0002-6,0,,,Marchandise incompatible
+validation,SHP_0002,OFF-SHP_0002-7,1,0.6225047330866759,1.0,
+validation,SHP_0002,OFF-SHP_0002-8,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-9,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-10,0,0.21034025765916395,0.0,
+validation,SHP_0002,OFF-SHP_0002-11,0,,,Véhicule indisponible
+validation,SHP_0002,OFF-SHP_0002-12,1,0.5214105802968172,1.0,
+validation,SHP_0002,OFF-SHP_0002-13,0,0.1341522216347278,0.0,
+validation,SHP_0002,OFF-SHP_0002-14,0,,,Créneau incompatible
+validation,SHP_0002,OFF-SHP_0002-15,0,,,Capacité en poids insuffisante ; Créneau incompatible
+validation,SHP_0002,OFF-SHP_0002-16,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-17,0,,,Capacité en poids insuffisante
+validation,SHP_0002,OFF-SHP_0002-18,1,0.48387138322149825,1.0,
+validation,SHP_0002,OFF-SHP_0002-19,0,0.178352941170717,0.0,
+validation,SHP_0002,OFF-SHP_0002-20,0,0.09419183484515162,0.0,
+validation,SHP_0002,OFF-SHP_0002-21,1,0.47650959979464813,0.0,
+validation,SHP_0002,OFF-SHP_0002-22,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-23,1,0.2134042266758323,0.0,
+validation,SHP_0002,OFF-SHP_0002-24,0,0.08650326988133922,0.0,
+validation,SHP_0002,OFF-SHP_0002-25,0,,,Marchandise incompatible
+validation,SHP_0002,OFF-SHP_0002-26,1,0.22428837061556323,0.0,
+validation,SHP_0002,OFF-SHP_0002-27,0,,,Capacité en volume insuffisante
+validation,SHP_0002,OFF-SHP_0002-28,0,,,Capacité en poids insuffisante
+validation,SHP_0002,OFF-SHP_0002-29,0,0.21860322244907154,0.0,
+validation,SHP_0007,OFF-SHP_0007-0,0,0.2861756083476169,0.0,
+validation,SHP_0007,OFF-SHP_0007-1,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-2,0,0.5135820213761177,1.0,
+validation,SHP_0007,OFF-SHP_0007-3,1,0.63074247999822,1.0,
+validation,SHP_0007,OFF-SHP_0007-4,0,0.24835819676983809,0.0,
+validation,SHP_0007,OFF-SHP_0007-5,0,0.2091568578267536,0.0,
+validation,SHP_0007,OFF-SHP_0007-6,0,0.17125585676680027,0.0,
+validation,SHP_0007,OFF-SHP_0007-7,0,0.34442547810756463,0.0,
+validation,SHP_0007,OFF-SHP_0007-8,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-9,0,0.4488900543292402,0.0,
+validation,SHP_0007,OFF-SHP_0007-10,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-11,1,0.7172385609670618,1.0,
+validation,SHP_0007,OFF-SHP_0007-12,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-13,1,0.28191737140231465,0.0,
+validation,SHP_0007,OFF-SHP_0007-14,1,0.5849494096638684,1.0,
+validation,SHP_0007,OFF-SHP_0007-15,0,,,Trajet incompatible ; Marchandise incompatible
+validation,SHP_0007,OFF-SHP_0007-16,0,,,Marchandise incompatible
+validation,SHP_0007,OFF-SHP_0007-17,0,,,Capacité en poids insuffisante
+validation,SHP_0007,OFF-SHP_0007-18,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-19,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-20,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0007,OFF-SHP_0007-21,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-22,0,0.484104111682212,1.0,
+validation,SHP_0007,OFF-SHP_0007-23,0,,,Capacité en volume insuffisante
+validation,SHP_0007,OFF-SHP_0007-24,0,0.1772309878356073,0.0,
+validation,SHP_0007,OFF-SHP_0007-25,1,0.37273376714529177,0.0,
+validation,SHP_0007,OFF-SHP_0007-26,0,0.25774013775497473,0.0,
+validation,SHP_0007,OFF-SHP_0007-27,1,0.3752054314236526,0.0,
+validation,SHP_0007,OFF-SHP_0007-28,1,0.5748778389554074,1.0,
+validation,SHP_0007,OFF-SHP_0007-29,1,0.4914591893886842,1.0,
+validation,SHP_0015,OFF-SHP_0015-0,0,0.4276049825654893,0.0,
+validation,SHP_0015,OFF-SHP_0015-1,0,,,Marchandise incompatible
+validation,SHP_0015,OFF-SHP_0015-2,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-3,0,0.3099706411041832,0.0,
+validation,SHP_0015,OFF-SHP_0015-4,1,0.6800327432079302,1.0,
+validation,SHP_0015,OFF-SHP_0015-5,0,0.4117655936164583,0.0,
+validation,SHP_0015,OFF-SHP_0015-6,1,0.6023169876518579,1.0,
+validation,SHP_0015,OFF-SHP_0015-7,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-8,0,0.2987846465058994,0.0,
+validation,SHP_0015,OFF-SHP_0015-9,0,,,Créneau incompatible ; Véhicule indisponible
+validation,SHP_0015,OFF-SHP_0015-10,1,0.6862771870301193,1.0,
+validation,SHP_0015,OFF-SHP_0015-11,0,0.6080033228136701,1.0,
+validation,SHP_0015,OFF-SHP_0015-12,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-13,1,0.47838819111264197,1.0,
+validation,SHP_0015,OFF-SHP_0015-14,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-15,0,0.32598438155822007,0.0,
+validation,SHP_0015,OFF-SHP_0015-16,1,0.6086147978263166,1.0,
+validation,SHP_0015,OFF-SHP_0015-17,0,0.14582074592122965,0.0,
+validation,SHP_0015,OFF-SHP_0015-18,1,0.4559083607191347,0.0,
+validation,SHP_0015,OFF-SHP_0015-19,0,,,Capacité en poids insuffisante
+validation,SHP_0015,OFF-SHP_0015-20,1,0.5842344523348666,1.0,
+validation,SHP_0015,OFF-SHP_0015-21,0,,,Capacité en poids insuffisante
+validation,SHP_0015,OFF-SHP_0015-22,0,0.09466565271178494,0.0,
+validation,SHP_0015,OFF-SHP_0015-23,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-24,0,,,Capacité en poids insuffisante
+validation,SHP_0015,OFF-SHP_0015-25,0,,,Capacité en volume insuffisante
+validation,SHP_0015,OFF-SHP_0015-26,0,0.5279769351616709,1.0,
+validation,SHP_0015,OFF-SHP_0015-27,0,0.5758996056545824,1.0,
+validation,SHP_0015,OFF-SHP_0015-28,0,0.24545064678118614,0.0,
+validation,SHP_0015,OFF-SHP_0015-29,0,,,Capacité en poids insuffisante
+validation,SHP_0017,OFF-SHP_0017-0,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0017,OFF-SHP_0017-1,0,0.45938676307107496,0.0,
+validation,SHP_0017,OFF-SHP_0017-2,0,0.2085083893202559,0.0,
+validation,SHP_0017,OFF-SHP_0017-3,1,0.6046095907670704,1.0,
+validation,SHP_0017,OFF-SHP_0017-4,0,0.4945303258283276,1.0,
+validation,SHP_0017,OFF-SHP_0017-5,0,0.3281261331188678,0.0,
+validation,SHP_0017,OFF-SHP_0017-6,0,0.37568271031961353,0.0,
+validation,SHP_0017,OFF-SHP_0017-7,0,0.23775801916094658,0.0,
+validation,SHP_0017,OFF-SHP_0017-8,0,0.4379262302947031,0.0,
+validation,SHP_0017,OFF-SHP_0017-9,0,0.20139541014106413,0.0,
+validation,SHP_0017,OFF-SHP_0017-10,0,0.47414860554164895,0.0,
+validation,SHP_0017,OFF-SHP_0017-11,1,0.634596695911642,1.0,
+validation,SHP_0017,OFF-SHP_0017-12,0,0.21100295044847317,0.0,
+validation,SHP_0017,OFF-SHP_0017-13,0,0.16732326282785945,0.0,
+validation,SHP_0017,OFF-SHP_0017-14,1,0.23299290764179328,0.0,
+validation,SHP_0017,OFF-SHP_0017-15,0,,,Capacité en poids insuffisante
+validation,SHP_0017,OFF-SHP_0017-16,0,0.4318727499712249,0.0,
+validation,SHP_0017,OFF-SHP_0017-17,0,,,Capacité en volume insuffisante ; Créneau incompatible
+validation,SHP_0017,OFF-SHP_0017-18,0,,,Capacité en volume insuffisante
+validation,SHP_0017,OFF-SHP_0017-19,0,0.33900151372650267,0.0,
+validation,SHP_0017,OFF-SHP_0017-20,0,0.18765484462157048,0.0,
+validation,SHP_0017,OFF-SHP_0017-21,1,0.2765628846465643,0.0,
+validation,SHP_0017,OFF-SHP_0017-22,0,0.21579416147050767,0.0,
+validation,SHP_0017,OFF-SHP_0017-23,0,,,Capacité en volume insuffisante
+validation,SHP_0017,OFF-SHP_0017-24,0,,,Capacité en volume insuffisante
+validation,SHP_0017,OFF-SHP_0017-25,1,0.5058242209564466,1.0,
+validation,SHP_0017,OFF-SHP_0017-26,1,0.5944944662593565,1.0,
+validation,SHP_0017,OFF-SHP_0017-27,0,0.14899703357296357,0.0,
+validation,SHP_0017,OFF-SHP_0017-28,0,,,Capacité en poids insuffisante
+validation,SHP_0017,OFF-SHP_0017-29,0,0.46486903269559793,0.0,
+validation,SHP_0025,OFF-SHP_0025-0,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-1,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-2,1,0.6957446022803697,1.0,
+validation,SHP_0025,OFF-SHP_0025-3,0,,,Trajet incompatible ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-4,1,0.38279022892033265,0.0,
+validation,SHP_0025,OFF-SHP_0025-5,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-6,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-7,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-8,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-9,0,,,Capacité en poids insuffisante
+validation,SHP_0025,OFF-SHP_0025-10,1,0.6279551594710786,1.0,
+validation,SHP_0025,OFF-SHP_0025-11,0,,,Capacité en volume insuffisante ; Trajet incompatible
+validation,SHP_0025,OFF-SHP_0025-12,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-13,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-14,1,0.4910962117182989,1.0,
+validation,SHP_0025,OFF-SHP_0025-15,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-16,0,,,Capacité en volume insuffisante
+validation,SHP_0025,OFF-SHP_0025-17,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-18,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-19,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-20,1,0.4536070137809331,0.0,
+validation,SHP_0025,OFF-SHP_0025-21,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-22,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-23,0,,,Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-24,0,,,Capacité en poids insuffisante
+validation,SHP_0025,OFF-SHP_0025-25,0,,,Créneau incompatible ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-26,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-27,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+validation,SHP_0025,OFF-SHP_0025-28,0,,,Trajet incompatible
+validation,SHP_0025,OFF-SHP_0025-29,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+validation,SHP_0029,OFF-SHP_0029-0,0,0.2441706412407097,0.0,
+validation,SHP_0029,OFF-SHP_0029-1,0,,,Créneau incompatible
+validation,SHP_0029,OFF-SHP_0029-2,0,0.2727219626466319,0.0,
+validation,SHP_0029,OFF-SHP_0029-3,0,0.4422377677385601,0.0,
+validation,SHP_0029,OFF-SHP_0029-4,0,0.3616795752059256,0.0,
+validation,SHP_0029,OFF-SHP_0029-5,0,0.2004130774600046,0.0,
+validation,SHP_0029,OFF-SHP_0029-6,0,,,Capacité en poids insuffisante
+validation,SHP_0029,OFF-SHP_0029-7,0,0.3277309480054403,0.0,
+validation,SHP_0029,OFF-SHP_0029-8,1,0.47118969890839013,0.0,
+validation,SHP_0029,OFF-SHP_0029-9,1,0.5176171653763352,1.0,
+validation,SHP_0029,OFF-SHP_0029-10,1,0.4828822254801012,1.0,
+validation,SHP_0029,OFF-SHP_0029-11,0,0.40957144320861183,0.0,
+validation,SHP_0029,OFF-SHP_0029-12,0,0.1984983773480363,0.0,
+validation,SHP_0029,OFF-SHP_0029-13,0,,,Capacité en poids insuffisante ; Créneau incompatible ; Marchandise incompatible
+validation,SHP_0029,OFF-SHP_0029-14,0,,,Véhicule indisponible
+validation,SHP_0029,OFF-SHP_0029-15,0,0.4804302601594978,1.0,
+validation,SHP_0029,OFF-SHP_0029-16,1,0.4657692052117558,0.0,
+validation,SHP_0029,OFF-SHP_0029-17,1,0.5371490297396224,1.0,
+validation,SHP_0029,OFF-SHP_0029-18,0,,,Trajet incompatible
+validation,SHP_0029,OFF-SHP_0029-19,0,0.22363694064969197,0.0,
+validation,SHP_0029,OFF-SHP_0029-20,0,0.3360559314028858,0.0,
+validation,SHP_0029,OFF-SHP_0029-21,1,0.255459301906718,0.0,
+validation,SHP_0029,OFF-SHP_0029-22,0,0.39870545985640277,0.0,
+validation,SHP_0029,OFF-SHP_0029-23,0,,,Capacité en volume insuffisante
+validation,SHP_0029,OFF-SHP_0029-24,0,0.3457583537820725,0.0,
+validation,SHP_0029,OFF-SHP_0029-25,0,0.2683561494373657,0.0,
+validation,SHP_0029,OFF-SHP_0029-26,0,0.3134898602668573,0.0,
+validation,SHP_0029,OFF-SHP_0029-27,0,,,Capacité en volume insuffisante
+validation,SHP_0029,OFF-SHP_0029-28,0,0.22047276285355594,0.0,
+validation,SHP_0029,OFF-SHP_0029-29,1,0.21899292920638141,0.0,
+validation,SHP_0038,OFF-SHP_0038-0,0,0.4125806555027304,0.0,
+validation,SHP_0038,OFF-SHP_0038-1,1,0.37687323352325297,0.0,
+validation,SHP_0038,OFF-SHP_0038-2,0,0.2259899402326123,0.0,
+validation,SHP_0038,OFF-SHP_0038-3,0,,,Capacité en poids insuffisante
+validation,SHP_0038,OFF-SHP_0038-4,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0038,OFF-SHP_0038-5,1,0.6104341193913486,1.0,
+validation,SHP_0038,OFF-SHP_0038-6,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0038,OFF-SHP_0038-7,1,0.15490262430062518,0.0,
+validation,SHP_0038,OFF-SHP_0038-8,0,0.5947407543422603,1.0,
+validation,SHP_0038,OFF-SHP_0038-9,0,,,Capacité en volume insuffisante
+validation,SHP_0038,OFF-SHP_0038-10,0,0.4125544446366151,0.0,
+validation,SHP_0038,OFF-SHP_0038-11,0,,,Créneau incompatible
+validation,SHP_0038,OFF-SHP_0038-12,0,,,Véhicule indisponible
+validation,SHP_0038,OFF-SHP_0038-13,0,,,Capacité en volume insuffisante
+validation,SHP_0038,OFF-SHP_0038-14,0,0.3041709046327428,0.0,
+validation,SHP_0038,OFF-SHP_0038-15,0,0.14486335145820117,0.0,
+validation,SHP_0038,OFF-SHP_0038-16,1,0.4376874156306136,0.0,
+validation,SHP_0038,OFF-SHP_0038-17,0,,,Capacité en volume insuffisante
+validation,SHP_0038,OFF-SHP_0038-18,0,0.47709070902664263,0.0,
+validation,SHP_0038,OFF-SHP_0038-19,0,,,Capacité en poids insuffisante
+validation,SHP_0038,OFF-SHP_0038-20,0,0.20038620911831095,0.0,
+validation,SHP_0038,OFF-SHP_0038-21,1,0.16668520416008176,0.0,
+validation,SHP_0038,OFF-SHP_0038-22,0,0.23270380210164154,0.0,
+validation,SHP_0038,OFF-SHP_0038-23,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+validation,SHP_0038,OFF-SHP_0038-24,0,0.18021475241316545,0.0,
+validation,SHP_0038,OFF-SHP_0038-25,1,0.5681028521700794,1.0,
+validation,SHP_0038,OFF-SHP_0038-26,0,,,Capacité en poids insuffisante
+validation,SHP_0038,OFF-SHP_0038-27,0,,,Créneau incompatible
+validation,SHP_0038,OFF-SHP_0038-28,0,0.16611964309463428,0.0,
+validation,SHP_0038,OFF-SHP_0038-29,0,0.15243741509469955,0.0,
+validation,SHP_0041,OFF-SHP_0041-0,1,0.14234725377177534,0.0,
+validation,SHP_0041,OFF-SHP_0041-1,0,,,Capacité en poids insuffisante
+validation,SHP_0041,OFF-SHP_0041-2,0,,,Créneau incompatible
+validation,SHP_0041,OFF-SHP_0041-3,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-4,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-5,1,0.5600073719069554,1.0,
+validation,SHP_0041,OFF-SHP_0041-6,0,,,Marchandise incompatible
+validation,SHP_0041,OFF-SHP_0041-7,0,0.42546961482034323,0.0,
+validation,SHP_0041,OFF-SHP_0041-8,0,,,Capacité en poids insuffisante
+validation,SHP_0041,OFF-SHP_0041-9,1,0.6131163088537375,1.0,
+validation,SHP_0041,OFF-SHP_0041-10,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-11,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-12,0,0.13728323244628218,0.0,
+validation,SHP_0041,OFF-SHP_0041-13,1,0.17171374750004764,0.0,
+validation,SHP_0041,OFF-SHP_0041-14,0,,,Trajet incompatible ; Créneau incompatible
+validation,SHP_0041,OFF-SHP_0041-15,0,0.07555737720071198,0.0,
+validation,SHP_0041,OFF-SHP_0041-16,0,,,Véhicule indisponible
+validation,SHP_0041,OFF-SHP_0041-17,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-18,1,0.5625649089078207,1.0,
+validation,SHP_0041,OFF-SHP_0041-19,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-20,0,,,Capacité en poids insuffisante
+validation,SHP_0041,OFF-SHP_0041-21,0,0.410204175514298,0.0,
+validation,SHP_0041,OFF-SHP_0041-22,0,0.5773957110779836,1.0,
+validation,SHP_0041,OFF-SHP_0041-23,0,,,Capacité en poids insuffisante
+validation,SHP_0041,OFF-SHP_0041-24,0,,,Véhicule indisponible
+validation,SHP_0041,OFF-SHP_0041-25,0,0.3692865423915233,0.0,
+validation,SHP_0041,OFF-SHP_0041-26,0,0.24924343011216124,0.0,
+validation,SHP_0041,OFF-SHP_0041-27,0,0.2694044080063256,0.0,
+validation,SHP_0041,OFF-SHP_0041-28,0,,,Capacité en volume insuffisante
+validation,SHP_0041,OFF-SHP_0041-29,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-0,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-1,0,,,Véhicule indisponible
+validation,SHP_0042,OFF-SHP_0042-2,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-3,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-4,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-5,0,0.1948379670138457,0.0,
+validation,SHP_0042,OFF-SHP_0042-6,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-7,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-8,0,,,Capacité en poids insuffisante
+validation,SHP_0042,OFF-SHP_0042-9,0,,,Trajet incompatible
+validation,SHP_0042,OFF-SHP_0042-10,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-11,0,0.4958726315862451,1.0,
+validation,SHP_0042,OFF-SHP_0042-12,1,0.3746718629014345,0.0,
+validation,SHP_0042,OFF-SHP_0042-13,1,0.6670926209379691,1.0,
+validation,SHP_0042,OFF-SHP_0042-14,1,0.2214839296791603,0.0,
+validation,SHP_0042,OFF-SHP_0042-15,0,0.1481116375182724,0.0,
+validation,SHP_0042,OFF-SHP_0042-16,0,0.30769401083151077,0.0,
+validation,SHP_0042,OFF-SHP_0042-17,0,,,Capacité en volume insuffisante
+validation,SHP_0042,OFF-SHP_0042-18,0,,,Capacité en poids insuffisante
+validation,SHP_0042,OFF-SHP_0042-19,1,0.5594370985022284,1.0,
+validation,SHP_0042,OFF-SHP_0042-20,0,0.22087537369690027,0.0,
+validation,SHP_0042,OFF-SHP_0042-21,0,,,Capacité en poids insuffisante
+validation,SHP_0042,OFF-SHP_0042-22,0,0.2303083905816712,0.0,
+validation,SHP_0042,OFF-SHP_0042-23,0,0.5625125758171997,1.0,
+validation,SHP_0042,OFF-SHP_0042-24,1,0.49677922603233055,1.0,
+validation,SHP_0042,OFF-SHP_0042-25,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0042,OFF-SHP_0042-26,0,0.22695735210596382,0.0,
+validation,SHP_0042,OFF-SHP_0042-27,0,,,Véhicule indisponible
+validation,SHP_0042,OFF-SHP_0042-28,0,0.3547123039328835,0.0,
+validation,SHP_0042,OFF-SHP_0042-29,0,0.48452021489362823,1.0,
+validation,SHP_0044,OFF-SHP_0044-0,0,,,Capacité en volume insuffisante
+validation,SHP_0044,OFF-SHP_0044-1,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-2,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-3,0,0.36904234613453213,0.0,
+validation,SHP_0044,OFF-SHP_0044-4,0,0.43346564841073165,0.0,
+validation,SHP_0044,OFF-SHP_0044-5,1,0.6205031215217908,1.0,
+validation,SHP_0044,OFF-SHP_0044-6,1,0.4182952288414437,0.0,
+validation,SHP_0044,OFF-SHP_0044-7,0,,,Capacité en volume insuffisante
+validation,SHP_0044,OFF-SHP_0044-8,0,,,Véhicule indisponible
+validation,SHP_0044,OFF-SHP_0044-9,1,0.5423725272487836,1.0,
+validation,SHP_0044,OFF-SHP_0044-10,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-11,0,0.13190421452430245,0.0,
+validation,SHP_0044,OFF-SHP_0044-12,0,0.2960918003749051,0.0,
+validation,SHP_0044,OFF-SHP_0044-13,0,0.5433968830781974,1.0,
+validation,SHP_0044,OFF-SHP_0044-14,1,0.4897559873296196,1.0,
+validation,SHP_0044,OFF-SHP_0044-15,0,0.158841487556446,0.0,
+validation,SHP_0044,OFF-SHP_0044-16,1,0.5265469884470706,1.0,
+validation,SHP_0044,OFF-SHP_0044-17,0,0.10926400759372212,0.0,
+validation,SHP_0044,OFF-SHP_0044-18,0,0.3897390267954743,0.0,
+validation,SHP_0044,OFF-SHP_0044-19,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-20,0,0.22289891835291598,0.0,
+validation,SHP_0044,OFF-SHP_0044-21,1,0.5170580207721402,1.0,
+validation,SHP_0044,OFF-SHP_0044-22,0,,,Trajet incompatible
+validation,SHP_0044,OFF-SHP_0044-23,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-24,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-25,0,0.44691581188081403,0.0,
+validation,SHP_0044,OFF-SHP_0044-26,0,,,Capacité en poids insuffisante
+validation,SHP_0044,OFF-SHP_0044-27,0,0.10382623976140706,0.0,
+validation,SHP_0044,OFF-SHP_0044-28,0,0.6231104714910609,1.0,
+validation,SHP_0044,OFF-SHP_0044-29,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-0,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-1,0,0.15074118533831524,0.0,
+validation,SHP_0048,OFF-SHP_0048-2,0,0.11614093487088009,0.0,
+validation,SHP_0048,OFF-SHP_0048-3,1,0.504486941381797,1.0,
+validation,SHP_0048,OFF-SHP_0048-4,0,0.2934179660217802,0.0,
+validation,SHP_0048,OFF-SHP_0048-5,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-6,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible
+validation,SHP_0048,OFF-SHP_0048-7,1,0.4168126777228091,0.0,
+validation,SHP_0048,OFF-SHP_0048-8,1,0.4661493170546289,0.0,
+validation,SHP_0048,OFF-SHP_0048-9,1,0.5590571509281618,1.0,
+validation,SHP_0048,OFF-SHP_0048-10,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-11,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-12,0,,,Capacité en volume insuffisante
+validation,SHP_0048,OFF-SHP_0048-13,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-14,1,0.5384102528229754,1.0,
+validation,SHP_0048,OFF-SHP_0048-15,1,0.619041084119411,1.0,
+validation,SHP_0048,OFF-SHP_0048-16,0,,,Capacité en volume insuffisante
+validation,SHP_0048,OFF-SHP_0048-17,0,0.2669951498472304,0.0,
+validation,SHP_0048,OFF-SHP_0048-18,0,,,Capacité en volume insuffisante
+validation,SHP_0048,OFF-SHP_0048-19,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-20,0,,,Capacité en poids insuffisante
+validation,SHP_0048,OFF-SHP_0048-21,0,0.49134035666893405,1.0,
+validation,SHP_0048,OFF-SHP_0048-22,0,,,Véhicule indisponible
+validation,SHP_0048,OFF-SHP_0048-23,0,0.2875796106191055,0.0,
+validation,SHP_0048,OFF-SHP_0048-24,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0048,OFF-SHP_0048-25,0,,,Véhicule indisponible
+validation,SHP_0048,OFF-SHP_0048-26,1,0.5670956551002027,1.0,
+validation,SHP_0048,OFF-SHP_0048-27,0,0.31914858349298564,0.0,
+validation,SHP_0048,OFF-SHP_0048-28,0,0.1524369824475174,0.0,
+validation,SHP_0048,OFF-SHP_0048-29,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-0,0,0.2197652408488256,0.0,
+validation,SHP_0053,OFF-SHP_0053-1,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0053,OFF-SHP_0053-2,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-3,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-4,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-5,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0053,OFF-SHP_0053-6,0,0.32926264564643365,0.0,
+validation,SHP_0053,OFF-SHP_0053-7,0,0.2529203057936883,0.0,
+validation,SHP_0053,OFF-SHP_0053-8,0,0.12885525414123558,0.0,
+validation,SHP_0053,OFF-SHP_0053-9,0,0.24524477760153524,0.0,
+validation,SHP_0053,OFF-SHP_0053-10,1,0.46010724403573183,0.0,
+validation,SHP_0053,OFF-SHP_0053-11,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-12,0,0.22091978225175077,0.0,
+validation,SHP_0053,OFF-SHP_0053-13,0,0.4845126224003381,1.0,
+validation,SHP_0053,OFF-SHP_0053-14,1,0.24437333645013384,0.0,
+validation,SHP_0053,OFF-SHP_0053-15,0,,,Véhicule indisponible
+validation,SHP_0053,OFF-SHP_0053-16,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+validation,SHP_0053,OFF-SHP_0053-17,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-18,0,0.2854581660070807,0.0,
+validation,SHP_0053,OFF-SHP_0053-19,0,0.08831244462742892,0.0,
+validation,SHP_0053,OFF-SHP_0053-20,0,0.47980202204897465,1.0,
+validation,SHP_0053,OFF-SHP_0053-21,0,,,Capacité en volume insuffisante
+validation,SHP_0053,OFF-SHP_0053-22,1,0.3999223136948177,0.0,
+validation,SHP_0053,OFF-SHP_0053-23,0,0.19988445992623938,0.0,
+validation,SHP_0053,OFF-SHP_0053-24,0,0.15042117105574918,0.0,
+validation,SHP_0053,OFF-SHP_0053-25,0,0.2126545170951659,0.0,
+validation,SHP_0053,OFF-SHP_0053-26,0,0.23233110837639748,0.0,
+validation,SHP_0053,OFF-SHP_0053-27,0,,,Marchandise incompatible
+validation,SHP_0053,OFF-SHP_0053-28,0,,,Créneau incompatible
+validation,SHP_0053,OFF-SHP_0053-29,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-0,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-1,1,0.5609589459940348,1.0,
+validation,SHP_0059,OFF-SHP_0059-2,1,0.5897071767877524,1.0,
+validation,SHP_0059,OFF-SHP_0059-3,0,,,Véhicule indisponible
+validation,SHP_0059,OFF-SHP_0059-4,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-5,1,0.5276717472981153,1.0,
+validation,SHP_0059,OFF-SHP_0059-6,0,,,Capacité en volume insuffisante
+validation,SHP_0059,OFF-SHP_0059-7,1,0.3639356153480837,0.0,
+validation,SHP_0059,OFF-SHP_0059-8,0,0.3364058506768597,0.0,
+validation,SHP_0059,OFF-SHP_0059-9,0,,,Créneau incompatible
+validation,SHP_0059,OFF-SHP_0059-10,0,,,Marchandise incompatible
+validation,SHP_0059,OFF-SHP_0059-11,1,0.12969710899782497,0.0,
+validation,SHP_0059,OFF-SHP_0059-12,0,,,Capacité en volume insuffisante
+validation,SHP_0059,OFF-SHP_0059-13,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-14,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Trajet incompatible
+validation,SHP_0059,OFF-SHP_0059-15,0,0.21658257465703096,0.0,
+validation,SHP_0059,OFF-SHP_0059-16,0,0.44688973445461644,0.0,
+validation,SHP_0059,OFF-SHP_0059-17,1,0.4448422325830466,0.0,
+validation,SHP_0059,OFF-SHP_0059-18,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+validation,SHP_0059,OFF-SHP_0059-19,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-20,0,,,Trajet incompatible
+validation,SHP_0059,OFF-SHP_0059-21,0,0.3173955759835528,0.0,
+validation,SHP_0059,OFF-SHP_0059-22,0,,,Marchandise incompatible
+validation,SHP_0059,OFF-SHP_0059-23,0,0.12872586624882226,0.0,
+validation,SHP_0059,OFF-SHP_0059-24,0,,,Capacité en poids insuffisante
+validation,SHP_0059,OFF-SHP_0059-25,0,,,Véhicule indisponible
+validation,SHP_0059,OFF-SHP_0059-26,0,0.27793973289418417,0.0,
+validation,SHP_0059,OFF-SHP_0059-27,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible
+validation,SHP_0059,OFF-SHP_0059-28,0,0.6838596153887433,1.0,
+validation,SHP_0059,OFF-SHP_0059-29,0,0.2730234542501509,0.0,
+validation,SHP_0063,OFF-SHP_0063-0,0,,,Capacité en volume insuffisante
+validation,SHP_0063,OFF-SHP_0063-1,0,0.1723240709842384,0.0,
+validation,SHP_0063,OFF-SHP_0063-2,0,,,Marchandise incompatible
+validation,SHP_0063,OFF-SHP_0063-3,1,0.5191465863163495,1.0,
+validation,SHP_0063,OFF-SHP_0063-4,0,0.47538697687404197,0.0,
+validation,SHP_0063,OFF-SHP_0063-5,1,0.5907153824308474,1.0,
+validation,SHP_0063,OFF-SHP_0063-6,1,0.6718384571243653,1.0,
+validation,SHP_0063,OFF-SHP_0063-7,1,0.36526922981253057,0.0,
+validation,SHP_0063,OFF-SHP_0063-8,0,,,Créneau incompatible
+validation,SHP_0063,OFF-SHP_0063-9,0,,,Capacité en poids insuffisante
+validation,SHP_0063,OFF-SHP_0063-10,0,0.19005262965439904,0.0,
+validation,SHP_0063,OFF-SHP_0063-11,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0063,OFF-SHP_0063-12,0,0.224379795537169,0.0,
+validation,SHP_0063,OFF-SHP_0063-13,0,0.5006516743471117,1.0,
+validation,SHP_0063,OFF-SHP_0063-14,0,,,Capacité en volume insuffisante
+validation,SHP_0063,OFF-SHP_0063-15,1,0.26895984696955794,0.0,
+validation,SHP_0063,OFF-SHP_0063-16,0,0.2521945761739205,0.0,
+validation,SHP_0063,OFF-SHP_0063-17,0,0.32970021543443073,0.0,
+validation,SHP_0063,OFF-SHP_0063-18,0,0.336843088661661,0.0,
+validation,SHP_0063,OFF-SHP_0063-19,1,0.1295082689425588,0.0,
+validation,SHP_0063,OFF-SHP_0063-20,0,,,Trajet incompatible
+validation,SHP_0063,OFF-SHP_0063-21,0,0.22298087164621222,0.0,
+validation,SHP_0063,OFF-SHP_0063-22,0,,,Capacité en poids insuffisante
+validation,SHP_0063,OFF-SHP_0063-23,0,,,Marchandise incompatible
+validation,SHP_0063,OFF-SHP_0063-24,0,0.3119216183918275,0.0,
+validation,SHP_0063,OFF-SHP_0063-25,1,0.6178830449199088,1.0,
+validation,SHP_0063,OFF-SHP_0063-26,0,0.11636823063151856,0.0,
+validation,SHP_0063,OFF-SHP_0063-27,0,0.44955620997189394,0.0,
+validation,SHP_0063,OFF-SHP_0063-28,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0063,OFF-SHP_0063-29,1,0.49661707028386054,1.0,
+validation,SHP_0069,OFF-SHP_0069-0,1,0.24045323659875711,0.0,
+validation,SHP_0069,OFF-SHP_0069-1,0,,,Marchandise incompatible
+validation,SHP_0069,OFF-SHP_0069-2,0,0.3804519291244128,0.0,
+validation,SHP_0069,OFF-SHP_0069-3,1,0.606943525093394,1.0,
+validation,SHP_0069,OFF-SHP_0069-4,1,0.3409254250084633,0.0,
+validation,SHP_0069,OFF-SHP_0069-5,1,0.41111922000366186,0.0,
+validation,SHP_0069,OFF-SHP_0069-6,0,,,Trajet incompatible
+validation,SHP_0069,OFF-SHP_0069-7,0,,,Véhicule indisponible ; Marchandise incompatible
+validation,SHP_0069,OFF-SHP_0069-8,0,,,Capacité en volume insuffisante
+validation,SHP_0069,OFF-SHP_0069-9,1,0.29196077443151763,0.0,
+validation,SHP_0069,OFF-SHP_0069-10,0,0.3491260997839075,0.0,
+validation,SHP_0069,OFF-SHP_0069-11,0,,,Capacité en volume insuffisante
+validation,SHP_0069,OFF-SHP_0069-12,0,,,Capacité en volume insuffisante
+validation,SHP_0069,OFF-SHP_0069-13,0,,,Capacité en poids insuffisante
+validation,SHP_0069,OFF-SHP_0069-14,0,0.3042316313296886,0.0,
+validation,SHP_0069,OFF-SHP_0069-15,0,0.1016122785499913,0.0,
+validation,SHP_0069,OFF-SHP_0069-16,1,0.5554119942913056,1.0,
+validation,SHP_0069,OFF-SHP_0069-17,0,0.22113223655412928,0.0,
+validation,SHP_0069,OFF-SHP_0069-18,0,0.5955733067562818,1.0,
+validation,SHP_0069,OFF-SHP_0069-19,0,0.3127378187803031,0.0,
+validation,SHP_0069,OFF-SHP_0069-20,0,0.49790331397490106,1.0,
+validation,SHP_0069,OFF-SHP_0069-21,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible
+validation,SHP_0069,OFF-SHP_0069-22,0,,,Capacité en volume insuffisante ; Véhicule indisponible ; Marchandise incompatible
+validation,SHP_0069,OFF-SHP_0069-23,0,0.37377337864800986,0.0,
+validation,SHP_0069,OFF-SHP_0069-24,1,0.36814281237004487,0.0,
+validation,SHP_0069,OFF-SHP_0069-25,0,,,Capacité en poids insuffisante
+validation,SHP_0069,OFF-SHP_0069-26,0,0.3549633276914412,0.0,
+validation,SHP_0069,OFF-SHP_0069-27,0,,,Marchandise incompatible
+validation,SHP_0069,OFF-SHP_0069-28,0,,,Marchandise incompatible
+validation,SHP_0069,OFF-SHP_0069-29,0,0.14240161506127214,0.0,
+validation,SHP_0079,OFF-SHP_0079-0,0,,,Capacité en poids insuffisante
+validation,SHP_0079,OFF-SHP_0079-1,0,0.2647856589969786,0.0,
+validation,SHP_0079,OFF-SHP_0079-2,1,0.3781125998709846,0.0,
+validation,SHP_0079,OFF-SHP_0079-3,0,0.2644856803982748,0.0,
+validation,SHP_0079,OFF-SHP_0079-4,1,0.5361664095249734,1.0,
+validation,SHP_0079,OFF-SHP_0079-5,0,0.3229071272555521,0.0,
+validation,SHP_0079,OFF-SHP_0079-6,0,,,Marchandise incompatible
+validation,SHP_0079,OFF-SHP_0079-7,0,,,Capacité en volume insuffisante
+validation,SHP_0079,OFF-SHP_0079-8,1,0.5211009076153542,1.0,
+validation,SHP_0079,OFF-SHP_0079-9,0,,,Capacité en poids insuffisante
+validation,SHP_0079,OFF-SHP_0079-10,0,0.44297687326733703,0.0,
+validation,SHP_0079,OFF-SHP_0079-11,0,,,Capacité en poids insuffisante
+validation,SHP_0079,OFF-SHP_0079-12,1,0.446628830167442,0.0,
+validation,SHP_0079,OFF-SHP_0079-13,0,,,Véhicule indisponible
+validation,SHP_0079,OFF-SHP_0079-14,1,0.20389266763306033,0.0,
+validation,SHP_0079,OFF-SHP_0079-15,0,,,Capacité en volume insuffisante
+validation,SHP_0079,OFF-SHP_0079-16,0,0.26110450656621326,0.0,
+validation,SHP_0079,OFF-SHP_0079-17,0,,,Capacité en poids insuffisante
+validation,SHP_0079,OFF-SHP_0079-18,0,0.6909496698374122,1.0,
+validation,SHP_0079,OFF-SHP_0079-19,0,0.2702073118979176,0.0,
+validation,SHP_0079,OFF-SHP_0079-20,1,0.49408598662058817,1.0,
+validation,SHP_0079,OFF-SHP_0079-21,0,,,Capacité en volume insuffisante
+validation,SHP_0079,OFF-SHP_0079-22,0,0.18283115794031432,0.0,
+validation,SHP_0079,OFF-SHP_0079-23,0,0.38506671949446636,0.0,
+validation,SHP_0079,OFF-SHP_0079-24,0,,,Marchandise incompatible
+validation,SHP_0079,OFF-SHP_0079-25,0,,,Capacité en volume insuffisante
+validation,SHP_0079,OFF-SHP_0079-26,0,0.41394480575246745,0.0,
+validation,SHP_0079,OFF-SHP_0079-27,1,0.412223295777644,0.0,
+validation,SHP_0079,OFF-SHP_0079-28,0,0.3241620020321833,0.0,
+validation,SHP_0079,OFF-SHP_0079-29,1,0.6148980777815234,1.0,
+validation,SHP_0087,OFF-SHP_0087-0,0,0.10089490775397199,0.0,
+validation,SHP_0087,OFF-SHP_0087-1,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+validation,SHP_0087,OFF-SHP_0087-2,0,0.4114127818768945,0.0,
+validation,SHP_0087,OFF-SHP_0087-3,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+validation,SHP_0087,OFF-SHP_0087-4,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-5,0,0.17932459436143827,0.0,
+validation,SHP_0087,OFF-SHP_0087-6,1,0.18725947683382207,0.0,
+validation,SHP_0087,OFF-SHP_0087-7,0,0.14339422400638852,0.0,
+validation,SHP_0087,OFF-SHP_0087-8,0,,,Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-9,0,0.17552891418303682,0.0,
+validation,SHP_0087,OFF-SHP_0087-10,1,0.1927693687201201,0.0,
+validation,SHP_0087,OFF-SHP_0087-11,0,0.3670015808902749,0.0,
+validation,SHP_0087,OFF-SHP_0087-12,1,0.3929756350834956,0.0,
+validation,SHP_0087,OFF-SHP_0087-13,0,,,Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-14,0,0.15773620771266636,0.0,
+validation,SHP_0087,OFF-SHP_0087-15,0,,,Capacité en poids insuffisante
+validation,SHP_0087,OFF-SHP_0087-16,1,0.41122467811047897,0.0,
+validation,SHP_0087,OFF-SHP_0087-17,0,0.30025158681626823,0.0,
+validation,SHP_0087,OFF-SHP_0087-18,0,,,Capacité en poids insuffisante
+validation,SHP_0087,OFF-SHP_0087-19,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+validation,SHP_0087,OFF-SHP_0087-20,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-21,0,,,Capacité en poids insuffisante
+validation,SHP_0087,OFF-SHP_0087-22,0,0.27396492317568966,0.0,
+validation,SHP_0087,OFF-SHP_0087-23,0,,,Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-24,0,0.0872324198735882,0.0,
+validation,SHP_0087,OFF-SHP_0087-25,0,0.29767941129702297,0.0,
+validation,SHP_0087,OFF-SHP_0087-26,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-27,0,0.10173797033021462,0.0,
+validation,SHP_0087,OFF-SHP_0087-28,0,,,Capacité en volume insuffisante
+validation,SHP_0087,OFF-SHP_0087-29,0,0.3248382612338938,0.0,
+validation,SHP_0088,OFF-SHP_0088-0,0,,,Marchandise incompatible
+validation,SHP_0088,OFF-SHP_0088-1,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+validation,SHP_0088,OFF-SHP_0088-2,1,0.5983348529387689,1.0,
+validation,SHP_0088,OFF-SHP_0088-3,0,0.19580816053296532,0.0,
+validation,SHP_0088,OFF-SHP_0088-4,1,0.17113550686401258,0.0,
+validation,SHP_0088,OFF-SHP_0088-5,0,0.2098797323858137,0.0,
+validation,SHP_0088,OFF-SHP_0088-6,0,0.24126718816030132,0.0,
+validation,SHP_0088,OFF-SHP_0088-7,1,0.3813836552339153,0.0,
+validation,SHP_0088,OFF-SHP_0088-8,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0088,OFF-SHP_0088-9,0,,,Capacité en poids insuffisante
+validation,SHP_0088,OFF-SHP_0088-10,1,0.4520313003386728,0.0,
+validation,SHP_0088,OFF-SHP_0088-11,0,0.4542250369450876,0.0,
+validation,SHP_0088,OFF-SHP_0088-12,0,,,Marchandise incompatible
+validation,SHP_0088,OFF-SHP_0088-13,0,0.528407743575451,1.0,
+validation,SHP_0088,OFF-SHP_0088-14,1,0.6298595524115238,1.0,
+validation,SHP_0088,OFF-SHP_0088-15,1,0.2846506672909611,0.0,
+validation,SHP_0088,OFF-SHP_0088-16,0,0.2846051679284861,0.0,
+validation,SHP_0088,OFF-SHP_0088-17,0,0.13670979802314764,0.0,
+validation,SHP_0088,OFF-SHP_0088-18,1,0.4410028964870624,0.0,
+validation,SHP_0088,OFF-SHP_0088-19,1,0.3612939781208901,0.0,
+validation,SHP_0088,OFF-SHP_0088-20,1,0.666526857357614,1.0,
+validation,SHP_0088,OFF-SHP_0088-21,0,0.13129119699990704,0.0,
+validation,SHP_0088,OFF-SHP_0088-22,0,0.12503082839890434,0.0,
+validation,SHP_0088,OFF-SHP_0088-23,0,,,Créneau incompatible
+validation,SHP_0088,OFF-SHP_0088-24,0,,,Capacité en volume insuffisante
+validation,SHP_0088,OFF-SHP_0088-25,0,,,Capacité en poids insuffisante
+validation,SHP_0088,OFF-SHP_0088-26,0,0.21844423471578306,0.0,
+validation,SHP_0088,OFF-SHP_0088-27,0,0.2843244279860675,0.0,
+validation,SHP_0088,OFF-SHP_0088-28,0,0.11997138815671927,0.0,
+validation,SHP_0088,OFF-SHP_0088-29,1,0.5993734553267822,1.0,
+validation,SHP_0090,OFF-SHP_0090-0,0,,,Marchandise incompatible
+validation,SHP_0090,OFF-SHP_0090-1,0,0.5140273355858821,1.0,
+validation,SHP_0090,OFF-SHP_0090-2,0,,,Capacité en poids insuffisante
+validation,SHP_0090,OFF-SHP_0090-3,0,0.2249991753476828,0.0,
+validation,SHP_0090,OFF-SHP_0090-4,0,,,Capacité en volume insuffisante
+validation,SHP_0090,OFF-SHP_0090-5,1,0.5879953756346149,1.0,
+validation,SHP_0090,OFF-SHP_0090-6,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Trajet incompatible
+validation,SHP_0090,OFF-SHP_0090-7,0,0.11317250846547225,0.0,
+validation,SHP_0090,OFF-SHP_0090-8,0,,,Capacité en poids insuffisante
+validation,SHP_0090,OFF-SHP_0090-9,0,0.4522434731867112,0.0,
+validation,SHP_0090,OFF-SHP_0090-10,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+validation,SHP_0090,OFF-SHP_0090-11,1,0.45981152684682797,0.0,
+validation,SHP_0090,OFF-SHP_0090-12,0,0.25442261887513684,0.0,
+validation,SHP_0090,OFF-SHP_0090-13,0,0.19951934531001286,0.0,
+validation,SHP_0090,OFF-SHP_0090-14,1,0.5692948239684178,1.0,
+validation,SHP_0090,OFF-SHP_0090-15,1,0.5752998091920132,1.0,
+validation,SHP_0090,OFF-SHP_0090-16,1,0.40209519034586444,0.0,
+validation,SHP_0090,OFF-SHP_0090-17,0,0.10723055651463051,0.0,
+validation,SHP_0090,OFF-SHP_0090-18,0,,,Capacité en poids insuffisante ; Trajet incompatible
+validation,SHP_0090,OFF-SHP_0090-19,0,,,Capacité en volume insuffisante
+validation,SHP_0090,OFF-SHP_0090-20,0,,,Créneau incompatible ; Marchandise incompatible
+validation,SHP_0090,OFF-SHP_0090-21,0,0.3846689418626305,0.0,
+validation,SHP_0090,OFF-SHP_0090-22,0,,,Capacité en volume insuffisante
+validation,SHP_0090,OFF-SHP_0090-23,0,0.3840997091590381,0.0,
+validation,SHP_0090,OFF-SHP_0090-24,0,,,Créneau incompatible
+validation,SHP_0090,OFF-SHP_0090-25,1,0.5216228012622549,1.0,
+validation,SHP_0090,OFF-SHP_0090-26,0,,,Véhicule indisponible
+validation,SHP_0090,OFF-SHP_0090-27,0,0.7359616585850999,1.0,
+validation,SHP_0090,OFF-SHP_0090-28,1,0.18049143457001865,0.0,
+validation,SHP_0090,OFF-SHP_0090-29,0,0.5634767313827446,1.0,
+validation,SHP_0094,OFF-SHP_0094-0,1,0.3447187608937395,0.0,
+validation,SHP_0094,OFF-SHP_0094-1,0,,,Capacité en poids insuffisante
+validation,SHP_0094,OFF-SHP_0094-2,0,,,Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-3,0,,,Capacité en poids insuffisante ; Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-4,0,0.41108976440825845,0.0,
+validation,SHP_0094,OFF-SHP_0094-5,1,0.3570866150667343,0.0,
+validation,SHP_0094,OFF-SHP_0094-6,0,0.2887326496288027,0.0,
+validation,SHP_0094,OFF-SHP_0094-7,0,,,Capacité en poids insuffisante
+validation,SHP_0094,OFF-SHP_0094-8,1,0.1784702466042916,0.0,
+validation,SHP_0094,OFF-SHP_0094-9,1,0.40025790484972534,0.0,
+validation,SHP_0094,OFF-SHP_0094-10,0,,,Capacité en volume insuffisante
+validation,SHP_0094,OFF-SHP_0094-11,0,,,Trajet incompatible ; Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-12,0,,,Capacité en poids insuffisante
+validation,SHP_0094,OFF-SHP_0094-13,0,0.21239800565950165,0.0,
+validation,SHP_0094,OFF-SHP_0094-14,0,,,Capacité en poids insuffisante
+validation,SHP_0094,OFF-SHP_0094-15,0,,,Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-16,0,0.28211805951822017,0.0,
+validation,SHP_0094,OFF-SHP_0094-17,0,0.4300997781055421,0.0,
+validation,SHP_0094,OFF-SHP_0094-18,0,,,Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-19,1,0.42446199419791253,0.0,
+validation,SHP_0094,OFF-SHP_0094-20,0,0.36849369814300814,0.0,
+validation,SHP_0094,OFF-SHP_0094-21,0,,,Capacité en poids insuffisante
+validation,SHP_0094,OFF-SHP_0094-22,0,0.1634490738191792,0.0,
+validation,SHP_0094,OFF-SHP_0094-23,0,0.45005408926254453,0.0,
+validation,SHP_0094,OFF-SHP_0094-24,0,,,Véhicule indisponible
+validation,SHP_0094,OFF-SHP_0094-25,0,,,Créneau incompatible
+validation,SHP_0094,OFF-SHP_0094-26,0,,,Trajet incompatible
+validation,SHP_0094,OFF-SHP_0094-27,1,0.42168836916122027,0.0,
+validation,SHP_0094,OFF-SHP_0094-28,0,,,Capacité en volume insuffisante
+validation,SHP_0094,OFF-SHP_0094-29,0,0.45155546442090977,0.0,
+test,SHP_0001,OFF-SHP_0001-0,0,0.4881458213673999,1.0,
+test,SHP_0001,OFF-SHP_0001-1,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-2,0,0.33288087464586696,0.0,
+test,SHP_0001,OFF-SHP_0001-3,1,0.6119318661893185,1.0,
+test,SHP_0001,OFF-SHP_0001-4,0,,,Trajet incompatible
+test,SHP_0001,OFF-SHP_0001-5,0,,,Marchandise incompatible
+test,SHP_0001,OFF-SHP_0001-6,0,0.30558930050647065,0.0,
+test,SHP_0001,OFF-SHP_0001-7,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-8,0,,,Capacité en poids insuffisante
+test,SHP_0001,OFF-SHP_0001-9,0,,,Créneau incompatible
+test,SHP_0001,OFF-SHP_0001-10,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0001,OFF-SHP_0001-11,0,,,Marchandise incompatible
+test,SHP_0001,OFF-SHP_0001-12,0,0.2794658309358098,0.0,
+test,SHP_0001,OFF-SHP_0001-13,0,,,Capacité en poids insuffisante
+test,SHP_0001,OFF-SHP_0001-14,0,0.15650480803250344,0.0,
+test,SHP_0001,OFF-SHP_0001-15,0,0.16028555466932265,0.0,
+test,SHP_0001,OFF-SHP_0001-16,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-17,0,0.27697603431961065,0.0,
+test,SHP_0001,OFF-SHP_0001-18,0,,,Capacité en poids insuffisante
+test,SHP_0001,OFF-SHP_0001-19,0,,,Capacité en poids insuffisante
+test,SHP_0001,OFF-SHP_0001-20,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-21,0,,,Capacité en poids insuffisante
+test,SHP_0001,OFF-SHP_0001-22,0,0.26555179991073535,0.0,
+test,SHP_0001,OFF-SHP_0001-23,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-24,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-25,0,,,Capacité en volume insuffisante
+test,SHP_0001,OFF-SHP_0001-26,0,0.28251577428889235,0.0,
+test,SHP_0001,OFF-SHP_0001-27,1,0.5106730239392856,1.0,
+test,SHP_0001,OFF-SHP_0001-28,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0001,OFF-SHP_0001-29,0,0.13509580768247526,0.0,
+test,SHP_0005,OFF-SHP_0005-0,1,0.3169432368110168,0.0,
+test,SHP_0005,OFF-SHP_0005-1,1,0.5077720309643715,1.0,
+test,SHP_0005,OFF-SHP_0005-2,1,0.5704453992838331,1.0,
+test,SHP_0005,OFF-SHP_0005-3,0,0.37235374187281123,0.0,
+test,SHP_0005,OFF-SHP_0005-4,1,0.12284923630472612,0.0,
+test,SHP_0005,OFF-SHP_0005-5,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0005,OFF-SHP_0005-6,0,,,Capacité en volume insuffisante
+test,SHP_0005,OFF-SHP_0005-7,0,0.3007044411272763,0.0,
+test,SHP_0005,OFF-SHP_0005-8,0,,,Capacité en volume insuffisante
+test,SHP_0005,OFF-SHP_0005-9,0,,,Véhicule indisponible
+test,SHP_0005,OFF-SHP_0005-10,1,0.39556394410836687,0.0,
+test,SHP_0005,OFF-SHP_0005-11,0,0.15516049731448356,0.0,
+test,SHP_0005,OFF-SHP_0005-12,1,0.5861489695361316,1.0,
+test,SHP_0005,OFF-SHP_0005-13,0,,,Capacité en volume insuffisante ; Créneau incompatible
+test,SHP_0005,OFF-SHP_0005-14,0,,,Capacité en poids insuffisante
+test,SHP_0005,OFF-SHP_0005-15,0,0.2903301861432811,0.0,
+test,SHP_0005,OFF-SHP_0005-16,0,,,Capacité en volume insuffisante
+test,SHP_0005,OFF-SHP_0005-17,0,,,Capacité en volume insuffisante
+test,SHP_0005,OFF-SHP_0005-18,0,,,Créneau incompatible
+test,SHP_0005,OFF-SHP_0005-19,0,,,Véhicule indisponible
+test,SHP_0005,OFF-SHP_0005-20,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0005,OFF-SHP_0005-21,0,0.19913237275565165,0.0,
+test,SHP_0005,OFF-SHP_0005-22,0,,,Capacité en volume insuffisante ; Créneau incompatible
+test,SHP_0005,OFF-SHP_0005-23,1,0.45444627261339365,0.0,
+test,SHP_0005,OFF-SHP_0005-24,0,0.2072722901887682,0.0,
+test,SHP_0005,OFF-SHP_0005-25,0,0.2922640432233242,0.0,
+test,SHP_0005,OFF-SHP_0005-26,0,,,Capacité en volume insuffisante
+test,SHP_0005,OFF-SHP_0005-27,0,,,Capacité en poids insuffisante ; Trajet incompatible
+test,SHP_0005,OFF-SHP_0005-28,1,0.3606257841979961,0.0,
+test,SHP_0005,OFF-SHP_0005-29,0,0.40528920121367595,0.0,
+test,SHP_0011,OFF-SHP_0011-0,1,0.5976325445038557,1.0,
+test,SHP_0011,OFF-SHP_0011-1,0,0.08844205911698481,0.0,
+test,SHP_0011,OFF-SHP_0011-2,0,0.2031685973534133,0.0,
+test,SHP_0011,OFF-SHP_0011-3,0,,,Capacité en poids insuffisante
+test,SHP_0011,OFF-SHP_0011-4,0,0.2708517074933559,0.0,
+test,SHP_0011,OFF-SHP_0011-5,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0011,OFF-SHP_0011-6,0,0.27196079919591787,0.0,
+test,SHP_0011,OFF-SHP_0011-7,1,0.4894743043526815,1.0,
+test,SHP_0011,OFF-SHP_0011-8,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-9,0,,,Véhicule indisponible
+test,SHP_0011,OFF-SHP_0011-10,0,0.19754488536693005,0.0,
+test,SHP_0011,OFF-SHP_0011-11,0,0.35360872774487273,0.0,
+test,SHP_0011,OFF-SHP_0011-12,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-13,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-14,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-15,0,,,Créneau incompatible
+test,SHP_0011,OFF-SHP_0011-16,0,,,Capacité en poids insuffisante
+test,SHP_0011,OFF-SHP_0011-17,0,,,Véhicule indisponible
+test,SHP_0011,OFF-SHP_0011-18,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-19,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-20,1,0.4347436052897794,0.0,
+test,SHP_0011,OFF-SHP_0011-21,0,0.5633892180654921,1.0,
+test,SHP_0011,OFF-SHP_0011-22,0,,,Véhicule indisponible
+test,SHP_0011,OFF-SHP_0011-23,0,0.5476939328464654,1.0,
+test,SHP_0011,OFF-SHP_0011-24,0,,,Trajet incompatible ; Véhicule indisponible
+test,SHP_0011,OFF-SHP_0011-25,0,,,Capacité en volume insuffisante
+test,SHP_0011,OFF-SHP_0011-26,0,0.43004866141521236,0.0,
+test,SHP_0011,OFF-SHP_0011-27,0,,,Trajet incompatible
+test,SHP_0011,OFF-SHP_0011-28,0,0.30365178637628804,0.0,
+test,SHP_0011,OFF-SHP_0011-29,1,0.4704886232332193,0.0,
+test,SHP_0013,OFF-SHP_0013-0,0,,,Capacité en poids insuffisante
+test,SHP_0013,OFF-SHP_0013-1,1,0.5847641715140983,1.0,
+test,SHP_0013,OFF-SHP_0013-2,0,0.42550395062659624,0.0,
+test,SHP_0013,OFF-SHP_0013-3,0,,,Capacité en volume insuffisante
+test,SHP_0013,OFF-SHP_0013-4,0,0.47279078620751425,0.0,
+test,SHP_0013,OFF-SHP_0013-5,0,0.3738484224149782,0.0,
+test,SHP_0013,OFF-SHP_0013-6,1,0.396005947620014,0.0,
+test,SHP_0013,OFF-SHP_0013-7,0,0.16776372203317436,0.0,
+test,SHP_0013,OFF-SHP_0013-8,0,,,Capacité en volume insuffisante
+test,SHP_0013,OFF-SHP_0013-9,0,0.5416983247984346,1.0,
+test,SHP_0013,OFF-SHP_0013-10,1,0.5005345605908722,1.0,
+test,SHP_0013,OFF-SHP_0013-11,0,0.16874012805784616,0.0,
+test,SHP_0013,OFF-SHP_0013-12,1,0.4239632758480241,0.0,
+test,SHP_0013,OFF-SHP_0013-13,1,0.43147553109585257,0.0,
+test,SHP_0013,OFF-SHP_0013-14,1,0.4268415299278733,0.0,
+test,SHP_0013,OFF-SHP_0013-15,0,,,Capacité en volume insuffisante
+test,SHP_0013,OFF-SHP_0013-16,0,0.17386532618506703,0.0,
+test,SHP_0013,OFF-SHP_0013-17,0,,,Capacité en volume insuffisante
+test,SHP_0013,OFF-SHP_0013-18,0,0.1637762532651189,0.0,
+test,SHP_0013,OFF-SHP_0013-19,0,0.3391847440834842,0.0,
+test,SHP_0013,OFF-SHP_0013-20,0,,,Capacité en volume insuffisante
+test,SHP_0013,OFF-SHP_0013-21,0,0.21828576630691657,0.0,
+test,SHP_0013,OFF-SHP_0013-22,0,0.10304346818631098,0.0,
+test,SHP_0013,OFF-SHP_0013-23,1,0.17066883872401944,0.0,
+test,SHP_0013,OFF-SHP_0013-24,0,0.23258659734960574,0.0,
+test,SHP_0013,OFF-SHP_0013-25,0,0.1896426664712804,0.0,
+test,SHP_0013,OFF-SHP_0013-26,0,0.13064152261113465,0.0,
+test,SHP_0013,OFF-SHP_0013-27,0,0.08396004625481403,0.0,
+test,SHP_0013,OFF-SHP_0013-28,1,0.3964766815584774,0.0,
+test,SHP_0013,OFF-SHP_0013-29,1,0.6417555241389618,1.0,
+test,SHP_0019,OFF-SHP_0019-0,0,,,Trajet incompatible
+test,SHP_0019,OFF-SHP_0019-1,1,0.30193269542707835,0.0,
+test,SHP_0019,OFF-SHP_0019-2,0,0.3869607599034499,0.0,
+test,SHP_0019,OFF-SHP_0019-3,0,0.1534622969176806,0.0,
+test,SHP_0019,OFF-SHP_0019-4,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0019,OFF-SHP_0019-5,0,0.22014930224737791,0.0,
+test,SHP_0019,OFF-SHP_0019-6,0,0.19346655066536042,0.0,
+test,SHP_0019,OFF-SHP_0019-7,0,,,Capacité en volume insuffisante
+test,SHP_0019,OFF-SHP_0019-8,0,0.5706856469602558,1.0,
+test,SHP_0019,OFF-SHP_0019-9,0,,,Capacité en poids insuffisante
+test,SHP_0019,OFF-SHP_0019-10,0,,,Capacité en poids insuffisante
+test,SHP_0019,OFF-SHP_0019-11,1,0.5748053266596032,1.0,
+test,SHP_0019,OFF-SHP_0019-12,0,0.16001677746034498,0.0,
+test,SHP_0019,OFF-SHP_0019-13,0,0.19643277953218286,0.0,
+test,SHP_0019,OFF-SHP_0019-14,1,0.2538453405055911,0.0,
+test,SHP_0019,OFF-SHP_0019-15,1,0.31122203438877766,0.0,
+test,SHP_0019,OFF-SHP_0019-16,0,0.4186522272983819,0.0,
+test,SHP_0019,OFF-SHP_0019-17,0,0.1788553855963279,0.0,
+test,SHP_0019,OFF-SHP_0019-18,0,0.30924248532175125,0.0,
+test,SHP_0019,OFF-SHP_0019-19,1,0.4393597730526285,0.0,
+test,SHP_0019,OFF-SHP_0019-20,1,0.5118336727530145,1.0,
+test,SHP_0019,OFF-SHP_0019-21,0,0.28537021975178695,0.0,
+test,SHP_0019,OFF-SHP_0019-22,1,0.33824551619096854,0.0,
+test,SHP_0019,OFF-SHP_0019-23,0,0.17548104125278965,0.0,
+test,SHP_0019,OFF-SHP_0019-24,0,,,Capacité en volume insuffisante
+test,SHP_0019,OFF-SHP_0019-25,0,0.3091349249471021,0.0,
+test,SHP_0019,OFF-SHP_0019-26,0,0.10594056827902526,0.0,
+test,SHP_0019,OFF-SHP_0019-27,0,0.25625930841595873,0.0,
+test,SHP_0019,OFF-SHP_0019-28,0,0.37182883432586705,0.0,
+test,SHP_0019,OFF-SHP_0019-29,0,,,Marchandise incompatible
+test,SHP_0023,OFF-SHP_0023-0,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-1,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-2,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-3,0,0.2618312464007726,0.0,
+test,SHP_0023,OFF-SHP_0023-4,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-5,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-6,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-7,1,0.498868263322507,1.0,
+test,SHP_0023,OFF-SHP_0023-8,0,,,Marchandise incompatible ; Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-9,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-10,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-11,0,0.49647930488531855,1.0,
+test,SHP_0023,OFF-SHP_0023-12,0,,,Créneau incompatible ; Véhicule indisponible
+test,SHP_0023,OFF-SHP_0023-13,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-14,0,,,Capacité en volume insuffisante
+test,SHP_0023,OFF-SHP_0023-15,0,0.4949379435655891,1.0,
+test,SHP_0023,OFF-SHP_0023-16,0,0.23486474569374025,0.0,
+test,SHP_0023,OFF-SHP_0023-17,0,,,Créneau incompatible
+test,SHP_0023,OFF-SHP_0023-18,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-19,0,,,Capacité en poids insuffisante
+test,SHP_0023,OFF-SHP_0023-20,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-21,0,,,Véhicule indisponible
+test,SHP_0023,OFF-SHP_0023-22,0,,,Capacité en poids insuffisante
+test,SHP_0023,OFF-SHP_0023-23,1,0.5852329725136597,1.0,
+test,SHP_0023,OFF-SHP_0023-24,1,0.49919710255977645,1.0,
+test,SHP_0023,OFF-SHP_0023-25,0,,,Véhicule indisponible
+test,SHP_0023,OFF-SHP_0023-26,1,0.4992237658096427,1.0,
+test,SHP_0023,OFF-SHP_0023-27,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-28,0,,,Budget strict dépassé
+test,SHP_0023,OFF-SHP_0023-29,1,0.45989082375272217,0.0,
+test,SHP_0031,OFF-SHP_0031-0,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-1,1,0.5868688906897845,1.0,
+test,SHP_0031,OFF-SHP_0031-2,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-3,1,0.7093983539080372,1.0,
+test,SHP_0031,OFF-SHP_0031-4,0,,,Capacité en volume insuffisante
+test,SHP_0031,OFF-SHP_0031-5,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-6,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-7,1,0.46369130151665866,0.0,
+test,SHP_0031,OFF-SHP_0031-8,0,0.2105367237310143,0.0,
+test,SHP_0031,OFF-SHP_0031-9,1,0.522315028145707,1.0,
+test,SHP_0031,OFF-SHP_0031-10,0,,,Capacité en volume insuffisante ; Créneau incompatible
+test,SHP_0031,OFF-SHP_0031-11,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-12,0,,,Capacité en poids insuffisante ; Marchandise incompatible ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-13,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante ; Véhicule indisponible ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-14,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-15,0,,,Créneau incompatible ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-16,1,0.5270809955393246,1.0,
+test,SHP_0031,OFF-SHP_0031-17,1,0.513267965487623,1.0,
+test,SHP_0031,OFF-SHP_0031-18,1,0.6398783680958186,1.0,
+test,SHP_0031,OFF-SHP_0031-19,0,,,Capacité en volume insuffisante
+test,SHP_0031,OFF-SHP_0031-20,0,,,Capacité en poids insuffisante
+test,SHP_0031,OFF-SHP_0031-21,1,0.6063020501822884,1.0,
+test,SHP_0031,OFF-SHP_0031-22,0,,,Capacité en poids insuffisante
+test,SHP_0031,OFF-SHP_0031-23,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-24,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-25,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-26,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-27,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-28,0,,,Budget strict dépassé
+test,SHP_0031,OFF-SHP_0031-29,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0032,OFF-SHP_0032-0,0,,,Capacité en poids insuffisante
+test,SHP_0032,OFF-SHP_0032-1,0,0.40546631963973184,0.0,
+test,SHP_0032,OFF-SHP_0032-2,0,0.4416566395629621,0.0,
+test,SHP_0032,OFF-SHP_0032-3,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-4,1,0.5119911658446104,1.0,
+test,SHP_0032,OFF-SHP_0032-5,0,,,Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-6,0,0.06585470797765498,0.0,
+test,SHP_0032,OFF-SHP_0032-7,0,0.15977453520420204,0.0,
+test,SHP_0032,OFF-SHP_0032-8,0,0.35146543266417013,0.0,
+test,SHP_0032,OFF-SHP_0032-9,0,0.17146933774095763,0.0,
+test,SHP_0032,OFF-SHP_0032-10,1,0.49663656956997787,1.0,
+test,SHP_0032,OFF-SHP_0032-11,0,0.5115451881527497,1.0,
+test,SHP_0032,OFF-SHP_0032-12,0,0.5330864692715082,1.0,
+test,SHP_0032,OFF-SHP_0032-13,0,,,Capacité en poids insuffisante
+test,SHP_0032,OFF-SHP_0032-14,0,0.19497207975958855,0.0,
+test,SHP_0032,OFF-SHP_0032-15,0,,,Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-16,0,0.2731108776684724,0.0,
+test,SHP_0032,OFF-SHP_0032-17,0,,,Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-18,0,,,Véhicule indisponible ; Marchandise incompatible
+test,SHP_0032,OFF-SHP_0032-19,0,0.6299245313559337,1.0,
+test,SHP_0032,OFF-SHP_0032-20,0,0.23581414765414777,0.0,
+test,SHP_0032,OFF-SHP_0032-21,1,0.3625395345087692,0.0,
+test,SHP_0032,OFF-SHP_0032-22,0,0.280527673617035,0.0,
+test,SHP_0032,OFF-SHP_0032-23,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-24,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0032,OFF-SHP_0032-25,0,0.12008626670639033,0.0,
+test,SHP_0032,OFF-SHP_0032-26,0,0.29935858210378,0.0,
+test,SHP_0032,OFF-SHP_0032-27,0,,,Capacité en poids insuffisante
+test,SHP_0032,OFF-SHP_0032-28,1,0.6254722712237911,1.0,
+test,SHP_0032,OFF-SHP_0032-29,0,,,Capacité en volume insuffisante
+test,SHP_0034,OFF-SHP_0034-0,0,,,Capacité en poids insuffisante
+test,SHP_0034,OFF-SHP_0034-1,0,0.24033568588798682,0.0,
+test,SHP_0034,OFF-SHP_0034-2,0,0.2671532800576099,0.0,
+test,SHP_0034,OFF-SHP_0034-3,0,,,Créneau incompatible ; Marchandise incompatible
+test,SHP_0034,OFF-SHP_0034-4,0,0.29450190413081273,0.0,
+test,SHP_0034,OFF-SHP_0034-5,0,,,Capacité en poids insuffisante
+test,SHP_0034,OFF-SHP_0034-6,0,0.25061653267096806,0.0,
+test,SHP_0034,OFF-SHP_0034-7,0,0.5157262461099814,1.0,
+test,SHP_0034,OFF-SHP_0034-8,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0034,OFF-SHP_0034-9,0,0.5228406297706854,1.0,
+test,SHP_0034,OFF-SHP_0034-10,1,0.4423481984214117,0.0,
+test,SHP_0034,OFF-SHP_0034-11,0,0.09098452963757553,0.0,
+test,SHP_0034,OFF-SHP_0034-12,0,0.22393120852398365,0.0,
+test,SHP_0034,OFF-SHP_0034-13,0,0.42412455760520557,0.0,
+test,SHP_0034,OFF-SHP_0034-14,1,0.4284367097831114,0.0,
+test,SHP_0034,OFF-SHP_0034-15,0,0.3346402857198404,0.0,
+test,SHP_0034,OFF-SHP_0034-16,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0034,OFF-SHP_0034-17,0,0.6716992610846354,1.0,
+test,SHP_0034,OFF-SHP_0034-18,0,,,Capacité en poids insuffisante
+test,SHP_0034,OFF-SHP_0034-19,0,,,Capacité en volume insuffisante ; Trajet incompatible
+test,SHP_0034,OFF-SHP_0034-20,0,0.3943083254127241,0.0,
+test,SHP_0034,OFF-SHP_0034-21,0,,,Capacité en poids insuffisante
+test,SHP_0034,OFF-SHP_0034-22,0,0.12083160494491414,0.0,
+test,SHP_0034,OFF-SHP_0034-23,0,,,Capacité en poids insuffisante
+test,SHP_0034,OFF-SHP_0034-24,0,,,Véhicule indisponible
+test,SHP_0034,OFF-SHP_0034-25,0,,,Capacité en volume insuffisante
+test,SHP_0034,OFF-SHP_0034-26,0,,,Véhicule indisponible
+test,SHP_0034,OFF-SHP_0034-27,0,0.3064002093499101,0.0,
+test,SHP_0034,OFF-SHP_0034-28,0,,,Capacité en volume insuffisante
+test,SHP_0034,OFF-SHP_0034-29,0,0.331980359609567,0.0,
+test,SHP_0040,OFF-SHP_0040-0,0,,,Trajet incompatible
+test,SHP_0040,OFF-SHP_0040-1,0,,,Capacité en poids insuffisante
+test,SHP_0040,OFF-SHP_0040-2,0,0.2620526632420126,0.0,
+test,SHP_0040,OFF-SHP_0040-3,0,0.15985985535807537,0.0,
+test,SHP_0040,OFF-SHP_0040-4,0,,,Capacité en volume insuffisante ; Trajet incompatible
+test,SHP_0040,OFF-SHP_0040-5,1,0.5637697794207105,1.0,
+test,SHP_0040,OFF-SHP_0040-6,0,,,Capacité en poids insuffisante
+test,SHP_0040,OFF-SHP_0040-7,0,,,Capacité en volume insuffisante
+test,SHP_0040,OFF-SHP_0040-8,0,,,Capacité en poids insuffisante
+test,SHP_0040,OFF-SHP_0040-9,0,,,Créneau incompatible
+test,SHP_0040,OFF-SHP_0040-10,0,,,Capacité en volume insuffisante
+test,SHP_0040,OFF-SHP_0040-11,0,,,Capacité en poids insuffisante
+test,SHP_0040,OFF-SHP_0040-12,0,0.11714827872125566,0.0,
+test,SHP_0040,OFF-SHP_0040-13,0,0.17742736198260622,0.0,
+test,SHP_0040,OFF-SHP_0040-14,0,0.328881258201087,0.0,
+test,SHP_0040,OFF-SHP_0040-15,0,,,Créneau incompatible
+test,SHP_0040,OFF-SHP_0040-16,0,,,Trajet incompatible
+test,SHP_0040,OFF-SHP_0040-17,0,,,Créneau incompatible
+test,SHP_0040,OFF-SHP_0040-18,0,0.6046962271927663,1.0,
+test,SHP_0040,OFF-SHP_0040-19,0,0.13754048363192223,0.0,
+test,SHP_0040,OFF-SHP_0040-20,1,0.4761119112393243,0.0,
+test,SHP_0040,OFF-SHP_0040-21,1,0.5396175466687229,1.0,
+test,SHP_0040,OFF-SHP_0040-22,0,,,Trajet incompatible
+test,SHP_0040,OFF-SHP_0040-23,0,,,Capacité en volume insuffisante
+test,SHP_0040,OFF-SHP_0040-24,0,,,Capacité en poids insuffisante ; Créneau incompatible
+test,SHP_0040,OFF-SHP_0040-25,0,,,Marchandise incompatible
+test,SHP_0040,OFF-SHP_0040-26,0,,,Trajet incompatible
+test,SHP_0040,OFF-SHP_0040-27,1,0.7403800783332976,1.0,
+test,SHP_0040,OFF-SHP_0040-28,0,0.23285772933521728,0.0,
+test,SHP_0040,OFF-SHP_0040-29,0,,,Capacité en volume insuffisante
+test,SHP_0045,OFF-SHP_0045-0,0,,,Véhicule indisponible
+test,SHP_0045,OFF-SHP_0045-1,1,0.5669181560928096,1.0,
+test,SHP_0045,OFF-SHP_0045-2,0,,,Véhicule indisponible ; Marchandise incompatible ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-3,0,,,Marchandise incompatible
+test,SHP_0045,OFF-SHP_0045-4,1,0.6702313220374897,1.0,
+test,SHP_0045,OFF-SHP_0045-5,0,,,Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-6,0,,,Capacité en poids insuffisante
+test,SHP_0045,OFF-SHP_0045-7,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-8,1,0.49374573095417507,1.0,
+test,SHP_0045,OFF-SHP_0045-9,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0045,OFF-SHP_0045-10,0,,,Capacité en poids insuffisante
+test,SHP_0045,OFF-SHP_0045-11,1,0.3243568495295457,0.0,
+test,SHP_0045,OFF-SHP_0045-12,0,,,Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-13,0,,,Marchandise incompatible ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-14,0,,,Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-15,1,0.449234127951583,0.0,
+test,SHP_0045,OFF-SHP_0045-16,0,,,Capacité en poids insuffisante
+test,SHP_0045,OFF-SHP_0045-17,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-18,0,,,Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-19,0,,,Créneau incompatible
+test,SHP_0045,OFF-SHP_0045-20,1,0.6013451483599297,1.0,
+test,SHP_0045,OFF-SHP_0045-21,1,0.5919617407579822,1.0,
+test,SHP_0045,OFF-SHP_0045-22,0,,,Trajet incompatible ; Marchandise incompatible ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-23,0,,,Capacité en volume insuffisante ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-24,0,,,Marchandise incompatible
+test,SHP_0045,OFF-SHP_0045-25,0,,,Capacité en poids insuffisante ; Budget strict dépassé
+test,SHP_0045,OFF-SHP_0045-26,0,0.513696879071038,1.0,
+test,SHP_0045,OFF-SHP_0045-27,0,0.43690671472312376,0.0,
+test,SHP_0045,OFF-SHP_0045-28,1,0.3204894399316516,0.0,
+test,SHP_0045,OFF-SHP_0045-29,0,,,Budget strict dépassé
+test,SHP_0046,OFF-SHP_0046-0,0,,,Capacité en poids insuffisante
+test,SHP_0046,OFF-SHP_0046-1,0,0.38952134866548255,0.0,
+test,SHP_0046,OFF-SHP_0046-2,0,0.16038061138204532,0.0,
+test,SHP_0046,OFF-SHP_0046-3,1,0.4037069908012579,0.0,
+test,SHP_0046,OFF-SHP_0046-4,0,0.1643444988929748,0.0,
+test,SHP_0046,OFF-SHP_0046-5,0,,,Marchandise incompatible
+test,SHP_0046,OFF-SHP_0046-6,0,0.4682811561559774,0.0,
+test,SHP_0046,OFF-SHP_0046-7,0,,,Trajet incompatible
+test,SHP_0046,OFF-SHP_0046-8,0,0.45890748116953095,0.0,
+test,SHP_0046,OFF-SHP_0046-9,1,0.19900053855600827,0.0,
+test,SHP_0046,OFF-SHP_0046-10,0,0.1457933947124289,0.0,
+test,SHP_0046,OFF-SHP_0046-11,0,0.1590520916337113,0.0,
+test,SHP_0046,OFF-SHP_0046-12,0,0.46318211023413647,0.0,
+test,SHP_0046,OFF-SHP_0046-13,0,,,Capacité en poids insuffisante
+test,SHP_0046,OFF-SHP_0046-14,0,,,Capacité en poids insuffisante
+test,SHP_0046,OFF-SHP_0046-15,1,0.37340039704125894,0.0,
+test,SHP_0046,OFF-SHP_0046-16,0,0.3691368055017157,0.0,
+test,SHP_0046,OFF-SHP_0046-17,0,,,Capacité en poids insuffisante
+test,SHP_0046,OFF-SHP_0046-18,0,,,Capacité en volume insuffisante ; Trajet incompatible
+test,SHP_0046,OFF-SHP_0046-19,1,0.4119119048096332,0.0,
+test,SHP_0046,OFF-SHP_0046-20,1,0.55084516091,1.0,
+test,SHP_0046,OFF-SHP_0046-21,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0046,OFF-SHP_0046-22,0,,,Capacité en poids insuffisante
+test,SHP_0046,OFF-SHP_0046-23,0,0.20168376301762536,0.0,
+test,SHP_0046,OFF-SHP_0046-24,0,0.2880151086166713,0.0,
+test,SHP_0046,OFF-SHP_0046-25,0,0.362573162951721,0.0,
+test,SHP_0046,OFF-SHP_0046-26,1,0.3954381944323678,0.0,
+test,SHP_0046,OFF-SHP_0046-27,0,,,Capacité en volume insuffisante
+test,SHP_0046,OFF-SHP_0046-28,0,,,Capacité en poids insuffisante ; Véhicule indisponible ; Marchandise incompatible
+test,SHP_0046,OFF-SHP_0046-29,1,0.5300292832694908,1.0,
+test,SHP_0054,OFF-SHP_0054-0,1,0.6060774176830932,1.0,
+test,SHP_0054,OFF-SHP_0054-1,0,0.11865351122474053,0.0,
+test,SHP_0054,OFF-SHP_0054-2,0,0.44726747821786295,0.0,
+test,SHP_0054,OFF-SHP_0054-3,0,,,Capacité en volume insuffisante
+test,SHP_0054,OFF-SHP_0054-4,1,0.6616198245595267,1.0,
+test,SHP_0054,OFF-SHP_0054-5,0,,,Capacité en volume insuffisante
+test,SHP_0054,OFF-SHP_0054-6,1,0.28677562502825577,0.0,
+test,SHP_0054,OFF-SHP_0054-7,0,0.3871813803205367,0.0,
+test,SHP_0054,OFF-SHP_0054-8,0,0.11930518918584133,0.0,
+test,SHP_0054,OFF-SHP_0054-9,0,0.3173003505529902,0.0,
+test,SHP_0054,OFF-SHP_0054-10,0,0.4130902157206058,0.0,
+test,SHP_0054,OFF-SHP_0054-11,1,0.43802348115427897,0.0,
+test,SHP_0054,OFF-SHP_0054-12,0,0.4078358438955379,0.0,
+test,SHP_0054,OFF-SHP_0054-13,0,,,Trajet incompatible
+test,SHP_0054,OFF-SHP_0054-14,0,,,Capacité en poids insuffisante
+test,SHP_0054,OFF-SHP_0054-15,0,,,Trajet incompatible
+test,SHP_0054,OFF-SHP_0054-16,0,0.5516015050114621,1.0,
+test,SHP_0054,OFF-SHP_0054-17,1,0.587938584655068,1.0,
+test,SHP_0054,OFF-SHP_0054-18,0,,,Capacité en volume insuffisante
+test,SHP_0054,OFF-SHP_0054-19,1,0.32633141261786863,0.0,
+test,SHP_0054,OFF-SHP_0054-20,0,,,Capacité en volume insuffisante
+test,SHP_0054,OFF-SHP_0054-21,0,,,Capacité en volume insuffisante
+test,SHP_0054,OFF-SHP_0054-22,1,0.3063645819551958,0.0,
+test,SHP_0054,OFF-SHP_0054-23,0,0.0826781827711536,0.0,
+test,SHP_0054,OFF-SHP_0054-24,1,0.708986574342023,1.0,
+test,SHP_0054,OFF-SHP_0054-25,0,0.19962610100423006,0.0,
+test,SHP_0054,OFF-SHP_0054-26,0,,,Créneau incompatible
+test,SHP_0054,OFF-SHP_0054-27,0,0.13725067784351633,0.0,
+test,SHP_0054,OFF-SHP_0054-28,1,0.5954733320645231,1.0,
+test,SHP_0054,OFF-SHP_0054-29,1,0.656855180318096,1.0,
+test,SHP_0071,OFF-SHP_0071-0,0,0.38314401406376924,0.0,
+test,SHP_0071,OFF-SHP_0071-1,1,0.3708817504360557,0.0,
+test,SHP_0071,OFF-SHP_0071-2,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0071,OFF-SHP_0071-3,0,,,Capacité en poids insuffisante
+test,SHP_0071,OFF-SHP_0071-4,0,,,Créneau incompatible
+test,SHP_0071,OFF-SHP_0071-5,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0071,OFF-SHP_0071-6,0,,,Capacité en volume insuffisante
+test,SHP_0071,OFF-SHP_0071-7,0,0.41991069246835705,0.0,
+test,SHP_0071,OFF-SHP_0071-8,1,0.46508057294999483,0.0,
+test,SHP_0071,OFF-SHP_0071-9,0,,,Capacité en poids insuffisante
+test,SHP_0071,OFF-SHP_0071-10,0,,,Capacité en poids insuffisante ; Véhicule indisponible
+test,SHP_0071,OFF-SHP_0071-11,0,0.4663550023582194,0.0,
+test,SHP_0071,OFF-SHP_0071-12,0,,,Véhicule indisponible
+test,SHP_0071,OFF-SHP_0071-13,0,0.3276905655546435,0.0,
+test,SHP_0071,OFF-SHP_0071-14,1,0.3773803568319225,0.0,
+test,SHP_0071,OFF-SHP_0071-15,1,0.2581181713645265,0.0,
+test,SHP_0071,OFF-SHP_0071-16,0,,,Capacité en poids insuffisante
+test,SHP_0071,OFF-SHP_0071-17,0,,,Capacité en volume insuffisante
+test,SHP_0071,OFF-SHP_0071-18,0,0.4202493326503262,0.0,
+test,SHP_0071,OFF-SHP_0071-19,0,,,Trajet incompatible
+test,SHP_0071,OFF-SHP_0071-20,0,0.19760846077221847,0.0,
+test,SHP_0071,OFF-SHP_0071-21,0,,,Capacité en volume insuffisante
+test,SHP_0071,OFF-SHP_0071-22,0,0.4632871165056633,0.0,
+test,SHP_0071,OFF-SHP_0071-23,0,,,Véhicule indisponible
+test,SHP_0071,OFF-SHP_0071-24,0,,,Marchandise incompatible
+test,SHP_0071,OFF-SHP_0071-25,0,,,Marchandise incompatible
+test,SHP_0071,OFF-SHP_0071-26,0,,,Capacité en poids insuffisante
+test,SHP_0071,OFF-SHP_0071-27,0,0.32664766733372663,0.0,
+test,SHP_0071,OFF-SHP_0071-28,0,,,Capacité en poids insuffisante
+test,SHP_0071,OFF-SHP_0071-29,0,0.28124206048270617,0.0,
+test,SHP_0074,OFF-SHP_0074-0,1,0.562406448248288,1.0,
+test,SHP_0074,OFF-SHP_0074-1,0,,,Capacité en poids insuffisante
+test,SHP_0074,OFF-SHP_0074-2,0,,,Capacité en volume insuffisante
+test,SHP_0074,OFF-SHP_0074-3,0,0.45301275952630293,0.0,
+test,SHP_0074,OFF-SHP_0074-4,0,,,Véhicule indisponible
+test,SHP_0074,OFF-SHP_0074-5,0,0.3019399942592036,0.0,
+test,SHP_0074,OFF-SHP_0074-6,1,0.5181824449266037,1.0,
+test,SHP_0074,OFF-SHP_0074-7,0,,,Capacité en poids insuffisante
+test,SHP_0074,OFF-SHP_0074-8,0,0.27803561685582473,0.0,
+test,SHP_0074,OFF-SHP_0074-9,0,0.3059623841847511,0.0,
+test,SHP_0074,OFF-SHP_0074-10,0,0.59962918879596,1.0,
+test,SHP_0074,OFF-SHP_0074-11,0,,,Capacité en poids insuffisante
+test,SHP_0074,OFF-SHP_0074-12,0,0.292221250715152,0.0,
+test,SHP_0074,OFF-SHP_0074-13,0,,,Capacité en volume insuffisante
+test,SHP_0074,OFF-SHP_0074-14,0,0.23240988083115974,0.0,
+test,SHP_0074,OFF-SHP_0074-15,1,0.5345650508593728,1.0,
+test,SHP_0074,OFF-SHP_0074-16,0,,,Capacité en volume insuffisante
+test,SHP_0074,OFF-SHP_0074-17,0,,,Capacité en volume insuffisante ; Créneau incompatible
+test,SHP_0074,OFF-SHP_0074-18,0,0.3456067581818071,0.0,
+test,SHP_0074,OFF-SHP_0074-19,0,0.5003414599449294,1.0,
+test,SHP_0074,OFF-SHP_0074-20,0,0.1779096808342463,0.0,
+test,SHP_0074,OFF-SHP_0074-21,0,,,Trajet incompatible
+test,SHP_0074,OFF-SHP_0074-22,0,,,Capacité en poids insuffisante
+test,SHP_0074,OFF-SHP_0074-23,0,,,Capacité en poids insuffisante
+test,SHP_0074,OFF-SHP_0074-24,1,0.43402894023940913,0.0,
+test,SHP_0074,OFF-SHP_0074-25,0,,,Capacité en volume insuffisante
+test,SHP_0074,OFF-SHP_0074-26,0,,,Créneau incompatible
+test,SHP_0074,OFF-SHP_0074-27,0,0.33862750963082067,0.0,
+test,SHP_0074,OFF-SHP_0074-28,0,0.12773685648445607,0.0,
+test,SHP_0074,OFF-SHP_0074-29,0,,,Capacité en poids insuffisante
+test,SHP_0077,OFF-SHP_0077-0,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-1,0,0.5021410077638998,1.0,
+test,SHP_0077,OFF-SHP_0077-2,0,,,Capacité en poids insuffisante
+test,SHP_0077,OFF-SHP_0077-3,1,0.5388217503717844,1.0,
+test,SHP_0077,OFF-SHP_0077-4,0,,,Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-5,1,0.4817718714478538,1.0,
+test,SHP_0077,OFF-SHP_0077-6,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+test,SHP_0077,OFF-SHP_0077-7,0,,,Capacité en poids insuffisante
+test,SHP_0077,OFF-SHP_0077-8,0,,,Capacité en poids insuffisante
+test,SHP_0077,OFF-SHP_0077-9,0,0.28257456011542104,0.0,
+test,SHP_0077,OFF-SHP_0077-10,0,,,Trajet incompatible
+test,SHP_0077,OFF-SHP_0077-11,0,0.10599267791106493,0.0,
+test,SHP_0077,OFF-SHP_0077-12,0,,,Capacité en poids insuffisante
+test,SHP_0077,OFF-SHP_0077-13,0,0.19158397702260926,0.0,
+test,SHP_0077,OFF-SHP_0077-14,1,0.3087179627742216,0.0,
+test,SHP_0077,OFF-SHP_0077-15,0,,,Créneau incompatible
+test,SHP_0077,OFF-SHP_0077-16,0,,,Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-17,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0077,OFF-SHP_0077-18,1,0.5310120336788556,1.0,
+test,SHP_0077,OFF-SHP_0077-19,1,0.7125999654443901,1.0,
+test,SHP_0077,OFF-SHP_0077-20,1,0.3273693477286285,0.0,
+test,SHP_0077,OFF-SHP_0077-21,0,,,Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-22,0,,,Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-23,1,0.5108381141458465,1.0,
+test,SHP_0077,OFF-SHP_0077-24,0,,,Véhicule indisponible
+test,SHP_0077,OFF-SHP_0077-25,0,,,Capacité en volume insuffisante
+test,SHP_0077,OFF-SHP_0077-26,1,0.5337289873646638,1.0,
+test,SHP_0077,OFF-SHP_0077-27,0,,,Trajet incompatible
+test,SHP_0077,OFF-SHP_0077-28,1,0.36940098244179304,0.0,
+test,SHP_0077,OFF-SHP_0077-29,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-0,0,0.08757911502819486,0.0,
+test,SHP_0078,OFF-SHP_0078-1,0,0.0787274147157887,0.0,
+test,SHP_0078,OFF-SHP_0078-2,0,0.5181724580303935,1.0,
+test,SHP_0078,OFF-SHP_0078-3,0,,,Capacité en poids insuffisante ; Trajet incompatible
+test,SHP_0078,OFF-SHP_0078-4,0,,,Créneau incompatible
+test,SHP_0078,OFF-SHP_0078-5,0,,,Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-6,1,0.5389101235901594,1.0,
+test,SHP_0078,OFF-SHP_0078-7,0,,,Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-8,0,,,Capacité en poids insuffisante
+test,SHP_0078,OFF-SHP_0078-9,1,0.37254483368096053,0.0,
+test,SHP_0078,OFF-SHP_0078-10,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+test,SHP_0078,OFF-SHP_0078-11,0,0.09862535552103532,0.0,
+test,SHP_0078,OFF-SHP_0078-12,0,,,Capacité en poids insuffisante
+test,SHP_0078,OFF-SHP_0078-13,1,0.460619928798309,0.0,
+test,SHP_0078,OFF-SHP_0078-14,0,0.10926674514643267,0.0,
+test,SHP_0078,OFF-SHP_0078-15,0,0.5253269027039371,1.0,
+test,SHP_0078,OFF-SHP_0078-16,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-17,0,,,Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-18,0,0.3103056279598327,0.0,
+test,SHP_0078,OFF-SHP_0078-19,1,0.49874013486621316,1.0,
+test,SHP_0078,OFF-SHP_0078-20,0,,,Capacité en volume insuffisante ; Trajet incompatible ; Marchandise incompatible
+test,SHP_0078,OFF-SHP_0078-21,0,0.30820041369253337,0.0,
+test,SHP_0078,OFF-SHP_0078-22,0,0.24698560058343488,0.0,
+test,SHP_0078,OFF-SHP_0078-23,1,0.46775992889286594,0.0,
+test,SHP_0078,OFF-SHP_0078-24,0,,,Créneau incompatible
+test,SHP_0078,OFF-SHP_0078-25,0,,,Capacité en volume insuffisante
+test,SHP_0078,OFF-SHP_0078-26,1,0.2699878483808896,0.0,
+test,SHP_0078,OFF-SHP_0078-27,0,0.594440063237198,1.0,
+test,SHP_0078,OFF-SHP_0078-28,0,0.3709409054037414,0.0,
+test,SHP_0078,OFF-SHP_0078-29,0,0.19925039077944387,0.0,
+test,SHP_0081,OFF-SHP_0081-0,0,0.4772850105289418,0.0,
+test,SHP_0081,OFF-SHP_0081-1,0,0.12482629137284365,0.0,
+test,SHP_0081,OFF-SHP_0081-2,0,0.22056203780012826,0.0,
+test,SHP_0081,OFF-SHP_0081-3,0,0.38645594804059674,0.0,
+test,SHP_0081,OFF-SHP_0081-4,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+test,SHP_0081,OFF-SHP_0081-5,1,0.11132536936615217,0.0,
+test,SHP_0081,OFF-SHP_0081-6,0,,,Capacité en volume insuffisante
+test,SHP_0081,OFF-SHP_0081-7,0,0.3283906688314387,0.0,
+test,SHP_0081,OFF-SHP_0081-8,0,,,Capacité en volume insuffisante ; Trajet incompatible
+test,SHP_0081,OFF-SHP_0081-9,0,,,Capacité en volume insuffisante
+test,SHP_0081,OFF-SHP_0081-10,0,0.12568459814575766,0.0,
+test,SHP_0081,OFF-SHP_0081-11,0,0.4218489270635143,0.0,
+test,SHP_0081,OFF-SHP_0081-12,0,0.36474963513231057,0.0,
+test,SHP_0081,OFF-SHP_0081-13,1,0.5757243382199444,1.0,
+test,SHP_0081,OFF-SHP_0081-14,0,0.4533586889642976,0.0,
+test,SHP_0081,OFF-SHP_0081-15,0,0.31304293793116134,0.0,
+test,SHP_0081,OFF-SHP_0081-16,0,0.09943720156830589,0.0,
+test,SHP_0081,OFF-SHP_0081-17,0,,,Capacité en volume insuffisante
+test,SHP_0081,OFF-SHP_0081-18,0,0.20492339746841215,0.0,
+test,SHP_0081,OFF-SHP_0081-19,1,0.494214039503468,1.0,
+test,SHP_0081,OFF-SHP_0081-20,1,0.539809645702228,1.0,
+test,SHP_0081,OFF-SHP_0081-21,0,,,Capacité en volume insuffisante
+test,SHP_0081,OFF-SHP_0081-22,0,,,Capacité en poids insuffisante ; Créneau incompatible ; Marchandise incompatible
+test,SHP_0081,OFF-SHP_0081-23,1,0.4722161020884146,0.0,
+test,SHP_0081,OFF-SHP_0081-24,0,,,Marchandise incompatible
+test,SHP_0081,OFF-SHP_0081-25,0,0.148036110594867,0.0,
+test,SHP_0081,OFF-SHP_0081-26,1,0.6115028666598907,1.0,
+test,SHP_0081,OFF-SHP_0081-27,0,,,Capacité en poids insuffisante ; Capacité en volume insuffisante
+test,SHP_0081,OFF-SHP_0081-28,0,0.22654581961844664,0.0,
+test,SHP_0081,OFF-SHP_0081-29,1,0.47769227386949814,0.0,
+test,SHP_0084,OFF-SHP_0084-0,0,0.09381434723043154,0.0,
+test,SHP_0084,OFF-SHP_0084-1,0,,,Capacité en poids insuffisante
+test,SHP_0084,OFF-SHP_0084-2,0,0.4195699364738465,0.0,
+test,SHP_0084,OFF-SHP_0084-3,0,,,Capacité en poids insuffisante
+test,SHP_0084,OFF-SHP_0084-4,0,,,Capacité en poids insuffisante ; Marchandise incompatible
+test,SHP_0084,OFF-SHP_0084-5,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-6,0,0.13619258428871028,0.0,
+test,SHP_0084,OFF-SHP_0084-7,1,0.1631167382930048,0.0,
+test,SHP_0084,OFF-SHP_0084-8,0,0.3346092857081661,0.0,
+test,SHP_0084,OFF-SHP_0084-9,0,0.3639039603739108,0.0,
+test,SHP_0084,OFF-SHP_0084-10,1,0.4294932672099252,0.0,
+test,SHP_0084,OFF-SHP_0084-11,0,0.3562303062270099,0.0,
+test,SHP_0084,OFF-SHP_0084-12,0,0.3496136261878217,0.0,
+test,SHP_0084,OFF-SHP_0084-13,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-14,0,0.08271322494528283,0.0,
+test,SHP_0084,OFF-SHP_0084-15,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-16,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-17,1,0.3178877809040604,0.0,
+test,SHP_0084,OFF-SHP_0084-18,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-19,0,,,Capacité en poids insuffisante
+test,SHP_0084,OFF-SHP_0084-20,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-21,0,,,Capacité en poids insuffisante
+test,SHP_0084,OFF-SHP_0084-22,0,,,Trajet incompatible
+test,SHP_0084,OFF-SHP_0084-23,0,,,Créneau incompatible
+test,SHP_0084,OFF-SHP_0084-24,1,0.6284461294718557,1.0,
+test,SHP_0084,OFF-SHP_0084-25,0,0.14561459694265738,0.0,
+test,SHP_0084,OFF-SHP_0084-26,0,,,Capacité en volume insuffisante
+test,SHP_0084,OFF-SHP_0084-27,0,0.15446716793328505,0.0,
+test,SHP_0084,OFF-SHP_0084-28,0,0.3522526448263,0.0,
+test,SHP_0084,OFF-SHP_0084-29,0,,,Capacité en volume insuffisante ; Véhicule indisponible
+test,SHP_0091,OFF-SHP_0091-0,0,0.3202381340267806,0.0,
+test,SHP_0091,OFF-SHP_0091-1,0,,,Capacité en poids insuffisante ; Créneau incompatible
+test,SHP_0091,OFF-SHP_0091-2,1,0.525242110739358,1.0,
+test,SHP_0091,OFF-SHP_0091-3,1,0.6495834602185973,1.0,
+test,SHP_0091,OFF-SHP_0091-4,0,0.4030525850995017,0.0,
+test,SHP_0091,OFF-SHP_0091-5,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-6,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-7,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-8,0,0.4477431713914795,0.0,
+test,SHP_0091,OFF-SHP_0091-9,0,0.16629192625026298,0.0,
+test,SHP_0091,OFF-SHP_0091-10,0,0.5494313587486487,1.0,
+test,SHP_0091,OFF-SHP_0091-11,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-12,0,0.25930942155694914,0.0,
+test,SHP_0091,OFF-SHP_0091-13,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-14,1,0.516201760705174,1.0,
+test,SHP_0091,OFF-SHP_0091-15,0,0.2930471069669863,0.0,
+test,SHP_0091,OFF-SHP_0091-16,0,0.34430853395007577,0.0,
+test,SHP_0091,OFF-SHP_0091-17,0,,,Créneau incompatible
+test,SHP_0091,OFF-SHP_0091-18,0,,,Capacité en poids insuffisante
+test,SHP_0091,OFF-SHP_0091-19,0,0.19224215084645144,0.0,
+test,SHP_0091,OFF-SHP_0091-20,0,,,Capacité en volume insuffisante ; Marchandise incompatible
+test,SHP_0091,OFF-SHP_0091-21,1,0.42200823430389645,0.0,
+test,SHP_0091,OFF-SHP_0091-22,0,0.3709886203730093,0.0,
+test,SHP_0091,OFF-SHP_0091-23,0,0.2974102107321754,0.0,
+test,SHP_0091,OFF-SHP_0091-24,0,0.1882716629499354,0.0,
+test,SHP_0091,OFF-SHP_0091-25,0,,,Créneau incompatible
+test,SHP_0091,OFF-SHP_0091-26,1,0.5861482772548174,1.0,
+test,SHP_0091,OFF-SHP_0091-27,0,0.16414551778337114,0.0,
+test,SHP_0091,OFF-SHP_0091-28,1,0.5318195595108146,1.0,
+test,SHP_0091,OFF-SHP_0091-29,1,0.6205044881913111,1.0,

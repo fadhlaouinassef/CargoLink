@@ -1,0 +1,237 @@
+{
+  "selected_model": "random_forest_leaf_24",
+  "seed": 42,
+  "selection_objective": "Précision maximale sur validation, rappel >= min_validation_recall ; départage Precision@3 puis F1",
+  "min_validation_recall": 0.5,
+  "threshold": 0.47838819111264197,
+  "test_at_threshold_0_5": {
+    "accuracy": 0.7383177570093458,
+    "precision": 0.7333333333333333,
+    "recall": 0.46218487394957986,
+    "f1": 0.5670103092783505,
+    "roc_auc": 0.82590065729262,
+    "precision_at_3": 0.7,
+    "threshold": 0.5,
+    "predicted_positive": 75,
+    "demandes_avec_candidats": 20,
+    "offres_admissibles": 321
+  },
+  "previous_method_model": "logistic_regression",
+  "previous_method_test": {
+    "accuracy": 0.7538940809968847,
+    "precision": 0.6886792452830188,
+    "recall": 0.6134453781512605,
+    "f1": 0.6488888888888888,
+    "roc_auc": 0.8298943339712122,
+    "precision_at_3": 0.7,
+    "threshold": 0.5,
+    "predicted_positive": 106,
+    "demandes_avec_candidats": 20,
+    "offres_admissibles": 321
+  },
+  "delta_precision_previous_method": 0.04695293862502714,
+  "data_sha256": "f76df440ee1e7f952a8f8566e15a908cacf32332cd476bf0642103c952866216",
+  "provenance": "Détails dans data_provenance ; le CSV d'expéditions ne fournit pas de labels de pertinence.",
+  "versions": {
+    "python": "3.13.14",
+    "sklearn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "joblib": "1.6.0"
+  },
+  "features": [
+    "ratio_prix_budget",
+    "budget_absent",
+    "ecart_horaire_heures",
+    "detour_km",
+    "ratio_poids",
+    "ratio_volume",
+    "note_transporteur",
+    "nombre_avis",
+    "type_vehicule",
+    "categorie_marchandise"
+  ],
+  "validation": {
+    "baseline": {
+      "accuracy": 0.5189504373177842,
+      "precision": 0.4370629370629371,
+      "recall": 0.9689922480620154,
+      "f1": 0.6024096385542169,
+      "roc_auc": 0.7884155618343838,
+      "precision_at_3": 0.7166666666666666,
+      "threshold": 0.5,
+      "predicted_positive": 286,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_regression": {
+      "accuracy": 0.7259475218658892,
+      "precision": 0.6842105263157895,
+      "recall": 0.5038759689922481,
+      "f1": 0.5803571428571429,
+      "roc_auc": 0.778816199376947,
+      "precision_at_3": 0.75,
+      "threshold": 0.5465079628651239,
+      "predicted_positive": 95,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest": {
+      "accuracy": 0.7346938775510204,
+      "precision": 0.6979166666666666,
+      "recall": 0.5193798449612403,
+      "f1": 0.5955555555555555,
+      "roc_auc": 0.7653046439179887,
+      "precision_at_3": 0.7499999999999999,
+      "threshold": 0.5022875805782896,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_C_0.1": {
+      "accuracy": 0.7288629737609329,
+      "precision": 0.6875,
+      "recall": 0.5116279069767442,
+      "f1": 0.5866666666666667,
+      "roc_auc": 0.7796855755995072,
+      "precision_at_3": 0.75,
+      "threshold": 0.5270621986832782,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_C_10": {
+      "accuracy": 0.7259475218658892,
+      "precision": 0.6842105263157895,
+      "recall": 0.5038759689922481,
+      "f1": 0.5803571428571429,
+      "roc_auc": 0.7784539592842136,
+      "precision_at_3": 0.75,
+      "threshold": 0.548450457292944,
+      "predicted_positive": 95,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest_leaf_12": {
+      "accuracy": 0.7405247813411079,
+      "precision": 0.7083333333333334,
+      "recall": 0.5271317829457365,
+      "f1": 0.6044444444444445,
+      "roc_auc": 0.7706295732811707,
+      "precision_at_3": 0.7333333333333333,
+      "threshold": 0.47714324605289055,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest_leaf_24": {
+      "accuracy": 0.7376093294460642,
+      "precision": 0.7142857142857143,
+      "recall": 0.5038759689922481,
+      "f1": 0.5909090909090909,
+      "roc_auc": 0.7700137651235238,
+      "precision_at_3": 0.7499999999999999,
+      "threshold": 0.47838819111264197,
+      "predicted_positive": 91,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "hist_gradient_boosting_7": {
+      "accuracy": 0.717201166180758,
+      "precision": 0.6454545454545455,
+      "recall": 0.5503875968992248,
+      "f1": 0.5941422594142259,
+      "roc_auc": 0.761754691009201,
+      "precision_at_3": 0.7666666666666666,
+      "threshold": 0.5270040339539968,
+      "predicted_positive": 110,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "hist_gradient_boosting_15": {
+      "accuracy": 0.7142857142857143,
+      "precision": 0.6565656565656566,
+      "recall": 0.5038759689922481,
+      "f1": 0.5701754385964912,
+      "roc_auc": 0.7450554227341882,
+      "precision_at_3": 0.7333333333333333,
+      "threshold": 0.5797432446161361,
+      "predicted_positive": 99,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    }
+  },
+  "test": {
+    "accuracy": 0.7570093457943925,
+    "precision": 0.735632183908046,
+    "recall": 0.5378151260504201,
+    "f1": 0.6213592233009708,
+    "roc_auc": 0.82590065729262,
+    "precision_at_3": 0.7,
+    "threshold": 0.47838819111264197,
+    "predicted_positive": 87,
+    "demandes_avec_candidats": 20,
+    "offres_admissibles": 321
+  },
+  "baseline_test": {
+    "accuracy": 0.5482866043613707,
+    "precision": 0.4496124031007752,
+    "recall": 0.9747899159663865,
+    "f1": 0.6153846153846154,
+    "roc_auc": 0.8328479906814211,
+    "precision_at_3": 0.7499999999999999,
+    "threshold": 0.5,
+    "predicted_positive": 258,
+    "demandes_avec_candidats": 20,
+    "offres_admissibles": 321
+  },
+  "delta_precision_at_3": -0.04999999999999993,
+  "split": {
+    "train": {
+      "demandes": 60,
+      "offres_total": 1800,
+      "offres_admissibles": 996
+    },
+    "validation": {
+      "demandes": 20,
+      "offres_total": 600,
+      "offres_admissibles": 343
+    },
+    "test": {
+      "demandes": 20,
+      "offres_total": 600,
+      "offres_admissibles": 321
+    }
+  },
+  "group_overlap": 0,
+  "data_provenance": {
+    "source_file": "C:\\Users\\nasse\\Desktop\\Django\\CargoLink\\datasets\\shippments_dataset.csv",
+    "source_sha256": "f13d71c90ea8269c6583c1535d2b41fdd67f5401e7d933d0998e6883db0025f8",
+    "source_rows": 100,
+    "source_columns": [
+      "curr_loc",
+      "delivery_deadline",
+      "destination",
+      "ready_time",
+      "route",
+      "shipment_id",
+      "weight_tons"
+    ],
+    "observed_fields": [
+      "demande_id",
+      "poids_kg (weight_tons * 1000)",
+      "depart_ville",
+      "arrivee_ville",
+      "ready_time",
+      "delivery_deadline",
+      "source_route"
+    ],
+    "synthetic_fields": "Offres, volume, budget, prix, capacités, avis, catégories, compatibilités et pertinent ; le créneau tient aussi compte de la fenêtre CSV.",
+    "labels_synthetic": true,
+    "seed": 42,
+    "requests": 100,
+    "rows": 3000,
+    "labels": "Utilité simulée bruitée, sans décisions utilisateur réelles",
+    "verified_at_training": true
+  }
+}
