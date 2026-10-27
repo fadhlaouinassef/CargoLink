@@ -124,7 +124,7 @@ class Reclamation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('-created_at',)
+        ordering = ('-created_at',)                 # le plus récent d'abord
         verbose_name = 'réclamation'
         verbose_name_plural = 'réclamations'
 
