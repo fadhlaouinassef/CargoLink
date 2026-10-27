@@ -1,0 +1,11 @@
+﻿shipment_id,route,weight_tons,curr_loc,destination,ready_time,delivery_deadline
+SHP_0001,ludhiana -> sonnagar,14.4,ludhiana,sonnagar,2026-01-08 15:17:00,2026-01-10 11:17:00
+SHP_0002,ludhiana -> sonnagar,16.3,ludhiana,sonnagar,2026-01-07 01:37:00,2026-01-08 07:37:00
+SHP_0003,dadri -> mumbai,20.0,dadri,mumbai,2026-01-07 11:02:00,2026-01-08 20:02:00
+SHP_0004,mumbai -> ahmedabad,9.2,mumbai,ahmedabad,2026-01-11 17:44:00,2026-01-12 19:44:00
+SHP_0005,dadri -> mumbai,19.3,dadri,mumbai,2026-01-09 05:51:00,2026-01-11 04:51:00
+SHP_0006,dadri -> mumbai,20.1,dadri,mumbai,2026-01-06 21:17:00,2026-01-08 14:17:00
+SHP_0007,dadri -> mumbai,12.5,dadri,mumbai,2026-01-07 09:50:00,2026-01-09 00:50:00
+SHP_0008,ahmedabad -> mumbai,13.9,ahmedabad,mumbai,2026-01-05 20:05:00,2026-01-07 01:05:00
+SHP_0009,mumbai -> dadri,14.4,mumbai,dadri,2026-01-11 08:12:00,2026-01-13 07:12:00
+SHP_0010,ludhiana -> sonnagar,17.9,ludhiana,sonnagar,2026-01-07 17:13:00,2026-01-09 05:13:00

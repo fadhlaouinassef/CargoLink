@@ -1,0 +1,424 @@
+{
+  "generated_at_utc": "2026-10-27T17:42:13.471043+00:00",
+  "limitation": "Labels de pertinence simulés : ces résultats ne mesurent pas la précision réelle en production.",
+  "scope": "Classification sur offres admissibles après filtrage métier ; train est une mesure de réajustement, test est réservé.",
+  "selected_model": "random_forest_leaf_24",
+  "threshold": 0.47838819111264197,
+  "model_file": "C:\\Users\\nasse\\Desktop\\Django\\CargoLink\\matching_des_offres\\artifacts\\model.joblib",
+  "model_sha256": "686912fec8dd80d75c5e35c3ca52936ff6d5b78e65e53cda8500486c43c5d0ad",
+  "data_sha256": "f76df440ee1e7f952a8f8566e15a908cacf32332cd476bf0642103c952866216",
+  "training_versions": {
+    "python": "3.13.14",
+    "sklearn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "joblib": "1.6.0"
+  },
+  "data_provenance": {
+    "source_file": "C:\\Users\\nasse\\Desktop\\Django\\CargoLink\\datasets\\shippments_dataset.csv",
+    "source_sha256": "f13d71c90ea8269c6583c1535d2b41fdd67f5401e7d933d0998e6883db0025f8",
+    "source_rows": 100,
+    "source_columns": [
+      "curr_loc",
+      "delivery_deadline",
+      "destination",
+      "ready_time",
+      "route",
+      "shipment_id",
+      "weight_tons"
+    ],
+    "observed_fields": [
+      "demande_id",
+      "poids_kg (weight_tons * 1000)",
+      "depart_ville",
+      "arrivee_ville",
+      "ready_time",
+      "delivery_deadline",
+      "source_route"
+    ],
+    "synthetic_fields": "Offres, volume, budget, prix, capacités, avis, catégories, compatibilités et pertinent ; le créneau tient aussi compte de la fenêtre CSV.",
+    "labels_synthetic": true,
+    "seed": 42,
+    "requests": 100,
+    "rows": 3000,
+    "labels": "Utilité simulée bruitée, sans décisions utilisateur réelles",
+    "verified_at_training": true
+  },
+  "group_overlap": 0,
+  "split": {
+    "train": {
+      "demandes": 60,
+      "total": 1800,
+      "admissibles": 996,
+      "exclues": 804
+    },
+    "validation": {
+      "demandes": 20,
+      "total": 600,
+      "admissibles": 343,
+      "exclues": 257
+    },
+    "test": {
+      "demandes": 20,
+      "total": 600,
+      "admissibles": 321,
+      "exclues": 279
+    }
+  },
+  "scores": {
+    "train": {
+      "accuracy": 0.7881526104417671,
+      "precision": 0.7713178294573644,
+      "recall": 0.5669515669515669,
+      "f1": 0.6535303776683087,
+      "roc_auc": 0.8720510611983481,
+      "precision_at_3": 0.7777777777777778,
+      "threshold": 0.47838819111264197,
+      "predicted_positive": 258,
+      "demandes_avec_candidats": 60,
+      "offres_admissibles": 996,
+      "average_precision": 0.7840235177556625,
+      "confusion_matrix": [
+        [
+          586,
+          59
+        ],
+        [
+          152,
+          199
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          0.9085271317829458,
+          0.09147286821705426
+        ],
+        [
+          0.43304843304843305,
+          0.5669515669515669
+        ]
+      ],
+      "confusion_axes": "lignes = labels réels [0, 1], colonnes = prédictions [0, 1]",
+      "classification_report": {
+        "non_pertinent": {
+          "precision": 0.7940379403794038,
+          "recall": 0.9085271317829458,
+          "f1-score": 0.8474331164135936,
+          "support": 645.0
+        },
+        "pertinent": {
+          "precision": 0.7713178294573644,
+          "recall": 0.5669515669515669,
+          "f1-score": 0.6535303776683087,
+          "support": 351.0
+        },
+        "accuracy": 0.7881526104417671,
+        "macro avg": {
+          "precision": 0.7826778849183841,
+          "recall": 0.7377393493672564,
+          "f1-score": 0.7504817470409512,
+          "support": 996.0
+        },
+        "weighted avg": {
+          "precision": 0.7860311543014562,
+          "recall": 0.7881526104417671,
+          "f1-score": 0.779099922337695,
+          "support": 996.0
+        }
+      }
+    },
+    "validation": {
+      "accuracy": 0.7376093294460642,
+      "precision": 0.7142857142857143,
+      "recall": 0.5038759689922481,
+      "f1": 0.5909090909090909,
+      "roc_auc": 0.7700137651235238,
+      "precision_at_3": 0.7499999999999999,
+      "threshold": 0.47838819111264197,
+      "predicted_positive": 91,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343,
+      "average_precision": 0.6615407376712859,
+      "confusion_matrix": [
+        [
+          188,
+          26
+        ],
+        [
+          64,
+          65
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          0.8785046728971962,
+          0.12149532710280374
+        ],
+        [
+          0.49612403100775193,
+          0.5038759689922481
+        ]
+      ],
+      "confusion_axes": "lignes = labels réels [0, 1], colonnes = prédictions [0, 1]",
+      "classification_report": {
+        "non_pertinent": {
+          "precision": 0.746031746031746,
+          "recall": 0.8785046728971962,
+          "f1-score": 0.8068669527896996,
+          "support": 214.0
+        },
+        "pertinent": {
+          "precision": 0.7142857142857143,
+          "recall": 0.5038759689922481,
+          "f1-score": 0.5909090909090909,
+          "support": 129.0
+        },
+        "accuracy": 0.7376093294460642,
+        "macro avg": {
+          "precision": 0.7301587301587302,
+          "recall": 0.6911903209447221,
+          "f1-score": 0.6988880218493952,
+          "support": 343.0
+        },
+        "weighted avg": {
+          "precision": 0.7340922763663288,
+          "recall": 0.7376093294460642,
+          "f1-score": 0.7256466490503454,
+          "support": 343.0
+        }
+      }
+    },
+    "test": {
+      "accuracy": 0.7570093457943925,
+      "precision": 0.735632183908046,
+      "recall": 0.5378151260504201,
+      "f1": 0.6213592233009708,
+      "roc_auc": 0.82590065729262,
+      "precision_at_3": 0.7,
+      "threshold": 0.47838819111264197,
+      "predicted_positive": 87,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 321,
+      "average_precision": 0.7246448360667271,
+      "confusion_matrix": [
+        [
+          179,
+          23
+        ],
+        [
+          55,
+          64
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          0.8861386138613861,
+          0.11386138613861387
+        ],
+        [
+          0.46218487394957986,
+          0.5378151260504201
+        ]
+      ],
+      "confusion_axes": "lignes = labels réels [0, 1], colonnes = prédictions [0, 1]",
+      "classification_report": {
+        "non_pertinent": {
+          "precision": 0.7649572649572649,
+          "recall": 0.8861386138613861,
+          "f1-score": 0.8211009174311926,
+          "support": 202.0
+        },
+        "pertinent": {
+          "precision": 0.735632183908046,
+          "recall": 0.5378151260504201,
+          "f1-score": 0.6213592233009708,
+          "support": 119.0
+        },
+        "accuracy": 0.7570093457943925,
+        "macro avg": {
+          "precision": 0.7502947244326554,
+          "recall": 0.7119768699559031,
+          "f1-score": 0.7212300703660817,
+          "support": 321.0
+        },
+        "weighted avg": {
+          "precision": 0.7540859732287383,
+          "recall": 0.7570093457943925,
+          "f1-score": 0.7470533735012973,
+          "support": 321.0
+        }
+      }
+    }
+  },
+  "baseline_test": {
+    "accuracy": 0.5482866043613707,
+    "precision": 0.4496124031007752,
+    "recall": 0.9747899159663865,
+    "f1": 0.6153846153846154,
+    "roc_auc": 0.8328479906814211,
+    "precision_at_3": 0.7499999999999999,
+    "threshold": 0.5,
+    "predicted_positive": 258,
+    "demandes_avec_candidats": 20,
+    "offres_admissibles": 321,
+    "average_precision": 0.7550919978384856,
+    "confusion_matrix": [
+      [
+        60,
+        142
+      ],
+      [
+        3,
+        116
+      ]
+    ],
+    "confusion_matrix_normalized": [
+      [
+        0.297029702970297,
+        0.7029702970297029
+      ],
+      [
+        0.025210084033613446,
+        0.9747899159663865
+      ]
+    ],
+    "confusion_axes": "lignes = labels réels [0, 1], colonnes = prédictions [0, 1]",
+    "classification_report": {
+      "non_pertinent": {
+        "precision": 0.9523809523809523,
+        "recall": 0.297029702970297,
+        "f1-score": 0.4528301886792453,
+        "support": 202.0
+      },
+      "pertinent": {
+        "precision": 0.4496124031007752,
+        "recall": 0.9747899159663865,
+        "f1-score": 0.6153846153846154,
+        "support": 119.0
+      },
+      "accuracy": 0.5482866043613707,
+      "macro avg": {
+        "precision": 0.7009966777408638,
+        "recall": 0.6359098094683417,
+        "f1-score": 0.5341074020319303,
+        "support": 321.0
+      },
+      "weighted avg": {
+        "precision": 0.7659963499998275,
+        "recall": 0.5482866043613707,
+        "f1-score": 0.5130917985793669,
+        "support": 321.0
+      }
+    }
+  },
+  "validation_candidates_at_training": {
+    "baseline": {
+      "accuracy": 0.5189504373177842,
+      "precision": 0.4370629370629371,
+      "recall": 0.9689922480620154,
+      "f1": 0.6024096385542169,
+      "roc_auc": 0.7884155618343838,
+      "precision_at_3": 0.7166666666666666,
+      "threshold": 0.5,
+      "predicted_positive": 286,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_regression": {
+      "accuracy": 0.7259475218658892,
+      "precision": 0.6842105263157895,
+      "recall": 0.5038759689922481,
+      "f1": 0.5803571428571429,
+      "roc_auc": 0.778816199376947,
+      "precision_at_3": 0.75,
+      "threshold": 0.5465079628651239,
+      "predicted_positive": 95,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest": {
+      "accuracy": 0.7346938775510204,
+      "precision": 0.6979166666666666,
+      "recall": 0.5193798449612403,
+      "f1": 0.5955555555555555,
+      "roc_auc": 0.7653046439179887,
+      "precision_at_3": 0.7499999999999999,
+      "threshold": 0.5022875805782896,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_C_0.1": {
+      "accuracy": 0.7288629737609329,
+      "precision": 0.6875,
+      "recall": 0.5116279069767442,
+      "f1": 0.5866666666666667,
+      "roc_auc": 0.7796855755995072,
+      "precision_at_3": 0.75,
+      "threshold": 0.5270621986832782,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "logistic_C_10": {
+      "accuracy": 0.7259475218658892,
+      "precision": 0.6842105263157895,
+      "recall": 0.5038759689922481,
+      "f1": 0.5803571428571429,
+      "roc_auc": 0.7784539592842136,
+      "precision_at_3": 0.75,
+      "threshold": 0.548450457292944,
+      "predicted_positive": 95,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest_leaf_12": {
+      "accuracy": 0.7405247813411079,
+      "precision": 0.7083333333333334,
+      "recall": 0.5271317829457365,
+      "f1": 0.6044444444444445,
+      "roc_auc": 0.7706295732811707,
+      "precision_at_3": 0.7333333333333333,
+      "threshold": 0.47714324605289055,
+      "predicted_positive": 96,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "random_forest_leaf_24": {
+      "accuracy": 0.7376093294460642,
+      "precision": 0.7142857142857143,
+      "recall": 0.5038759689922481,
+      "f1": 0.5909090909090909,
+      "roc_auc": 0.7700137651235238,
+      "precision_at_3": 0.7499999999999999,
+      "threshold": 0.47838819111264197,
+      "predicted_positive": 91,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "hist_gradient_boosting_7": {
+      "accuracy": 0.717201166180758,
+      "precision": 0.6454545454545455,
+      "recall": 0.5503875968992248,
+      "f1": 0.5941422594142259,
+      "roc_auc": 0.761754691009201,
+      "precision_at_3": 0.7666666666666666,
+      "threshold": 0.5270040339539968,
+      "predicted_positive": 110,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    },
+    "hist_gradient_boosting_15": {
+      "accuracy": 0.7142857142857143,
+      "precision": 0.6565656565656566,
+      "recall": 0.5038759689922481,
+      "f1": 0.5701754385964912,
+      "roc_auc": 0.7450554227341882,
+      "precision_at_3": 0.7333333333333333,
+      "threshold": 0.5797432446161361,
+      "predicted_positive": 99,
+      "demandes_avec_candidats": 20,
+      "offres_admissibles": 343
+    }
+  }
+}
